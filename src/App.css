@@ -224,7 +224,7 @@ body,html {
 }
 
 .Title {
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 0px 4px 3px rgba(162, 158, 158, 0.8);
 }
 
 .ButtonAbout:hover,
@@ -239,11 +239,13 @@ body,html {
 .Logos,
 .ListitemDesktopNaActive {
   cursor: pointer;
+  transition: background-color 0.3s ease-in;
 }
 
-.ListitemDesktopNa:hover {
-  background-color:#d9cfbf !important;
-}
+  .ListitemDesktopNa:hover {
+    background-color:white !important;
+  }
+
 .ListitemDesktopNa:hover .Label {
   color: black !important;
 }

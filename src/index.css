@@ -18,6 +18,6 @@ code {
 }
 
 @font-face {
-  font-family: PlayfairDisplay;
-  src: url('/public/Playfair_Display/PlayfairDisplay.ttf') format('truetype');
+  font-family: Rochester;
+  src: url('/public/Rochester/Rochester-Regular.ttf') format('truetype');
 }
