@@ -227,6 +227,11 @@ body,html {
   text-shadow: 0px 4px 3px rgba(162, 158, 158, 0.8);
 }
 
+.Title2 {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.8);
+}
+
+
 .ButtonAbout:hover,
 .ButtonServices:hover,
 .ButtonBlog:hover {
