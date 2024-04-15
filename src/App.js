@@ -175,7 +175,7 @@ function App() {
   };
 
   return (
-    <div className="Homepage" style={{ width: '100%', height: '100vh', position: 'relative', background: 'white', border: 'hidden red' }}>
+    <div className="Homepage" style={{ width: '100%', height: '100vh', position: 'relative', background: 'white', border: 'hidden red'}}>
       <div className="Navdesktop" style={{ zIndex: 2, position: 'absolute', width: "100%" }}>
         <div className="Navbanner" style={{ width: '100%', height: '10vh', left: 0, top: 0, position: 'absolute', background: '#0E0E0E' }} />
         <div className="Navlogo" style={{ width: 99, height: '10vh', left: 39, top: 0, position: 'absolute', justifyContent: 'flex-start', alignItems: 'center', display: 'inline-flex' }}>
@@ -225,9 +225,9 @@ function App() {
       {isHomeDesktop && <OverlaysMobile displayState={desktopStateList.includes(desktopState) ? "none":displayState} displayState2={displayState2} desktopState={desktopState} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} setDesktopState={setDesktopState}/>}
 
       {desktopState === 'Homedesktop1' && (
-        <div id='Homedesktop1' className='Homedesktop1' style={{ left: 0, top: 0, position: 'absolute', width: "100%", display: desktopStateList.includes(desktopState) ? "none":"static" }}>
+        <div id='Homedesktop1' className='Homedesktop1' style={{ left: 0, top: 0, position: 'absolute', width: "100%", height:'100vh',display: desktopStateList.includes(desktopState) ? "none":"static",overflow:'hidden'}}>
           <div className="Image" style={{ width: '100%', height: '147vh', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex' }}>
-            <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="./home1e.png" alt="About me" />
+            <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover'}} src="./home1e.png" alt="About me" />
           </div>
 
           <div className="TextContent1" style={{ border: 'hidden red', height: '75vh', left: '3.5vw', top: '30vh', position: 'absolute', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'inline-flex' }}>
@@ -242,35 +242,23 @@ function App() {
         </div>
       )}
       {desktopState === 'Homedesktop2' && (
-        <div id='Homedesktop2' className='Homedesktop2' style={{ left: 0, top: 0, position: 'absolute', border: '1px black solid', display: desktopStateList.includes(desktopState) ? "none":"static"  }}>
+        <div id='Homedesktop2' className='Homedesktop2' style={{ left: 0, top: 0, position: 'absolute', width: "100%", height:'100vh', border: '1px black solid', display: desktopStateList.includes(desktopState) ? "none":"static",overflow:'hidden'}}>
           <div className="Image" style={{ width: '100vw', height: '97vh', left: '-1px', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex' }}>
             <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="./home3c.png" alt="Boardroom" />
           </div>
-          {/* <div className="Rectangle158" style={{width: '50vw', height: 68, left: '0vw', top: '70vh', position: 'absolute', background: 'rgba(217, 217, 217, 0.30)'}} /> */}
-          {/* <div className="Overlay2" style={{width: '25vw', height: '100vh', left: '0vw', top: 1, position: 'absolute', background: 'rgba(0, 0, 0, 0.20)'}} />
-          <div className="HoverOverlay2" style={{width: '25vw', height: '100vh', left: '0vw', top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.20)', border: '1px #8C8484 solid', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', gap: 8, display: 'inline-flex'}}>
-              <div className="ButtonAbout" style={{zIndex:1,position: 'absolute',marginTop:17,top:'70vh',textAlign: 'center', color: '#DED8D8', fontSize: 30, fontFamily: 'Roboto', fontWeight: '700', letterSpacing: 3, wordWrap: 'break-word'}}onClick={() => handleButtonClick('Homedesktop1')}>About Us</div>
-          </div>
-          <div className="Overlay1" style={{width: '50vw', height: '100vh', top: 0, left:'50vw',position: 'absolute', background: 'rgba(0, 0, 0, 0.20)'}}></div> */}
-
-          <div className="TextContent1" style={{ height: '87vh', paddingLeft: '0vw', left: '69vw', top: '10vh', position: 'absolute', flexDirection: 'column', justifyContent: 'center', alignItems: 'end', gap: 24, display: 'inline-flex'}}>
+          <div className="TextContent1" style={{ height: '87vh', paddingLeft: '0vw', right: '10px', top: '10vh', position: 'absolute', flexDirection: 'column', justifyContent: 'center', alignItems: 'end', gap: 24, display: 'inline-flex'}}>
             <div className="Title" style={{ width: '30vw', height: 28, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'flex' }}>
               <div className="Title2" style={{zIndex:1, color: 'white', fontSize: 'clamp(20px, 4vw, 64px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'end' }}>Unlock Exlusive Deals</div>
             </div>
-            <div className="Title2" style={{zIndex:1, color: 'white', fontSize: 'clamp(20px, 4vw, 20px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'end' }}>Explore Curated Selections and Partnerships for Top-Quality Products</div>
+            <div className="Title2" style={{zIndex:1, color: 'white', fontSize: 'clamp(20px, 4vw, 20px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'end',maxWidth:'25vw' }}>Explore Curated Selections and Partnerships for Top-Quality Products</div>
             <div className="Button"style={{background:'#784F39'}}>
               <div className="Label" style={{color:'white'}} onClick={() => handleBlogClick()}>Claim Deals</div>
             </div>
           </div>
-
-          {/* <div className="Overlay2" style={{width: '25vw', height: '100vh', left: '25vw', top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.20)'}} />
-          <div className="HoverOverlay3" style={{width: '25vw', height: '100vh', left: '25vw', top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.20)', borderLeft: '1px #8C8484 solid', borderTop: '1px #8C8484 solid', borderRight: '1px #8C8484 solid', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', gap: 8, display: 'inline-flex'}}>
-              <div className="ButtonServices" style={{zIndex:1,position: 'absolute',marginTop:17,top:'70vh', color: '#DED8D8', fontSize: 30, fontFamily: 'Roboto', fontWeight: '700', letterSpacing: 3, wordWrap: 'break-word'}}onClick={() => handleButtonClick('Homedesktop3')}>Services</div>
-          </div> */}
         </div>
       )}
       {desktopState === 'Homedesktop3' && (
-        <div id='Homedesktop3' className="Homedesktop3" style={{ left: 0, top: 0, position: 'absolute', border: '1px black solid', display: desktopStateList.includes(desktopState) ? "none":"static"  }}>
+        <div id='Homedesktop3' className="Homedesktop3" style={{ left: 0, top: 0, position: 'absolute', width: "100%", height:'100vh',border: '1px black solid', display: desktopStateList.includes(desktopState) ? "none":"static",overflow:'hidden'}}>
           <div className="Image" style={{ width: '100vw', height: '97vh', left: '-1px', top: 70, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex' }}>
             <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="./home2d.png" alt="Planning" />
           </div>
@@ -278,7 +266,7 @@ function App() {
             <div className="Title2" style={{ zIndex:'1',width: '30vw', height: 28, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'flex' }}>
               <div className="Title2" style={{ color: 'white', fontSize: 'clamp(20px, 4vw, 54px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'center' }}>Indulge in My Hand Picked Collection</div>
             </div>
-              <div className="Title2" style={{ zIndex:'1',color: 'white', fontSize: 'clamp(20px, 4vw, 30px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'center' }}>Discover Personalized Essentials Tailored for You.</div>
+              <div className="Title2" style={{ zIndex:'1',color: 'white', fontSize: 'clamp(20px, 4vw, 30px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'center',width:'30vw' }}>Discover Personalized Essentials Tailored for You.</div>
             <div className="Button"style={{background:'#784F39'}}>
               <div className="Label" style={{color:'white', fontFamily:'PlayfairDisplay'}} onClick={() => handleServicesClick()}>Explore Shop</div>
             </div>
