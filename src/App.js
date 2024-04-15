@@ -248,9 +248,9 @@ function App() {
           </div>
           <div className="TextContent1" style={{ height: '87vh', paddingLeft: '0vw', right: '10px', top: '10vh', position: 'absolute', flexDirection: 'column', justifyContent: 'center', alignItems: 'end', gap: 24, display: 'inline-flex'}}>
             <div className="Title" style={{ width: '30vw', height: 28, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'flex' }}>
-              <div className="Title2" style={{zIndex:1, color: 'white', fontSize: 'clamp(20px, 4vw, 64px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'end' }}>Unlock Exlusive Deals</div>
+              <div className="Title2" style={{zIndex:1, color: 'white', fontSize: 'clamp(20px, 4vw, 64px)', fontFamily: 'PlayfairDisplay', lineHeight: 1.1, wordWrap: 'break-word', textAlign: 'end' }}>Unlock Exlusive Deals</div>
             </div>
-            <div className="Title2" style={{zIndex:1, color: 'white', fontSize: 'clamp(20px, 4vw, 20px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'end',maxWidth:'25vw' }}>Explore Curated Selections and Partnerships for Top-Quality Products</div>
+            <div className="Title2" style={{zIndex:1, color: 'white', fontSize: 'clamp(15px, 2vw, 20px)', fontFamily: 'PlayfairDisplay', lineHeight: 1.1, wordWrap: 'break-word', textAlign: 'end',maxWidth:'25vw' }}>Explore Curated Selections and Partnerships for Top-Quality Products</div>
             <div className="Button"style={{background:'#784F39'}}>
               <div className="Label" style={{color:'white'}} onClick={() => handleBlogClick()}>Claim Deals</div>
             </div>
@@ -259,14 +259,14 @@ function App() {
       )}
       {desktopState === 'Homedesktop3' && (
         <div id='Homedesktop3' className="Homedesktop3" style={{ left: 0, top: 0, position: 'absolute', width: "100%", height:'100vh',border: '1px black solid', display: desktopStateList.includes(desktopState) ? "none":"static",overflow:'hidden'}}>
-          <div className="Image" style={{ width: '100vw', height: '97vh', left: '-1px', top: 70, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex' }}>
+          <div className="Image" style={{ width: '100vw', height: '97vh', left: '-1px', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex' }}>
             <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="./home2d.png" alt="Planning" />
           </div>
           <div className="TextContent1" style={{ height: '87vh', paddingLeft: '0vw', left: '35vw', position: 'absolute', flexDirection: 'column', top: '10vh', justifyContent: 'center', alignItems: 'center', gap: 24, display: 'inline-flex' }}>
             <div className="Title2" style={{ zIndex:'1',width: '30vw', height: 28, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'flex' }}>
-              <div className="Title2" style={{ color: 'white', fontSize: 'clamp(20px, 4vw, 54px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'center' }}>Indulge in My Hand Picked Collection</div>
+              <div className="Title2" style={{ color: 'white', fontSize: 'clamp(20px, 4vw, 54px)', fontFamily: 'PlayfairDisplay', lineHeight: 1.1, wordWrap: 'break-word', textAlign: 'center' }}>Indulge in My Hand Picked Collection</div>
             </div>
-              <div className="Title2" style={{ zIndex:'1',color: 'white', fontSize: 'clamp(20px, 4vw, 30px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'center',width:'30vw' }}>Discover Personalized Essentials Tailored for You.</div>
+              <div className="Title2" style={{ zIndex:'1',color: 'white', fontSize: 'clamp(15px, 2vw, 30px)', fontFamily: 'PlayfairDisplay', lineHeight: 1.1, wordWrap: 'break-word', textAlign: 'center',width:'30vw' }}>Discover Personalized Essentials Tailored for You.</div>
             <div className="Button"style={{background:'#784F39'}}>
               <div className="Label" style={{color:'white', fontFamily:'PlayfairDisplay'}} onClick={() => handleServicesClick()}>Explore Shop</div>
             </div>
