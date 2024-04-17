@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import './App.css';
 import About from './aboutus'
 import Services from './services'
-import Blog from './blog'
+import Deals from './deals'
+import Wellness from './wellness'
 import Contact from './contact'
 import MobileMenu from './components/MobileMenu';
 import OverlaysMobile from './components/OverlaysMobile';
 
-const desktopStateList = ["AboutUs", "Services", "Blog", "Contact"]
+const desktopStateList = ["AboutUs", "Services", "Deals", "Wellness", "Contact"]
 
 function App() {
   const [desktopState, setDesktopState] = useState('Homedesktop1');
@@ -151,7 +152,12 @@ function App() {
   const handleBlogClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
-    setDesktopState('Blog');
+    setDesktopState('Deals');
+  };
+  const handleWellnessClick = () => {
+    setDisplayState('none');
+    setDisplayState2('0');
+    setDesktopState('Wellness');
   };
   const handleContactClick = () => {
     setDisplayState('none');
@@ -176,7 +182,7 @@ function App() {
 
   return (
     <div className="Homepage" style={{ width: '100%', height: '100vh', position: 'relative', background: 'white', border: 'hidden red'}}>
-      <div className="Navdesktop" style={{ zIndex: 2, position: 'absolute', width: "100%" }}>
+      <div className="Navdesktop" style={{ zIndex: 2, position: 'fixed', width: "100%" }}>
         <div className="Navbanner" style={{ width: '100%', height: '10vh', left: 0, top: 0, position: 'absolute', background: '#0E0E0E' }} />
         <div className="Navlogo" style={{ width: 99, height: '10vh', left: 39, top: 0, position: 'absolute', justifyContent: 'flex-start', alignItems: 'center', display: 'inline-flex' }}>
           <div className="Logos" style={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }} onClick={() => handleHomeClick()}>
@@ -185,7 +191,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div id='Navmenudesktop' className="Navmenudesktop" style={{ zIndex: 2, width: '80vw', height: '10vh', right: '0vw', position: 'absolute', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'inline-flex' }}>
+      <div id='Navmenudesktop' className="Navmenudesktop" style={{ zIndex: 2, width: '80vw', height: '10vh', right: '0vw', position: 'fixed', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'inline-flex' }}>
         <div className="ListitemDesktopNa" style={{ width: 115, height: '100%', paddingLeft: 18, paddingRight: 18, paddingTop: 0, paddingBottom: 0, background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}onClick={() => handleAboutClick()}>
           <div className="Label" style={{ width: 100, textAlign: 'center', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word' }}>About</div>
         </div>
@@ -195,7 +201,7 @@ function App() {
         <div className="ListitemDesktopNa" style={{ width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}onClick={() => handleBlogClick()}>
           <div className="Label" style={{ width: 131, textAlign: 'center', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word' }} >Deals</div>
         </div>
-        <div className="ListitemDesktopNa" style={{ width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}onClick={() => handleBlogClick()}>
+        <div className="ListitemDesktopNa" style={{ width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}onClick={() => handleWellnessClick()}>
           <div className="Label" style={{ width: 131, textAlign: 'center', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word' }} >Wellness</div>
         </div>
         <div className="ListitemDesktopNa" style={{ width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}onClick={() => handleContactClick()}>
@@ -203,7 +209,7 @@ function App() {
         </div>
       </div>
 
-      <MobileMenu handleContactClick={handleContactClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} desktopState={desktopState} />
+      <MobileMenu handleContactClick={handleContactClick} handleWellnessClick={handleWellnessClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} desktopState={desktopState} />
 
       <div className="Rectangle158" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Recwidth, height: '15vh', maxHeight: "10%", left: `${Overlay1.replace("vw", "")}%`, top: '73vh', position: 'absolute', background: 'rgba(120, 79, 57, 0.6)', transition: 'left 0.5s ease-in-out' }} />
       <div className="Rectangle158" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Recwidth, height: '15vh', maxHeight: "10%", left: `${Overlay2.replace("vw", "")}%`, top: '73vh', position: 'absolute', background: 'rgba(120, 79, 57, 0.6)', transition: 'left 0.5s ease-in-out' }} />
@@ -222,7 +228,7 @@ function App() {
         <div className="ButtonBlog" style={{ zIndex: 1, color: 'white', position: 'absolute', height: '15vh', top: '70vh', textAlign: 'center', fontSize: 'clamp(12px, 3vw, 30px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', letterSpacing: 3, wordWrap: 'break-word', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={() => handleButton2Click(desktopState)}>{Button2}</div>
       </div>
 
-      {isHomeDesktop && <OverlaysMobile displayState={desktopStateList.includes(desktopState) ? "none":displayState} displayState2={displayState2} desktopState={desktopState} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} setDesktopState={setDesktopState}/>}
+      {isHomeDesktop && <OverlaysMobile displayState={desktopStateList.includes(desktopState) ? "none":displayState} displayState2={displayState2} desktopState={desktopState} handleWellnessClick={handleWellnessClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} setDesktopState={setDesktopState}/>}
 
       {desktopState === 'Homedesktop1' && (
         <div id='Homedesktop1' className='Homedesktop1' style={{ left: 0, top: 0, position: 'absolute', width: "100%", height:'100vh',display: desktopStateList.includes(desktopState) ? "none":"static",overflow:'hidden'}}>
@@ -280,8 +286,11 @@ function App() {
       {desktopState === 'Services' && (
         <Services />
       )}
-      {desktopState === 'Blog' && (
-        <Blog />
+      {desktopState === 'Deals' && (
+        <Deals />
+      )}
+      {desktopState === 'Wellness' && (
+        <Wellness />
       )}
       {desktopState === 'Contact' && (
         <Contact />

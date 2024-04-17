@@ -1,26 +1,17 @@
 import React, { useState } from 'react';
 import './App.css';
 import App from './App'
-import Blog from './blog'
+import Blog from './deals'
 import Contact from './contact'
 import Modal from './modal'
 import ServicesMobile from './components/ServicesMobile';
+import FadeInSection from './components/FadeIn';
 
 
 function Services() {
     const [desktopState,setDesktopState] = useState('Services1');  
     const [showModal, setShowModal] = useState(false);
     const [selectedService, setSelectedService] = useState(null);
-
-    // const handleAboutClick = () => {
-    //     setDesktopState('AboutUs');
-    //   };
-    //   const handleServicesClick = () => {
-    //     setDesktopState('Services');
-    //   };
-    //   const handleBlogClick = () => {
-    //     setDesktopState('Blog');
-    //   };
       const handleContactClick = () => {
         setDesktopState('Contact');
       };
@@ -31,7 +22,7 @@ function Services() {
         { 
             title: "Assessments", 
             description: "Assessments include state analysis and an implementation roadmap.",
-            image:'./assessments.jpg',
+            image:'./empress-tshirt.png',
             description2: (
                 <div>
                     <p>Our Assessments service provides a comprehensive evaluation of your organization's current state, identifying key areas of strength and areas for improvement. Through rigorous analysis and data-driven methodologies, we deliver actionable insights to drive strategic decision-making and organizational growth.</p>
@@ -47,7 +38,7 @@ function Services() {
         { 
             title: "Organizational Audits", 
             description: "Detailed audits of your organization.",
-            image:"./audits.jpg",
+            image:"./empress-tshirt.png",
             description2: (
                 <div>
                     <p>Our Organization Audits service offers a detailed examination of your organization's structure, processes, and performance to identify areas for improvement and operational efficiencies.</p>
@@ -63,7 +54,7 @@ function Services() {
         { 
             title: "Program Evaluation", 
             description: "Comprehensive analysis that is used to maintain effective program.",
-            image:"./groupmeeting.jpeg",
+            image:"./empress-tshirt.png",
             description2: (
                 <div>
                     <p>Our Program Evaluation service provides a comprehensive analysis of your organization's programs and initiatives to assess their effectiveness and impact. Through thorough evaluation and data analysis, we help you make informed decisions to improve program outcomes and maximize results.</p>
@@ -79,7 +70,7 @@ function Services() {
         { 
             title: "Strategic Plan", 
             description: "Strategic Plan for your organization",
-            image:"./busyboardroom.jpg",
+            image:"./empress-tshirt.png",
             description2: (
                 <div>
                     <p>Our Strategic Plan service helps your organization develop a clear and actionable roadmap to achieve its long-term goals and objectives. Through a collaborative process, we work with you to define your vision, identify strategic priorities, and establish measurable targets for success.</p>
@@ -109,97 +100,47 @@ function Services() {
   
   return (
     <>
-    <div className="Services" style={{width: '100%', height: '100vh', right:'0', position: 'relative', background: '#f0ece7'}}>
+    <div className="Services">
+        <div className='Banner'><img src='./banner2.png' alt='banner'style={{zIndex:2,width:'100vw',height:'auto',marginTop:'3vh', left:0, top:0}}onClick={() => window.location.href = './'}/></div>
         {desktopState === 'Services1' && (
-        <div>
-            <div className="Servicesx" style={{width: '100%', position: 'relative', background: 'white',top: '100px'}}>
-                <div className="Servicesdesktop" style={{width: '100%',  left: 0, top: "1vh", position: 'absolute', background: '#f0ece7', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-start', gap: 1, display: 'inline-flex'}}>
-                    <div className="Home" style={{height: '13rem', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 124, display: 'inline-flex'}}>
-                        <div className="IntroSection" style={{alignSelf: 'stretch', height: 259, justifyContent: 'flex-start', alignItems: 'center', display: 'inline-flex'}}>
-                            <div className="Frame1" style={{flex: '1 1 0', alignSelf: 'stretch', paddingLeft: 50, paddingRight: 60, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 20, display: 'inline-flex'}}>
-                                <div className="E3StrategicSolutions" style={{alignSelf: 'stretch', color: 'black', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word'}}>SERVICES</div>
-                                <div className="Text" style={{alignSelf: 'stretch', height: 100, width:'100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
-                                    <div className="CardTextz" style={{alignSelf: 'stretch', color: '#4D4D4D', paddingRight:'70px',fontSize: 'clamp(10px, 3vw, 35px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word'}}>Our professional services will help align your business with your strategic goals.  We have over 20 years of experience providing extensive services for various organizations.</div>
+            <div className="Servicesx" style={{width: '100%', position: 'relative', background: 'white',top: '100px',marginTop: '-50px',flexDirection: 'column', display: 'inline-flex',justifyContent: 'flex-start', alignItems: 'center'}}>
+                <FadeInSection>
+                    <div style={{ backgroundColor:'white' }}>
+                        <div className="MySkill" style={{ height: "auto", flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: 56.67, display: 'inline-flex', padding: "0px 4vw" }}>
+                            <div className="SectionTitle" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: '1vh', display: 'flex' }}>
+                                <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
+                                    <div className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(20px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>Shop</div>
                                 </div>
+                                <div className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(20px, 4vw, 25px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', wordWrap: 'break-word' }}>“<i>I’m so excited to share with you my range of products that I have personally designed with my tender love and care. I hope they bring a smile to your day.</i>” - Dr. Joi</div>
                             </div>
                         </div>
                     </div>
-                    <div className="BodyX" style={{maxWidth:'100%',flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 48, display: 'inline-flex'}}>
-                        <div className="Servicecards1" >
-                            <div className="Frame2230"style={{position:'relative',}}>
-                                <div className="Servicecards1">
-                                    <div className="Frame2230">
-                                        {services.map((service, index) => (
-                                        <div className="Servicecard" key={index}style={{position:'relative',backgroundColor:'white',border:'black 2px solid'}}>
-                                            <div className="CardImage">
-                                            <img className="cardpic" style={{maxHeight:'160px', opacity:'80%'}} src={`./${service.image}`} alt={service.title} />
-                                            </div>
-                                            <div className="CardTitle">
-                                                <div className="TitleSer">{service.title}</div>
-                                            </div>
-                                            <div className="CardTextx" style={{paddingLeft:'20px',paddingRight:'30px'}}>{service.description}</div>
-                                            <div className="Button">
-                                                <div className="ReadMore" onClick={() => handleReadMoreClick(service)}>READ MORE</div>
-                                            </div>
-                                        </div>
-                                        ))}
-                                    </div>
+                </FadeInSection>
+                <FadeInSection>
+                    <div className="BodyX" style={{maxWidth:'100%',flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 48, display: 'inline-flex', marginTop:'50px'}}>
+                    {/* THIS IS FOR THE PRODUCTS JS */}
+                    <div id="products-container" class="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"></div> 
+                        <div className="Frame2230">
+                            {services.map((service, index) => (
+                            <div className="Servicecard" key={index}style={{position:'relative',backgroundColor:'white',border:'black 2px solid'}}>
+                                <div className="CardImage">
+                                <img className="cardpic" style={{maxHeight:'160px', opacity:'80%'}} src={`./${service.image}`} alt={service.title} />
                                 </div>
-                                {/* <div className="Servicecard">
-                                    <div className="CardImage">
-                                        <img className="cardpic" src="./boardroom-queenst2.jpg" alt='boardroom'/>
-                                    </div>
-                                    <div className="CardTextx">Detailed audits of your organization</div>
-                                    <div className="Group5">
-                                        <div className="TitleSer">Organization Audits</div>
-                                    </div>
-                                    <div className="Button">
-                                        <div className="ReadMore">READ MORE</div>
-                                    </div>
+                                <div className="CardTitle">
+                                    <div className="TitleSer">{service.title}</div>
                                 </div>
-                                <div className="Servicecard">
-                                    <div className="CardImage">
-                                        <img className="cardpic" src="./boardroom-queenst.jpg" alt='boardroom'/>
-                                    </div>
-                                    <div className="CardTextx">Stragetic Plan for your organization</div>
-                                    <div className="Group5">
-                                        <div className="TitleSer">Strategic Plan</div>
-                                    </div>
-                                    <div className="Button">
-                                        <div className="ReadMore">READ MORE</div>
-                                    </div>
-                                </div>
-                                <div className="Servicecard">
-                                    <div className="CardImage">
-                                        <img className="cardpic" src="./groupmeeting.jpeg" alt='groupmeeting'/>
-                                    </div>
-                                    <div className="CardTextx">Comprehensive analysis that is used to maintain an effectiveness program</div>
-                                    <div className="Group5">
-                                        <div className="TitleSer">Program Evaluation</div>
-                                    </div>
-                                    <div className="Button">
-                                        <div className="ReadMore">READ MORE</div>
-                                    </div>
-                                </div> */}
-                                {showModal && <Modal onClose={handleCloseModal} service={selectedService} />}
-                                {showModal ? <div className="background-overlay" /> : null}
-                            </div>
-                        </div>
-                        <div className="IntroSection" style={{alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center', display: 'inline-flex',backgroundColor:'#f0ece7', marginTop:'70px'}}>
-                        <div className="Frame1" style={{flex: '1 1 0', alignSelf: 'stretch', paddingLeft: 50, paddingRight: 60, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 20, display: 'inline-flex'}}>
-                            <div className="E3StrategicSolutions" style={{alignSelf: 'stretch', color: 'black', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word'}}>PRICING</div>
-                                <div className="Text" style={{alignSelf: 'stretch', height: 100, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
-                                    <div className="Pricingx" style={{alignSelf: 'stretch', color: '#4D4D4D', fontSize: 'clamp(10px, 3vw, 35px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word'}}>Our pricing is personalized to meet your specific needs, ensuring the best value for your investment. Contact us today for a consultation and allow us to elevate your business to the next level!</div>
-                                </div>
-                                <div className="Button book-consultation" style={{top:'90vh',height:'6vh',justifyContent: 'center', alignItems: 'center', gap: 10, display: 'inline-flex'}}>
-                                    <div className="Label" style={{textAlign: 'center', color: '#FBFDFD', fontSize: 'clamp(10px, 3vw, 20px)', fontFamily: 'Roboto', fontWeight: '600', letterSpacing: 3, wordWrap: 'break-word'}}onClick={() => handleContactClick()}>BOOK A CONSULTATION</div>
+                                <div className="CardTextx" style={{paddingLeft:'20px',paddingRight:'30px'}}>{service.description}</div>
+                                <div className="Button">
+                                    <div className="ReadMore" onClick={() => handleReadMoreClick(service)}>READ MORE</div>
                                 </div>
                             </div>
+                            ))}
                         </div>
+                        {showModal && <Modal onClose={handleCloseModal} service={selectedService} />}
+                        {showModal ? <div className="background-overlay" /> : null}
                     </div>
-                </div>
+                </FadeInSection>
             </div>
-        </div>
         )}
         {desktopState === 'Homedesktop1' && (
         <App />

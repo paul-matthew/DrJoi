@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../App.css';
 import App from '../App'
 import Services from '../services'
-import Blog from '../blog'
+import Blog from '../deals'
 import Contact from '../contact'
 import FadeInSection from './FadeIn';
 

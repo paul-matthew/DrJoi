@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 import App from '../App'
-import Blog from '../blog'
+import Blog from '../deals'
 import Contact from '../contact'
 import Modal from '../modal'
 import FadeInSection from './FadeIn';
