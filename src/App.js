@@ -7,6 +7,7 @@ import Wellness from './wellness'
 import Contact from './contact'
 import MobileMenu from './components/MobileMenu';
 import OverlaysMobile from './components/OverlaysMobile';
+import FadeInSection from './components/FadeIn';
 
 const desktopStateList = ["AboutUs", "Services", "Deals", "Wellness", "Contact"]
 
@@ -235,7 +236,7 @@ function App() {
           <div className="Image" style={{ width: '100%', height: '147vh', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex' }}>
             <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover'}} src="./home1e.png" alt="About me" />
           </div>
-
+          {/* <FadeInSection> */}
           <div className="TextContent1" style={{ border: 'hidden red', height: '75vh', left: '3.5vw', top: '30vh', position: 'absolute', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'inline-flex' }}>
             <div className="Title" style={{ width: '40vw', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-start', display: 'flex' }}>
               <div className="Title" style={{ color: '#784F39', fontSize: 'clamp(45px, 4vw, 75px)', fontFamily: 'Rochester', lineHeight: 1, wordWrap: 'break-word' }}>Exotic Relief by Dr. Joi</div>
@@ -245,6 +246,7 @@ function App() {
               <div className="Label" style={{color:'white', fontFamily:'PlayDisplayFair'}} onClick={() => handleAboutClick()}>About Me</div>
             </div>
           </div>
+          {/* </FadeInSection> */}
         </div>
       )}
       {desktopState === 'Homedesktop2' && (

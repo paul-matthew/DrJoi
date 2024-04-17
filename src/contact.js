@@ -36,12 +36,12 @@ function Contact() {
   
   return (
     
-    <div className="ContactX" style={{width: '100%', height: '100vh', right:'0',backgroundColor:'#f0ece7'}}>
+    <div className="ContactX" style={{width: '100%', height: '100vh', right:'0',backgroundColor:'white'}}>
         <div id='NavlogoMobile'><img src='./logo-new.png' alt='logo mobile'style={{height:'5vh',marginTop:'1.5vh'}}onClick={() => window.location.href = './'}/></div>
         <FadeInSection>
         {desktopState === 'Contact1' && (
             <div className="ContactX" style={{width: '100%', height: 'auto', top: "1vh", display: 'flex', justifyContent: 'center', alignItems: 'center', position: "absolute"}}>
-                <form className="ContactForm" style={{width: '70%',minHeight:'60vh',paddingRight:'50px', border:'solid gray'}}>
+                <form className="ContactForm" style={{width: '70%',minHeight:'60vh',paddingRight:'50px', border:'solid gray',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}>
                     <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700'}}>Contact Us</p>
                     <div className="FormGroup">
                         <label htmlFor="name" style={{ display: smallScreen ? "none": "block"}}>Name</label>
