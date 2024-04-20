@@ -41,8 +41,8 @@ function Contact() {
         <FadeInSection>
         {desktopState === 'Contact1' && (
             <div className="ContactX" style={{width: '100%', height: 'auto', top: "1vh", display: 'flex', justifyContent: 'center', alignItems: 'center', position: "absolute"}}>
-                <form className="ContactForm" style={{width: '70%',minHeight:'60vh',paddingRight:'50px', border:'solid gray',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}>
-                    <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'PlaydairDisplay', fontWeight: '700'}}>Contact Us</p>
+                <form className="ContactForm" style={{width: '70%',minHeight:'60vh', border:'solid gray',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}>
+                    <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(26px, 3vw, 30px)', fontFamily: 'PlaydairDisplay', fontWeight: '700'}}>Contact Me</p>
                     <div className="FormGroup">
                         <label htmlFor="name" style={{ display: smallScreen ? "none": "block"}}>Name</label>
                         <input type="text" id="name" name="name" placeholder={ smallScreen ? "Name": "Enter your name"} required />

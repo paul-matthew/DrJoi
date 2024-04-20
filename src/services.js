@@ -4,8 +4,9 @@ import App from './App'
 import Blog from './deals'
 import Contact from './contact'
 import Modal from './modal'
-import ServicesMobile from './components/ServicesMobile';
+// import ServicesMobile from './components/ServicesMobile';
 import FadeInSection from './components/FadeIn';
+import ReactDOM from 'react-dom';
 
 
 function Services() {
@@ -110,10 +111,10 @@ function Services() {
                         <div className="MySkill" style={{ height: "auto", flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: 56.67, display: 'inline-flex', padding: "0px 4vw" }}>
                             <div className="SectionTitle" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: '1vh', display: 'flex' }}>
                                 <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
-                                    <div className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(20px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>Shop</div>
+                                    <div className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(40px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>Shop</div>
                                 </div>
                                 <div className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(20px, 4vw, 20px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', wordWrap: 'break-word' }}>“<i>I’m so excited to share with you my range of products that I have personally designed. I hope they bring a smile to your day.</i>” - Dr. Joi</div>
-                                <div className="MyExpertise" style={{ alignSelf: 'stretch', color: 'red', fontSize: 'clamp(20px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word',marginTop:'30px' }}>Limited Time Offers</div>
+                                <div className="MyExpertise" style={{ alignSelf: 'stretch', color: 'red', fontSize: 'clamp(30px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word',marginTop:'30px' }}>Limited Time Offers</div>
                                 {/* <div className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(20px, 4vw, 20px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', wordWrap: 'break-word' }}>Discover products available for a limited time only. Don't miss out – grab yours today!</div> */}
                             </div>
                         </div>
@@ -121,35 +122,36 @@ function Services() {
                 </FadeInSection>
                 <div className="BodyX" style={{maxWidth:'100%',flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 20, display: 'inline-flex', marginTop:'50px'}}>
                 {/* THIS IS FOR THE PRODUCTS JS */}
-                    <FadeInSection>
-                        <div id="products-container" class="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"></div> 
-                        <div className="Frame2230">
-                            {services.map((service, index) => (
-                            <div className="Servicecard" key={index}style={{position:'relative',backgroundColor:'white',border:'black 2px solid'}}>
-                                <div className="CardTitle">
-                                    <div className="TitleSer">{service.title}</div>
-                                </div>
-                                <div className="CardImage" onClick={() => handleReadMoreClick(service)}>
-                                <img className="cardpic" style={{maxHeight:'200px', opacity:'80%'}} src={`./${service.image}`} alt={service.title} />
-                                </div>
-                                <div className="CardTextx" style={{paddingLeft:'20px',paddingRight:'30px'}}>{service.description}</div>
-                            </div>
-                            ))}
+                <FadeInSection>
+                <div id="products-container" class="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"></div> 
+                <div className="Frame2230" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                    {services.map((service, index) => (
+                    <div className="Servicecard" key={index} style={{ position: 'relative', backgroundColor: 'white', border: 'black 2px solid', width: '250px', margin: '20px', padding: '10px' }}>
+                        <div className="CardTitle">
+                            <div className="TitleSer">{service.title}</div>
                         </div>
-                    </FadeInSection>
+                        <div className="CardImage" onClick={() => handleReadMoreClick(service)}>
+                            <img className="cardpic" style={{ maxHeight: '200px', opacity: '80%' }} src={`./${service.image}`} alt={service.title} />
+                        </div>
+                        <div className="CardTextx" style={{ paddingLeft: '20px', paddingRight: '30px' }}>{service.description}</div>
+                    </div>
+                    ))}
+                </div>
+            </FadeInSection>
+
                     <FadeInSection>
-                        <div className="MyExpertise" style={{ alignSelf: 'stretch', color: 'black', fontSize: 'clamp(20px, 4vw, 51px)', fontFamily: 'PlayfairDisplay', fontWeight: '300', wordWrap: 'break-word',marginTop:'30px' }}>Our Full Collection</div>
-                        <div className="Frame2230" style={{marginTop:'30px'}}>
+                        <div className="MyExpertise" style={{ alignSelf: 'stretch', color: 'black', fontSize: 'clamp(30px, 4vw, 51px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word',marginTop:'30px' }}>Our Full Collection</div>
+                        <div className="Frame2230" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
                             {services.map((service, index) => (
-                            <div className="Servicecard" key={index}style={{position:'relative',backgroundColor:'white',border:'black 2px solid'}}>
-                                <div className="CardTitle">
-                                    <div className="TitleSer">{service.title}</div>
-                                </div>
-                                <div className="CardImage" onClick={() => handleReadMoreClick(service)}>
-                                <img className="cardpic" style={{maxHeight:'200px', opacity:'80%'}} src={`./${service.image}`} alt={service.title} />
-                                </div>
-                                <div className="CardTextx" style={{paddingLeft:'20px',paddingRight:'30px'}}>{service.description}</div>
-                            </div>
+                    <div className="Servicecard" key={index} style={{ position: 'relative', backgroundColor: 'white', border: 'black 2px solid', width: '250px', margin: '20px', padding: '10px' }}>
+                    <div className="CardTitle">
+                        <div className="TitleSer">{service.title}</div>
+                    </div>
+                    <div className="CardImage" onClick={() => handleReadMoreClick(service)}>
+                        <img className="cardpic" style={{ maxHeight: '200px', opacity: '80%' }} src={`./${service.image}`} alt={service.title} />
+                    </div>
+                    <div className="CardTextx" style={{ paddingLeft: '20px', paddingRight: '30px' }}>{service.description}</div>
+                </div>
                             ))}
                         </div>
                     </FadeInSection>
@@ -183,9 +185,10 @@ function Services() {
             </div>
         </div> */}
     </div>
-    <ServicesMobile />
+    {/* <ServicesMobile /> */}
     </>
   );
 }
 
+ReactDOM.render(<Services />, document.getElementById('root'));
 export default Services;

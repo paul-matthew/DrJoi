@@ -476,8 +476,8 @@ body,html {
 }
 @media (max-width:575px){
   .TitleSer {
-    font-size: 24px !important;
-    font-weight: 400px !important;
+    font-size: 30px !important;
+    font-weight: bold !important;
   }
   .CardTextx{
     padding-top: 10px;
@@ -543,7 +543,7 @@ body,html {
     height: 644.38px;
   }
   .Servicesx {
-    top: 57px !important;
+    top: 115px !important;
   }
 }
 
@@ -1291,7 +1291,7 @@ button:hover {
   }
 
   .active-menu-mobile {
-    background-color: rgb(130, 117, 78) !important;
+    background-color: rgb(137, 72, 221) !important;
     
     .Label {
       color: white !important;
@@ -1427,6 +1427,34 @@ height:320% !important;
     min-width:22vh !important
     }
   }
+
+    /* For the Professional Background Cards */
+    @media (min-width: 576px) and (max-width: 809px) {
+      .CardContent1{
+      height:200px !important;
+      min-width:50vh !important
+      }
+    }
+    @media (min-width: 810px) and (max-width: 1238px) {
+      .CardContent1{
+      height:300px !important;
+      min-width:50vh !important
+      }
+    }
+  
+    @media (min-width: 1239px) and (max-width: 1342px) {
+      .CardContent1{
+      height:350px !important;
+      min-width:45vh !important
+      }
+    }
+  
+    @media (min-width: 1343px){
+      .CardContent1{
+      height:350px !important;
+      min-width:22vh !important
+      }
+    }
 
 /* For the BIO INTRO */
 

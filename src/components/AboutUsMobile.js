@@ -32,203 +32,130 @@ function AboutUsMobile() {
   return (
     
     <div className="AboutUs-mobile" style={{width: '100%', height: '100vh', right:'0', position: 'relative', background: 'white', maxWidth: "100%", display: "none"}}>
-        <div id='NavlogoMobile'><img src='/logo2.png' alt='logo mobile'style={{height:'5vh',marginTop:'1.5vh'}}onClick={() => window.location.href = './'}/></div>
+        <div id='NavlogoMobile'><img src='/logo2.png' alt='logo mobile'style={{height:'6vh',marginTop:'1vh'}}onClick={() => window.location.href = './'}/></div>
         {desktopState === 'About1' && (
         <div>
-            <div className="Aboutus" style={{width: '100%', position: 'absolute', background: 'white', top: "15vh"}}>
+            <div className="Aboutus" style={{width: '100%', position: 'absolute', background: 'white', top: "13vh"}}>
                 <div className="Image" style={{width: '100%', height: 'auto', right: 0, top: 0, position: 'absolute', objectFit: "cover"}}>
-                    <img className="Samplebio21" style={{width: 'auto', height: '80vh', right: 0, top: '0vh', position: 'absolute'}} src="/aboutme2c.png" alt='Placeholder'/>
+                    <img className="Samplebio21" style={{width: 'auto', height: '70vh', right: 0, top: '14vh', position: 'absolute'}} src="/aboutme2c.png" alt='Placeholder'/>
                 </div>
-                <div className="Intro" style={{ position: "relative",width: '85vw', height: '100vh', left: "5vw", top: 20, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex'}}>
+                <div className="Intro" style={{ position: "relative",width: '85vw', height: '100vh', left: "5vw", top: 0, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex'}}>
                     {/* <div className="E3StrategicSolutions" style={{alignSelf: 'stretch', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word'}}>E3 STRATEGIC SOLUTIONS</div> */}
                     <div className="Content" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex'}}>
-                        <div className='content-name' style={{width:'100%', fontSize: 'clamp(25px, 4vw, 64px)', fontFamily: 'Playfair Display', fontWeight: '700', wordWrap: 'break-word'}}>Hello, my name is Dr. Joi</div>
-                        <div className="Subheadline" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex'}}>
-                            <div className="Text" style={{width: '100%',  fontSize: 'clamp(16px, 2vw, 24px)', marginBottom:'22vh',fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word',lineHeight: '1.5' }}>
+                        <div className='content-name' style={{width:'100%', fontSize: 'clamp(45px, 4vw, 64px)', fontFamily: 'Playfair Display', fontWeight: '700', wordWrap: 'break-word'}}>Hello, my name is Dr. Joi</div>
+                        <div className="Subheadline" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex',marginTop:'40vh'}}>
+                            <div style={{color:'white',width: '100%',  fontSize: 'clamp(16px, 2vw, 24px)', marginBottom:'22vh',fontFamily: 'PlayfairDisplay', fontWeight: '400', wordWrap: 'break-word',lineHeight: '1.5', textShadow:'2px 2px 3px rgba(0, 0, 0, 0.9)' }}>
                                 <div className='Experience'>
-                                    I have over 20 years of experience working with non-profits.
+                                I am passionate about empowering individuals to prioritize their mental health and well-being. 
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="about-button" className="Button">
-                        <div className="Label"onClick={scrollToMySkills}>READ MORE</div>
                     </div>
                 </div>
-                <div id="my-skills-mobile" className="MySkill" style={{height: 732.33, left: 50, flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: 56.67, display: 'inline-flex'}}>
-                    <div className="SectionTitle" style={{flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: '3vh', display: 'flex'}}>
-                        <div className="MySkills" style={{textAlign: 'center', color: '#282938', fontSize: 'clamp(21px, 2vw, 21px)', fontFamily: 'Roboto', fontWeight: '600', wordWrap: 'break-word'}}>My Skills</div>
-                        <div className="Content" style={{alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex'}}>
-                            <div className="MyExpertise" style={{alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(50px, 4vw, 61px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word'}}>My Expertise</div>
-                        </div>
-                    </div>
-                    <div className="Row" style={{flexWrap: "wrap", justifyContent: "flex-start"}}>
-                        <FadeInSection>
-                        <div className="Content1" style={{marginBottom:50,flex: '1 1 0', padding: 32, background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)',borderRadius: 10.67, borderBottom: '4px rgb(130, 117, 78) solid', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                            <div className="SectionTitle" style={{alignSelf: 'stretch', height: 351.33, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex'}}>
-                                <div className="StrategyDirection" style={{padding: 13.33, background: 'white', boxShadow: '0px 0px 16px rgba(0, 0, 0, 0.10)', borderRadius: 10.67, justifyContent: 'center', alignItems: 'center', gap: 13.33, display: 'inline-flex'}}>
-                                    <img className="ProductChain1" style={{width: 53.33, height: 53.33}} src="./project1.jpg" alt='Placeholder'/>
-                                </div>
-                                <div className="ContentX" style={{height: 239.33, gap: 21.33}}>
-                                    <div className="StrategyDirection" style={{alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(30px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word'}}>Strategy & Direction</div>
-                                    <div className="Place" style={{alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(21px, 3vw, 21px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</div>
-                                </div>
-                            </div>
-                        </div>
-                        </FadeInSection>
-                        <FadeInSection>
-                        <div className="Content1" style={{marginBottom:50,flex: '1 1 0', padding: 32, background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)',borderRadius: 10.67, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                            <div className="SectionTitle" style={{alignSelf: 'stretch', height: 306.33, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 21.33, display: 'flex'}}>
-                                <div className="BrandingLogo" style={{padding: 13.33, background: 'white', boxShadow: '0px 0px 16px rgba(0, 0, 0, 0.10)', borderRadius: 10.67, justifyContent: 'center', alignItems: 'center', gap: 13.33, display: 'inline-flex'}}>
-                                    <img className="Tag1" style={{width: 53.33, height: 53.33}} src="./project2.jpg" alt='Placeholder'/>
-                                </div>
-                                <div className="ContentX" style={{height: 205, gap: 32}}>
-                                    <div className="Skill2" style={{alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(30px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word'}}>Skill #2</div>
-                                    <div className="Place" style={{alignSelf: 'stretch', color: 'black', fontSize: 'clamp(21px, 3vw, 21px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</div>
-                                </div>
-                            </div>
-                        </div>
-                        </FadeInSection>
-                        <FadeInSection>
-                        <div className="Content1" style={{marginBottom:50,flex: '1 1 0', padding: 32, background: 'white',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 10.67, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                            <div className="SectionTitle" style={{alignSelf: 'stretch', height: 306.33, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 21.33, display: 'flex'}}>
-                                <div className="UiUxDesign" style={{padding: 13.33, background: 'white', boxShadow: '0px 0px 16px rgba(0, 0, 0, 0.10)', borderRadius: 10.67, justifyContent: 'center', alignItems: 'center', gap: 13.33, display: 'inline-flex'}}>
-                                    <img className="FeatherPen1" style={{width: 53.33, height: 53.33}} src="./project3.jpg" alt='Placeholder'/>
-                                </div>
-                                <div className="ContentX" style={{height: 205, gap: 32}}>
-                                    <div className="Skill3" style={{alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(30px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word'}}>Skill #3</div>
-                                    <div className="Place" style={{alignSelf: 'stretch', color: 'black', fontSize: 'clamp(21px, 3vw, 21px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</div>
-                                </div>
-                            </div>
-                        </div>
-                        </FadeInSection>
-                        <FadeInSection>
-                        <div className="Content1 last" style={{marginBottom:50,flex: '1 1 0', padding: 32, background: 'white',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 10.67, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                            <div className="SectionTitle" style={{alignSelf: 'stretch', height: "auto", flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 21.33, display: 'flex'}}>
-                                <div className="WebflowDevelopment" style={{padding: 13.33, background: 'white', boxShadow: '0px 0px 16px rgba(0, 0, 0, 0.10)', borderRadius: 10.67, justifyContent: 'center', alignItems: 'center', gap: 13.33, display: 'inline-flex'}}>
-                                    <img className="FeatherPen1" style={{width: 53.33, height: 53.33}} src="./project4.jpg" alt='Placeholder'/>
-                                </div>
-                                <div className="ContentX" style={{alignSelf: 'stretch', height: "auto", flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex'}}>
-                                    <div className="Skill4" style={{alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(30px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700',  wordWrap: 'break-word'}}>Skill #4</div>
-                                    <div className="Place" style={{alignSelf: 'stretch', color: 'black', fontSize: 'clamp(21px, 3vw, 21px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</div>
-                                </div>
-                            </div>
-                        </div>
-                        </FadeInSection>
-                    </div>
-                </div>
-                <div className="Blog" style={{ margin: "5%", marginBottom: "6rem"}}>
-                    <div className="SectionHeader" style={{width: '100%', justifyContent: 'flex-start', alignItems: 'center', gap: 16.67, display: 'inline-flex'}}>
-                        <div className="SectionTitle" style={{width: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                            <div className="RecentProjects" style={{textAlign: 'center', color: '#282938', fontSize: 'clamp(21px, 3vw, 21px)', fontFamily: 'Roboto', fontWeight: '600', lineHeight: 3, wordWrap: 'break-word'}}>Recent Projects</div>
-                            <div className="Content" style={{alignSelf: 'stretch', height: "auto", flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 32, display: 'flex'}}>
-                                <div className="MyPortfolio" style={{alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(50px, 4vw, 61px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word'}}>My Portfolio</div>
-                            </div>
-                        </div>
-                    </div>
-                    {/* <div className="Content" style={{alignSelf: 'stretch', height: 615.67, paddingLeft: 30, paddingRight: 30, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 85.33, display: 'flex'}}>
-                        <div className="Content" style={{alignSelf: 'stretch', height: 615.67, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 85.33, display: 'flex'}}> */}
-                            <div className="Row" style={{flexWrap: "wrap", justifyContent: "flex-start", rowGap: "1.5rem"}}>
-                            <FadeInSection>
-                                <div className="Card" style={{width: "100%",flex: '1 1 0', background: 'white', boxShadow: '0px 0px 32px rgba(0, 0, 0, 0.15)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                                    <img className="PlaceholderImage" style={{alignSelf: 'stretch', height: 200, borderRadius: 8,objectFit:'cover'}} src="./project1.jpg" alt='Placeholder'/>
-                                    <div className="Content" style={{alignSelf: 'stretch', height: 'auto', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex'}}>
-                                        <div className="Content" style={{alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex'}}>
-                                            <div style={{alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex'}}>
-                                                <div className="Project1" style={{alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(30px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word'}}>Project 1</div>
-                                                <div className="LoremIpsumDolorSitAmetConsecteturAdipiscingElitSuspendisseVariusEnimInEros" style={{alignSelf: 'stretch', color: 'black', fontSize: 'clamp(21px, 3vw, 21px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.</div>
+                <div style={{ backgroundColor:'white' }}>
+                                <div className="MySkill" style={{ height: "auto", flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: 56.67, display: 'inline-flex', padding: "0px 3vw" }}>
+                                    <div className="SectionTitle" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: '3vh', display: 'flex' }}>
+                                        <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
+                                            <div className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(40px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>My Expertise</div>
+                                        </div>
+                                    </div>
+                                    <FadeInSection>
+                                    <div className="Row" style={{ flexWrap: "wrap", justifyContent: "flex-start",marginBottom:'160px' }}>
+                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex',marginBottom:'20px' }}>
+                                            <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp1.jpg" alt='Placeholder' />
+                                            <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
+                                                <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                    <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                        <div className="Project1" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(20px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Professional Background</div>
+                                                        <div  style={{ alignSelf: 'stretch', color: 'black', fontSize: 'clamp(14px, 3vw, 17px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word' }}>With over a decade of experience as a mental health practitioner, I have honed my expertise in clinical settings, catering to diverse populations and addressing a spectrum of mental health challenges. My practice encompasses individual therapy as well as facilitating group counseling sessions, allowing me to offer comprehensive support tailored to each client's needs.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                                            <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp2.jpg" alt='Placeholder' />
+                                            <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
+                                                <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                    <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                        <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(20px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Education and Qualifications</div>
+                                                        <div  style={{ alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(14px, 3vw, 17px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word' }}>My educational journey reflects a commitment to a holistic approach to mental health care. Holding degrees in medicine, public health, and business, I possess a unique interdisciplinary perspective. My Master of Public Health coupled with coursework in clinical and community-based behavioral health research methods, equips me with the skills to address mental health issues comprehensively.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                                            <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp3.jpg" alt='Placeholder' />
+                                            <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
+                                                <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                    <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                        <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(20px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Areas of Specialization</div>
+                                                        <div  style={{ alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(14px, 3vw, 17px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word' }}>Drawing from my diverse educational background, I approach mental health care holistically, considering biological, social, and economic factors. This interdisciplinary approach enables me to offer comprehensive support to individuals facing mental health challenges. Whether addressing clinical symptoms or social determinants of health, I am equipped to provide personalized and effective interventions.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                                            <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp4.jpg" alt='Placeholder' />
+                                            <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'70px' }}>
+                                                <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                    <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                        <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(20px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Professional Philosophy</div>
+                                                        <div  style={{ alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(14px, 3vw, 17px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word' }}>Grounded in empathy and compassion, my professional philosophy revolves around empowering individuals to take charge of their mental health journey and lead fulfilling lives. I believe in the transformative power of therapy and prioritize creating a safe and supportive therapeutic environment where clients feel heard and valued. By fostering a collaborative partnership with my clients, I strive to facilitate growth, resilience, and holistic well-being.</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </FadeInSection>
+
                                 </div>
-                            </FadeInSection>
-                            <FadeInSection>
-                                <div className="Card" style={{width: "100%",flex: '1 1 0', background: 'white', boxShadow: '0px 5.333333492279053px 16px rgba(0, 0, 0, 0.15)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                                    <img className="PlaceholderImage" style={{alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit:'cover'}} src="./project2.jpg" alt='Placeholder'/>
-                                    <div className="Content" style={{alignSelf: 'stretch', height: 'auto', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex'}}>
-                                        <div className="Content" style={{alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex'}}>
-                                            <div style={{alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex'}}>
-                                                <div className="Project2" style={{alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(30px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word'}}>Project 2</div>
-                                                <div className="LoremIpsumDolorSitAmetConsecteturAdipiscingElitSuspendisseVariusEnimInEros" style={{alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(21px, 3vw, 21px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.</div>
+                                <div className="Blog" style={{ position: "relative", padding: "0px 6vw", marginBottom: "3rem" }}>
+                                    <div className="SectionHeader" >
+                                        <div className="SectionTitle" style={{ width: '100%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex' }}>
+                                            <div className="Content" style={{ alignSelf: 'stretch', height: 77, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 32, display: 'flex',marginBottom:'50px' }}>
+                                                <div className="MyPortfolio" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(40px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>My Favorite Affirmations</div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </FadeInSection>
-                                <div className="Card last" style={{ width: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 5.333333492279053px 32px rgba(0, 0, 0, 0.15)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                                    <img className="PlaceholderImage" style={{alignSelf: 'stretch', height: 200, borderRadius: 8,objectFit:'cover'}} src="./project3.jpg" alt='Placeholder'/>
-                                    <div className="Content" style={{alignSelf: 'stretch', height: 'auto', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex'}}>
-                                        <div className="Content" style={{alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex'}}>
-                                            <div style={{alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex'}}>
-                                                <div className="Project3" style={{alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(30px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word'}}>Project 3</div>
-                                                <div className="LoremIpsumDolorSitAmetConsecteturAdipiscingElitSuspendisseVariusEnimInEros" style={{alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(21px, 3vw, 21px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.</div>
+                                    <FadeInSection>
+                                    <div className="Row" style={{ flexWrap: "wrap", justifyContent: "flex-start",marginBottom:'160px' }}>
+                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                                            <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./affirmation.jpg" alt='Placeholder' />
+                                            <div className="CardContent" style={{ alignSelf: 'stretch', height: '140px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
+                                                <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                    <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                        <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(18px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Affirmation for Resilience</div>
+                                                        <div  style={{ alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(14px, 3vw, 17px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word' }}>In every challenge lies an opportunity for growth and strength. I embrace adversity as a chance to evolve and thrive, knowing that I am resilient and capable of overcoming any obstacle.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                                            <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./selflove.jpeg" alt='Placeholder' />
+                                            <div className="CardContent" style={{ alignSelf: 'stretch', height: '140px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
+                                                <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                    <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                        <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(18px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Affirmation for Self-Compassion</div>
+                                                        <div  style={{ alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(14px, 3vw, 17px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word' }}>I am worthy of love and kindness, both from others and from myself. I treat myself with compassion and understanding, acknowledging that I am human and deserving of forgiveness and grace.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                                            <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./meditation1.jpeg" alt='Placeholder' />
+                                            <div className="CardContent" style={{ alignSelf: 'stretch', height: '140px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
+                                                <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                    <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
+                                                        <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(18px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Affirmation for Inner Peace</div>
+                                                        <div  style={{ alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(14px, 3vw, 17px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word' }}>I cultivate inner peace by letting go of worries and fears that do not serve me. I trust in the journey of life, knowing that I am guided by inner wisdom and surrounded by love and support.</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </FadeInSection>
                                 </div>
                             </div>
-                        {/* </div>
-                    </div> */}
-                </div>
-                {/* <div className="Testimonial" style={{height: 675.52, paddingLeft: 85.33, paddingRight: 85.33, paddingTop: 20, paddingBottom: 20, left: 0, top: 2904, position: 'absolute', background: 'white', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 106.67, display: 'inline-flex'}}>
-                    <div className="SectionTitle" style={{alignSelf: 'stretch', height: 130.33, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 21.33, display: 'flex'}}>
-                        <div className="ClientsFeedback" style={{width: 746.67, color: '#282938', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '600', lineHeight: 3, wordWrap: 'break-word'}}>Clients Feedback</div>
-                        <div className="CustomerTestimonials" style={{width: 746.67, color: '#282938', fontSize: 64, fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word'}}>Customer testimonials</div>
-                    </div>
-                    <div className="Content" style={{alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 42.67, display: 'inline-flex'}}>
-                        <div className="Column" style={{flex: '1 1 0', padding: 42.67, borderRadius: 8, border: '1.33px #5F5FB0 solid', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 42.67, display: 'inline-flex'}}>
-                            <div className="Stars" style={{justifyContent: 'flex-start', alignItems: 'flex-start', gap: 5.33, display: 'inline-flex'}}>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                            </div>
-                            <div className="PlaceDuisCursusMiQuisViverra" style={{alignSelf: 'stretch', color: '#1C1E53', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '400', lineHeight: 32, wordWrap: 'break-word'}}>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra.</div>
-                            <div className="Avatar" style={{justifyContent: 'flex-start', alignItems: 'center', gap: 21.33, display: 'inline-flex'}}>
-                                <img className="AvatarImage" style={{width: 74.67, height: 74.67, borderRadius: 9999}} src="https://via.placeholder.com/75x75" alt='Placeholder'/>
-                                <div className="AvatarContent" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                                    <div className="DianneRussell" style={{color: '#282938', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '600', lineHeight: 32, wordWrap: 'break-word'}}>Dianne Russell</div>
-                                    <div className="Starbucks" style={{color: '#1C1E53', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '400', lineHeight: 32, wordWrap: 'break-word'}}>Starbucks</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="Column" style={{flex: '1 1 0', padding: 42.67, borderRadius: 8, overflow: 'hidden', border: '1.33px #5F5FB0 solid', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 42.67, display: 'inline-flex'}}>
-                            <div className="Stars" style={{justifyContent: 'flex-start', alignItems: 'flex-start', gap: 5.33, display: 'inline-flex'}}>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                            </div>
-                            <div className="PlaceDuisCursusMiQuisViverra" style={{alignSelf: 'stretch', color: '#1C1E53', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '400', lineHeight: 32, wordWrap: 'break-word'}}>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra.</div>
-                            <div className="Avatar" style={{justifyContent: 'flex-start', alignItems: 'center', gap: 21.33, display: 'inline-flex'}}>
-                                <img className="AvatarImage" style={{width: 74.67, height: 74.67, borderRadius: 9999}} src="https://via.placeholder.com/75x75" alt='Placeholder'/>
-                                <div className="AvatarContent" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}} alt='Placeholder'>
-                                    <div className="KristinWatson" style={{color: '#282938', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '600', lineHeight: 32, wordWrap: 'break-word'}}>Kristin Watson</div>
-                                    <div className="LouisVuitton" style={{color: '#1C1E53', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '400', lineHeight: 32, wordWrap: 'break-word'}}>Louis Vuitton</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="Column" style={{flex: '1 1 0', padding: 42.67, borderRadius: 8, overflow: 'hidden', border: '1.33px #5F5FB0 solid', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 42.67, display: 'inline-flex'}}>
-                            <div className="Stars" style={{justifyContent: 'flex-start', alignItems: 'flex-start', gap: 5.33, display: 'inline-flex'}}>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                                <div className="Vector" style={{width: 26.67, height: 25.19, background: '#5F5FB0'}}></div>
-                            </div>
-                            <div className="PlaceDuisCursusMiQuisViverra" style={{alignSelf: 'stretch', color: '#1C1E53', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '400', lineHeight: 32, wordWrap: 'break-word'}}>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra.</div>
-                            <div className="Avatar" style={{justifyContent: 'flex-start', alignItems: 'center', gap: 21.33, display: 'inline-flex'}}>
-                                <img className="AvatarImage" style={{width: 74.67, height: 74.67, borderRadius: 9999}} src="https://via.placeholder.com/75x75" alt='Placeholder'/>
-                                <div className="AvatarContent" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex'}}>
-                                    <div className="KathrynMurphy" style={{color: '#282938', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '600', lineHeight: 32, wordWrap: 'break-word'}}>Kathryn Murphy</div>
-                                    <div className="McdonaldS" style={{color: '#1C1E53', fontSize: 21.33, fontFamily: 'Roboto', fontWeight: '400', lineHeight: 32, wordWrap: 'break-word'}}>McDonald's</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
             </div>
         </div>
         )}

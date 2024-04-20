@@ -58,7 +58,7 @@ function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, ha
 
             </div>
 
-            <div className={desktopState === "Blog" ? "active-menu-mobile": "ListitemDesktopNa"} style={{ width: '100%', height: '100%',  padding: "8px 18px", background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
+            <div className={desktopState === "Deals" ? "active-menu-mobile": "ListitemDesktopNa"} style={{ width: '100%', height: '100%',  padding: "8px 18px", background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
               <div className="Label" style={{ width: "100%", textAlign: 'left', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word', cursor: "pointer" }} onClick={_handleBlogClick}>Deals</div>
 
             </div>
