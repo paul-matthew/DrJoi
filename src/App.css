@@ -1151,6 +1151,11 @@ button:hover {
 
 /* Largest devices such as desktops (1280px and up) */
 /* @media only screen and (min-width: 80em) {...} */
+@media(min-width:576px){
+  #NavlogoMobile{
+    display:none;
+  }
+}
 
 @media only screen and (max-width: 575px){
   #Navmenudesktop {
@@ -1161,7 +1166,7 @@ button:hover {
   }
   #NavlogoMobile{
     display: flex !important;
-    position:absolute;
+    position:fixed;
     z-index:20;
     margin:10px;
   }

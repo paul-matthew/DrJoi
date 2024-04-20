@@ -32,17 +32,17 @@ function AboutUsMobile() {
   return (
     
     <div className="AboutUs-mobile" style={{width: '100%', height: '100vh', right:'0', position: 'relative', background: 'white', maxWidth: "100%", display: "none"}}>
-        <div id='NavlogoMobile'><img src='./logo-new.png' alt='logo mobile'style={{height:'5vh',marginTop:'1.5vh'}}onClick={() => window.location.href = './'}/></div>
+        <div id='NavlogoMobile'><img src='/logo2.png' alt='logo mobile'style={{height:'5vh',marginTop:'1.5vh'}}onClick={() => window.location.href = './'}/></div>
         {desktopState === 'About1' && (
         <div>
-            <div className="Aboutus" style={{width: '100%', position: 'absolute', background: '#efe6dd', top: "10vh"}}>
+            <div className="Aboutus" style={{width: '100%', position: 'absolute', background: 'white', top: "15vh"}}>
                 <div className="Image" style={{width: '100%', height: 'auto', right: 0, top: 0, position: 'absolute', objectFit: "cover"}}>
-                    <img className="Samplebio21" style={{width: 'auto', height: '80vh', right: 0, top: '0vh', position: 'absolute'}} src="./biointro-tan.png" alt='Placeholder'/>
+                    <img className="Samplebio21" style={{width: 'auto', height: '80vh', right: 0, top: '0vh', position: 'absolute'}} src="/aboutme2c.png" alt='Placeholder'/>
                 </div>
                 <div className="Intro" style={{ position: "relative",width: '85vw', height: '100vh', left: "5vw", top: 20, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex'}}>
                     {/* <div className="E3StrategicSolutions" style={{alignSelf: 'stretch', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word'}}>E3 STRATEGIC SOLUTIONS</div> */}
                     <div className="Content" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex'}}>
-                        <div className='content-name' style={{width:'100%', fontSize: 'clamp(25px, 4vw, 64px)', fontFamily: 'Playfair Display', fontWeight: '700', wordWrap: 'break-word'}}>Hello, my name is Erica Opoku</div>
+                        <div className='content-name' style={{width:'100%', fontSize: 'clamp(25px, 4vw, 64px)', fontFamily: 'Playfair Display', fontWeight: '700', wordWrap: 'break-word'}}>Hello, my name is Dr. Joi</div>
                         <div className="Subheadline" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex'}}>
                             <div className="Text" style={{width: '100%',  fontSize: 'clamp(16px, 2vw, 24px)', marginBottom:'22vh',fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word',lineHeight: '1.5' }}>
                                 <div className='Experience'>

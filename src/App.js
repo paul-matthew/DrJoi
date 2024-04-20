@@ -7,7 +7,7 @@ import Wellness from './wellness'
 import Contact from './contact'
 import MobileMenu from './components/MobileMenu';
 import OverlaysMobile from './components/OverlaysMobile';
-import FadeInSection from './components/FadeIn';
+// import FadeInSection from './components/FadeIn';
 
 const desktopStateList = ["AboutUs", "Services", "Deals", "Wellness", "Contact"]
 
@@ -260,7 +260,7 @@ function App() {
             </div>
             <div className="Title2" style={{zIndex:1, color: 'white', fontSize: 'clamp(15px, 2vw, 20px)', fontFamily: 'PlayfairDisplay', lineHeight: 1.1, wordWrap: 'break-word', textAlign: 'end',maxWidth:'25vw' }}>Explore Curated Selections and Partnerships for Top-Quality Products</div>
             <div className="Button"style={{background:'#784F39'}}>
-              <div className="Label" style={{color:'white'}} onClick={() => handleBlogClick()}>Claim Deals</div>
+              <div className="Label" style={{color:'white', fontFamily:'PlayfairDisplay'}} onClick={() => handleBlogClick()}>Claim Deals</div>
             </div>
           </div>
         </div>
