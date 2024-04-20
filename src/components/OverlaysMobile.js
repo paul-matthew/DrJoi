@@ -145,15 +145,15 @@ const OverlaysMobile = ({setDesktopState, displayState, displayState2, desktopSt
       {desktopState === 'Homedesktop1' && (
         <div className='Homedesktop1' style={{left: 0, top: 0, position: 'absolute', width: "100%"}}>
           <div className="Image" style={{width: '100%', height: '95vh', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex'}}>
-              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home1e.png"alt="About me"/>
+              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home1f.png"alt="About me"/>
           </div>
             
           <div className="TextContent1" style={{border:'hidden red',height: '50vh', left: '3.5vw', top: '17vh', position: 'absolute', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'inline-flex', padding: "1rem", width: "80vw"}}>
               <div className="Title" style={{width: '50vw', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
                   <div className="Title" style={{zIndex:'1', color: '#784F39', fontSize: 'clamp(40px, 4vw, 54px)', fontFamily: 'Rochester', lineHeight: 1, wordWrap: 'break-word'}}>Exotic Relief by Dr. Joi</div>
               </div>
-              <div style={{maxWidth:'220px'}}>
-                <div className="Lead" style={{zIndex:'1', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', alignSelf: 'stretch', color: 'black', fontSize: 'clamp(20px, 2.5vw, 20px)', fontFamily: 'PlayfairDisplay', fontWeight: '400', lineHeight: 1.5, wordWrap: 'break-word'}}>Build The Life Your Brain Deserves</div>
+              <div style={{maxWidth:'160px'}}>
+                <div className="Lead" style={{zIndex:'1', textShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', alignSelf: 'stretch', color: 'black', fontSize: 'clamp(20px, 2.5vw, 20px)', fontFamily: 'PlayfairDisplay', fontWeight: '400', lineHeight: 1.5, wordWrap: 'break-word'}}>Build The Life Your Brain Deserves</div>
               </div>
               <div className="Button InitialAbout">
                   <div className="Label" style={{color:'white', fontFamily:'PlayfairDisplay'}} onClick={() => handleAboutClick()}>About me</div>
