@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 
 function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, handleWellnessClick, handleContactClick, desktopState}) {
   const [openMenuContent, setOpenMenuContent] = React.useState(false);
@@ -27,6 +28,20 @@ function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, ha
   const _handleContactClick = () => {
     handleContactClick()
   }
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest("#mobile-menu")) {
+        setOpenMenuContent(false);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <div

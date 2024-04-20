@@ -101,7 +101,7 @@ function Services() {
   
   return (
     <>
-        <div className="Services" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px',background: 'white' }}>
+    <div className="Services" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px',background: 'white'}}>
         <div id='NavlogoMobile'><img src='./logo2.png' alt='logo mobile'style={{height:'6vh',marginTop:'1vh', position:'fixed', left:10, top:10}}onClick={() => window.location.href = './'}/></div>
         <div className='Banner'><img src='./banner3.png' alt='banner'style={{zIndex:2,width:'100vw',maxHeight:'200px',marginTop:'3vh', left:0, top:0,objectFit:'cover'}}onClick={() => window.location.href = './'}/></div>
         {desktopState === 'Services1' && (
@@ -122,36 +122,36 @@ function Services() {
                 </FadeInSection>
                 <div className="BodyX" style={{maxWidth:'100%',flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 20, display: 'inline-flex', marginTop:'50px'}}>
                 {/* THIS IS FOR THE PRODUCTS JS */}
-                <FadeInSection>
-                <div id="products-container" class="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"></div> 
-                <div className="Frame2230" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    {services.map((service, index) => (
-                    <div className="Servicecard" key={index} style={{ position: 'relative', backgroundColor: 'white', border: 'black 2px solid', width: '250px', margin: '20px', padding: '10px' }}>
-                        <div className="CardTitle">
-                            <div className="TitleSer">{service.title}</div>
+                    <FadeInSection>
+                        <div id="products-container" class="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"></div> 
+                        <div className="Frame2230" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                            {services.map((service, index) => (
+                            <div className="Servicecard" key={index} style={{ position: 'relative', backgroundColor: 'white', border: 'black 2px solid', width: '250px', margin: '20px', padding: '10px' }}>
+                                <div className="CardTitle">
+                                    <div className="TitleSer">{service.title}</div>
+                                </div>
+                                <div className="CardImage" onClick={() => handleReadMoreClick(service)}>
+                                    <img className="cardpic" style={{ maxHeight: '200px', opacity: '80%' }} src={`./${service.image}`} alt={service.title} />
+                                </div>
+                                <div className="CardTextx" style={{ paddingLeft: '20px', paddingRight: '30px' }}>{service.description}</div>
+                            </div>
+                            ))}
                         </div>
-                        <div className="CardImage" onClick={() => handleReadMoreClick(service)}>
-                            <img className="cardpic" style={{ maxHeight: '200px', opacity: '80%' }} src={`./${service.image}`} alt={service.title} />
-                        </div>
-                        <div className="CardTextx" style={{ paddingLeft: '20px', paddingRight: '30px' }}>{service.description}</div>
-                    </div>
-                    ))}
-                </div>
-            </FadeInSection>
+                    </FadeInSection>
 
                     <FadeInSection>
                         <div className="MyExpertise" style={{ alignSelf: 'stretch', color: 'black', fontSize: 'clamp(30px, 4vw, 51px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word',marginTop:'30px' }}>Our Full Collection</div>
-                        <div className="Frame2230" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+                        <div className="Frame2230" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center',marginBottom:'100px' }}>
                             {services.map((service, index) => (
-                    <div className="Servicecard" key={index} style={{ position: 'relative', backgroundColor: 'white', border: 'black 2px solid', width: '250px', margin: '20px', padding: '10px' }}>
-                    <div className="CardTitle">
-                        <div className="TitleSer">{service.title}</div>
-                    </div>
-                    <div className="CardImage" onClick={() => handleReadMoreClick(service)}>
-                        <img className="cardpic" style={{ maxHeight: '200px', opacity: '80%' }} src={`./${service.image}`} alt={service.title} />
-                    </div>
-                    <div className="CardTextx" style={{ paddingLeft: '20px', paddingRight: '30px' }}>{service.description}</div>
-                </div>
+                                <div className="Servicecard" key={index} style={{ position: 'relative', backgroundColor: 'white', border: 'black 2px solid', width: '250px', margin: '20px', padding: '10px' }}>
+                                    <div className="CardTitle">
+                                        <div className="TitleSer">{service.title}</div>
+                                    </div>
+                                    <div className="CardImage" onClick={() => handleReadMoreClick(service)}>
+                                        <img className="cardpic" style={{ maxHeight: '200px', opacity: '80%' }} src={`./${service.image}`} alt={service.title} />
+                                    </div>
+                                    <div className="CardTextx" style={{ paddingLeft: '20px', paddingRight: '30px' }}>{service.description}</div>
+                                </div>
                             ))}
                         </div>
                     </FadeInSection>

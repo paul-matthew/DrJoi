@@ -1382,7 +1382,7 @@ button:hover {
 
 @media(max-width:400px){
 .BlogContainer{
-height:320% !important;
+height:305% !important;
 }
 }
 @media(min-width:401px) and (max-width:600px){

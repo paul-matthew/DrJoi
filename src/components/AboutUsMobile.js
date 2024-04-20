@@ -37,14 +37,14 @@ function AboutUsMobile() {
         <div>
             <div className="Aboutus" style={{width: '100%', position: 'absolute', background: 'white', top: "13vh"}}>
                 <div className="Image" style={{width: '100%', height: 'auto', right: 0, top: 0, position: 'absolute', objectFit: "cover"}}>
-                    <img className="Samplebio21" style={{width: 'auto', height: '70vh', right: 0, top: '14vh', position: 'absolute'}} src="/aboutme2c.png" alt='Placeholder'/>
+                    <img className="Samplebio21" style={{width: 'auto', height: '70vh', right: 0, top: '14vh', position: 'absolute',opacity:'100%'}} src="/aboutme2c.png" alt='Placeholder'/>
                 </div>
                 <div className="Intro" style={{ position: "relative",width: '85vw', height: '100vh', left: "5vw", top: 0, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex'}}>
                     {/* <div className="E3StrategicSolutions" style={{alignSelf: 'stretch', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word'}}>E3 STRATEGIC SOLUTIONS</div> */}
                     <div className="Content" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex'}}>
-                        <div className='content-name' style={{width:'100%', fontSize: 'clamp(45px, 4vw, 64px)', fontFamily: 'Playfair Display', fontWeight: '700', wordWrap: 'break-word'}}>Hello, my name is Dr. Joi</div>
-                        <div className="Subheadline" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex',marginTop:'40vh'}}>
-                            <div style={{color:'white',width: '100%',  fontSize: 'clamp(16px, 2vw, 24px)', marginBottom:'22vh',fontFamily: 'PlayfairDisplay', fontWeight: '400', wordWrap: 'break-word',lineHeight: '1.5', textShadow:'2px 2px 3px rgba(0, 0, 0, 0.9)' }}>
+                        <div className='content-name' style={{width:'100%', fontSize: 'clamp(40px, 4vw, 64px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word'}}>Hello, my name is Dr. Joi</div>
+                        <div className="Subheadline" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex',marginTop:'35vh'}}>
+                            <div style={{color:'white',width: '100%',  fontSize: 'clamp(26px, 2vw, 24px)', marginBottom:'22vh',fontFamily: 'PlayfairDisplay', fontWeight: '400', wordWrap: 'break-word',lineHeight: '1.2', textShadow:'2px 2px 3px rgba(0, 0, 0, 0.9)' }}>
                                 <div className='Experience'>
                                 I am passionate about empowering individuals to prioritize their mental health and well-being. 
                                 </div>
