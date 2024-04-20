@@ -42,7 +42,7 @@ function Contact() {
         {desktopState === 'Contact1' && (
             <div className="ContactX" style={{width: '100%', height: 'auto', top: "1vh", display: 'flex', justifyContent: 'center', alignItems: 'center', position: "absolute"}}>
                 <form className="ContactForm" style={{width: '70%',minHeight:'60vh',paddingRight:'50px', border:'solid gray',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}>
-                    <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700'}}>Contact Us</p>
+                    <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'PlaydairDisplay', fontWeight: '700'}}>Contact Us</p>
                     <div className="FormGroup">
                         <label htmlFor="name" style={{ display: smallScreen ? "none": "block"}}>Name</label>
                         <input type="text" id="name" name="name" placeholder={ smallScreen ? "Name": "Enter your name"} required />
@@ -55,8 +55,8 @@ function Contact() {
                         <label htmlFor="message" style={{ display: smallScreen ? "none": "block"}}>Message</label>
                         <textarea id="message" name="message" rows="5" placeholder={ smallScreen ? "Message": "Enter your message"} required style={{minHeight:'20vh'}}></textarea>
                     </div>
-                    <div className="FormGroup last-form-group" >
-                        <button className='Button' type="submit"><div className='Label'>Submit</div></button>
+                    <div className="FormGroup last-form-group" style={{display:'flex', justifyContent:'center'}}>
+                        <button className='Button' type="submit"><div className='Label' style={{fontFamily:'PlayfairDisplay'}}>Submit</div></button>
                     </div>
                 </form>
             </div>

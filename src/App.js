@@ -243,7 +243,7 @@ function App() {
             </div>
             <div className="Lead" style={{ maxWidth: '40vw', alignSelf: 'stretch', color: 'black', textShadow: '0px 4px 3px rgba(162, 158, 158, 0.9)',fontSize: 'clamp(30px, 2.5vw, 30px)', fontFamily: 'PlayfairDisplay', fontWeight: '400', lineHeight: 1.5, wordWrap: 'break-word' }}>Build The Life Your Brain Deserves</div>
             <div className="Button InitialAbout" style={{background:'#784F39'}}>
-              <div className="Label" style={{color:'white', fontFamily:'PlayDisplayFair'}} onClick={() => handleAboutClick()}>About Me</div>
+              <div className="Label" style={{color:'white', fontFamily:'PlayfairDisplay'}} onClick={() => handleAboutClick()}>About Me</div>
             </div>
           </div>
           {/* </FadeInSection> */}

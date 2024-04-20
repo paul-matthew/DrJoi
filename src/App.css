@@ -275,12 +275,13 @@ body,html {
   transition: transform ease-in-out 0.5s; 
   z-index: 4;
   padding: 8px 20px; /* Adjust padding for the button */
-  background: rgb(130, 117, 78);
+  background: #784F39;
   box-shadow: 4px 5px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px; /* Adjust border radius for a less oval shape */
   border: 2px black solid;
   display: inline-flex;
   align-items: center;
+  font-family:PlayfairDisplay;
 }
 
 .Label {
@@ -435,13 +436,19 @@ body,html {
   width: 100%;
   height: auto;
   border-top-left-radius: 20px;
-  object-fit: cover;
+  object-fit:scale-down;
 }
+.cardpic:hover {
+  transform:scale(1.1);
+  transition: transform 0.5s ease-in-out;
+  cursor: pointer;
+}
+
 
 .CardTextx {
   width: 100%;
   color: black;
-  font-family: Roboto;
+  font-family: PlayfairDisplay;
   font-weight: 400;
   box-sizing: border-box; /* Include padding in width calculation */
 }
@@ -457,9 +464,14 @@ body,html {
   padding: 10px 0;
 }
 
+.CardTitle {
+  display: flex; 
+  justify-content: center; 
+}
+
 .TitleSer {
   color:black;
-  font-family: "Bowlby One SC", sans-serif;
+  font-family: "PlayfairDisplay", sans-serif;
   margin: 10px; /* Remove default margin */
 }
 @media (max-width:575px){
@@ -645,12 +657,6 @@ button:hover {
 } */
 
 /*MODAL*/
-
-@media (min-width:576px){
-.modalImg{
-object-position: center -140px;
-}
-}
 
 .fade {
   -webkit-transition: opacity 0.15s linear;
