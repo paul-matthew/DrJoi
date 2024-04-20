@@ -13,9 +13,9 @@ function Services() {
     const [desktopState,setDesktopState] = useState('Services1');  
     const [showModal, setShowModal] = useState(false);
     const [selectedService, setSelectedService] = useState(null);
-      const handleContactClick = () => {
-        setDesktopState('Contact');
-      };
+    //   const handleContactClick = () => {
+    //     setDesktopState('Contact');
+    //   };
 
 
 

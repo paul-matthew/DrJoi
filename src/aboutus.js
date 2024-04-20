@@ -11,12 +11,12 @@ import ReactDOM from 'react-dom';
 
 function About() {
     const [desktopState] = useState('About1');
-    const scrollToMySkills = () => {
-        const mySkillsElement = document.querySelector('.MySkills');
-        if (mySkillsElement) {
-            mySkillsElement.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+    // const scrollToMySkills = () => {
+    //     const mySkillsElement = document.querySelector('.MySkills');
+    //     if (mySkillsElement) {
+    //         mySkillsElement.scrollIntoView({ behavior: 'smooth' });
+    //     }
+    // };
 
     // const handleAboutClick = () => {
     //     setDesktopState('AboutUs');

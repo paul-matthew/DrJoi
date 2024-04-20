@@ -9,12 +9,12 @@ import FadeInSection from './FadeIn';
 function AboutUsMobile() {
     const [desktopState] = useState('About1');  
     
-    const scrollToMySkills = () => {
-        const mySkillsElement = document.getElementById('my-skills-mobile');
-        if (mySkillsElement) {
-            mySkillsElement.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+    // const scrollToMySkills = () => {
+    //     const mySkillsElement = document.getElementById('my-skills-mobile');
+    //     if (mySkillsElement) {
+    //         mySkillsElement.scrollIntoView({ behavior: 'smooth' });
+    //     }
+    // };
 
     // const handleAboutClick = () => {
     //     setDesktopState('AboutUs');
