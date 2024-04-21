@@ -212,21 +212,21 @@ function App() {
 
       <MobileMenu handleContactClick={handleContactClick} handleWellnessClick={handleWellnessClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} desktopState={desktopState} />
 
-      <div className="Rectangle158" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Recwidth, height: '15vh', maxHeight: "10%", left: `${Overlay1.replace("vw", "")}%`, top: '73vh', position: 'absolute', background: 'rgba(120, 79, 57, 0.6)', transition: 'left 0.5s ease-in-out' }} />
-      <div className="Rectangle158" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Recwidth, height: '15vh', maxHeight: "10%", left: `${Overlay2.replace("vw", "")}%`, top: '73vh', position: 'absolute', background: 'rgba(120, 79, 57, 0.6)', transition: 'left 0.5s ease-in-out' }} />
+      <div className="Rectangle158" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Recwidth, height: '15vh', maxHeight: "10%", left: `${Overlay1.replace("vw", "")}%`, top: '73vh', position: 'absolute', background: 'rgba(120, 79, 57, 0.6)', transition: 'left 0.5s ease-in-out',border:'solid #784F39' }} />
+      <div className="Rectangle158" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Recwidth, height: '15vh', maxHeight: "10%", left: `${Overlay2.replace("vw", "")}%`, top: '73vh', position: 'absolute', background: 'rgba(120, 79, 57, 0.6)', transition: 'left 0.5s ease-in-out',border:'solid #784F39' }} />
       {/* MAIN */}
       <div className="Overlay1" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Mainwidth, height: '100vh', left: `${MainOverlay.replace("vw", "")}%`, top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.20)', transition: 'left 0.5s ease-in-out' }}></div>
 
       {/* Services */}
-      <div className="Overlay2" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: '25vw', height: '100vh', left: `${Overlay1.replace("vw", "")}%`, top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.0)', transition: 'left 0.5s ease-in-out' }} />
-      <div id='HoverOverlay2' className="HoverOverlay2" style={{ zIndex: displayState2, opacity: displayState2, width: '25vw', height: '100vh', left: `${Overlay1.replace("vw", "")}%`, top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.)', flexDirection: 'column', alignItems: 'center', gap: 8, display: desktopStateList.includes(desktopState) ? "none":'inline-flex', transition: 'left 0.5s ease-in-out' }}>
+      <div className="Overlay2" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: '25vw', height: '100vh', left: `${Overlay1.replace("vw", "")}%`, top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.0)', transition: 'left 0.5s ease-in-out'}} />
+      <div id='HoverOverlay2' className="HoverOverlay2" style={{ zIndex: displayState2, opacity: displayState2, width: '25vw', height: '100vh', left: `${Overlay1.replace("vw", "")}%`, top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.)', flexDirection: 'column', alignItems: 'center', gap: 8, display: desktopStateList.includes(desktopState) ? "none":'inline-flex', transition: 'left 0.5s ease-in-out', width: Recwidth  }}>
         <div className="ButtonServices" style={{ position: 'absolute', marginTop: 0, height: '15vh', top: '70vh', textAlign: 'center', color: 'white', fontSize: 'clamp(12px, 3vw, 30px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', zIndex: 1, letterSpacing: 3, wordWrap: 'break-word', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={() => handleButtonClick(desktopState)}>{Button1}</div>
       </div>
 
       {/* Blog */}
       <div className="Overlay3" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: '25vw', height: '100vh', left: `${Overlay2.replace("vw", "")}%`, top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.0)', transition: 'left 0.5s ease-in-out' }} />
-      <div id='HoverOverlay3' className="HoverOverlay3" style={{ zIndex: displayState2, opacity: displayState2, width: '25vw', height: '100vh', left: `${Overlay2.replace("vw", "")}%`, top: 0, position: 'absolute', hover: 'rgba(0, 0, 0, 0.20)', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', gap: 8, display: desktopStateList.includes(desktopState) ? "none":'inline-flex', transition: 'left 0.5s ease-in-out' }}>
-        <div className="ButtonBlog" style={{ zIndex: 1, color: 'white', position: 'absolute', height: '15vh', top: '70vh', textAlign: 'center', fontSize: 'clamp(12px, 3vw, 30px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', letterSpacing: 3, wordWrap: 'break-word', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={() => handleButton2Click(desktopState)}>{Button2}</div>
+      <div id='HoverOverlay3' className="HoverOverlay3" style={{ zIndex: displayState2, opacity: displayState2, width: '25vw', height: '100vh', left: `${Overlay2.replace("vw", "")}%`, top: 0, position: 'absolute', hover: 'rgba(0, 0, 0, 0.20)', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', gap: 8, display: desktopStateList.includes(desktopState) ? "none":'inline-flex', transition: 'left 0.5s ease-in-out', width: Recwidth }}>
+        <div className="ButtonBlog" style={{zIndex: 1, color: 'white', position: 'absolute', height: '15vh', top: '70vh', textAlign: 'center', fontSize: 'clamp(12px, 3vw, 30px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', letterSpacing: 3, wordWrap: 'break-word', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={() => handleButton2Click(desktopState)}>{Button2}</div>
       </div>
 
       {isHomeDesktop && <OverlaysMobile displayState={desktopStateList.includes(desktopState) ? "none":displayState} displayState2={displayState2} desktopState={desktopState} handleWellnessClick={handleWellnessClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} setDesktopState={setDesktopState}/>}
@@ -252,7 +252,7 @@ function App() {
       {desktopState === 'Homedesktop2' && (
         <div id='Homedesktop2' className='Homedesktop2' style={{ left: 0, top: 0, position: 'absolute', width: "100%", height:'100vh', border: '1px black solid', display: desktopStateList.includes(desktopState) ? "none":"static",overflow:'hidden'}}>
           <div className="Image" style={{ width: '100vw', height: '97vh', left: '-1px', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex' }}>
-            <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="./home3c.png" alt="Boardroom" />
+            <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="./home3h.jpg" alt="Boardroom" />
           </div>
           <div className="TextContent1" style={{ height: '87vh', paddingLeft: '0vw', right: '10px', top: '10vh', position: 'absolute', flexDirection: 'column', justifyContent: 'center', alignItems: 'end', gap: 24, display: 'inline-flex'}}>
             <div className="Title" style={{ width: '30vw', height: 28, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'flex' }}>
@@ -268,7 +268,7 @@ function App() {
       {desktopState === 'Homedesktop3' && (
         <div id='Homedesktop3' className="Homedesktop3" style={{ left: 0, top: 0, position: 'absolute', width: "100%", height:'100vh',border: '1px black solid', display: desktopStateList.includes(desktopState) ? "none":"static",overflow:'hidden'}}>
           <div className="Image" style={{ width: '100vw', height: '97vh', left: '-1px', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex' }}>
-            <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="./home2d.png" alt="Planning" />
+            <img className="AboutMem2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="./home2w.jpg" alt="Planning" />
           </div>
           <div className="TextContent1" style={{ height: '87vh', paddingLeft: '0vw', left: '35vw', position: 'absolute', flexDirection: 'column', top: '10vh', justifyContent: 'center', alignItems: 'center', gap: 24, display: 'inline-flex' }}>
             <div className="Title2" style={{ zIndex:'1',width: '30vw', height: 28, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'flex' }}>

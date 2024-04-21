@@ -164,7 +164,7 @@ const OverlaysMobile = ({setDesktopState, displayState, displayState2, desktopSt
       {desktopState === 'Homedesktop2' && (
         <div className='Homedesktop2' style={{left: 0, top: 0, position: 'absolute', border: '1px black solid'}}>
           <div className="Image" style={{width: '100vw', height: '97vh', left: '-1px', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex'}}>
-              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home2b-mob.png" alt="Boardroom" />
+              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home2c-mob.png" alt="Boardroom" />
           </div>
           {/* <div className="Rectangle158" style={{width: '50vw', height: 68, left: '0vw', top: '70vh', position: 'absolute', background: 'rgba(217, 217, 217, 0.30)'}} /> */}
           {/* <div className="Overlay2" style={{width: '25vw', height: '100vh', left: '0vw', top: 1, position: 'absolute', background: 'rgba(0, 0, 0, 0.20)'}} />
@@ -191,7 +191,7 @@ const OverlaysMobile = ({setDesktopState, displayState, displayState2, desktopSt
       {desktopState === 'Homedesktop3' && (
         <div className="Homedesktop3" style={{left: 0, top: 0, position: 'absolute', border: '1px black solid'}}>
           <div className="Image" style={{width: '100vw', height: '97vh', left: '-1px', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex'}}>
-              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home3c-mob.png" alt="Planning" />
+              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home3d-mob.png" alt="Planning" />
           </div>          
           <div className="TextContent1 text-content3-mobile" style={{height: '50vh', width: "60vw", paddingLeft:'0vw',left: isStateServices ?'1000vw': "20vw", transition: "all 1s ease !important", transitionDelay: "1s", position: 'absolute', flexDirection: 'column',justifyContent: 'end', alignItems: 'center', gap: 24, display: 'inline-flex', top:'28vh'}}>
               <div className="Title" style={{width: '100%', height: 28, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'flex'}}>
