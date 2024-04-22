@@ -11,12 +11,14 @@ import ReactDOM from 'react-dom';
 
 function About() {
     const [desktopState] = useState('About1');
-    // const scrollToMySkills = () => {
-    //     const mySkillsElement = document.querySelector('.MySkills');
-    //     if (mySkillsElement) {
-    //         mySkillsElement.scrollIntoView({ behavior: 'smooth' });
-    //     }
-    // };
+    const scrollToMySkills = () => {
+        const mySkillsElement = document.getElementById('my-skills1');
+        if (mySkillsElement) {
+            const yOffset = -70; // Adjust this value as needed
+            const y = mySkillsElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    };
 
     // const handleAboutClick = () => {
     //     setDesktopState('AboutUs');
@@ -40,18 +42,29 @@ function About() {
                             <div className="Image" style={{ width: '100%', height: '100%', right: 0, bottom: 0, position: 'absolute' }}>
                                 <img className="aboutmepic" style={{ width: 'auto', maxWidth:'65vw',maxHeight:'80vh',height: 'auto', right: 0, top: '5vh', position: 'absolute' }} src="./aboutme2c.png" alt='Placeholder' />
                             </div>
-                            <div className="Intro" style={{ width: '100%', height: '100%', top: 24, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex', padding: "0px 3vw" }}>
-                                <div className="E3StrategicSolutions" style={{ alignSelf: 'stretch', color: 'black', fontSize: 'clamp(16px, 3vw, 3vw)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word', marginTop:'20px' }}>Exotic Relief by Dr. Joi</div>
+                            <div className="Intro" style={{ width: '100%', height: '100%', top: 24, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex', padding: "0px 3vw",marginTop:'60px' }}>
+                                {/* <div className="E3StrategicSolutions" style={{ alignSelf: 'stretch', color: 'black', fontSize: 'clamp(16px, 3vw, 3vw)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word', marginTop:'20px' }}>Exotic Relief by Dr. Joi</div> */}
                                 <div className="Content" style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex' }}>
-                                    <div className='' style={{ width: '30vw', color: '#25282B', fontSize: 'clamp(16px, 4vw, 4vw)', fontFamily: 'Playfair Display', fontWeight: '700', wordWrap: 'break-word' }}>Hello, my name is Joi</div>
+                                    <div className='' style={{ width: '50vw', color: '#25282B', fontSize: 'clamp(16px, 4vw, 4vw)', fontFamily: 'Playfair Display', fontWeight: '700', wordWrap: 'break-word' }}>Hello, my name is Dr. Joi</div>
                                     <div className="Subheadline" style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex',marginTop:'0px'}}>
                                         <div className="Text biointro" style={{ textShadow: '2px 2px 4px rgba(255, 255, 255, 0.5)',color: 'black', fontSize: 'clamp(13px, 2vw, 1.5vw)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word', lineHeight: '1.5' }}>I am passionate about empowering individuals to prioritize their mental health and well-being. As a mental health advocate, I believe in fostering a supportive and inclusive environment where everyone feels heard and valued. Through my journey and experiences, I am committed to breaking stigmas surrounding mental health and promoting self-care practices for a happier and healthier life.
                                         I am currently pursuing a Psy.D. in Clinical Psychology with an emphasis in Neuroscience, as well as an M.S. in Clinical Psychopharmacology.
                                         </div>
                                     </div>
+                                    <div className="Button" style={{marginTop:'20px'}}>
+                                        <div className="Label"onClick={scrollToMySkills}>READ MORE</div>
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px',marginLeft:'10px' }}>
+                                        <a href="https://www.instagram.com/theebonijoi/" target="_blank" rel="noopener noreferrer">
+                                            <i className="fab fa-instagram" style={{ fontSize: '20px', color: 'black', marginRight: '10px' }}></i>
+                                        </a>
+                                        <a href="https://www.tiktok.com/@TheEboniJoi" target="_blank" rel="noopener noreferrer">
+                                            <i className="fab fa-tiktok" style={{ fontSize: '20px', color: 'black' }}></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <div style={{ backgroundColor:'white' }}>
+                            <div id="my-skills1" style={{ backgroundColor:'white' }}>
                                 <div className="MySkill" style={{ height: "auto", flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: 56.67, display: 'inline-flex', padding: "0px 3vw" }}>
                                     <div className="SectionTitle" style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', gap: '3vh', display: 'flex' }}>
                                         <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
