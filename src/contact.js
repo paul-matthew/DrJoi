@@ -55,8 +55,16 @@ function Contact() {
                         <label htmlFor="message" style={{ display: smallScreen ? "none": "block"}}>Message</label>
                         <textarea id="message" name="message" rows="5" placeholder={ smallScreen ? "Message": "Enter your message"} required style={{minHeight:'20vh'}}></textarea>
                     </div>
-                    <div className="FormGroup last-form-group" style={{display:'flex', justifyContent:'center'}}>
-                        <button className='Button' type="submit"><div className='Label' style={{fontFamily:'PlayfairDisplay'}}>Submit</div></button>
+                    <div className="FormGroup last-form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <button className='Button' type="submit"><div className='Label' style={{ fontFamily: 'PlayfairDisplay' }}>Submit</div></button>
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                            <a href="https://www.instagram.com/theebonijoi/" target="_blank" rel="noopener noreferrer">
+                                <i className="fab fa-instagram" style={{ fontSize: '20px', color: 'black', marginRight: '10px' }}></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@TheEboniJoi" target="_blank" rel="noopener noreferrer">
+                                <i className="fab fa-tiktok" style={{ fontSize: '20px', color: 'black' }}></i>
+                            </a>
+                        </div>
                     </div>
                 </form>
             </div>

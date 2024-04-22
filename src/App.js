@@ -311,14 +311,22 @@ function App() {
               <div className="Label" style={{ color: 'white', fontSize: 'clamp(11px, 1vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word' }}onClick={() => handleContactClick()}>Contact</div>
             </div>
             <div className="MenuItemDefault" style={{ alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
-              <div className="Label" style={{ color: 'white', fontSize: 'clamp(11px, 1vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word', textAlign: "center" }}><a href='https://www.pmdaybreak.com' style={{ color: 'white' }}>Web Design: PM Daybreak Designs</a></div>
+              <div className="Label" style={{ color: 'white', fontSize: 'clamp(11px, 1vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word', textAlign: "center" }}><a href='https://www.pmdaybreak.com' style={{ color: 'white' }}>Web Design: PM Daybreak</a></div>
             </div>
           </div>
         </div>
-        <div className="Footercompany" style={{ width: 358, height: 43, left: 0, top: 0, position: 'absolute', justifyContent: 'flex-start', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
+        <div className="Footercompany" style={{ width: 458, height: 43, left: 0, top: 0, position: 'absolute', justifyContent: 'flex-start', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
           <div className="HeadingName" style={{ paddingTop: 9, paddingBottom: 10, paddingRight: 119, justifyContent: 'flex-start', alignItems: 'center', display: 'flex' }}>
             <div className="MenuItemDefault" style={{ alignSelf: 'stretch', paddingLeft: 20, paddingRight: 20, justifyContent: 'flex-start', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
               <div className="Label" style={{ color: 'white', fontSize: 'clamp(11px, 1vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word' }}>Exotic Relief by Dr Joi</div>
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0px' }}>
+                <a href="https://www.instagram.com/theebonijoi/" target="_blank" rel="noopener noreferrer">
+                    <i className="fab fa-instagram" style={{ fontSize: '15px', color: 'white', marginRight: '10px' }}></i>
+                </a>
+                <a href="https://www.tiktok.com/@TheEboniJoi" target="_blank" rel="noopener noreferrer">
+                    <i className="fab fa-tiktok" style={{ fontSize: '15px', color: 'white' }}></i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
