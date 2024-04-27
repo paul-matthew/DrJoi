@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 const printifyApiKey = process.env.PRINTIFY_API_KEY
 const printifyShopID = process.env.PRINTIFY_SHOPID
-const PORT = process.env.PORT || 5000; 
+const PORT = process.env.PORT || 3000; 
 const mapAPIkey = process.env.MAP_API
 const paypalkey = process.env.PAYPAL_CLIENT_ID_SB
 const paypal = require('paypal-rest-sdk');
