@@ -6,7 +6,7 @@ import './App.css';
 // import Contact from './contact'
 import AboutUsMobile from './components/AboutUsMobile.js';
 import FadeInSection from './components/FadeIn.js';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 
 
 function About() {
@@ -204,5 +204,5 @@ function About() {
     );
 }
 
-ReactDOM.render(<About />, document.getElementById('root'));
+// ReactDOM.render(<About />, document.getElementById('root'));
 export default About;

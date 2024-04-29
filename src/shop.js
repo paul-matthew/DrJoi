@@ -4,7 +4,7 @@ import './style.css';
 import Modal from './modal.js'
 // import ServicesMobile from './components/ServicesMobile';
 import FadeInSection from './components/FadeIn.js';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import './products.js';
 
 
@@ -119,7 +119,7 @@ function Shop() {
             </FadeInSection>
             <div>
                 <FadeInSection>
-                    <div id="products-container" class="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000" style={{marginBottom:'50px'}}></div>   
+                    <div id="products-container" className="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000" style={{marginBottom:'50px'}}></div>   
                 </FadeInSection>
                     {/* <div className="Frame2230" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
                         {services.map((service, index) => (
@@ -160,5 +160,5 @@ function Shop() {
   );
 }
 
-ReactDOM.render(<Shop />, document.getElementById('root'));
+// ReactDOM.render(<Shop />, document.getElementById('root'));
 export default Shop;

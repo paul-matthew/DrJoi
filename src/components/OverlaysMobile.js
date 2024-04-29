@@ -123,7 +123,7 @@ const OverlaysMobile = ({setDesktopState, displayState, displayState2, desktopSt
 
     return (  
         <div className='overlays-container-mobile' style={{ display: "none"}}>
-          <div id='NavlogoMobile'><img src='./logo2.png' alt='logo mobile'style={{height:'6vh',marginTop:'1vh'}}onClick={() => handleHomeClick()}/></div>
+          <div id='NavlogoMobile'><img src='./logo2.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => handleHomeClick()}/></div>
         <div className="header-holder-mobile" style={{ height: "10vh", width: "100vw"}} />
         <div className="Rectangle158-mobile" style={{ display: displayState, zIndex: displayState2, width: '100vw', height: '55vh', left: 0, position: 'absolute', background: 'rgba(217, 217, 217, 0.0)', transition: 'top 0.5s ease-in-out' }} />      
         <div className="Rectangle158-mobile" style={{display:displayState,zIndex:displayState2,width: '100vw', height: '15vh', top: `${Overlay2.replace("vw", "")}%` ,left: 0, position: 'absolute', background: 'rgba(217, 217, 217, 0.0)',transition: 'top 0.5s ease-in-out' }} />

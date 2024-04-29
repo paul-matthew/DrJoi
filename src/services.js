@@ -6,7 +6,7 @@ import Contact from './contact.js'
 import Modal from './modal.js'
 // import ServicesMobile from './components/ServicesMobile';
 import FadeInSection from './components/FadeIn.js';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 
 
 function Services() {
@@ -190,5 +190,5 @@ function Services() {
   );
 }
 
-ReactDOM.render(<Services />, document.getElementById('root'));
+// ReactDOM.render(<Services />, document.getElementById('root'));
 export default Services;

@@ -3667,7 +3667,7 @@ textarea.form-control-lg {
 
 .card {
   position: relative;
-  max-height: 450px;
+  min-height: 250px;
   display: flex;
   flex-wrap: wrap; /* Allow cards to wrap to the next line */
   justify-content: space-between; /* Distribute cards evenly */
@@ -3676,7 +3676,7 @@ textarea.form-control-lg {
   border: 1px solid rgba(0, 0, 0, 0.125);
   margin:10px;
   border-radius: 0.25rem;
-  max-width:300px;
+  /* max-width:300px; */
 }
 
 .card > hr {
