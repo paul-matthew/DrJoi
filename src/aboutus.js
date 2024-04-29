@@ -51,7 +51,7 @@ function About() {
                                         I am currently pursuing a Psy.D. in Clinical Psychology with an emphasis in Neuroscience, as well as an M.S. in Clinical Psychopharmacology.
                                         </div>
                                     </div>
-                                    <div className="Button" style={{marginTop:'20px'}}>
+                                    <div className="Button" style={{marginTop:'20px', zIndex:1}}>
                                         <div className="Label"onClick={scrollToMySkills}>READ MORE</div>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px',marginLeft:'10px' }}>

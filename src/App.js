@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { displayProducts } from './products.js';
 import './App.css';
 import './style.css';
@@ -12,7 +12,7 @@ import OverlaysMobile from './components/OverlaysMobile.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const desktopStateList = ["AboutUs", "Shop", "Deals", "Wellness", "Contact"]
+const desktopStateList = ["About", "Shop", "Deals", "Wellness", "Contact"]
 
 function App() {
   const [desktopState, setDesktopState] = useState('Homedesktop1');
@@ -142,19 +142,15 @@ function App() {
       }, 0); // Wait for 0.5s transition duration
     }
   };
-const changeUrl = (newUrl) => {
-  if (newUrl === '/about' || newUrl === '/shop' || newUrl === '/deals' || newUrl === '/wellness' || newUrl === '/contact') {
-    window.history.pushState({}, '', '/');
-  } else {
-    window.history.pushState({}, '', newUrl);
-  }
-};
 
+  const changeUrl = (newUrl) => {
+    window.history.pushState({}, '', newUrl);
+  };
 
   const handleAboutClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
-    setDesktopState('AboutUs');
+    setDesktopState('About');
     changeUrl('/About');
   };
   const handleServicesClick = () => {
@@ -198,6 +194,19 @@ const changeUrl = (newUrl) => {
   }
   changeUrl('/');
   };
+
+  useEffect(() => {
+    const currentUrl = window.location.pathname.toLowerCase();
+    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/contact'];
+    
+    if (allowedUrls.includes(currentUrl)) {
+      const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
+      setDesktopState(stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)); // Capitalize the first letter
+      displayProducts();
+    } else {
+      setDesktopState('Homedesktop1'); // Set default state if URL doesn't match
+    }
+  }, []);
 
   return (
     <div className="Homepage" style={{ width: '100%', height: '100vh', position: 'relative', background: 'white', border: 'hidden red'}}>
@@ -300,7 +309,7 @@ const changeUrl = (newUrl) => {
         </div>
       )}
 
-      {desktopState === 'AboutUs' && (
+      {desktopState === 'About' && (
         <About />
       )}
       {desktopState === 'Shop' && (
@@ -352,6 +361,16 @@ const changeUrl = (newUrl) => {
     </div>
   );
 }
+
+// document.addEventListener("DOMContentLoaded", function() {
+//   console.log("Page refresh, back to homepage");
+//   const currentUrl = window.location.pathname.toLowerCase();
+//   const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/contact'];
+  
+//   if (allowedUrls.includes(currentUrl)) {
+//     window.history.pushState({}, '', '/');
+//   }
+// });
 
 export default App;
 
