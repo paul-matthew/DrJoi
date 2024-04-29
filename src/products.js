@@ -1,5 +1,5 @@
-/* eslint-disable no-undef */
 import './style.css';
+/* eslint-disable no-undef */
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -512,6 +512,7 @@ function handleOrderButtonClick() {
   document.body.appendChild(orderModal);
 
   // Initialize the modal using Bootstrap's modal
+  /* eslint-disable no-undef */
   const modal = new bootstrap.Modal(orderModal);
 
   orderModal.addEventListener('hidden.bs.modal', function () {
@@ -547,7 +548,7 @@ async function submitOrder() {
 
   // Iterate over each cart item
   cartItems.forEach(cartItem => {
-    const sku = cartItem.getAttribute('data-sku');
+    // const sku = cartItem.getAttribute('data-sku');
     const quantityElement = cartItem.querySelector('.quantity');
     const productId = cartItem.getAttribute('data-product-id'); 
     const variantId = cartItem.getAttribute('data-variant-id'); 
@@ -623,20 +624,20 @@ async function submitOrder() {
 }
 }
 
-function formatPhoneNumber() {
-  var phoneInput = document.getElementById('phoneInput');
+// function formatPhoneNumber() {
+//   var phoneInput = document.getElementById('phoneInput');
   
-  // Remove any non-numeric characters
-  var phoneNumber = phoneInput.value.replace(/\D/g, '');
+//   // Remove any non-numeric characters
+//   var phoneNumber = phoneInput.value.replace(/\D/g, '');
 
-  // Format the phone number as needed
-  if (phoneNumber.length >= 10) {
-    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-  }
+//   // Format the phone number as needed
+//   if (phoneNumber.length >= 10) {
+//     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+//   }
 
-  // Update the input value
-  phoneInput.value = phoneNumber;
-}
+//   // Update the input value
+//   phoneInput.value = phoneNumber;
+// }
 
 
 function constructModalBody() {
@@ -769,13 +770,15 @@ function constructModalBody() {
               </div>
             </div>
           `;
-  
-      
-       
+          default:
+            break; 
   }
 }
 
 orderModal.addEventListener('click', function (event) {
+  // if (!event.target || !event.target.id) {
+  //   return; // Exit early if the event target doesn't have an id
+  // }
   const targetId = event.target.id;
   switch (targetId) {
     case 'OrderDetailsButton':
@@ -803,6 +806,8 @@ orderModal.addEventListener('click', function (event) {
       orderModal.innerHTML = constructModalBody();
       saveInputValues();
       break;
+      default:
+        break;
   }
 });
 
@@ -848,21 +853,21 @@ function saveInputValues() {
     // Function to validate zip code or Canadian postal code format
     function validateZipCodeFormat(zipValue) {
 
-      if (countryInput.value === 'TT') {
-        // Trinidad and Tobago doesn't require a postal code
-        var zipPattern = /^(\d{6}(-\d{4})?)$/;
-        return zipPattern.test(zipValue);
-      }
-      else if (countryInput.value === 'US') {
+      // if (countryInput.value === 'TT') {
+      //   // Trinidad and Tobago doesn't require a postal code
+      //   var zipPattern = /^(\d{6}(-\d{4})?)$/;
+      //   return zipPattern.test(zipValue);
+      // }
+      if (countryInput.value === 'US') {
         // Allow for postal code with or without a space
         var zipPattern = /^(\d{5}(-\d{4})?)$/;
         return zipPattern.test(zipValue);
       }
-      else if (countryInput.value === 'CA') {
-      // Allow for postal code with or without a space
-      var zipPattern = /^([A-Za-z]\d[A-Za-z] \d[A-Za-z]\d|[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d)$/;
-      return zipPattern.test(zipValue);
-    }
+    //   else if (countryInput.value === 'CA') {
+    //   // Allow for postal code with or without a space
+    //   var zipPattern = /^([A-Za-z]\d[A-Za-z] \d[A-Za-z]\d|[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d)$/;
+    //   return zipPattern.test(zipValue);
+    // }
     }
   
     var validationMessage = document.getElementById('formincomplete');
@@ -959,113 +964,113 @@ function initializePayPal(amount) {
   }
 
   // Initialize the PayPal SDK here
-  // paypal.Buttons({
-  //   createOrder: function (_, actions) {
-  //     saveInputValues();
-  //     console.log('Amount to be sent to PayPal:', total);
+  paypal.Buttons({
+    createOrder: function (_, actions) {
+      saveInputValues();
+      console.log('Amount to be sent to PayPal:', total);
   
-  //     return actions.order.create({
-  //       purchase_units: [
-  //         {
-  //           amount: {
-  //             value: total,
-  //           },
-  //           // shipping: {
-  //           //   name: {
-  //           //     full_name: inputValues.firstName + ' ' + inputValues.lastName,
-  //           //     phone: inputValues.phone,
-  //           //     email: inputValues.email,
-  //           //   },
-  //           //   address: {
-  //           //     country_code: 'US',
-  //           //     address_line_1: inputValues.address,
-  //           //     address_line_2: '',
-  //           //     admin_area_2: inputValues.city,
-  //           //     admin_area_1: inputValues.region,
-  //           //     postal_code: 'xxxxx',
-  //           //   },
+      return actions.order.create({
+        purchase_units: [
+          {
+            amount: {
+              value: total,
+            },
+            // shipping: {
+            //   name: {
+            //     full_name: inputValues.firstName + ' ' + inputValues.lastName,
+            //     phone: inputValues.phone,
+            //     email: inputValues.email,
+            //   },
+            //   address: {
+            //     country_code: 'US',
+            //     address_line_1: inputValues.address,
+            //     address_line_2: '',
+            //     admin_area_2: inputValues.city,
+            //     admin_area_1: inputValues.region,
+            //     postal_code: 'xxxxx',
+            //   },
 
-  //           // },
-  //         },
-  //       ],
-  //       application_context: {
-  //         shipping_preference: 'NO_SHIPPING',
-  //       },
-  //     });
-  //   },
-  //   onApprove: function (data, actions) {
-  //     return actions.order.capture().then(function (details) {
-  //       console.log('Transaction details:', details);
-  //       // console.log('Transaction Customer details', details.payer);
-  //       // console.log('Transaction value:', details.purchase_units[0].amount.value);
+            // },
+          },
+        ],
+        application_context: {
+          shipping_preference: 'NO_SHIPPING',
+        },
+      });
+    },
+    onApprove: function (data, actions) {
+      return actions.order.capture().then(function (details) {
+        console.log('Transaction details:', details);
+        // console.log('Transaction Customer details', details.payer);
+        // console.log('Transaction value:', details.purchase_units[0].amount.value);
     
-  //       // Send payment details to the server for further validation
-  //       fetch(fetchURLpayvalidate, {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           order: data,
-  //           paymentDetails: details,
-  //           total:total,
-  //         }),
-  //       })
-  //         .then(response => response.json())
-  //         .then(responseData => {
-  //           // console.log("Response Data is:",responseData);
-  //           if (responseData.success) {
-  //             // If the server validates the payment, proceed with your logic
-  //             submitOrder();
-  //           } else {
-  //             console.error('Error processing payment on the server:', responseData.error);
-  //             currentStage = 5;      
-  //             orderModal.innerHTML = constructModalBody();
+        // Send payment details to the server for further validation
+        fetch(fetchURLpayvalidate, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            order: data,
+            paymentDetails: details,
+            total:total,
+          }),
+        })
+          .then(response => response.json())
+          .then(responseData => {
+            // console.log("Response Data is:",responseData);
+            if (responseData.success) {
+              // If the server validates the payment, proceed with your logic
+              submitOrder();
+            } else {
+              console.error('Error processing payment on the server:', responseData.error);
+              currentStage = 5;      
+              orderModal.innerHTML = constructModalBody();
       
-  //             // Display an error message to the user
-  //             alert('Error processing payment: ' + responseData.error);
-  //           }
-  //         })
-  //         .catch(error => {
-  //           console.error('Error communicating with the server:', error);
-  //           // Display an error message to the user
-  //           alert('Error communicating with the server');
-  //         });
-  //     });
-  //   },
+              // Display an error message to the user
+              alert('Error processing payment: ' + responseData.error);
+            }
+          })
+          .catch(error => {
+            console.error('Error communicating with the server:', error);
+            // Display an error message to the user
+            alert('Error communicating with the server');
+          });
+      });
+    },
     
-  // }).render('#paypal-button-container');
+  }).render('#paypal-button-container');
   
   
 }
 
 //Shipping - FUNCTION CURRENTLY NOT BEING USED
 
-function calculateShippingCost() {
-  // Fetch the order details, such as selectedSKUs and any other relevant information
+// function calculateShippingCost() {
+//   // Fetch the order details, such as selectedSKUs and any other relevant information
 
 
-  // Make a POST request to Printify's shipping cost endpoint
-  fetch(fetchURL)
-  .then(response => response.json())
-  .then(data => {
-      // Handle the response from Printify
-      console.log('Printify shipping cost response:', data);
+//   // Make a POST request to Printify's shipping cost endpoint
+//   fetch(fetchURL)
+//   .then(response => response.json())
+//   .then(data => {
+//       // Handle the response from Printify
+//       console.log('Printify shipping cost response:', data);
 
-      // You can extract and use the shipping cost options from the response
-      const standardShippingCost = data.standard || 0;
-      const expressShippingCost = data.express || 0;
-      const priorityShippingCost = data.priority || 0;
-      const printifyExpressShippingCost = data.printify_express || 0;
+//       // You can extract and use the shipping cost options from the response
+//       const standardShippingCost = data.standard || 0;
+//       const expressShippingCost = data.express || 0;
+//       const priorityShippingCost = data.priority || 0;
+//       const printifyExpressShippingCost = data.printify_express || 0;
 
-      // You can use these shipping cost values as needed in your application
-  })
-  .catch(error => {
-      // Handle any errors that occur during the fetch
-      console.error('Error calculating shipping cost with Printify:', error);
-      // You can also show an error message to the user
-  });
-}
+//       // You can use these shipping cost values as needed in your application
+//   })
+//   .catch(error => {
+//       // Handle any errors that occur during the fetch
+//       console.error('Error calculating shipping cost with Printify:', error);
+//       // You can also show an error message to the user
+//   });
+// }
 
 
 //CLEAR --------------------
@@ -1103,165 +1108,165 @@ function handleClearButtonClick() {
 
 //ADDRESS OPTIONS AUTOMATION VIA API ----------------------------------------------------------------------
 
-function populateCountryOptions() {
-	const countrySelect = document.getElementById('countryInput');
-	  // countries = [
-		// { value: '', text: '' },
-		// { value: 'CA', text: 'Canada' },
-		// { value: 'TT', text: 'Trinidad and Tobago' },
-		// { value: 'US', text: 'United States' },
-		// // Add more countries as needed
-	  // ];
+// function populateCountryOptions() {
+// 	const countrySelect = document.getElementById('countryInput');
+// 	  countries = [
+// 		{ value: '', text: '' },
+// 		{ value: 'CA', text: 'Canada' },
+// 		{ value: 'TT', text: 'Trinidad and Tobago' },
+// 		{ value: 'US', text: 'United States' },
+// 		// Add more countries as needed
+// 	  ];
 	
 
   
-	// Clear existing options
-	countrySelect.innerHTML = '';
+// 	// Clear existing options
+// 	countrySelect.innerHTML = '';
   
-	// Add new options based on the countries array
-	// countries.forEach(country => {
-	//   const option = document.createElement('option');
-	//   option.value = country.value;
-	//   option.text = country.text;
+// 	// Add new options based on the countries array
+// 	countries.forEach(country => {
+// 	  const option = document.createElement('option');
+// 	  option.value = country.value;
+// 	  option.text = country.text;
   
-	//   if (inputValues.country === country.value) {
-	// 	option.selected = true;
-	//   }
+// 	  if (inputValues.country === country.value) {
+// 		option.selected = true;
+// 	  }
   
-	//   countrySelect.appendChild(option);
-	// });
-	saveInputValues();
-}
+// 	  countrySelect.appendChild(option);
+// 	});
+// 	saveInputValues();
+// }
   
-function filterUSRegions(regions) {
-// Filter out regions with specific ISO codes
-return regions.filter(region => !region.iso2.startsWith('UM-') && !region.iso2.startsWith('VI') && !region.iso2.startsWith('GU'));
-}
+// function filterUSRegions(regions) {
+// // Filter out regions with specific ISO codes
+// return regions.filter(region => !region.iso2.startsWith('UM-') && !region.iso2.startsWith('VI') && !region.iso2.startsWith('GU'));
+// }
   
-async function region() {
-	// Get the selected country
-	const selectedCountry = document.getElementById('countryInput').value;
-	saveInputValues();
-	console.log('Country saved:', selectedCountry);
+// async function region() {
+// 	// Get the selected country
+// 	const selectedCountry = document.getElementById('countryInput').value;
+// 	saveInputValues();
+// 	console.log('Country saved:', selectedCountry);
   
-	// Get the region select element
-	const regionSelect = document.getElementById('regionInput');
+// 	// Get the region select element
+// 	const regionSelect = document.getElementById('regionInput');
   
-	// Clear existing options
-	regionSelect.innerHTML = '';
+// 	// Clear existing options
+// 	regionSelect.innerHTML = '';
   
-	// Set the fetch URL based on the environment
-	let fetchURLmap = '';
-	if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-	  fetchURLmap = 'http://localhost:5000/maps/regions';
-	} else {
-	  fetchURLmap = 'https://tm-server-4a2a80557ba4.herokuapp.com/maps/regions';
-	}
+// 	// Set the fetch URL based on the environment
+// 	let fetchURLmap = '';
+// 	if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+// 	  fetchURLmap = 'http://localhost:5000/maps/regions';
+// 	} else {
+// 	  fetchURLmap = 'https://tm-server-4a2a80557ba4.herokuapp.com/maps/regions';
+// 	}
   
-	const apiUrl = `${fetchURLmap}?country=${selectedCountry}`;
+// 	const apiUrl = `${fetchURLmap}?country=${selectedCountry}`;
   
-	try {
-	  const response = await fetch(apiUrl);
-	  const result = await response.json();
+// 	try {
+// 	  const response = await fetch(apiUrl);
+// 	  const result = await response.json();
   
-	  switch (selectedCountry) {
-		case 'CA':
-		  // Sort the Canadian regions alphabetically by name
-		  const sortedCARegions = result.sort((a, b) => a.name.localeCompare(b.name));
-		  addOptions(regionSelect, sortedCARegions.map(state => ({ value: state.iso2, text: state.name })));
-		  fetchCities();
-		  break;
-		case 'TT':
-		  // Assuming 'TT' API response contains ISO and name properties
-		  // Sort the Trinidad and Tobago regions alphabetically by name
-		  const sortedTTRegions = result.sort((a, b) => a.name.localeCompare(b.name));
-		  addOptions(regionSelect, sortedTTRegions.map(state => ({ value: state.iso2, text: state.name })));
-		  fetchCities();
-		  break;
-		case 'US':
-		  // For 'US', filter out regions with ISO codes starting with "UM-"
-		  const filteredUSRegions = filterUSRegions(result);
-		  // Sort the American regions alphabetically by name
-		  const sortedUSRegions = filteredUSRegions.sort((a, b) => a.name.localeCompare(b.name));
-		  addOptions(regionSelect, sortedUSRegions.map(state => ({ value: state.iso2, text: state.name })));
-		  fetchCities();
-		  break;
-		// Add more cases for other countries as needed
-		default:
-		  // Default case when no country is selected
-		  break;
-	  }
+// 	  switch (selectedCountry) {
+// 		case 'CA':
+// 		  // Sort the Canadian regions alphabetically by name
+// 		  const sortedCARegions = result.sort((a, b) => a.name.localeCompare(b.name));
+// 		  addOptions(regionSelect, sortedCARegions.map(state => ({ value: state.iso2, text: state.name })));
+// 		  fetchCities();
+// 		  break;
+// 		case 'TT':
+// 		  // Assuming 'TT' API response contains ISO and name properties
+// 		  // Sort the Trinidad and Tobago regions alphabetically by name
+// 		  const sortedTTRegions = result.sort((a, b) => a.name.localeCompare(b.name));
+// 		  addOptions(regionSelect, sortedTTRegions.map(state => ({ value: state.iso2, text: state.name })));
+// 		  fetchCities();
+// 		  break;
+// 		case 'US':
+// 		  // For 'US', filter out regions with ISO codes starting with "UM-"
+// 		  const filteredUSRegions = filterUSRegions(result);
+// 		  // Sort the American regions alphabetically by name
+// 		  const sortedUSRegions = filteredUSRegions.sort((a, b) => a.name.localeCompare(b.name));
+// 		  addOptions(regionSelect, sortedUSRegions.map(state => ({ value: state.iso2, text: state.name })));
+// 		  fetchCities();
+// 		  break;
+// 		// Add more cases for other countries as needed
+// 		default:
+// 		  // Default case when no country is selected
+// 		  break;
+// 	  }
   
-	} catch (error) {
-	  console.log('Error fetching states:', error);
-	}
-  }
+// 	} catch (error) {
+// 	  console.log('Error fetching states:', error);
+// 	}
+//   }
   
-async function fetchCities() {
-// Get the selected country and region
-const selectedCountry = document.getElementById('countryInput').value;
-const selectedRegion = document.getElementById('regionInput').value;
-saveInputValues();
-console.log('Region saved:', selectedRegion);
+// async function fetchCities() {
+// // Get the selected country and region
+// const selectedCountry = document.getElementById('countryInput').value;
+// const selectedRegion = document.getElementById('regionInput').value;
+// saveInputValues();
+// console.log('Region saved:', selectedRegion);
 
-// Set up headers for the API request
-const headers = new Headers();
-headers.append("Content-Type", "application/json");
+// // Set up headers for the API request
+// const headers = new Headers();
+// headers.append("Content-Type", "application/json");
 
-let fetchURLmap = '';
-if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-	fetchURLmap = 'http://localhost:5000/maps/cities';
-} else {
-	fetchURLmap = 'https://tm-server-4a2a80557ba4.herokuapp.com/maps/cities';
-}
+// let fetchURLmap = '';
+// if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+// 	fetchURLmap = 'http://localhost:5000/maps/cities';
+// } else {
+// 	fetchURLmap = 'https://tm-server-4a2a80557ba4.herokuapp.com/maps/cities';
+// }
 
-const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
+// const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
 
-try {
-	// Fetch cities data from the server
-	const response = await fetch(apiUrl);
-	const result = await response.json();
+// try {
+// 	// Fetch cities data from the server
+// 	const response = await fetch(apiUrl);
+// 	const result = await response.json();
 
-	// Log the result to the console (you can modify this part as needed)
-	// console.log(result);
+// 	// Log the result to the console (you can modify this part as needed)
+// 	// console.log(result);
 
-	// Update city dropdown options
-	updateCityDropdown(result);
-} catch (error) {
-	console.log('Error fetching cities:', error);
-}
-}
+// 	// Update city dropdown options
+// 	updateCityDropdown(result);
+// } catch (error) {
+// 	console.log('Error fetching cities:', error);
+// }
+// }
 
-function updateCityDropdown(cityData) {
-	const citySelect = document.getElementById('cityInput');
+// function updateCityDropdown(cityData) {
+// 	const citySelect = document.getElementById('cityInput');
   
-	// Clear existing options
-	citySelect.innerHTML = '';
+// 	// Clear existing options
+// 	citySelect.innerHTML = '';
   
-	// Add new options based on the fetched city data
-	cityData.forEach(city => {
-	  const option = document.createElement('option');
-	  option.value = city.name; // Use the 'name' property for the value
-	  option.text = city.name; // Display the 'name' property in the dropdown
-	  citySelect.appendChild(option);
-	});
-	saveInputValues();console.log('City saved:',citySelect.value)
-}
+// 	// Add new options based on the fetched city data
+// 	cityData.forEach(city => {
+// 	  const option = document.createElement('option');
+// 	  option.value = city.name; // Use the 'name' property for the value
+// 	  option.text = city.name; // Display the 'name' property in the dropdown
+// 	  citySelect.appendChild(option);
+// 	});
+// 	saveInputValues();console.log('City saved:',citySelect.value)
+// }
   
-function addOptions(regionSelect, optionsArray, selectedValue) {
-// Add options to the select element
-optionsArray.forEach(optionText => {
-	const option = document.createElement('option');
-	option.value = optionText.value;
-	option.text = optionText.text;
+// function addOptions(regionSelect, optionsArray, selectedValue) {
+// // Add options to the select element
+// optionsArray.forEach(optionText => {
+// 	const option = document.createElement('option');
+// 	option.value = optionText.value;
+// 	option.text = optionText.text;
 
-	// Add a data attribute to store the classification
-	option.setAttribute('data-classification', 'region');
+// 	// Add a data attribute to store the classification
+// 	option.setAttribute('data-classification', 'region');
 
-	if (selectedValue === optionText) {
-	option.selected = true;
-	}
-	regionSelect.add(option);
-});
-}
+// 	if (selectedValue === optionText) {
+// 	option.selected = true;
+// 	}
+// 	regionSelect.add(option);
+// });
+// }
 }
