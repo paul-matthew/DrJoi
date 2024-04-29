@@ -142,9 +142,14 @@ function App() {
       }, 0); // Wait for 0.5s transition duration
     }
   };
-  const changeUrl = (newUrl) => {
+const changeUrl = (newUrl) => {
+  if (newUrl === '/about' || newUrl === '/shop' || newUrl === '/deals' || newUrl === '/wellness' || newUrl === '/contact') {
+    window.history.pushState({}, '', '/');
+  } else {
     window.history.pushState({}, '', newUrl);
-  };
+  }
+};
+
 
   const handleAboutClick = () => {
     setDisplayState('none');
