@@ -20,18 +20,64 @@ const Wellness = () => {
                                         <div className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(15px, 4vw, 25px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', wordWrap: 'break-word' }}>“<i>This is the content that I personally use to nurture my spiritual well-being and enhance my daily journey towards inner peace and fulfillment. Dive in and explore these carefully curated resources designed to uplift your spirit and elevate your consciousness.</i>” - Dr. Joi</div>
                                     </div>
                                     <FadeInSection>
-                                    <div className="Row" style={{ flexWrap: "wrap", justifyContent: "center",marginBottom:'160px' }}>
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/pIwzVer7ZDQ?si=-N_UpIM6I3VpDMt_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{border:'solid black',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}></iframe>
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/xdKglDO6Pd8?si=qOkoPeiJBjLplayD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{border:'solid black',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}></iframe>
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/UX5zqQuLMOw?si=Ma220d-we4cEbOjQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{border:'solid black',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}></iframe>
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/3fi7DGQXgeU?si=o9qsEnW4DVzmZ9Zi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{border:'solid black',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}></iframe>
+                                    <div className="Row">
+                                        <div className="Video">
+                                            <iframe
+                                            width="560"
+                                            height="315"
+                                            src="https://www.youtube.com/embed/pIwzVer7ZDQ?si=-N_UpIM6I3VpDMt_"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen
+                                            style={{ border: "solid black", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                                            ></iframe>
+                                        </div>
+                                        <div className="Video">
+                                            <iframe
+                                            width="560"
+                                            height="315"
+                                            src="https://www.youtube.com/embed/xdKglDO6Pd8?si=qOkoPeiJBjLplayD"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen
+                                            style={{ border: "solid black", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                                            ></iframe>
+                                        </div>
+                                        <div className="Video">
+                                            <iframe
+                                            width="560"
+                                            height="315"
+                                            src="https://www.youtube.com/embed/UX5zqQuLMOw?si=Ma220d-we4cEbOjQ"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen
+                                            style={{ border: "solid black", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                                            ></iframe>
+                                        </div>
+                                        <div className="Video">
+                                            <iframe
+                                            width="560"
+                                            height="315"
+                                            src="https://www.youtube.com/embed/3fi7DGQXgeU?si=o9qsEnW4DVzmZ9Zi"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen
+                                            style={{ border: "solid black", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                                            ></iframe>
+                                        </div>
                                     </div>
                                     </FadeInSection>
                                 </div>
                             </div>
                 </FadeInSection>
-
-
             </div>
         </div>
     );

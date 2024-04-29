@@ -315,13 +315,25 @@ body,html {
 }
 
 .Row {
-  align-self: stretch;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-start;
-  gap: 42.67px;
-  display: inline-flex;
-  max-width: 90vw;
+  gap: 20px; /* Adjust the gap as needed */
+  width:90vw;
+  margin-bottom:40px;
 }
+
+.Video {
+  width: calc(50% - 20px); /* Adjust the width and gap to fit two videos per row */
+  margin-bottom: 20px; /* Adjust the margin as needed */
+}
+
+@media screen and (max-width: 768px) {
+  .Video {
+    width: calc(100% - 20px); /* Adjust the width and gap for mobile */
+  }
+}
+
 
 .ContentX {
   align-self: "stretch";
