@@ -202,7 +202,7 @@ function App() {
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
       setDesktopState(stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)); // Capitalize the first letter
-      displayProducts();
+      // displayProducts();
     } else {
       setDesktopState('Homedesktop1'); // Set default state if URL doesn't match
     }

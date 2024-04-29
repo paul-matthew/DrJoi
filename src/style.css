@@ -3658,7 +3658,7 @@ textarea.form-control-lg {
   width:25% !important; /*THIS CONTROLS THE NUMBER OF CARDS on DESKTOP - 4 CARDS*/
 }
 
-@media (max-width:600px){
+@media (max-width:1000px){
   .card-container{
     max-height:50%;
     width:50% !important; /*THIS CONTROLS THE NUMBER OF CARDS on MOBILE - 2 CARDS*/
@@ -3668,6 +3668,11 @@ textarea.form-control-lg {
 @media(max-width:700px){
   .card{
     min-height: 250px !important;
+  }
+}
+@media(min-width:1200px){
+  .card{
+    min-height: 450px !important;
   }
 }
 
@@ -3708,9 +3713,13 @@ textarea.form-control-lg {
 }
 
 .card-body {
-  width: calc(50% - 10px); /* Set width to 50% minus margin */
+  width: calc(100% - 10px); /* Set width to 50% minus margin */
   margin-right: 10px; /* Add some margin between cards */
 }
+
+/* .card-price{
+  font-weight:bold !important;
+} */
 
 /* Media query for mobile devices */
 @media (max-width: 767px) {
@@ -10805,7 +10814,8 @@ transform: scale(1.2);
 
 .card-title2{
   font-family: ROB;
-  font-size: medium !important;
+  font-size: large !important;
+  font-weight: bold;
 }
 
 .modal-title{

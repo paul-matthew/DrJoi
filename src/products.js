@@ -47,12 +47,12 @@ fetch(fetchURL)
               <div class="card-body">
                 <div>
                   <div class="service-info">
-                    <h5 class="card-title2" style='font-size:25px'>${product.title}</h5>
+                    <h5 class="card-title2">${product.title}</h5>
                   </div>
-                    <h5 style='font-size:12px;'>
+                    <dic class='card-price'>
                       $${product.variants.filter(variant => variant.is_enabled).reduce(
                       (maxPrice, variant) => (variant.price > maxPrice ? variant.price : maxPrice), 0) / 100}
-                    USD</h5>
+                    USD</div>
                   </div>
               </div>
             </div>
