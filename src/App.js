@@ -11,7 +11,6 @@ import MobileMenu from './components/MobileMenu.js';
 import OverlaysMobile from './components/OverlaysMobile.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const desktopStateList = ["About", "Shop", "Deals", "Wellness", "Contact"]
 
@@ -325,16 +324,6 @@ function App() {
       {desktopState === 'Contact' && (
         <Contact />
       )}
-
-<Router>
-      <Routes>
-        <Route path="/about" component={About} />
-        <Route path="/shop" element={Shop} />
-        <Route path="/deals" component={Deals} />
-        <Route path="/wellness" component={Wellness} />
-        <Route path="/contact" component={Contact} />
-      </Routes>
-    </Router>
 
       <div className="Footerdesktop" style={{ zIndex: 4, width: '100%', height: 43, left: 0, bottom: '0vh', position: 'fixed', background: '#0E0E0E' }}>
         <div className="Footerprivacy" style={{ height: 43, marginRight: 20, right: '0vw', top: 0, position: 'absolute', justifyContent: 'flex-start', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
