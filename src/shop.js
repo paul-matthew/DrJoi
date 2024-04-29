@@ -9,7 +9,7 @@ import './products.js';
 
 
 function Shop() {
-    const [desktopState] = useState('Services1');  
+    // const [desktopState] = useState('Services1');  
     const [showModal, setShowModal] = useState(false);
     const [selectedService, setSelectedService] = useState(null);
     //   const handleContactClick = () => {
@@ -18,79 +18,79 @@ function Shop() {
 
 
 
-      const services = [
-        { 
-            title: "Product#1", 
-            description: <p><strong>Price:</strong> $XX.XX</p>,            
-            image:'./empress-tshirt.png',
-            description2: (
-                <div>
-                    <p>[Product info Placeholder.  Popup to be further developed.]</p>
-                    {/* <p><strong>Key Features:</strong></p>
-                    <ul>
-                        <li>State Analysis: Thorough assessment of your organization's operational, financial, and strategic performance.</li>
-                        <li>SWOT Analysis: Identification of strengths, weaknesses, opportunities, and threats impacting your business.</li>
-                        <li>Strategic Recommendations: Data-driven recommendations and actionable insights to optimize business processes and enhance performance.</li>
-                    </ul> */}
-                </div>
-            )
-        },
-        { 
-            title: "Product#2", 
-            description: <p><strong>Price:</strong> $XX.XX</p>, 
-            image:"./empress-tshirt.png",
-            description2: (
-                <div>
-                    <p>[Product info Placeholder]</p>
-                    {/* <p><strong>Key Features:</strong></p>
-                    <ul>
-                        <li>Operational Audits: Evaluation of your organization's day-to-day operations and processes.</li>
-                        <li>Financial Audits: Review of financial statements, budgets, and financial controls.</li>
-                        <li>Compliance Audits: Assessment of compliance with industry regulations and standards.</li>
-                    </ul> */}
-                </div>
-            )
-        },
-        { 
-            title: "Product#3", 
-            description: <p><strong>Price:</strong> $XX.XX</p>, 
-            image:"./empress-tshirt.png",
-            description2: (
-                <div>
-                    <p>[Product info Placeholder]</p>
-                    {/* <p><strong>Key Features:</strong></p>
-                    <ul>
-                        <li>Performance Measurement: Evaluation of program performance against predefined objectives and benchmarks.</li>
-                        <li>Outcome Assessment: Analysis of program outcomes and impact on target beneficiaries or stakeholders.</li>
-                        <li>Recommendation Development: Identification of strategies and recommendations for program improvement and optimization.</li>
-                    </ul> */}
-                </div>
-            )
-        },
-        { 
-            title: "Product#4", 
-            description: <p><strong>Price:</strong> $XX.XX</p>, 
-            image:"./empress-tshirt.png",
-            description2: (
-                <div>
-                    <p>[Product info Placeholder]</p>
-                    {/* <p><strong>Key Components:</strong></p>
-                    <ul>
-                        <li>Vision and Mission: Defining the organization's purpose, values, and long-term aspirations.</li>
-                        <li>Strategic Goals: Identifying high-level strategic objectives and priorities to guide decision-making.</li>
-                        <li>Action Plans: Developing detailed action plans with specific initiatives, timelines, and responsible parties.</li>
-                    </ul> */}
-                </div>
-            )
-        },
-    ];
+    //   const services = [
+    //     { 
+    //         title: "Product#1", 
+    //         description: <p><strong>Price:</strong> $XX.XX</p>,            
+    //         image:'./empress-tshirt.png',
+    //         description2: (
+    //             <div>
+    //                 <p>[Product info Placeholder.  Popup to be further developed.]</p>
+    //                 {/* <p><strong>Key Features:</strong></p>
+    //                 <ul>
+    //                     <li>State Analysis: Thorough assessment of your organization's operational, financial, and strategic performance.</li>
+    //                     <li>SWOT Analysis: Identification of strengths, weaknesses, opportunities, and threats impacting your business.</li>
+    //                     <li>Strategic Recommendations: Data-driven recommendations and actionable insights to optimize business processes and enhance performance.</li>
+    //                 </ul> */}
+    //             </div>
+    //         )
+    //     },
+    //     { 
+    //         title: "Product#2", 
+    //         description: <p><strong>Price:</strong> $XX.XX</p>, 
+    //         image:"./empress-tshirt.png",
+    //         description2: (
+    //             <div>
+    //                 <p>[Product info Placeholder]</p>
+    //                 {/* <p><strong>Key Features:</strong></p>
+    //                 <ul>
+    //                     <li>Operational Audits: Evaluation of your organization's day-to-day operations and processes.</li>
+    //                     <li>Financial Audits: Review of financial statements, budgets, and financial controls.</li>
+    //                     <li>Compliance Audits: Assessment of compliance with industry regulations and standards.</li>
+    //                 </ul> */}
+    //             </div>
+    //         )
+    //     },
+    //     { 
+    //         title: "Product#3", 
+    //         description: <p><strong>Price:</strong> $XX.XX</p>, 
+    //         image:"./empress-tshirt.png",
+    //         description2: (
+    //             <div>
+    //                 <p>[Product info Placeholder]</p>
+    //                 {/* <p><strong>Key Features:</strong></p>
+    //                 <ul>
+    //                     <li>Performance Measurement: Evaluation of program performance against predefined objectives and benchmarks.</li>
+    //                     <li>Outcome Assessment: Analysis of program outcomes and impact on target beneficiaries or stakeholders.</li>
+    //                     <li>Recommendation Development: Identification of strategies and recommendations for program improvement and optimization.</li>
+    //                 </ul> */}
+    //             </div>
+    //         )
+    //     },
+    //     { 
+    //         title: "Product#4", 
+    //         description: <p><strong>Price:</strong> $XX.XX</p>, 
+    //         image:"./empress-tshirt.png",
+    //         description2: (
+    //             <div>
+    //                 <p>[Product info Placeholder]</p>
+    //                 {/* <p><strong>Key Components:</strong></p>
+    //                 <ul>
+    //                     <li>Vision and Mission: Defining the organization's purpose, values, and long-term aspirations.</li>
+    //                     <li>Strategic Goals: Identifying high-level strategic objectives and priorities to guide decision-making.</li>
+    //                     <li>Action Plans: Developing detailed action plans with specific initiatives, timelines, and responsible parties.</li>
+    //                 </ul> */}
+    //             </div>
+    //         )
+    //     },
+    // ];
     
 
-    const handleReadMoreClick = (service) => {
-        setSelectedService(service);
-        setShowModal(true);
-        document.body.classList.add('modal-open');
-    };
+    // const handleReadMoreClick = (service) => {
+    //     setSelectedService(service);
+    //     setShowModal(true);
+    //     document.body.classList.add('modal-open');
+    // };
 
     const handleCloseModal = () => {
         setShowModal(false);
