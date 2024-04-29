@@ -28,7 +28,7 @@ let fetchURL = '';
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     fetchURL = 'http://localhost:5000/products';
 } else {
-    fetchURL = 'https://tm-server-4a2a80557ba4.herokuapp.com/products';
+    fetchURL = 'https://drjoiserver-106ea7a60e39.herokuapp.com/products';
 }
 if (window.location.pathname.includes('Shop')) {
   console.log("WORKS");
@@ -594,7 +594,7 @@ async function submitOrder() {
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       fetchURLorder = 'http://localhost:5000/orders';
   } else {
-      fetchURLorder = 'https://tm-server-4a2a80557ba4.herokuapp.com/orders';
+      fetchURLorder = 'https://drjoiserver-106ea7a60e39.herokuapp.com/orders';
   }
 
   if (window.location.pathname.includes('cart.html')) {
@@ -960,7 +960,7 @@ function initializePayPal(amount) {
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     fetchURLpayvalidate = 'http://localhost:5000/validate';
   } else {
-    fetchURLpayvalidate = 'https://tm-server-4a2a80557ba4.herokuapp.com/validate';
+    fetchURLpayvalidate = 'https://drjoiserver-106ea7a60e39.herokuapp.com/validate';
   }
 
   // Initialize the PayPal SDK here
@@ -1160,7 +1160,7 @@ function handleClearButtonClick() {
 // 	if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
 // 	  fetchURLmap = 'http://localhost:5000/maps/regions';
 // 	} else {
-// 	  fetchURLmap = 'https://tm-server-4a2a80557ba4.herokuapp.com/maps/regions';
+// 	  fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/regions';
 // 	}
   
 // 	const apiUrl = `${fetchURLmap}?country=${selectedCountry}`;
@@ -1217,7 +1217,7 @@ function handleClearButtonClick() {
 // if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
 // 	fetchURLmap = 'http://localhost:5000/maps/cities';
 // } else {
-// 	fetchURLmap = 'https://tm-server-4a2a80557ba4.herokuapp.com/maps/cities';
+// 	fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/cities';
 // }
 
 // const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
