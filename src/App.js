@@ -197,7 +197,7 @@ function App() {
 
   useEffect(() => {
     const currentUrl = window.location.pathname.toLowerCase();
-    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/contact'];
+    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/contact','./about', './shop', './deals', './wellness', './contact'];
     
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
