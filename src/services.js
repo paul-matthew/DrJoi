@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
-import App from './App'
-import Blog from './deals'
-import Contact from './contact'
-import Modal from './modal'
+import App from './App.js'
+import Blog from './deals.js'
+import Contact from './contact.js'
+import Modal from './modal.js'
 // import ServicesMobile from './components/ServicesMobile';
-import FadeInSection from './components/FadeIn';
+import FadeInSection from './components/FadeIn.js';
 import ReactDOM from 'react-dom';
 
 
@@ -123,7 +123,7 @@ function Services() {
                 <div className="BodyX" style={{maxWidth:'100%',flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 20, display: 'inline-flex', marginTop:'50px'}}>
                 {/* THIS IS FOR THE PRODUCTS JS */}
                     <FadeInSection>
-                        <div id="products-container" class="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"></div> 
+                        <div id="products-container" className="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"></div> 
                         <div className="Frame2230" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
                             {services.map((service, index) => (
                             <div className="Servicecard" key={index} style={{ position: 'relative', backgroundColor: 'white', border: 'black 2px solid', width: '250px', margin: '20px', padding: '10px' }}>

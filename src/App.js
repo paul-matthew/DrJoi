@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+import { displayProducts } from './products.js';
 import './App.css';
-import About from './aboutus'
-import Services from './services'
-import Deals from './deals'
-import Wellness from './wellness'
-import Contact from './contact'
-import MobileMenu from './components/MobileMenu';
-import OverlaysMobile from './components/OverlaysMobile';
-// import FadeInSection from './components/FadeIn';
+import './style.css';
+import About from './aboutus.js'
+import Shop from './shop.js'
+import Deals from './deals.js'
+import Wellness from './wellness.js'
+import Contact from './contact.js'
+import MobileMenu from './components/MobileMenu.js';
+import OverlaysMobile from './components/OverlaysMobile.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const desktopStateList = ["AboutUs", "Services", "Deals", "Wellness", "Contact"]
+const desktopStateList = ["AboutUs", "Shop", "Deals", "Wellness", "Contact"]
 
 function App() {
   const [desktopState, setDesktopState] = useState('Homedesktop1');
@@ -139,31 +142,40 @@ function App() {
       }, 0); // Wait for 0.5s transition duration
     }
   };
+  const changeUrl = (newUrl) => {
+    window.history.pushState({}, '', newUrl);
+  };
 
   const handleAboutClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('AboutUs');
+    changeUrl('/About');
   };
   const handleServicesClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
-    setDesktopState('Services');
+    setDesktopState('Shop');
+    changeUrl('/Shop');
+    displayProducts();
   };
   const handleBlogClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Deals');
+    changeUrl('/Deals');
   };
   const handleWellnessClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Wellness');
+    changeUrl('/Wellness');
   };
   const handleContactClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Contact');
+    changeUrl('/Contact');
   };
   const handleHomeClick = () => {
     if (desktopState !== 'Homedesktop1') {
@@ -179,6 +191,7 @@ function App() {
       setwidthRec('25vw');
 
   }
+  changeUrl('/');
   };
 
   return (
@@ -217,7 +230,7 @@ function App() {
       {/* MAIN */}
       <div className="Overlay1" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Mainwidth, height: '100vh', left: `${MainOverlay.replace("vw", "")}%`, top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.20)', transition: 'left 0.5s ease-in-out' }}></div>
 
-      {/* Services */}
+      {/* Shop */}
       <div className="Overlay2" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: '25vw', height: '100vh', left: `${Overlay1.replace("vw", "")}%`, top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.0)', transition: 'left 0.5s ease-in-out'}} />
       <div id='HoverOverlay2' className="HoverOverlay2" style={{ zIndex: displayState2, opacity: displayState2, height: '100vh', left: `${Overlay1.replace("vw", "")}%`, top: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.)', flexDirection: 'column', alignItems: 'center', gap: 8, display: desktopStateList.includes(desktopState) ? "none":'inline-flex', transition: 'left 0.5s ease-in-out', width: Recwidth  }}>
         <div className="ButtonServices" style={{ position: 'absolute', marginTop: 0, height: '15vh', top: '70vh', textAlign: 'center', color: 'white', fontSize: 'clamp(12px, 3vw, 30px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', zIndex: 1, letterSpacing: 3, wordWrap: 'break-word', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={() => handleButtonClick(desktopState)}>{Button1}</div>
@@ -285,8 +298,8 @@ function App() {
       {desktopState === 'AboutUs' && (
         <About />
       )}
-      {desktopState === 'Services' && (
-        <Services />
+      {desktopState === 'Shop' && (
+        <Shop />
       )}
       {desktopState === 'Deals' && (
         <Deals />

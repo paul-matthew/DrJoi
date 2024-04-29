@@ -1,5 +1,5 @@
 import './App.css';
-import FadeInSection from './components/FadeIn';
+import FadeInSection from './components/FadeIn.js';
 
 
 import React from 'react';
@@ -8,7 +8,7 @@ const Wellness = () => {
     return (
         <div className="BlogContainer" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center',padding: '20px',background: 'white' }}>
             <div id='NavlogoMobile'><img src='./logo2.png' alt='logo mobile'style={{height:'6vh',marginTop:'1vh', position:'fixed', left:10, top:10}}onClick={() => window.location.href = './'}/></div>
-            <div className='Banner'><img src='./banner3.png' alt='banner'style={{zIndex:2,width:'100vw',maxHeight:'200px',marginTop:'3vh', objectFit:'cover'}}onClick={() => window.location.href = './'}/></div>
+            <div className='Banner'><img src='./banner3.png' alt='banner'style={{zIndex:2,width:'100vw',maxHeight:'200px',marginTop:'3vh', objectFit:'cover'}}/></div>
             <div className="PostsWrapper" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px',marginTop: '30px' }}>
                 <FadeInSection>
                 <div style={{ backgroundColor:'white' }}>

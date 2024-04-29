@@ -4,8 +4,8 @@ import './App.css';
 // import Services from './services'
 // import Blog from './blog'
 // import Contact from './contact'
-import AboutUsMobile from './components/AboutUsMobile';
-import FadeInSection from './components/FadeIn';
+import AboutUsMobile from './components/AboutUsMobile.js';
+import FadeInSection from './components/FadeIn.js';
 import ReactDOM from 'react-dom';
 
 

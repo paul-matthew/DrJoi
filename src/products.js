@@ -1,3 +1,8 @@
+import './style.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+export const displayProducts = () => {
 //PRINTIFY API------------------------------------------------------
 
 //General -------------
@@ -24,16 +29,16 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
 } else {
     fetchURL = 'https://tm-server-4a2a80557ba4.herokuapp.com/products';
 }
-if (window.location.pathname.includes('shop.html')) {
+if (window.location.pathname.includes('Shop')) {
+  console.log("WORKS");
 fetch(fetchURL)
   .then(response => response.json())
   .then(data => {
     const productsContainer = document.getElementById('products-container');
-
     if (data && data.data) {
       data.data.forEach((product, index) => {
         const productCard = document.createElement('div');
-        productCard.classList.add('col-lg-3', 'col-md-6', 'col-sm-6', 'p-2', 'card-container');
+        productCard.classList.add('card-container');
         productCard.innerHTML = `
           <a data-bs-toggle="modal" href="#productitem${index + 1}">
             <div class="card">
@@ -295,11 +300,11 @@ fetch(fetchURL)
         });
         
     });
-} else {
-    console.log("Products data is missing or undefined.");
-}
-})
-.catch(error => console.error(error));
+  } else {
+      console.log("Products data is missing or undefined.");
+  }
+  })
+  .catch(error => console.error(error));
 }
 
 //SHOPPING CART------------
@@ -953,82 +958,82 @@ function initializePayPal(amount) {
   }
 
   // Initialize the PayPal SDK here
-  paypal.Buttons({
-    createOrder: function (_, actions) {
-      saveInputValues();
-      console.log('Amount to be sent to PayPal:', total);
+  // paypal.Buttons({
+  //   createOrder: function (_, actions) {
+  //     saveInputValues();
+  //     console.log('Amount to be sent to PayPal:', total);
   
-      return actions.order.create({
-        purchase_units: [
-          {
-            amount: {
-              value: total,
-            },
-            // shipping: {
-            //   name: {
-            //     full_name: inputValues.firstName + ' ' + inputValues.lastName,
-            //     phone: inputValues.phone,
-            //     email: inputValues.email,
-            //   },
-            //   address: {
-            //     country_code: 'US',
-            //     address_line_1: inputValues.address,
-            //     address_line_2: '',
-            //     admin_area_2: inputValues.city,
-            //     admin_area_1: inputValues.region,
-            //     postal_code: 'xxxxx',
-            //   },
+  //     return actions.order.create({
+  //       purchase_units: [
+  //         {
+  //           amount: {
+  //             value: total,
+  //           },
+  //           // shipping: {
+  //           //   name: {
+  //           //     full_name: inputValues.firstName + ' ' + inputValues.lastName,
+  //           //     phone: inputValues.phone,
+  //           //     email: inputValues.email,
+  //           //   },
+  //           //   address: {
+  //           //     country_code: 'US',
+  //           //     address_line_1: inputValues.address,
+  //           //     address_line_2: '',
+  //           //     admin_area_2: inputValues.city,
+  //           //     admin_area_1: inputValues.region,
+  //           //     postal_code: 'xxxxx',
+  //           //   },
 
-            // },
-          },
-        ],
-        application_context: {
-          shipping_preference: 'NO_SHIPPING',
-        },
-      });
-    },
-    onApprove: function (data, actions) {
-      return actions.order.capture().then(function (details) {
-        console.log('Transaction details:', details);
-        // console.log('Transaction Customer details', details.payer);
-        // console.log('Transaction value:', details.purchase_units[0].amount.value);
+  //           // },
+  //         },
+  //       ],
+  //       application_context: {
+  //         shipping_preference: 'NO_SHIPPING',
+  //       },
+  //     });
+  //   },
+  //   onApprove: function (data, actions) {
+  //     return actions.order.capture().then(function (details) {
+  //       console.log('Transaction details:', details);
+  //       // console.log('Transaction Customer details', details.payer);
+  //       // console.log('Transaction value:', details.purchase_units[0].amount.value);
     
-        // Send payment details to the server for further validation
-        fetch(fetchURLpayvalidate, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            order: data,
-            paymentDetails: details,
-            total:total,
-          }),
-        })
-          .then(response => response.json())
-          .then(responseData => {
-            // console.log("Response Data is:",responseData);
-            if (responseData.success) {
-              // If the server validates the payment, proceed with your logic
-              submitOrder();
-            } else {
-              console.error('Error processing payment on the server:', responseData.error);
-              currentStage = 5;      
-              orderModal.innerHTML = constructModalBody();
+  //       // Send payment details to the server for further validation
+  //       fetch(fetchURLpayvalidate, {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           order: data,
+  //           paymentDetails: details,
+  //           total:total,
+  //         }),
+  //       })
+  //         .then(response => response.json())
+  //         .then(responseData => {
+  //           // console.log("Response Data is:",responseData);
+  //           if (responseData.success) {
+  //             // If the server validates the payment, proceed with your logic
+  //             submitOrder();
+  //           } else {
+  //             console.error('Error processing payment on the server:', responseData.error);
+  //             currentStage = 5;      
+  //             orderModal.innerHTML = constructModalBody();
       
-              // Display an error message to the user
-              alert('Error processing payment: ' + responseData.error);
-            }
-          })
-          .catch(error => {
-            console.error('Error communicating with the server:', error);
-            // Display an error message to the user
-            alert('Error communicating with the server');
-          });
-      });
-    },
+  //             // Display an error message to the user
+  //             alert('Error processing payment: ' + responseData.error);
+  //           }
+  //         })
+  //         .catch(error => {
+  //           console.error('Error communicating with the server:', error);
+  //           // Display an error message to the user
+  //           alert('Error communicating with the server');
+  //         });
+  //     });
+  //   },
     
-  }).render('#paypal-button-container');
+  // }).render('#paypal-button-container');
   
   
 }
@@ -1092,40 +1097,20 @@ function handleClearButtonClick() {
 }
 
 // PAYPAL CONNECTION ----------------
-const headers = new Headers();
-headers.append("Content-Type", "application/json");
 
-let fetchURLpay = '';
-if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-  fetchURLpay = 'http://localhost:5000/config';
-} else {
-  fetchURLpay = 'https://tm-server-4a2a80557ba4.herokuapp.com/config';
-}
-
-const apiUrl = `${fetchURLpay}`;
-
-fetch(apiUrl)  // Use apiUrl here instead of hardcoded '/config'
-  .then(response => response.json())
-  .then(config => {
-    // Use the configuration variables, e.g., config.paypalClientId
-    const script = document.createElement('script');
-    script.src = `https://www.paypal.com/sdk/js?client-id=${config.paypalClientId}`;
-    document.head.appendChild(script);
-  })
-  .catch(error => console.error('Error fetching configuration:', error));
 
 
 //ADDRESS OPTIONS AUTOMATION VIA API ----------------------------------------------------------------------
 
 function populateCountryOptions() {
 	const countrySelect = document.getElementById('countryInput');
-	  countries = [
-		{ value: '', text: '' },
-		{ value: 'CA', text: 'Canada' },
-		{ value: 'TT', text: 'Trinidad and Tobago' },
-		{ value: 'US', text: 'United States' },
-		// Add more countries as needed
-	  ];
+	  // countries = [
+		// { value: '', text: '' },
+		// { value: 'CA', text: 'Canada' },
+		// { value: 'TT', text: 'Trinidad and Tobago' },
+		// { value: 'US', text: 'United States' },
+		// // Add more countries as needed
+	  // ];
 	
 
   
@@ -1133,17 +1118,17 @@ function populateCountryOptions() {
 	countrySelect.innerHTML = '';
   
 	// Add new options based on the countries array
-	countries.forEach(country => {
-	  const option = document.createElement('option');
-	  option.value = country.value;
-	  option.text = country.text;
+	// countries.forEach(country => {
+	//   const option = document.createElement('option');
+	//   option.value = country.value;
+	//   option.text = country.text;
   
-	  if (inputValues.country === country.value) {
-		option.selected = true;
-	  }
+	//   if (inputValues.country === country.value) {
+	// 	option.selected = true;
+	//   }
   
-	  countrySelect.appendChild(option);
-	});
+	//   countrySelect.appendChild(option);
+	// });
 	saveInputValues();
 }
   
@@ -1277,4 +1262,5 @@ optionsArray.forEach(optionText => {
 	}
 	regionSelect.add(option);
 });
+}
 }

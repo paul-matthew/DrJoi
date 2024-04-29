@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
-import App from './App'
-import Services from './services'
-import Blog from './deals'
-import FadeInSection from './components/FadeIn';
+import App from './App.js'
+import Services from './services.js'
+import Blog from './deals.js'
+import FadeInSection from './components/FadeIn.js';
 
 function Contact() {
     const [desktopState] = useState('Contact1');  
