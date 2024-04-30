@@ -1173,7 +1173,7 @@ button:hover {
   }
 }
 
-@media only screen and (max-width: 756px){
+@media only screen and (max-width: 575px){ /*FIX ISSUE OF IPAD RESPONSIVENESS*/
   #Navmenudesktop {
     display: none !important;
   }
