@@ -123,7 +123,7 @@ const OverlaysMobile = ({setDesktopState, displayState, displayState2, desktopSt
 
     return (  
         <div className='overlays-container-mobile' style={{ display: "none"}}>
-          <div id='NavlogoMobile'><img src='./logo2.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => handleHomeClick()}/></div>
+          <div id='NavlogoMobile'><img src='./logo-green3.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => handleHomeClick()}/></div>
         <div className="header-holder-mobile" style={{ height: "10vh", width: "100vw"}} />
         <div className="Rectangle158-mobile" style={{ display: displayState, zIndex: displayState2, width: '100vw', height: '55vh', left: 0, position: 'absolute', background: 'rgba(217, 217, 217, 0.0)', transition: 'top 0.5s ease-in-out' }} />      
         <div className="Rectangle158-mobile" style={{display:displayState,zIndex:displayState2,width: '100vw', height: '15vh', top: `${Overlay2.replace("vw", "")}%` ,left: 0, position: 'absolute', background: 'rgba(217, 217, 217, 0.0)',transition: 'top 0.5s ease-in-out' }} />
@@ -131,13 +131,13 @@ const OverlaysMobile = ({setDesktopState, displayState, displayState2, desktopSt
       <div className="Overlay1-mobile" style={{display:displayState,zIndex:displayState2, width: '100vw', height: "65vh", top: `${MainOverlay.replace("vw", "")}%`, left: 0, position: 'absolute', background: 'rgba(0, 0, 0, 0.10)',transition: 'top 0.5s ease-in-out'}}></div>
 
       {/* Services */}
-      <div className="Overlay2-mobile" style={{display:displayState,zIndex:displayState2,width: '100vw', height: '10vh',top: `${Overlay1.replace("vw", "")}%`, left: 0, position: 'absolute', backgroundColor: 'rgba(0, 0, 0, 0.4)',transition: 'top 0.5s ease-in-out' }} />
+      <div className="Overlay2-mobile" style={{display:displayState,zIndex:displayState2,width: '100vw', height: '10vh',top: `${Overlay1.replace("vw", "")}%`, left: 0, position: 'absolute', backgroundColor: 'rgba(33, 74, 109, 0.4)',transition: 'top 0.5s ease-in-out' }} />
       <div id='HoverOverlay2' className="HoverOverlay2-mobile" style={{zIndex:displayState2,opacity:displayState2,width: '100vw', height: '10vh', top: `${Overlay1.replace("vw", "")}%`, left: 0, position: 'absolute', backgroundColor: 'rgba(120, 79, 57, 0.1)', flexDirection: 'column', alignItems: 'center', gap: 8, display: 'inline-flex',transition: 'top 0.5s ease-in-out'}}>
         <div className="ButtonServices" style={{zIndex:2,height: '25vh',textAlign: 'center', color: 'white', fontSize: 'clamp(34px, 3vw, 30px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', letterSpacing: 3, wordWrap: 'break-word', display: 'flex', justifyContent: 'center', alignItems: 'center', textShadow: '4px 4px 4px rgba(0, 0, 0, 0.5)',}} onClick={() => handleButtonClick(desktopState)}>{Button1}</div>
       </div>
 
       {/* Blog */}
-      <div className="Overlay3-mobile" style={{display:displayState,zIndex:displayState2,width: '100vw', height: '10vh', top: `${Overlay2.replace("vw", "")}%`, left: 0, position: 'absolute', backgroundColor: 'rgba(0, 0, 0, 0.4)',transition: 'top 0.5s ease-in-out' }} />
+      <div className="Overlay3-mobile" style={{display:displayState,zIndex:displayState2,width: '100vw', height: '10vh', top: `${Overlay2.replace("vw", "")}%`, left: 0, position: 'absolute', backgroundColor: 'rgba(33, 74, 109, 0.4)',transition: 'top 0.5s ease-in-out' }} />
       <div id='HoverOverlay3' className="HoverOverlay3-mobile" style={{zIndex:displayState2,opacity:displayState2,width: '100vw', height: '10vh', top: `${Overlay2.replace("vw", "")}%`, left: 0, position: 'absolute', backgroundColor: 'rgba(120, 79, 57, 0.1)', outline: '1px rgba(0, 0, 0, 0.50) solid', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', gap: 8, display: 'inline-flex',transition: 'top 0.5s ease-in-out' }}>
           <div className="ButtonBlog" style={{zIndex:2,color: 'white',height:'25vh',textAlign:'center',fontSize: 'clamp(34px, 3vw, 30px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', letterSpacing: 3, wordWrap: 'break-word',display: 'flex', justifyContent: 'center', alignItems: 'center', textShadow: '4px 4px 4px rgba(0, 0, 0, 0.5)' }}onClick={() => handleButton2Click(desktopState)}>{Button2}</div>
       </div>
@@ -145,12 +145,12 @@ const OverlaysMobile = ({setDesktopState, displayState, displayState2, desktopSt
       {desktopState === 'Homedesktop1' && (
         <div className='Homedesktop1' style={{left: 0, top: 0, position: 'absolute', width: "100%"}}>
           <div className="Image" style={{width: '100%', height: '95vh', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex'}}>
-              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home1f.png"alt="About me"/>
+              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home1f-trop2.png"alt="About me"/>
           </div>
             
           <div className="TextContent1" style={{border:'hidden red',height: '50vh', left: '3.5vw', top: '17vh', position: 'absolute', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'inline-flex', padding: "1rem", width: "80vw"}}>
               <div className="Title" style={{width: '50vw', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
-                  <div className="Title" style={{zIndex:'1', color: '#784F39', fontSize: 'clamp(40px, 4vw, 54px)', fontFamily: 'Rochester', lineHeight: 1, wordWrap: 'break-word'}}>Exotic Relief by Dr. Joi</div>
+                  <div className="Title" style={{zIndex:'1', color: 'black', fontSize: 'clamp(40px, 4vw, 54px)', fontFamily: 'Rochester', lineHeight: 1, wordWrap: 'break-word',textShadow: "2 2 2px rgba(255, 255, 255, 1)"}}>Exotic Relief by Dr. Joi</div>
               </div>
               <div style={{maxWidth:'160px'}}>
                 <div className="Lead" style={{zIndex:'1', textShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', alignSelf: 'stretch', color: 'black', fontSize: 'clamp(20px, 2.5vw, 20px)', fontFamily: 'PlayfairDisplay', fontWeight: '400', lineHeight: 1.5, wordWrap: 'break-word'}}>Build The Life Your Brain Deserves</div>
@@ -177,7 +177,7 @@ const OverlaysMobile = ({setDesktopState, displayState, displayState2, desktopSt
               <div className="Title" style={{width: '60vw', height: 28, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'flex'}}>
                   <div className="Title" style={{zIndex:'2',color: 'black', fontSize: 'clamp(40px, 4vw, 64px)', fontFamily: 'PlayfairDisplay', lineHeight: 1, wordWrap: 'break-word', textAlign: 'end',textShadow: '(0px 4px 3px rgba(162, 158, 158, 0.9)'}}>Unlock Exclusive Deals</div>
               </div>
-              <div className="Button" style={{background:'#784F39'}}>
+              <div className="Button" >
                 <div className="Label"style={{color:'white', fontFamily:'PlayfairDisplay'}}onClick={() => handleBlogClick()}>Claim Deals</div>
               </div>  
           </div>

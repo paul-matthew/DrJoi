@@ -109,7 +109,7 @@ function ServicesMobile() {
   return (
     
     <div className="Services-mobile" style={{width: '100%', right:'0', position: 'relative', height:'100%',background: '#efe6dd', display: "none"}}>
-        <div id='NavlogoMobile'><img src='./logo2.png' alt='logo mobile'style={{height:'5vh',marginTop:'1.5vh'}}onClick={() => window.location.href = './'}/></div>
+        <div id='NavlogoMobile'><img src='./logo-green3.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => window.location.href = './'}/></div>
         {desktopState === 'Services1' && (
         <div>
             <div className="Servicesx" style={{width: '100%', position: 'relative', background: 'white',top: '10vh'}}>

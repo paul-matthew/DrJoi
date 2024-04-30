@@ -275,7 +275,8 @@ body,html {
   transition: transform ease-in-out 0.5s; 
   z-index: 4;
   padding: 8px 20px; /* Adjust padding for the button */
-  background: #784F39;
+  /* background: #784F39; OLD COLOR SCHEME*/
+  background: rgba(33, 74, 109, 1);
   box-shadow: 4px 5px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px; /* Adjust border radius for a less oval shape */
   border: 2px black solid;
@@ -374,6 +375,9 @@ body,html {
   }
   .Card {
     max-width: "25vw" !important;
+  }
+  .Card1 {
+    min-height:800px !important;
   }
 }
 

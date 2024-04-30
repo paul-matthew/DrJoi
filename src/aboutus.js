@@ -7,6 +7,7 @@ import './App.css';
 import AboutUsMobile from './components/AboutUsMobile.js';
 import FadeInSection from './components/FadeIn.js';
 // import ReactDOM from 'react-dom';
+import greenhori5Image from './greenhori5.jpeg';
 
 
 function About() {
@@ -38,9 +39,9 @@ function About() {
         <>
             <div className="AboutUs" style={{ width: '100%', height: '100%', right: '0', position: 'relative', background: 'white'}}>
                 {desktopState === 'About1' && (
-                        <div className="Aboutus" style={{ width: '100%', height:'100%',top: '10vh', position: 'absolute', background: 'white' }}>
+                        <div className="Aboutus" style={{ width: '100%', height:'100%',top: '10vh', position: 'absolute', backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 1)), url(${greenhori5Image})`,  }}>
                             <div className="Image" style={{ width: '100%', height: '100%', right: 0, bottom: 0, position: 'absolute' }}>
-                                <img className="aboutmepic" style={{ width: 'auto', maxWidth:'65vw',maxHeight:'80vh',height: 'auto', right: 0, top: '5vh', position: 'absolute' }} src="./aboutme2c.png" alt='Placeholder' />
+                                <img className="aboutmepic" style={{ width: 'auto', maxWidth:'65vw',maxHeight:'80vh',height: 'auto', right: 0, top: '5vh', position: 'absolute' }} src="./aboutme-icon2.png" alt='Placeholder' />
                             </div>
                             <div className="Intro" style={{ width: '100%', height: '100%', top: 24, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex', padding: "0px 3vw",marginTop:'60px' }}>
                                 {/* <div className="E3StrategicSolutions" style={{ alignSelf: 'stretch', color: 'black', fontSize: 'clamp(16px, 3vw, 3vw)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word', marginTop:'20px' }}>Exotic Relief by Dr. Joi</div> */}
@@ -73,7 +74,7 @@ function About() {
                                     </div>
                                     <FadeInSection>
                                     <div className="Row" style={{ flexWrap: "wrap", justifyContent: "flex-start",marginBottom:'160px' }}>
-                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex',marginBottom:'20px' }}>
+                                        <div className="Card Card1" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex',marginBottom:'20px' }}>
                                             <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp1.jpg" alt='Placeholder' />
                                             <div className="CardContent" style={{ alignSelf: 'stretch', height: '450px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                                 <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -84,7 +85,7 @@ function About() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                                        <div className="Card Card1" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                             <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp2.jpg" alt='Placeholder' />
                                             <div className="CardContent" style={{ alignSelf: 'stretch', height: '450px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                                 <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -95,7 +96,7 @@ function About() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                                        <div className="Card Card1" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                             <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp3.jpg" alt='Placeholder' />
                                             <div className="CardContent" style={{ alignSelf: 'stretch', height: '450px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                                 <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -106,7 +107,7 @@ function About() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                                        <div className="Card Card1" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                             <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp4.jpg" alt='Placeholder' />
                                             <div className="CardContent" style={{ alignSelf: 'stretch', height: '450px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                                 <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>

@@ -101,8 +101,8 @@ function Shop() {
   return (
     <>
     <div className="Services" style={{ width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px',background: 'white'}}>
-        <div id='NavlogoMobile'><img src='./logo2.png' alt='logo mobile'style={{height:'6vh',marginTop:'1vh', position:'fixed', left:10, top:10}}onClick={() => window.location.href = './'}/></div>
-        <div className='Banner'><img src='./banner3.png' alt='banner'style={{zIndex:2,width:'100vw',maxHeight:'200px',marginTop:'3vh', left:0, top:0,objectFit:'cover'}}/></div>
+        <div id='NavlogoMobile'><img src='./logo-green3.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh', position:'fixed', left:10, top:10}}onClick={() => window.location.href = './'}/></div>
+        <div className='Banner'><img src='./bannerflower.png' alt='banner'style={{zIndex:2,width:'100vw',maxHeight:'200px',marginTop:'3vh', left:0, top:0,objectFit:'cover'}}/></div>
         <div className="Servicesx" style={{width: '100%', position: 'relative', background: 'white',top: '100px',marginTop: '-90px',flexDirection: 'column', display: 'inline-flex',justifyContent: 'flex-start', alignItems: 'center'}}>
             <FadeInSection>
                 <div style={{ backgroundColor:'white' }}>

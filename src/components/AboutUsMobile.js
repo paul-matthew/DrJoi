@@ -35,12 +35,12 @@ function AboutUsMobile() {
   return (
     
     <div className="AboutUs-mobile" style={{width: '100%', height: '100vh', right:'0', position: 'relative', background: 'white', maxWidth: "100%", display: "none"}}>
-        <div id='NavlogoMobile'><img src='/logo2.png' alt='logo mobile'style={{height:'6vh',marginTop:'1vh'}}onClick={() => window.location.href = './'}/></div>
+        <div id='NavlogoMobile'><img src='/logo-green3.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => window.location.href = './'}/></div>
         {desktopState === 'About1' && (
         <div>
             <div className="Aboutus" style={{width: '100%', position: 'absolute', background: 'white', top: "2vh"}}>
                 <div className="Image" style={{width: '100%', height: 'auto', right: 0, top: 0, position: 'absolute', objectFit: "cover"}}>
-                    <img className="Samplebio21" style={{width: 'auto', height: '100vh', right: 0, top: '0vh', position: 'absolute',opacity:'100%'}} src="/aboutme2c.png" alt='Placeholder'/>
+                    <img className="Samplebio21" style={{width: 'auto', height: '100vh', right: 0, top: '6vh', position: 'absolute',opacity:'100%'}} src="/aboutme2c-icon.png" alt='Placeholder'/>
                 </div>
                 <div className="Intro" style={{ position: "relative",width: '85vw', height: '100vh', left: "5vw", top: 0, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex'}}>
                     {/* <div className="E3StrategicSolutions" style={{alignSelf: 'stretch', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word'}}>E3 STRATEGIC SOLUTIONS</div> */}
@@ -75,7 +75,7 @@ function AboutUsMobile() {
                         </div>
                         <FadeInSection>
                         <div className="Row" style={{ flexWrap: "wrap", justifyContent: "flex-start",marginBottom:'160px' }}>
-                            <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex',marginBottom:'20px' }}>
+                            <div className="Card" style={{ minHeight:'550px',maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex',marginBottom:'20px' }}>
                                 <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp1.jpg" alt='Placeholder' />
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -86,7 +86,7 @@ function AboutUsMobile() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                            <div className="Card" style={{ minHeight:'550px',maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                 <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp2.jpg" alt='Placeholder' />
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -97,7 +97,7 @@ function AboutUsMobile() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                            <div className="Card" style={{ minHeight:'550px',maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                 <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp3.jpg" alt='Placeholder' />
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -108,7 +108,7 @@ function AboutUsMobile() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                            <div className="Card" style={{ minHeight:'550px',axWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                 <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp4.jpg" alt='Placeholder' />
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'70px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>

@@ -37,10 +37,10 @@ function Contact() {
   return (
     
     <div className="ContactX" style={{width: '100%', height: '100vh', right:'0',backgroundColor:'white'}}>
-        <div id='NavlogoMobile'><img src='./logo2.png' alt='logo mobile'style={{height:'6vh',marginTop:'1vh'}}onClick={() => window.location.href = './'}/></div>
+        <div id='NavlogoMobile'><img src='./logo-green3.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => window.location.href = './'}/></div>
         <FadeInSection>
         {desktopState === 'Contact1' && (
-            <div className="ContactX" style={{width: '100%', height: 'auto', top: "1vh", display: 'flex', justifyContent: 'center', alignItems: 'center', position: "absolute"}}>
+            <div className="ContactX" style={{width: '100%', height: 'auto', top: "2vh", display: 'flex', justifyContent: 'center', alignItems: 'center', position: "absolute"}}>
                 <form className="ContactForm" style={{width: '70%',minHeight:'60vh', border:'solid gray',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}>
                     <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(26px, 3vw, 30px)', fontFamily: 'PlaydairDisplay', fontWeight: '700'}}>Contact Me</p>
                     <div className="FormGroup">

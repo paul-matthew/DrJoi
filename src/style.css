@@ -3682,9 +3682,10 @@ textarea.form-control-lg {
   display: flex;
   flex-wrap: wrap; /* Allow cards to wrap to the next line */
   justify-content: space-between; /* Distribute cards evenly */
-  margin-bottom: 20px; /* Add some margin between cards */
+  margin-bottom: 0px; /* Add some margin between cards */
   background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  /* border: 1px solid rgba(0, 0, 0, 0.125); */
+  border:none !important;
   margin:10px;
   border-radius: 0.25rem;
   /* max-width:300px; */
@@ -3715,6 +3716,8 @@ textarea.form-control-lg {
 .card-body {
   width: calc(100% - 10px); /* Set width to 50% minus margin */
   margin-right: 10px; /* Add some margin between cards */
+  display:flex;
+  justify-content: center;
 }
 
 /* .card-price{
@@ -10526,7 +10529,7 @@ textarea.form-control {
 
 .card {
   height: 60vh; /* Set a fixed height for all cards */
-  box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.24);
+  /* box-shadow: 0 1px 6px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.24); */ /*TO REMOVE CARD*/
   overflow:hidden;
 }
 
@@ -10814,7 +10817,7 @@ transform: scale(1.2);
 
 .card-title2{
   font-family: ROB;
-  font-size: large !important;
+  font-size: clamp(13px, 2vw, 22px) !important;
   font-weight: bold;
 }
 
