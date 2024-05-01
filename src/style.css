@@ -3714,15 +3714,19 @@ textarea.form-control-lg {
 }
 
 .card-body {
-  width: calc(100% - 10px); /* Set width to 50% minus margin */
+  /* width: calc(100% - 10px); Set width to 50% minus margin */
   margin-right: 10px; /* Add some margin between cards */
   display:flex;
   justify-content: center;
 }
 
-/* .card-price{
-  font-weight:bold !important;
-} */
+.card-price{
+  font-size:clamp(13px, 2vw, 15px);
+}
+
+.card-img-top, .card-body,.service-info{
+  min-width:100%;
+}
 
 /* Media query for mobile devices */
 @media (max-width: 767px) {
@@ -10537,11 +10541,23 @@ textarea.form-control {
   object-fit: cover; /* Ensure the image covers the entire card */
   height: 70%; /* Make sure the image takes up the full card height */
 }
-
+.title-price{
+  width:100%;
+  margin:0;
+  padding:0;
+}
 .service-info {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* justify-content: space-between; */
+  align-items: flex-start;
+  text-align: start;
+  margin:0;
+  height: 1.5em;
+}
+@media(max-width:767px){
+  .service-info {
+    height: auto !important;
+  }
 }
 
 .close-modal img {
@@ -10817,7 +10833,7 @@ transform: scale(1.2);
 
 .card-title2{
   font-family: ROB;
-  font-size: clamp(13px, 2vw, 22px) !important;
+  font-size: clamp(13px, 2vw, 20px) !important;
   font-weight: bold;
 }
 

@@ -45,14 +45,14 @@ fetch(fetchURL)
             <div class="card">
               <img src="${product.images[0].src}" class="card-img-top" alt="${product.title}"loading="lazy">
               <div class="card-body">
-                <div>
+                <div class="title-price">
                   <div class="service-info">
                     <h5 class="card-title2">${product.title}</h5>
                   </div>
-                    <dic class='card-price'>
+                    <div class='card-price'>
                       $${product.variants.filter(variant => variant.is_enabled).reduce(
                       (maxPrice, variant) => (variant.price > maxPrice ? variant.price : maxPrice), 0) / 100}
-                    USD</div>
+                    </div>
                   </div>
               </div>
             </div>
