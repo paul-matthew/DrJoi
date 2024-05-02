@@ -5,6 +5,8 @@ import Services from '../services.js'
 import Blog from '../deals.js'
 import Contact from '../contact.js'
 import FadeInSection from './FadeIn.js';
+import greenhori5Image from '../greenhori5.jpeg';
+
 
 function AboutUsMobile() {
     const [desktopState] = useState('About1');  
@@ -38,9 +40,9 @@ function AboutUsMobile() {
         <div id='NavlogoMobile'><img src='/logo-green3.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => window.location.href = './'}/></div>
         {desktopState === 'About1' && (
         <div>
-            <div className="Aboutus" style={{width: '100%', position: 'absolute', background: 'white', top: "2vh"}}>
-                <div className="Image" style={{width: '100%', height: 'auto', right: 0, top: 0, position: 'absolute', objectFit: "cover"}}>
-                    <img className="Samplebio21" style={{width: 'auto', height: '100vh', right: 0, top: '6vh', position: 'absolute',opacity:'100%'}} src="/aboutme2c-icon.png" alt='Placeholder'/>
+            <div className="Aboutus" style={{width: '101%', height:'100%',position: 'absolute', backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 1)), url(${greenhori5Image})`,  top: "2vh"}}>
+                <div className="Image" style={{width: '80%', height: 'auto', right: 0, top: 0, position: 'absolute', objectFit: "cover"}}>
+                    <img className="Samplebio21" style={{width: 'auto', height: '80vh', right: 0, top: '10vh', position: 'absolute',opacity:'100%'}} src="/aboutme2c-icon3.png" alt='Placeholder'/>
                 </div>
                 <div className="Intro" style={{ position: "relative",width: '85vw', height: '100vh', left: "5vw", top: 0, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex'}}>
                     {/* <div className="E3StrategicSolutions" style={{alignSelf: 'stretch', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word'}}>E3 STRATEGIC SOLUTIONS</div> */}
@@ -48,7 +50,7 @@ function AboutUsMobile() {
                         <div className="Subheadline" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'flex',marginTop:'50vh'}}>
                             <div style={{color:'white',width: '100%',  fontSize: 'clamp(26px, 2vw, 24px)', marginBottom:'22vh',fontFamily: 'PlayfairDisplay', fontWeight: '400', wordWrap: 'break-word',lineHeight: '1.2', textShadow:'2px 2px 3px rgba(0, 0, 0, 0.9)' }}>
                                 <div style={{width:'100%', fontSize: 'clamp(35px, 4vw, 64px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word'}}>Hello, my name is Dr. Joi</div>
-                                <div className='Experience' style={{fontSize: 'clamp(20px, 4vw, 64px)'}}>
+                                <div className='Experience' style={{fontSize: 'clamp(20px, 4vw, 64px)',textShadow:'2px 2px 3px rgba(0, 0, 0, 1.9)' }}>
                                 I am passionate about empowering individuals to prioritize their mental health and well-being. 
                                 </div>
                                 <div className="Button" style={{marginTop:'20px'}}>

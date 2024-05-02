@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
-import App from './App.js'
-import Services from './services.js'
-import Blog from './deals.js'
+// import App from './App.js'
+// import Services from './services.js'
+// import Blog from './deals.js'
 import FadeInSection from './components/FadeIn.js';
 
 function Contact() {
@@ -38,8 +38,9 @@ function Contact() {
     
     <div className="ContactX" style={{width: '100%', height: '100vh', right:'0',backgroundColor:'white'}}>
         <div id='NavlogoMobile'><img src='./logo-green3.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => window.location.href = './'}/></div>
-        <FadeInSection>
         {desktopState === 'Contact1' && (
+                    <FadeInSection>
+
             <div className="ContactX" style={{width: '100%', height: 'auto', top: "2vh", display: 'flex', justifyContent: 'center', alignItems: 'center', position: "absolute"}}>
                 <form className="ContactForm" style={{width: '70%',minHeight:'60vh', border:'solid gray',boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)'}}>
                     <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(26px, 3vw, 30px)', fontFamily: 'PlaydairDisplay', fontWeight: '700'}}>Contact Me</p>
@@ -68,35 +69,8 @@ function Contact() {
                     </div>
                 </form>
             </div>
-
+            </FadeInSection>
         )}
-        {desktopState === 'Homedesktop1' && (
-        <App />
-        )}
-        {desktopState === 'Services' && (
-        <Services />
-        )}
-        {desktopState === 'Blog' && (
-        <Blog />
-        )}
-        {desktopState === 'Contact' && (
-        <Contact />
-        )}
-    </FadeInSection>
-        {/* <div className="Navmenudesktop" style={{ width: '80vw', height: '10vh', right: '0vw', position: 'absolute', justifyContent: 'flex-end', alignItems: 'flex-end', display: 'inline-flex', paddingLeft: "calc(100vw - 100%)"}}>
-            <div className="ListitemDesktopNa" style={{width: 115, height: '100%', paddingLeft: 18, paddingRight: 18, paddingTop: 0, paddingBottom: 0, background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex'}}>
-                <div className="Label" style={{width: 100, textAlign: 'center', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word'}}onClick={() => handleAboutClick()}>About Us</div>
-            </div>
-            <div className="ListitemDesktopNa" style={{width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex'}}>
-                <div className="Label" style={{width: 131, textAlign: 'center', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word'}}onClick={() => handleServicesClick()}>Services</div>
-            </div>
-            <div className="ListitemDesktopNa" style={{width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: '#0E0E0E', justifyContent: 'center', alignItems: 'center', display: 'inline-flex'}}>
-                <div className="Label" style={{width: 131, textAlign: 'center', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word'}}onClick={() => handleBlogClick()}>Blog</div>
-            </div>
-            <div className="ListitemDesktopNaActive" style={{zIndex:2,width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: 'rgb(130, 117, 78)', justifyContent: 'center', alignItems: 'center', display: 'inline-flex'}}>
-                <div className="Label" style={{width: 131, textAlign: 'center', color: 'white',textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word'}}>Contact</div>
-            </div>
-        </div> */}
     </div>
     
   );

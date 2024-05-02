@@ -145,7 +145,7 @@ const OverlaysMobile = ({setDesktopState, displayState, displayState2, desktopSt
       {desktopState === 'Homedesktop1' && (
         <div className='Homedesktop1' style={{left: 0, top: 0, position: 'absolute', width: "100%"}}>
           <div className="Image" style={{width: '100%', height: '95vh', top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'center', display: 'inline-flex'}}>
-              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home1f-trop2.png"alt="About me"/>
+              <img className="AboutMem2" style={{width: '100%', height: '100%', objectFit:'cover'}} src="./home1f-trop3.png"alt="About me"/>
           </div>
             
           <div className="TextContent1" style={{border:'hidden red',height: '50vh', left: '3.5vw', top: '17vh', position: 'absolute', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 24, display: 'inline-flex', padding: "1rem", width: "80vw"}}>
