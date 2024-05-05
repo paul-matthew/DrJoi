@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'; // Import the cors package
+import path from 'path';
 
 dotenv.config();
 
@@ -30,6 +31,10 @@ app.get('/products', async (req, res) => {
     console.error('Error fetching products:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 async function publishProduct(productId) {

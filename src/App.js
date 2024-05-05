@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const desktopStateList = ["About", "Shop", "Deals", "Wellness", "Contact"]
 
 function App() {
+  console.log("yooot")
   const [desktopState, setDesktopState] = useState('Homedesktop1');
   const [Overlay1, set1stOverlay] = useState('50vw');
   const [MainOverlay, setPrimeOverlay] = useState('0vw');
@@ -142,7 +143,6 @@ function App() {
       }, 0); // Wait for 0.5s transition duration
     }
   };
-
   const changeUrl = (newUrl) => {
     window.history.pushState({}, '', newUrl);
   };
@@ -201,8 +201,10 @@ function App() {
     
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
+      console.log('dis one',stateFromUrl);
       setDesktopState(stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)); // Capitalize the first letter
-      // displayProducts();
+      console.log('dis one2',stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1));
+      displayProducts();
     } else {
       setDesktopState('Homedesktop1'); // Set default state if URL doesn't match
     }
@@ -361,16 +363,6 @@ function App() {
     </div>
   );
 }
-
-// document.addEventListener("DOMContentLoaded", function() {
-//   console.log("Page refresh, back to homepage");
-//   const currentUrl = window.location.pathname.toLowerCase();
-//   const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/contact'];
-  
-//   if (allowedUrls.includes(currentUrl)) {
-//     window.history.pushState({}, '', '/');
-//   }
-// });
 
 export default App;
 
