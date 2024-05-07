@@ -206,12 +206,13 @@ fetch(fetchURL)
         
         // Add an event listener to the "View Cart" button
         const viewCartBtn = productModal.querySelector('.view-cart-btn');
-        const { handleCartClick } = props; // Extract handleCartClick from props
+        const { handleCartClick } = props; 
         
         viewCartBtn.addEventListener('click', () => {
           // Call handleCartClick directly
           handleCartClick();
         });
+        viewCartBtn.setAttribute('data-bs-dismiss', 'modal');
         
 
 

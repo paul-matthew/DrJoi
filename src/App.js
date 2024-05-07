@@ -154,9 +154,7 @@ function App() {
     setDisplayState2('0');
     setDesktopState('About');
     changeUrl('/About');
-    if (desktopState === 'Cart') {
-      setShowCart(!showCart);
-    }
+    setShowCart(false);
   };
   const handleServicesClick = () => {
     setShowCart(false);
@@ -174,27 +172,21 @@ function App() {
     setDisplayState2('0');
     setDesktopState('Deals');
     changeUrl('/Deals');
-    if(desktopState === 'Cart'){
-      setShowCart(!showCart);
-    }
+    setShowCart(false);
   };
   const handleWellnessClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Wellness');
     changeUrl('/Wellness');
-    if(desktopState === 'Cart'){
-      setShowCart(!showCart);
-    }
+    setShowCart(false);
   };
   const handleContactClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Contact');
     changeUrl('/Contact');
-    if(desktopState === 'Cart'){
-      setShowCart(!showCart);
-    }
+    setShowCart(false);
   };
   const handleHomeClick = () => {
     if (desktopState !== 'Homedesktop1') {
