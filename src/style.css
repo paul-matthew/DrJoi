@@ -10552,7 +10552,7 @@ textarea.form-control {
   align-items: flex-start;
   text-align: start;
   margin:0;
-  height: 1.5em;
+  min-height: 1.5em;
 }
 @media(max-width:767px){
   .service-info {

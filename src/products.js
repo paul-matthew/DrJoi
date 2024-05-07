@@ -1,9 +1,10 @@
 import './style.css';
-/* eslint-disable no-undef */
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+// eslint-disable-next-line
+import App from './App.js';
 
-export const displayProducts = () => {
+const DisplayProducts = (props) => {
 //PRINTIFY API------------------------------------------------------
 
 //General -------------
@@ -204,12 +205,19 @@ fetch(fetchURL)
         const addToCartButton = productModal.querySelector(`#productitem${index + 1} .add-to-cart-btn`);
         
         // Add an event listener to the "View Cart" button
-        const viewCartButton = productModal.querySelector('.view-cart-btn');
-        viewCartButton.addEventListener('click', () => {
-            // Redirect to cart.html or your desired cart page
-            window.location.href = 'cart.html';
+        const viewCartBtn = productModal.querySelector('.view-cart-btn');
+        const { handleCartClick } = props; // Extract handleCartClick from props
+        
+        viewCartBtn.addEventListener('click', () => {
+          // Call handleCartClick directly
+          handleCartClick();
         });
+        
 
+
+
+        
+        
         addToCartButton.addEventListener('click', () => {
             // Get the selected color, size, and variant
             const selectedColorIndex = Array.from(colorOptions).findIndex(option => option.classList.contains('selected'));
@@ -313,7 +321,7 @@ let subtotal = 0;
 let total = 0;
 let shipping = 19.99;
 const skuToProductIdMap = {};
-if (window.location.pathname.includes('cart.html')) {
+if (window.location.pathname.includes('cart')) {
     document.addEventListener('DOMContentLoaded', () => {
     // Create an order button
     const orderButton = document.createElement('button');
@@ -597,7 +605,7 @@ async function submitOrder() {
       fetchURLorder = 'https://drjoiserver-106ea7a60e39.herokuapp.com/orders';
   }
 
-  if (window.location.pathname.includes('cart.html')) {
+  if (window.location.pathname.includes('cart')) {
   fetch(fetchURLorder, {
     method: 'POST',
     body: JSON.stringify(orderDetails),
@@ -1270,3 +1278,4 @@ function handleClearButtonClick() {
 // });
 // }
 }
+export default DisplayProducts;

@@ -1,7 +1,5 @@
 import './App.css';
 import FadeInSection from './components/FadeIn.js';
-
-
 import React from 'react';
 
 const Wellness = () => {

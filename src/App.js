@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { displayProducts } from './products.js';
+import DisplayProducts from './products.js';
 import './App.css';
 import './style.css';
 import About from './aboutus.js'
@@ -7,15 +7,15 @@ import Shop from './shop.js'
 import Deals from './deals.js'
 import Wellness from './wellness.js'
 import Contact from './contact.js'
+import Cart from './cart.js'
 import MobileMenu from './components/MobileMenu.js';
 import OverlaysMobile from './components/OverlaysMobile.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const desktopStateList = ["About", "Shop", "Deals", "Wellness", "Contact"]
+const desktopStateList = ["About", "Shop", "Deals", "Wellness", "Contact", "Cart"]
 
 function App() {
-  console.log("yooot")
   const [desktopState, setDesktopState] = useState('Homedesktop1');
   const [Overlay1, set1stOverlay] = useState('50vw');
   const [MainOverlay, setPrimeOverlay] = useState('0vw');
@@ -26,6 +26,8 @@ function App() {
   const [displayState2, setDisplayState2] = useState('1');
   const [Mainwidth, setwidthMain] = useState('50vw');
   const [Recwidth, setwidthRec] = useState('25vw');
+  const [showCart, setShowCart] = useState(false);
+  const [displayed, setDisplayed] = useState(false);
 
   const isHomeDesktop = !desktopStateList.includes(desktopState);
 
@@ -152,31 +154,47 @@ function App() {
     setDisplayState2('0');
     setDesktopState('About');
     changeUrl('/About');
+    if (desktopState === 'Cart') {
+      setShowCart(!showCart);
+    }
   };
   const handleServicesClick = () => {
+    setShowCart(false);
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Shop');
     changeUrl('/Shop');
-    displayProducts();
-  };
+    if (!displayed) {
+      // Call DisplayProducts only if it hasn't been called yet
+      setDisplayed(true);
+      // DisplayProducts();
+    }  };
   const handleBlogClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Deals');
     changeUrl('/Deals');
+    if(desktopState === 'Cart'){
+      setShowCart(!showCart);
+    }
   };
   const handleWellnessClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Wellness');
     changeUrl('/Wellness');
+    if(desktopState === 'Cart'){
+      setShowCart(!showCart);
+    }
   };
   const handleContactClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Contact');
     changeUrl('/Contact');
+    if(desktopState === 'Cart'){
+      setShowCart(!showCart);
+    }
   };
   const handleHomeClick = () => {
     if (desktopState !== 'Homedesktop1') {
@@ -190,27 +208,33 @@ function App() {
       setPrimeOverlay('0vw');
       setwidthMain('50vw');
       setwidthRec('25vw');
-
   }
   changeUrl('/');
+  };
+  // eslint-disable-next-line 
+  const handleCartClick = () => {
+    setDisplayState('none');
+    setDisplayState2('0');
+    setDesktopState('Cart');
+    changeUrl('/Cart');
+    setShowCart(!showCart);
+    console.log('hmmmm');
   };
 
   useEffect(() => {
     const currentUrl = window.location.pathname.toLowerCase();
-    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/contact'];
+    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/contact','/cart'];
     
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
-      console.log('dis one',stateFromUrl);
       setDesktopState(stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)); // Capitalize the first letter
-      console.log('dis one2',stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1));
-      displayProducts();
+      // DisplayProducts();
     } else {
       setDesktopState('Homedesktop1'); // Set default state if URL doesn't match
     }
   }, []);
 
-  return (
+  return ( 
     <div className="Homepage" style={{ width: '100%', height: '100vh', position: 'relative', background: 'white', border: 'hidden red'}}>
       <div className="Navdesktop" style={{ zIndex: 2, position: 'fixed', width: "100%" }}>
         <div className="Navbanner" style={{ width: '100%', height: '10vh', left: 0, top: 0, position: 'absolute', background: '#0e3022',borderBottom:'solid black' }} />
@@ -239,6 +263,9 @@ function App() {
         </div>
       </div>
 
+      {showCart && <Cart handleCartClick={handleCartClick} />}
+      <DisplayProducts handleCartClick={handleCartClick} />
+
       <MobileMenu handleContactClick={handleContactClick} handleWellnessClick={handleWellnessClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} desktopState={desktopState} />
 
       <div className="Rectangle158" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Recwidth, height: '15vh', maxHeight: "10%", left: `${Overlay1.replace("vw", "")}%`, top: '73vh', position: 'absolute', background: 'rgba(33, 74, 109, 0.8)', transition: 'left 0.5s ease-in-out',border:'solid rgba(14, 29, 48, 1)' }} />
@@ -258,7 +285,7 @@ function App() {
         <div className="ButtonBlog" style={{zIndex: 1, color: 'white', position: 'absolute', height: '15vh', top: '70vh', textAlign: 'center', fontSize: 'clamp(12px, 3vw, 30px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', letterSpacing: 3, wordWrap: 'break-word', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={() => handleButton2Click(desktopState)}>{Button2}</div>
       </div>
 
-      {isHomeDesktop && <OverlaysMobile displayState={desktopStateList.includes(desktopState) ? "none":displayState} displayState2={displayState2} desktopState={desktopState} handleWellnessClick={handleWellnessClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} setDesktopState={setDesktopState}/>}
+      {isHomeDesktop && <OverlaysMobile displayState={desktopStateList.includes(desktopState) ? "none":displayState} displayState2={displayState2} desktopState={desktopState} handleWellnessClick={handleWellnessClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} handleCartClick={handleCartClick} setDesktopState={setDesktopState}/>}
 
       {desktopState === 'Homedesktop1' && (
         <div id='Homedesktop1' className='Homedesktop1' style={{ left: 0, top: 0, position: 'absolute', width: "100%", height:'100vh',display: desktopStateList.includes(desktopState) ? "none":"static",overflow:'hidden'}}>
@@ -325,6 +352,9 @@ function App() {
       )}
       {desktopState === 'Contact' && (
         <Contact />
+      )}
+      {desktopState === 'Cart' && (
+        <Cart />
       )}
 
       <div className="Footerdesktop" style={{ zIndex: 4, width: '100%', height: 43, left: 0, bottom: '0vh', position: 'fixed', background: '#0e3022',border:'solid black' }}>
