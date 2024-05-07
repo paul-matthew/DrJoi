@@ -255,7 +255,7 @@ function App() {
         </div>
       </div>
 
-      {showCart && <Cart handleCartClick={handleCartClick} />}
+      {/* {showCart && <Cart handleCartClick={handleCartClick} />} */}
       <DisplayProducts handleCartClick={handleCartClick} />
 
       <MobileMenu handleContactClick={handleContactClick} handleWellnessClick={handleWellnessClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} desktopState={desktopState} />
