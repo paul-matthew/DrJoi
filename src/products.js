@@ -211,6 +211,8 @@ fetch(fetchURL)
         viewCartBtn.addEventListener('click', () => {
           // Call handleCartClick directly
           handleCartClick();
+          handleCart();
+          updateTotal();
         });
         viewCartBtn.setAttribute('data-bs-dismiss', 'modal');
         
@@ -322,38 +324,37 @@ let subtotal = 0;
 let total = 0;
 let shipping = 19.99;
 const skuToProductIdMap = {};
-if (window.location.pathname.includes('cart')) {
-    document.addEventListener('DOMContentLoaded', () => {
-    // Create an order button
-    const orderButton = document.createElement('button');
-    orderButton.id = 'orderButton';
-    orderButton.classList.add('order-btn'); 
-    orderButton.innerText = 'Order Now';
 
-    // Add a click event listener to the order button
-    orderButton.addEventListener('click', handleOrderButtonClick);
+function handleCart() {
+    if (window.location.pathname.includes('Cart')) {
+        // Create an order button
+        console.log("test");
 
-    // Create an clear button
-    const clearButton = document.createElement('button');
-    clearButton.id = 'clearButton';
-    clearButton.classList.add('clear-btn'); 
-    clearButton.innerText = 'Clear';
+        const orderButton = document.createElement('button');
+        orderButton.id = 'orderButton';
+        orderButton.classList.add('order-btn');
+        orderButton.innerText = 'Order Now';
 
-    // Add a click event listener to the order button
-    clearButton.addEventListener('click', handleClearButtonClick);
+        // Add a click event listener to the order button
+        orderButton.addEventListener('click', handleOrderButtonClick);
 
-    // Insert the order button at the top of the cart container
-    const cartContainer = document.getElementById('cart-container');
-    cartContainer.parentNode.insertBefore(orderButton, cartContainer);
-    cartContainer.parentNode.insertBefore(clearButton, cartContainer);
-    
+        // Create a clear button
+        const clearButton = document.createElement('button');
+        clearButton.id = 'clearButton';
+        clearButton.classList.add('clear-btn');
+        clearButton.innerText = 'Clear';
+
+        // Add a click event listener to the clear button
+        clearButton.addEventListener('click', handleClearButtonClick);
+
         // Fetch product data based on SKUs
         fetch(fetchURL)
             .then(response => response.json())
             .then(data => {
-                
                 if (data && data.data) {
-                    const productsContainer = document.getElementById('cart-container');
+                    const productsContainer = document.createElement('div');
+                    productsContainer.classList.add('products', 'row', 'mb-93');
+
 
                     // Iterate over the fetched product data and create elements
                     data.data.forEach(product => {
@@ -362,15 +363,16 @@ if (window.location.pathname.includes('cart')) {
                             selectedSKUs.forEach(selectedSKU => {
                                 const matchingVariant = product.variants.find(variant => variant.sku === selectedSKU);
                                 if (matchingVariant) {
-                                  skuToProductIdMap[matchingVariant.sku] = product.id;
-                              }
+                                    skuToProductIdMap[matchingVariant.sku] = product.id;
+                                }
 
                                 if (matchingVariant) {
                                     const matchingSKU = matchingVariant.sku;
                                     const existingCartItem = document.querySelector(`.cart-item[data-sku="${matchingSKU}"]`);
                                     subtotal += matchingVariant.price / 100;
+                                    total += matchingVariant.price / 100;
                                     updateTotal();
-       
+
                                     if (existingCartItem) {
                                         // If the item with the same SKU already exists, update its quantity
                                         const quantityElement = existingCartItem.querySelector('.quantity');
@@ -397,11 +399,10 @@ if (window.location.pathname.includes('cart')) {
                                         const productDetails = document.createElement('div');
                                         productDetails.classList.add('col-8');
                                         productDetails.innerHTML = `
-                                        <hr style="border-top: 5px solid #D091DE; margin: 1px 0;">
-    
-                                        <h5 style='font-family: IGLight;'>${product.title}</h5>
+                                            <hr style="border-top: 5px solid rgba(33, 74, 109, 1); margin: 1px 0;">
+                                            <h5 style='font-family: IGLight;'>${product.title}</h5>
                                             <p style="margin: 0;"><span style="font-weight: bold;">Color & Size:</span> ${matchingVariant.title}</p>
-                                            <p style="margin: 0;"><span style="font-weight: bold;">Price:</span> $${matchingVariant.price/100} USD</p>
+                                            <p style="margin: 0;"><span style="font-weight: bold;">Price:</span> $${matchingVariant.price / 100} USD</p>
                                             <p style="margin: 0;"><span style="font-weight: bold;">Quantity:</span> <span class="quantity">1</span></p>
                                         `;
 
@@ -416,57 +417,68 @@ if (window.location.pathname.includes('cart')) {
                                             const currentQuantity = parseInt(quantityElement.innerText, 10);
                                             console.log('Current Quantity:', currentQuantity); // Log current quantity for debugging
                                             subtotal -= matchingVariant.price / 100;
+                                            total -= matchingVariant.price / 100;
                                             updateTotal();
 
-                                        
                                             if (currentQuantity > 1) {
                                                 // If the quantity is more than 1, decrease it
                                                 quantityElement.innerText = currentQuantity - 1;
                                                 const indexOfMatchingSKU = selectedSKUs.indexOf(matchingSKU);
-                                        
+
                                                 // Check if the SKU appears more than once in the array
                                                 if (indexOfMatchingSKU !== -1) {
                                                     // Remove only the first occurrence of the SKU
                                                     selectedSKUs.splice(indexOfMatchingSKU, 1);
                                                 }
-                                        
+
                                                 // Update selectedSKUs with the modified array
                                                 updateSelectedSKUs(selectedSKUs);
                                             } else {
                                                 // If the quantity is 1, remove the entire cart item
                                                 cartItem.parentNode.removeChild(cartItem);
-                                        
+
                                                 // Update selectedSKUs with the filtered array
                                                 const updatedSelectedSKUs = selectedSKUs.filter(item => item !== matchingSKU);
                                                 updateSelectedSKUs(updatedSelectedSKUs);
                                             }
-                                        
+
                                             // Log the updated array
                                             console.log('Updated SKUs:', selectedSKUs);
                                             // console.log(`Remove item with SKU: ${matchingSKU}`);
                                         });
-                                        
 
                                         // Append elements to the cart item
                                         cartItem.appendChild(productImage);
                                         cartItem.appendChild(productDetails);
                                         cartItem.appendChild(removeItemButton);
 
-                                        // Append cart item to the cart container
+                                        // Append cart item to the products container
                                         productsContainer.appendChild(cartItem);
-                                    } 
+                                    }
                                 }
                             });
                         }
                     });
-                  return total;
+
+                    // Insert productsContainer into the DOM
+                    const cartContainer = document.getElementById('cart-container');
+                    if (cartContainer) {
+                        cartContainer.parentNode.insertBefore(orderButton, cartContainer);
+                        cartContainer.parentNode.insertBefore(clearButton, cartContainer);
+                        cartContainer.parentNode.insertBefore(productsContainer, cartContainer.nextSibling);
+                    } else {
+                        console.error("Cart container not found.");
+                    }
                 } else {
                     console.log("Product data is missing or undefined.");
                 }
             })
             .catch(error => console.error(error));
-    });
+    }
 }
+
+
+// Define a function to update total
 function updateTotal() {
   // Calculate the total based on your logic
   total = (subtotal + (subtotal * 0.13) + shipping).toFixed(2);
@@ -474,12 +486,16 @@ function updateTotal() {
 
   // Dispatch a custom event to notify other parts of the application
   const updateTotalEvent = new CustomEvent('updateTotalEvent', {
-    detail: { total: total },
+      detail: { total: total },
   });
   document.dispatchEvent(updateTotalEvent);
 
   return total;
 }
+
+// Call the function to handle cart functionality
+// handleCart();
+
 
 //ORDER---------------------
 
@@ -1086,7 +1102,7 @@ function initializePayPal(amount) {
 
 function handleClearButtonClick() {
     // Display a confirmation popup
-    const isConfirmed = window.confirm('Are you sure you want to clear all items from the cart?');
+    const isConfirmed = window.confirm('Remove all items from your cart?');
 
     // Check if the user confirmed
     if (isConfirmed) {

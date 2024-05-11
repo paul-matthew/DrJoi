@@ -18,8 +18,8 @@ function Cart() {
         </div>        
             <FadeInSection>
             <div className="container-xl">
-                <div className="row justify-content-center"data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                </div>
+                {/* <div className="row justify-content-center"data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+                </div> */}
                 <div id="cart-container" className="row justify-content-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"></div>      
             </div>
       </FadeInSection>
