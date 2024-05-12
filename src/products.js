@@ -92,12 +92,52 @@ fetch(fetchURL)
                   })
                   .map((color) => `
                     <div class="color-option" style="background-color: ${color.colors[0]};"></div>
-                  `).join('') || product.options.find(option => option.name === 'Frame Color')?.values.map((frameColor) => `
+                    `).join('') || product.options.find(option => option.name === 'Frame Color')?.values.map((frameColor) => `
                     <div class="color-option" style="background-color: ${frameColor.colors[0]};"></div>
-                `).join('') || product.options.find(option => option.name === 'Color')?.values.map((color) => `
-                  <div class="color-option" style="background-color: ${color.colors[0]};"></div>
-                `).join('') || ''}
+                    `).join('') || product.options.find(option => option.name === 'Color')?.values.map((color) => `
+                    <div class="color-option" style="background-color: ${color.colors[0]};"></div>
+                    `).join('') || product.options.find(option => option.name === 'Seam Colors')?.values.map((color) => `
+                    <div class="color-option" style="background-color: ${color.colors[0]};"></div>
+                    `).join('') || ''
+                }
               </div>
+              <div class="fabric-options" style="margin-right: 20px; ${product.options.some(option => option.name === 'Fabric weight' || option.name === 'Box type' || option.name === 'Paper finishes' || option.name === 'Finishes') && (
+                product.options.some(option => option.name === 'Fabric weight' && option.type === 'weight') || 
+                product.options.some(option => option.name === 'Box type' && option.type === 'finish') ||
+                product.options.some(option => option.name === 'Paper finishes' && option.type === 'paper') ||
+                product.options.some(option => option.name === 'Finishes' && option.type === 'surface')
+                ) ? '' : 'display: none;'}">
+                <h6 style='font-weight:bold; display: inline;'>${product.options.find(option => option.name === 'Fabric weight' || option.name === 'Box type' || option.name === 'Paper finishes' || option.name === 'Finishes')?.name}:</h6>
+                <select class="fabric-dropdown">
+                    ${(product.options.find(option => option.name === 'Fabric weight' && option.type === 'weight')?.values || product.options.find(option => option.name === 'Box type' && option.type === 'finish')?.values || product.options.find(option => option.name === 'Paper finishes' && option.type === 'paper')?.values || product.options.find(option => option.name === 'Finishes' && option.type === 'surface')?.values || [])
+                        .filter(option => {
+                            const variant = product.variants.find(variant => {
+                                if (variant.options.includes(option.id)) {
+                                    if (
+                                        product.options.some(opt => opt.name === 'Fabric weight' && opt.type === 'weight') ||
+                                        product.options.some(opt => opt.name === 'Box type' && opt.type === 'finish') ||
+                                        product.options.some(opt => opt.name === 'Paper finishes' && opt.type === 'paper') ||
+                                        product.options.some(opt => opt.name === 'Finishes' && opt.type === 'surface')
+                                    ) {
+                                        return variant.is_available && variant.is_enabled;
+                                    }
+                                }
+                                return false;
+                            });
+                            return variant;
+                        })
+                        .map((option) => `
+                            <option value="${option.id}">${option.title}</option>
+                        `).join('')}
+                </select>
+              </div>
+
+        
+            
+            
+              
+            
+
               <div class="size-and-quantity-options" style="display: flex; align-items: center;">
                 <div class="size-options" style="margin-right: 20px;">
                   <h6 style='font-weight:bold; display: inline;'>Size Options:</h6>
@@ -120,7 +160,7 @@ fetch(fetchURL)
                       })
                       .map(size => `
                         <option value="${size.id}">${size.title}</option>
-                      `).join('') || product.options.find(option => option.name === 'Phone Models')?.values
+                      `).join('') || product.options.find(option => option.name === 'Phone models')?.values
                       .filter(size => {
                         const variant = product.variants.find(variant => variant.options.includes(size.id));
                         return variant && variant.is_available && variant.is_enabled;
@@ -157,7 +197,8 @@ fetch(fetchURL)
             colorOption.addEventListener('click', () => {
                 const selectedColor = product.options.find(option => option.name === 'Colors')?.values[colorIndex] ||
                                      product.options.find(option => option.name === 'Frame Color')?.values[colorIndex]||
-                                     product.options.find(option => option.name === 'Color')?.values[colorIndex];;
+                                     product.options.find(option => option.name === 'Color')?.values[colorIndex]||
+                                     product.options.find(option => option.name === 'Seam Colors')?.values[colorIndex];;
                 if (selectedColor) {
                     // Remove 'selected' class from all color options
                     colorOptions.forEach(option => {
@@ -174,7 +215,7 @@ fetch(fetchURL)
         // JavaScript to handle size selection dropdown
         const sizeDropdown = productModal.querySelector('.size-dropdown');
         const Quantity = productModal.querySelector('.product-qty');
-
+        const fabricDropdown = productModal.querySelector('.fabric-dropdown');
 
 
         productCard.addEventListener('click', () => {
@@ -226,13 +267,18 @@ fetch(fetchURL)
             const selectedColorIndex = Array.from(colorOptions).findIndex(option => option.classList.contains('selected'));
             const selectedColor = product.options.find(option => option.name === 'Colors')?.values[selectedColorIndex] ||
             product.options.find(option => option.name === 'Frame Color')?.values[selectedColorIndex] ||
-            product.options.find(option => option.name === 'Color')?.values[selectedColorIndex];
+            product.options.find(option => option.name === 'Color')?.values[selectedColorIndex]||
+            product.options.find(option => option.name === 'Seam Colors')?.values[selectedColorIndex];
             const selectedSizeId = sizeDropdown.value;
             const selectedQuantity = Quantity.value;
+            const selectedFabricId = fabricDropdown.value;
+
         
             console.log('Selected Color:', selectedColor);
             console.log('Selected Size ID:', selectedSizeId);
             console.log('Selected Quantity:', selectedQuantity);
+            console.log('Selected Fabric:', selectedFabricId);
+
         
             // Log the entire product data for debugging
             console.log('Product Data:', product);
@@ -242,17 +288,26 @@ fetch(fetchURL)
         
             // Attempt with the first set of conditions
             selectedVariant = product.variants.find(variant => {
-                const colorMatchIndex = variant.options[0] === selectedColor?.id;
-                const sizeMatchIndex = variant.options[1]?.toString() === selectedSizeId.toString();
-                return colorMatchIndex && sizeMatchIndex;
-            });
+              const colorOptionIndex = product.options.findIndex(option => option.type === "color");
+              const sizeOptionIndex = product.options.findIndex(option => option.type === "size");
+              const fabricOptionIndex = product.options.findIndex(option => option.type === "weight" || option.type === "finish" || option.type === "paper" || option.type === "surface");
+              
+              const colorMatchIndex = colorOptionIndex !== -1 ? variant.options[colorOptionIndex] === selectedColor?.id : true;
+              const sizeMatchIndex = sizeOptionIndex !== -1 ? variant.options[sizeOptionIndex]?.toString() === selectedSizeId.toString() : true;
+              const fabricMatchIndex = fabricOptionIndex !== -1 ? variant.options[fabricOptionIndex]?.toString() === selectedFabricId.toString() : true;
+          
+              return colorMatchIndex && sizeMatchIndex && fabricMatchIndex;
+          });
+          
+          
         
             // If the first attempt failed, try the second set of conditions
             if (!selectedVariant) {
                 selectedVariant = product.variants.find(variant => {
                     const colorMatchIndex = variant.options[2] === selectedColor?.id;
                     const sizeMatchIndex = variant.options[0]?.toString() === selectedSizeId.toString();
-                    return colorMatchIndex && sizeMatchIndex;
+                    const fabricMatchIndex = variant.options[0]?.toString() === selectedFabricId.toString();
+                    return colorMatchIndex && sizeMatchIndex && fabricMatchIndex;
                 });
             }
         
@@ -261,14 +316,15 @@ fetch(fetchURL)
                 selectedVariant = product.variants.find(variant => {
                     const colorMatchIndex = variant.options[1] === selectedColor?.id;
                     const sizeMatchIndex = variant.options[0]?.toString() === selectedSizeId.toString();
+                    const fabricMatchIndex = variant.options[0]?.toString() === selectedFabricId.toString();
                     console.log("ah yo", variant.options[1])
-                    return colorMatchIndex && sizeMatchIndex;
+                    return colorMatchIndex && sizeMatchIndex && fabricMatchIndex;
                 });
             }
         
             // Now you can use the selectedVariant variable as needed
         
-            if (!selectedColor && (product.options.find(option => option.name === 'Colors')?.values.length > 0 || product.options.find(option => option.name === 'Color')?.values.length > 0 || product.options.find(option => option.name === 'Frame Color')?.values.length > 0)) {
+            if (!selectedColor && (product.options.find(option => option.name === 'Colors')?.values.length > 0 || product.options.find(option => option.name === 'Color')?.values.length > 0 || product.options.find(option => option.name === 'Seam Colors')?.values.length > 0 || product.options.find(option => option.name === 'Frame Color')?.values.length > 0)) {
                 // Show an error message to the user (you can customize this based on your UI)
                 alert("Please select a Colour Option");
                 return; // Stop execution if no color is selected
