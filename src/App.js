@@ -26,7 +26,7 @@ function App() {
   const [displayState2, setDisplayState2] = useState('1');
   const [Mainwidth, setwidthMain] = useState('50vw');
   const [Recwidth, setwidthRec] = useState('25vw');
-  const [showCart, setShowCart] = useState(false);
+  // const [showCart, setShowCart] = useState(false);
   const [displayed, setDisplayed] = useState(false);
 
   const isHomeDesktop = !desktopStateList.includes(desktopState);
@@ -154,10 +154,10 @@ function App() {
     setDisplayState2('0');
     setDesktopState('About');
     changeUrl('/About');
-    setShowCart(false);
+    // setShowCart(false);
   };
   const handleServicesClick = () => {
-    setShowCart(false);
+    // setShowCart(false);
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Shop');
@@ -172,21 +172,21 @@ function App() {
     setDisplayState2('0');
     setDesktopState('Deals');
     changeUrl('/Deals');
-    setShowCart(false);
+    // setShowCart(false);
   };
   const handleWellnessClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Wellness');
     changeUrl('/Wellness');
-    setShowCart(false);
+    // setShowCart(false);
   };
   const handleContactClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
     setDesktopState('Contact');
     changeUrl('/Contact');
-    setShowCart(false);
+    // setShowCart(false);
   };
   const handleHomeClick = () => {
     if (desktopState !== 'Homedesktop1') {
@@ -209,8 +209,8 @@ function App() {
     setDisplayState2('0');
     setDesktopState('Cart');
     changeUrl('/Cart');
-    setShowCart(!showCart);
-    console.log('hmmmm');
+    // setShowCart(!showCart);
+    // console.log('hmmmm',!showCart);
   };
 
   useEffect(() => {
@@ -220,8 +220,11 @@ function App() {
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
       setDesktopState(stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)); // Capitalize the first letter
-      // DisplayProducts();
-    } else {
+      if (currentUrl === '/cart') {
+        // handleCartClick();    
+      }
+    } 
+    else {
       setDesktopState('Homedesktop1'); // Set default state if URL doesn't match
     }
   }, []);

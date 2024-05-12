@@ -10993,6 +10993,7 @@ text-align: center;
 .container-xl{
   height:100% !important;
   margin-bottom:100px;
+  border:solid white;
 }
 
 .products{
