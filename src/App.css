@@ -781,13 +781,14 @@ button:hover {
   z-index: 1040;
   width: 100vw;
   height: 100vh;
-  background-color: #000;
+  /* This is for the MODAL BACKDROP for the SHOP PAGE */
+  background-color: rgba(0, 0, 0, 0.7);
 }
 .modal-backdrop.fade {
   opacity: 0;
 }
 .modal-backdrop.show {
-  opacity: 0.5;
+  opacity:1.0;
 }
 
 .modal-header {

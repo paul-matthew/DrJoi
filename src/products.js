@@ -32,7 +32,6 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
     fetchURL = 'https://drjoiserver-106ea7a60e39.herokuapp.com/products';
 }
 if (window.location.pathname.includes('Shop')) {
-  console.log("WORKS");
 fetch(fetchURL)
   .then(response => response.json())
   .then(data => {
@@ -578,13 +577,17 @@ function generateRandom6DigitNumber() {
 
   // Create a modal element
   const orderModal = document.createElement('div');
-  orderModal.classList.add('modal', 'fade');
+  orderModal.classList.add('modal', 'fade','portfolio-modal');
   orderModal.id = 'orderModal';
 
 // Function to handle the order button click
 function handleOrderButtonClick() {
-  // Function to construct the modal body based on the current stage
+  // Create the backdrop element
+  const backdrop = document.createElement('div');
+  backdrop.classList.add('modal-backdrop');
+  document.body.appendChild(backdrop);
 
+  console.log("we out here")
 
   // Set the modal content
   orderModal.innerHTML = constructModalBody();
@@ -592,20 +595,41 @@ function handleOrderButtonClick() {
   // Append the modal to the body
   document.body.appendChild(orderModal);
 
-  // Initialize the modal using Bootstrap's modal
-  /* eslint-disable no-undef */
-  const modal = new bootstrap.Modal(orderModal);
-
-  orderModal.addEventListener('hidden.bs.modal', function () {
-    // Reset the currentStage to 1 when the modal is closed
-    currentStage = 1;
-    // console.log(currentStage);
-  });
+ // Disable scrolling on the body
+ document.body.style.overflow = 'hidden';
 
   // Show the modal
-  modal.show();
+  orderModal.style.display = 'block';
 
+  const orderDetailsButton = orderModal.querySelector('#OrderDetailsButton');
+  orderDetailsButton.addEventListener('click', handleOrderDetailsButton);
+
+  // Function to hide the modal
+  function hideModal() {
+    backdrop.remove();
+    // Enable scrolling on the body
+    document.body.style.overflow = '';
+
+    orderModal.style.display = 'none';
+    // Remove the modal from the DOM when hidden
+    orderModal.remove();
+  }
+
+  // Event listener to hide the modal when clicking outside of it
+  window.addEventListener('click', function(event) {
+    if (event.target === orderModal || event.target.classList.contains('btn-close')) {
+      hideModal();
+      currentStage = 1;
+    }
+  });
+  
+
+  // Reset the currentStage to 1 when the modal is closed
+  // orderModal.addEventListener('hidden.bs.modal', function () {
+  //   currentStage = 1;
+  // });
 }
+
   // Initialize an array to store line items for the order
   const lineItems = [];
 
@@ -758,13 +782,13 @@ function constructModalBody() {
       `;
     case 2:
       return `
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered" style="top:30px; ">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Shipping Information</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="font-size: 16px; max-height: 650px; overflow-y: auto;" >
               <label for="firstNameInput">First Name<span style='color:red'>*</span>:</label>
               <input type="text" id="firstNameInput" class="form-control" required value="${inputValues.firstName}">
               <label for="lastNameInput">Last Name<span style='color:red'>*</span>:</label>
@@ -856,18 +880,31 @@ function constructModalBody() {
   }
 }
 
+function handleOrderDetailsButton() {
+  console.log("success");
+  currentStage = 2;
+  console.log("we out here")
+  
+  // Update only the modal body content
+  orderModal.innerHTML = constructModalBody();
+
+  // Save input values
+  saveInputValues();
+  orderModal.style.display = 'block';
+}
+
 orderModal.addEventListener('click', function (event) {
   // if (!event.target || !event.target.id) {
   //   return; // Exit early if the event target doesn't have an id
   // }
   const targetId = event.target.id;
   switch (targetId) {
-    case 'OrderDetailsButton':
-      currentStage=2;
-      // console.log(currentStage);
-      orderModal.innerHTML = constructModalBody();
-      saveInputValues();
-      break;
+    // case 'OrderDetailsButton':
+    //   currentStage=2;
+    //   // console.log(currentStage);
+    //   orderModal.innerHTML = constructModalBody();
+    //   saveInputValues();
+    //   break;
     case 'proceedpayment':
       currentStage=3;
       saveInputValues();
@@ -1045,6 +1082,7 @@ function initializePayPal(amount) {
   }
 
   // Initialize the PayPal SDK here
+  // eslint-disable-next-line
   paypal.Buttons({
     createOrder: function (_, actions) {
       saveInputValues();

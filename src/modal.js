@@ -1,3 +1,4 @@
+//NOT BEING USED
 import React from 'react';
 
 const Modal = ({ onClose, service }) => {
