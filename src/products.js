@@ -730,7 +730,9 @@ async function submitOrder() {
 }
 
 // function formatPhoneNumber() {
-//   var phoneInput = document.getElementById('phoneInput');
+//   // var phoneInput = document.getElementById('phoneInput');
+//   var phoneInput = document.getElementById('phoneInput');  
+//   console.log('trigger fingers')
   
 //   // Remove any non-numeric characters
 //   var phoneNumber = phoneInput.value.replace(/\D/g, '');
@@ -743,6 +745,33 @@ async function submitOrder() {
 //   // Update the input value
 //   phoneInput.value = phoneNumber;
 // }
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Add event listener to the 'phoneInput' element
+  document.getElementById('phoneInput').addEventListener('input', function(event) {
+    // Get the input value
+    var inputValue = event.target.value;
+
+    // Remove any non-numeric characters
+    var numericValue = inputValue.replace(/\D/g, '');
+
+    // Format the numeric value as needed (e.g., 123-456-7890)
+    var formattedValue = numericValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+
+    // Update the input value
+    event.target.value = formattedValue;
+
+    // Check if the input value contains non-numeric characters
+    if (inputValue !== numericValue) {
+      // Display an error message
+      document.getElementById('phoneErrorMessage').textContent = 'Please enter only numbers.';
+    } else {
+      // Clear the error message if input is valid
+      document.getElementById('phoneErrorMessage').textContent = '';
+    }
+  });
+});
+
 
 
 function constructModalBody() {
@@ -795,8 +824,6 @@ function constructModalBody() {
               <input type="text" id="lastNameInput" class="form-control" required value="${inputValues.lastName}">
               <label for="emailInput">Email<span style='color:red'>*</span>:</label>
               <input type="email" id="emailInput" class="form-control" required value="${inputValues.email}">
-              <label for="phoneInput">Phone<span style='color:red'>*</span>:</label>
-              <input type="text" id="phoneInput" class="form-control" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Please enter a valid phone number (e.g., 123-456-7890)" inputmode="numeric" oninput="formatPhoneNumber()" value="${inputValues.phone}">
               <label for="countrySelect">Country<span style='color:red'>*</span>:</label>
               <select id="countryInput" class="form-control" required onfocus="populateCountryOptions()" onchange="region()">
               <option>${inputValues.country}</option>
@@ -915,7 +942,7 @@ orderModal.addEventListener('click', function (event) {
     case 'backButton':
       currentStage=1;
       saveInputValues();
-      // console.log(currentStage);
+      console.log("yo",currentStage);
       orderModal.innerHTML = constructModalBody();
       break;
     case 'backButton2':
@@ -1032,17 +1059,13 @@ function saveInputValues() {
         var emailIsValid = validateEmailFormat(emailInput.value.trim());
         
         var zipIsValid = validateZipCodeFormat(zipInput.value.trim());
-        
-        var phoneIsValid = phoneInput.value.replace(/\D/g, '').length >= 10;
-    
-        var allFilledAndValid = allFieldsFilled && emailIsValid && zipIsValid && phoneIsValid;
+            
+        var allFilledAndValid = allFieldsFilled && emailIsValid && zipIsValid;
     
         if (!emailIsValid && emailInput.value.trim() !== '') {
           validationMessage2.innerHTML = 'Please provide a valid EMAIL';
         } else if ((!zipIsValid || zipInput.value.trim() === '')) {
           validationMessage2.innerHTML = 'Please review POSTAL/ZIP CODE format';
-        } else if (!phoneIsValid && phoneInput.value.trim() !== '') {
-          validationMessage2.innerHTML = 'Please review PHONE NUMBER';
         } else {
           validationMessage2.innerHTML = '';
         }        
@@ -1227,166 +1250,166 @@ function handleClearButtonClick() {
 
 //ADDRESS OPTIONS AUTOMATION VIA API ----------------------------------------------------------------------
 
-// function populateCountryOptions() {
-// 	const countrySelect = document.getElementById('countryInput');
-// 	  countries = [
-// 		{ value: '', text: '' },
-// 		{ value: 'CA', text: 'Canada' },
-// 		{ value: 'TT', text: 'Trinidad and Tobago' },
-// 		{ value: 'US', text: 'United States' },
-// 		// Add more countries as needed
-// 	  ];
+function populateCountryOptions() {
+	const countrySelect = document.getElementById('countryInput');
+	  const countries = [
+		{ value: '', text: '' },
+		{ value: 'CA', text: 'Canada' },
+		{ value: 'TT', text: 'Trinidad and Tobago' },
+		{ value: 'US', text: 'United States' },
+		// Add more countries as needed
+	  ];
 	
 
   
-// 	// Clear existing options
-// 	countrySelect.innerHTML = '';
+	// Clear existing options
+	countrySelect.innerHTML = '';
   
-// 	// Add new options based on the countries array
-// 	countries.forEach(country => {
-// 	  const option = document.createElement('option');
-// 	  option.value = country.value;
-// 	  option.text = country.text;
+	// Add new options based on the countries array
+	countries.forEach(country => {
+	  const option = document.createElement('option');
+	  option.value = country.value;
+	  option.text = country.text;
   
-// 	  if (inputValues.country === country.value) {
-// 		option.selected = true;
-// 	  }
+	  if (inputValues.country === country.value) {
+		option.selected = true;
+	  }
   
-// 	  countrySelect.appendChild(option);
-// 	});
-// 	saveInputValues();
-// }
+	  countrySelect.appendChild(option);
+	});
+	saveInputValues();
+}
   
-// function filterUSRegions(regions) {
-// // Filter out regions with specific ISO codes
-// return regions.filter(region => !region.iso2.startsWith('UM-') && !region.iso2.startsWith('VI') && !region.iso2.startsWith('GU'));
-// }
+function filterUSRegions(regions) {
+// Filter out regions with specific ISO codes
+return regions.filter(region => !region.iso2.startsWith('UM-') && !region.iso2.startsWith('VI') && !region.iso2.startsWith('GU'));
+}
   
-// async function region() {
-// 	// Get the selected country
-// 	const selectedCountry = document.getElementById('countryInput').value;
-// 	saveInputValues();
-// 	console.log('Country saved:', selectedCountry);
+async function region() {
+	// Get the selected country
+	const selectedCountry = document.getElementById('countryInput').value;
+	saveInputValues();
+	console.log('Country saved:', selectedCountry);
   
-// 	// Get the region select element
-// 	const regionSelect = document.getElementById('regionInput');
+	// Get the region select element
+	const regionSelect = document.getElementById('regionInput');
   
-// 	// Clear existing options
-// 	regionSelect.innerHTML = '';
+	// Clear existing options
+	regionSelect.innerHTML = '';
   
-// 	// Set the fetch URL based on the environment
-// 	let fetchURLmap = '';
-// 	if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-// 	  fetchURLmap = 'http://localhost:5000/maps/regions';
-// 	} else {
-// 	  fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/regions';
-// 	}
+	// Set the fetch URL based on the environment
+	let fetchURLmap = '';
+	if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+	  fetchURLmap = 'http://localhost:5000/maps/regions';
+	} else {
+	  fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/regions';
+	}
   
-// 	const apiUrl = `${fetchURLmap}?country=${selectedCountry}`;
+	const apiUrl = `${fetchURLmap}?country=${selectedCountry}`;
   
-// 	try {
-// 	  const response = await fetch(apiUrl);
-// 	  const result = await response.json();
+	try {
+	  const response = await fetch(apiUrl);
+	  const result = await response.json();
   
-// 	  switch (selectedCountry) {
-// 		case 'CA':
-// 		  // Sort the Canadian regions alphabetically by name
-// 		  const sortedCARegions = result.sort((a, b) => a.name.localeCompare(b.name));
-// 		  addOptions(regionSelect, sortedCARegions.map(state => ({ value: state.iso2, text: state.name })));
-// 		  fetchCities();
-// 		  break;
-// 		case 'TT':
-// 		  // Assuming 'TT' API response contains ISO and name properties
-// 		  // Sort the Trinidad and Tobago regions alphabetically by name
-// 		  const sortedTTRegions = result.sort((a, b) => a.name.localeCompare(b.name));
-// 		  addOptions(regionSelect, sortedTTRegions.map(state => ({ value: state.iso2, text: state.name })));
-// 		  fetchCities();
-// 		  break;
-// 		case 'US':
-// 		  // For 'US', filter out regions with ISO codes starting with "UM-"
-// 		  const filteredUSRegions = filterUSRegions(result);
-// 		  // Sort the American regions alphabetically by name
-// 		  const sortedUSRegions = filteredUSRegions.sort((a, b) => a.name.localeCompare(b.name));
-// 		  addOptions(regionSelect, sortedUSRegions.map(state => ({ value: state.iso2, text: state.name })));
-// 		  fetchCities();
-// 		  break;
-// 		// Add more cases for other countries as needed
-// 		default:
-// 		  // Default case when no country is selected
-// 		  break;
-// 	  }
+	  switch (selectedCountry) {
+		case 'CA':
+		  // Sort the Canadian regions alphabetically by name
+		  const sortedCARegions = result.sort((a, b) => a.name.localeCompare(b.name));
+		  addOptions(regionSelect, sortedCARegions.map(state => ({ value: state.iso2, text: state.name })));
+		  fetchCities();
+		  break;
+		case 'TT':
+		  // Assuming 'TT' API response contains ISO and name properties
+		  // Sort the Trinidad and Tobago regions alphabetically by name
+		  const sortedTTRegions = result.sort((a, b) => a.name.localeCompare(b.name));
+		  addOptions(regionSelect, sortedTTRegions.map(state => ({ value: state.iso2, text: state.name })));
+		  fetchCities();
+		  break;
+		case 'US':
+		  // For 'US', filter out regions with ISO codes starting with "UM-"
+		  const filteredUSRegions = filterUSRegions(result);
+		  // Sort the American regions alphabetically by name
+		  const sortedUSRegions = filteredUSRegions.sort((a, b) => a.name.localeCompare(b.name));
+		  addOptions(regionSelect, sortedUSRegions.map(state => ({ value: state.iso2, text: state.name })));
+		  fetchCities();
+		  break;
+		// Add more cases for other countries as needed
+		default:
+		  // Default case when no country is selected
+		  break;
+	  }
   
-// 	} catch (error) {
-// 	  console.log('Error fetching states:', error);
-// 	}
-//   }
+	} catch (error) {
+	  console.log('Error fetching states:', error);
+	}
+  }
   
-// async function fetchCities() {
-// // Get the selected country and region
-// const selectedCountry = document.getElementById('countryInput').value;
-// const selectedRegion = document.getElementById('regionInput').value;
-// saveInputValues();
-// console.log('Region saved:', selectedRegion);
+async function fetchCities() {
+// Get the selected country and region
+const selectedCountry = document.getElementById('countryInput').value;
+const selectedRegion = document.getElementById('regionInput').value;
+saveInputValues();
+console.log('Region saved:', selectedRegion);
 
-// // Set up headers for the API request
-// const headers = new Headers();
-// headers.append("Content-Type", "application/json");
+// Set up headers for the API request
+const headers = new Headers();
+headers.append("Content-Type", "application/json");
 
-// let fetchURLmap = '';
-// if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-// 	fetchURLmap = 'http://localhost:5000/maps/cities';
-// } else {
-// 	fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/cities';
-// }
+let fetchURLmap = '';
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+	fetchURLmap = 'http://localhost:5000/maps/cities';
+} else {
+	fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/cities';
+}
 
-// const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
+const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
 
-// try {
-// 	// Fetch cities data from the server
-// 	const response = await fetch(apiUrl);
-// 	const result = await response.json();
+try {
+	// Fetch cities data from the server
+	const response = await fetch(apiUrl);
+	const result = await response.json();
 
-// 	// Log the result to the console (you can modify this part as needed)
-// 	// console.log(result);
+	// Log the result to the console (you can modify this part as needed)
+	// console.log(result);
 
-// 	// Update city dropdown options
-// 	updateCityDropdown(result);
-// } catch (error) {
-// 	console.log('Error fetching cities:', error);
-// }
-// }
+	// Update city dropdown options
+	updateCityDropdown(result);
+} catch (error) {
+	console.log('Error fetching cities:', error);
+}
+}
 
-// function updateCityDropdown(cityData) {
-// 	const citySelect = document.getElementById('cityInput');
+function updateCityDropdown(cityData) {
+	const citySelect = document.getElementById('cityInput');
   
-// 	// Clear existing options
-// 	citySelect.innerHTML = '';
+	// Clear existing options
+	citySelect.innerHTML = '';
   
-// 	// Add new options based on the fetched city data
-// 	cityData.forEach(city => {
-// 	  const option = document.createElement('option');
-// 	  option.value = city.name; // Use the 'name' property for the value
-// 	  option.text = city.name; // Display the 'name' property in the dropdown
-// 	  citySelect.appendChild(option);
-// 	});
-// 	saveInputValues();console.log('City saved:',citySelect.value)
-// }
+	// Add new options based on the fetched city data
+	cityData.forEach(city => {
+	  const option = document.createElement('option');
+	  option.value = city.name; // Use the 'name' property for the value
+	  option.text = city.name; // Display the 'name' property in the dropdown
+	  citySelect.appendChild(option);
+	});
+	saveInputValues();console.log('City saved:',citySelect.value)
+}
   
-// function addOptions(regionSelect, optionsArray, selectedValue) {
-// // Add options to the select element
-// optionsArray.forEach(optionText => {
-// 	const option = document.createElement('option');
-// 	option.value = optionText.value;
-// 	option.text = optionText.text;
+function addOptions(regionSelect, optionsArray, selectedValue) {
+// Add options to the select element
+optionsArray.forEach(optionText => {
+	const option = document.createElement('option');
+	option.value = optionText.value;
+	option.text = optionText.text;
 
-// 	// Add a data attribute to store the classification
-// 	option.setAttribute('data-classification', 'region');
+	// Add a data attribute to store the classification
+	option.setAttribute('data-classification', 'region');
 
-// 	if (selectedValue === optionText) {
-// 	option.selected = true;
-// 	}
-// 	regionSelect.add(option);
-// });
-// }
+	if (selectedValue === optionText) {
+	option.selected = true;
+	}
+	regionSelect.add(option);
+});
+}
 }
 export default DisplayProducts;
