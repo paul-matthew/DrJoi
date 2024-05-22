@@ -587,7 +587,7 @@ function handleOrderButtonClick() {
   backdrop.classList.add('modal-backdrop');
   document.body.appendChild(backdrop);
 
-  console.log("we out here")
+  console.log("Modal Opened")
 
   // Set the modal content
   orderModal.innerHTML = constructModalBody();
@@ -908,9 +908,8 @@ function constructModalBody() {
 }
 
 function handleOrderDetailsButton() {
-  console.log("success");
+  console.log("Modal 2nd page, Order details");
   currentStage = 2;
-  console.log("we out here")
   
   // Update only the modal body content
   orderModal.innerHTML = constructModalBody();
@@ -926,12 +925,12 @@ orderModal.addEventListener('click', function (event) {
   // }
   const targetId = event.target.id;
   switch (targetId) {
-    // case 'OrderDetailsButton':
-    //   currentStage=2;
-    //   // console.log(currentStage);
-    //   orderModal.innerHTML = constructModalBody();
-    //   saveInputValues();
-    //   break;
+    case 'OrderDetailsButton':
+      currentStage=2;
+      // console.log(currentStage);
+      orderModal.innerHTML = constructModalBody();
+      saveInputValues();
+      break;
     case 'proceedpayment':
       currentStage=3;
       saveInputValues();
