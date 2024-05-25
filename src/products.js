@@ -560,7 +560,7 @@ const inputValues = {
   firstName:'',
   lastName: '',
   email: '',
-  phone: '',
+  // phone: '',
   country: '',
   region:'',
   city: '',
@@ -642,7 +642,7 @@ async function submitOrder() {
     firstName,
     lastName,
     email,
-    phone,
+    // phone,
     country,
     region,
     city,
@@ -682,7 +682,7 @@ async function submitOrder() {
       "first_name": firstName,
       "last_name": lastName,
       "email": email,
-      "phone": phone,
+      // "phone": phone,
       "country": country,
       "region": region,
       "address1": address,
@@ -746,31 +746,31 @@ async function submitOrder() {
 //   phoneInput.value = phoneNumber;
 // }
 
-document.addEventListener("DOMContentLoaded", function() {
-  // Add event listener to the 'phoneInput' element
-  document.getElementById('phoneInput').addEventListener('input', function(event) {
-    // Get the input value
-    var inputValue = event.target.value;
+// document.addEventListener("DOMContentLoaded", function() {
+//   // Add event listener to the 'phoneInput' element
+//   document.getElementById('phoneInput').addEventListener('input', function(event) {
+//     // Get the input value
+//     var inputValue = event.target.value;
 
-    // Remove any non-numeric characters
-    var numericValue = inputValue.replace(/\D/g, '');
+//     // Remove any non-numeric characters
+//     var numericValue = inputValue.replace(/\D/g, '');
 
-    // Format the numeric value as needed (e.g., 123-456-7890)
-    var formattedValue = numericValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+//     // Format the numeric value as needed (e.g., 123-456-7890)
+//     var formattedValue = numericValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
 
-    // Update the input value
-    event.target.value = formattedValue;
+//     // Update the input value
+//     event.target.value = formattedValue;
 
-    // Check if the input value contains non-numeric characters
-    if (inputValue !== numericValue) {
-      // Display an error message
-      document.getElementById('phoneErrorMessage').textContent = 'Please enter only numbers.';
-    } else {
-      // Clear the error message if input is valid
-      document.getElementById('phoneErrorMessage').textContent = '';
-    }
-  });
-});
+//     // Check if the input value contains non-numeric characters
+//     if (inputValue !== numericValue) {
+//       // Display an error message
+//       document.getElementById('phoneErrorMessage').textContent = 'Please enter only numbers.';
+//     } else {
+//       // Clear the error message if input is valid
+//       document.getElementById('phoneErrorMessage').textContent = '';
+//     }
+//   });
+// });
 
 
 
@@ -825,11 +825,11 @@ function constructModalBody() {
               <label for="emailInput">Email<span style='color:red'>*</span>:</label>
               <input type="email" id="emailInput" class="form-control" required value="${inputValues.email}">
               <label for="countrySelect">Country<span style='color:red'>*</span>:</label>
-              <select id="countryInput" class="form-control" required onfocus="populateCountryOptions()" onchange="region()">
+              <select id="countryInput" class="form-control" required>
               <option>${inputValues.country}</option>
               </select>                       
-              <label for="regionInput">Province/State/Region<span style='color:red'>*</span>:</label>
-              <select id="regionInput" class="form-control" required onchange="fetchCities()">
+              <label for="regionInput">State/Province/Region<span style='color:red'>*</span>:</label>
+              <select id="regionInput" class="form-control" required>
                 <option>${inputValues.region}</option>
               </select>
               <label for="cityinput">City<span style='color:red'>*</span>:</label>
@@ -920,40 +920,60 @@ function handleOrderDetailsButton() {
 }
 
 orderModal.addEventListener('click', function (event) {
-  // if (!event.target || !event.target.id) {
-  //   return; // Exit early if the event target doesn't have an id
-  // }
   const targetId = event.target.id;
   switch (targetId) {
     case 'OrderDetailsButton':
-      currentStage=2;
-      // console.log(currentStage);
+      currentStage = 2;
       orderModal.innerHTML = constructModalBody();
       saveInputValues();
       break;
     case 'proceedpayment':
-      currentStage=3;
+      currentStage = 3;
       saveInputValues();
-      // console.log(currentStage);
       orderModal.innerHTML = constructModalBody();
       initializePayPal();
       break;
     case 'backButton':
-      currentStage=1;
+      currentStage = 1;
       saveInputValues();
-      console.log("yo",currentStage);
       orderModal.innerHTML = constructModalBody();
       break;
     case 'backButton2':
-      currentStage=2;
-      // console.log(currentStage);
+      currentStage = 2;
       orderModal.innerHTML = constructModalBody();
       saveInputValues();
       break;
-      default:
-        break;
+    default:
+      break;
   }
+
+  // Add event listeners for country and region select inputs
+  if (currentStage === 2) {
+    const countryInput = document.getElementById('countryInput');
+    const regionInput = document.getElementById('regionInput');
+    const cityInput = document.getElementById('cityInput');
+    
+    // Function to populate country options when input gains focus
+    countryInput.addEventListener('focus', async () => {
+      await populateCountryOptions();
+    });
+  
+    // Function to update regions based on selected country
+    countryInput.addEventListener('change', async () => {
+      await region(); // Update regions
+    });
+  
+    // Function to update cities based on selected region
+    regionInput.addEventListener('change', async () => {
+      await fetchCities(); // Update cities
+    });
+  
+    // Optionally, you can populate country options initially
+    populateCountryOptions(); // Assuming this function exists
+  }
+  
 });
+
 
 var initialSetupDone = false;
 
@@ -962,7 +982,7 @@ function saveInputValues() {
   const firstNameInput = document.getElementById('firstNameInput');
   const lastNameInput = document.getElementById('lastNameInput');
   const emailInput = document.getElementById('emailInput');
-  const phoneInput = document.getElementById('phoneInput');
+  // const phoneInput = document.getElementById('phoneInput');
   const countryInput = document.getElementById('countryInput');
   const regionInput = document.getElementById('regionInput');
   const cityInput = document.getElementById('cityInput');
@@ -973,7 +993,7 @@ function saveInputValues() {
   if (firstNameInput) inputValues.firstName = firstNameInput.value;
   if (lastNameInput) inputValues.lastName = lastNameInput.value;
   if (emailInput) inputValues.email = emailInput.value;
-  if (phoneInput) inputValues.phone = phoneInput.value;
+  // if (phoneInput) inputValues.phone = phoneInput.value;
   if (countryInput) {
     inputValues.country = countryInput.value;
     console.log('Saved Country:', inputValues.country);
@@ -1007,11 +1027,11 @@ function saveInputValues() {
         var zipPattern = /^(\d{5}(-\d{4})?)$/;
         return zipPattern.test(zipValue);
       }
-    //   else if (countryInput.value === 'CA') {
-    //   // Allow for postal code with or without a space
-    //   var zipPattern = /^([A-Za-z]\d[A-Za-z] \d[A-Za-z]\d|[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d)$/;
-    //   return zipPattern.test(zipValue);
-    // }
+      else if (countryInput.value === 'CA') {
+      // Allow for postal code with or without a space
+      var zipPattern = /^([A-Za-z]\d[A-Za-z] \d[A-Za-z]\d|[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d)$/;
+      return zipPattern.test(zipValue);
+    }
     }
   
     var validationMessage = document.getElementById('formincomplete');
@@ -1032,13 +1052,15 @@ function saveInputValues() {
     if (!initialSetupDone || 
       Array.from(formControls).some(input => input.value.trim() === '' && input !== address2Input) ||
       !validateEmailFormat(emailInput.value.trim()) ||
-      !validateZipCodeFormat(zipInput.value.trim()) ||
-      phoneInput.value.replace(/\D/g, '').length < 10) {
-    // Set initial state
-    proceedBtn.disabled = true;
-    proceedBtn.classList.add('btn-disabled');
-    validationMessageText = 'Please fill in all required fields to proceed to payment.';
-  }
+      !validateZipCodeFormat(zipInput.value.trim()) 
+      // || phoneInput.value.replace(/\D/g, '').length < 10
+    ) 
+      {
+        // Set initial state
+        proceedBtn.disabled = true;
+        proceedBtn.classList.add('btn-disabled');
+        validationMessageText = 'Please fill in all required fields to proceed to payment.';
+      }
   
     validationMessage.innerText = validationMessageText;
     // var validationMessage2=document.createElement('div');
@@ -1253,9 +1275,8 @@ function populateCountryOptions() {
 	const countrySelect = document.getElementById('countryInput');
 	  const countries = [
 		{ value: '', text: '' },
+    { value: 'US', text: 'United States' },
 		{ value: 'CA', text: 'Canada' },
-		{ value: 'TT', text: 'Trinidad and Tobago' },
-		{ value: 'US', text: 'United States' },
 		// Add more countries as needed
 	  ];
 	
