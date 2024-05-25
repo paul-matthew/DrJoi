@@ -951,7 +951,7 @@ orderModal.addEventListener('click', function (event) {
   if (currentStage === 2) {
     const countryInput = document.getElementById('countryInput');
     const regionInput = document.getElementById('regionInput');
-    const cityInput = document.getElementById('cityInput');
+    // const cityInput = document.getElementById('cityInput');
     
     // Function to populate country options when input gains focus
     countryInput.addEventListener('focus', async () => {
@@ -1022,16 +1022,17 @@ function saveInputValues() {
       //   var zipPattern = /^(\d{6}(-\d{4})?)$/;
       //   return zipPattern.test(zipValue);
       // }
+      let zipPattern;
       if (countryInput.value === 'US') {
         // Allow for postal code with or without a space
-        var zipPattern = /^(\d{5}(-\d{4})?)$/;
+        zipPattern = /^(\d{5}(-\d{4})?)$/;
         return zipPattern.test(zipValue);
       }
       else if (countryInput.value === 'CA') {
       // Allow for postal code with or without a space
-      var zipPattern = /^([A-Za-z]\d[A-Za-z] \d[A-Za-z]\d|[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d)$/;
+      zipPattern = /^([A-Za-z]\d[A-Za-z] \d[A-Za-z]\d|[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d)$/;
       return zipPattern.test(zipValue);
-    }
+      }
     }
   
     var validationMessage = document.getElementById('formincomplete');
@@ -1116,7 +1117,9 @@ function initializePayPal(amount) {
   paypalButtonContainer.id = 'paypal-button-container';
 
   // Append the PayPal button container to the parent container
+  if (currentStage === 3) {
   paypalContainer.appendChild(paypalButtonContainer);
+  }
 
   let fetchURLpayvalidate = '';
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -1126,6 +1129,7 @@ function initializePayPal(amount) {
   }
 
   // Initialize the PayPal SDK here
+  if (currentStage === 3) {
   // eslint-disable-next-line
   paypal.Buttons({
     createOrder: function (_, actions) {
@@ -1203,7 +1207,7 @@ function initializePayPal(amount) {
     },
     
   }).render('#paypal-button-container');
-  
+}
   
 }
 
@@ -1266,8 +1270,30 @@ function handleClearButtonClick() {
 }
 
 // PAYPAL CONNECTION ----------------
+const headers = new Headers();
+headers.append("Content-Type", "application/json");
 
+let fetchURLpay = '';
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+  fetchURLpay = 'http://localhost:5000/config';
+} else {
+  fetchURLpay = 'https://drjoiserver-106ea7a60e39.herokuapp.com/config';
+}
 
+const apiUrl = `${fetchURLpay}`;
+
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(config => {
+    console.log('PayPal Client ID:', config.paypalClientId); // Check if client ID is successfully fetched
+    const script = document.createElement('script');
+    script.src = `https://www.paypal.com/sdk/js?client-id=${config.paypalClientId}`;
+    script.onload = function() {
+      initializePayPal(); // Call the function to initialize PayPal after the script is loaded
+    };
+    document.head.appendChild(script);
+  })
+  .catch(error => console.error('Error fetching configuration:', error));
 
 //ADDRESS OPTIONS AUTOMATION VIA API ----------------------------------------------------------------------
 

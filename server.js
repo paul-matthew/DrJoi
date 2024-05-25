@@ -3,12 +3,22 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
+import paypal from 'paypal-rest-sdk'
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const mapAPIkey = process.env.MAP_API;
+const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
+// const paypal = require('paypal-rest-sdk');
+
+// Configure PayPal SDK
+paypal.configure({
+  mode: 'sandbox', // Change to 'live' for production
+  client_id: paypalClientId,
+  // client_secret: paypalClientSecret,
+});
 
 app.use(express.json());
 app.use(cors());
@@ -92,6 +102,64 @@ app.get('/maps/cities', async (req, res) => {
   }
 });
 
+// PayPal configuration endpoint
+app.get('/config', (req, res) => {
+  res.json({
+    paypalClientId: paypalClientId,
+    paypalSandboxUrl: `https://www.sandbox.paypal.com/sdk/js?client-id=${paypalClientId}`,
+    silversurfer: "In the fresh",
+  });
+});
+
+// PayPal validation endpoint
+app.post('/paypal/validate', async (req, res) => {
+  const { paymentDetails, total } = req.body;
+
+  if (!paymentDetails) {
+    return res.status(400).json({ error: 'Invalid request data' });
+  }
+
+  try {
+    // Check if the payment details match the order details
+    const isPaymentValid = validatePaymentDetails(paymentDetails, total);
+
+    if (isPaymentValid) {
+      // If the payment is valid, send a success response to the client
+      res.json({ success: true });
+    } else {
+      // If the payment is not valid, send an error response to the client
+      res.status(400).json({ success: false, error: 'Invalid payment' });
+    }
+  } catch (error) {
+    console.error('Error processing PayPal order:', error);
+    res.status(500).json({ success: false, error: 'Failed to process PayPal order' });
+  }
+});
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Function to validate payment details
+function validatePaymentDetails(paymentDetails, total) {
+  const isValid =
+    paymentDetails &&
+    paymentDetails.status === 'COMPLETED' &&
+    paymentDetails.purchase_units &&
+    paymentDetails.purchase_units[0] &&
+    paymentDetails.purchase_units[0].amount &&
+    paymentDetails.purchase_units[0].amount.value === total.toString();
+
+  console.log("Paypal platform total", paymentDetails.purchase_units[0].amount.value);
+  console.log("client side total", total.toString());
+
+  if (isValid) {
+    console.log('Server validation complete');
+  } else {
+    console.log('Server validation error');
+    console.log('paymentDetails:', paymentDetails);
+  }
+
+  return isValid;
+}

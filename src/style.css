@@ -10860,9 +10860,23 @@ transform: scale(1.2);
 }
 
 .remove-btn{
-  max-width:100px !important;
+  max-width:100px;
   background:rgba(33, 74, 109, 1) !important;
   color:white !important;
+  width:80px;
+  height:40px;
+}
+
+@media (max-width:767px){
+  .remove-btn {
+    max-width: 70px !important;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Vertically center the text */
+    height: 30px;
+    margin:10px;
+}
 }
 
 .modal-header div{
@@ -10906,11 +10920,6 @@ text-align: center;
   border-color:#D091DE !important;
   color:black;
   border-radius:5px;
-}
-
-.remove-btn{
-  width:80px;
-  height:40px;
 }
 
 .remove-btn:hover, .order-btn:hover, .view-cart-btn:hover, .add-to-cart-btn:hover,.clear-btn:hover,.read-more:hover,.submit-btn:hover,.gen-btn:hover{
