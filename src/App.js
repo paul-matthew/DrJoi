@@ -221,7 +221,8 @@ function App() {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
       setDesktopState(stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)); // Capitalize the first letter
       if (currentUrl === '/cart') {
-        // handleCartClick();    
+        console.log('sip');
+        // handleCart();    
       }
     } 
     else {

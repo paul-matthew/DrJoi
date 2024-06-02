@@ -383,8 +383,7 @@ const skuToProductIdMap = {};
 function handleCart() {
     if (window.location.pathname.includes('Cart')) {
         // Create an order button
-        console.log("test");
-
+        console.log("Handle Cart");
         const orderButton = document.createElement('button');
         orderButton.id = 'orderButton';
         orderButton.classList.add('order-btn');
@@ -420,7 +419,6 @@ function handleCart() {
                                 if (matchingVariant) {
                                     skuToProductIdMap[matchingVariant.sku] = product.id;
                                 }
-
                                 if (matchingVariant) {
                                     const matchingSKU = matchingVariant.sku;
                                     const existingCartItem = document.querySelector(`.cart-item[data-sku="${matchingSKU}"]`);
@@ -532,6 +530,14 @@ function handleCart() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  const currentUrl = window.location.pathname.toLowerCase();
+  if (currentUrl === '/cart') {
+    console.log("works, loaded");
+    handleCart();    
+  }
+});
+
 
 // Define a function to update total
 function updateTotal() {
@@ -550,7 +556,6 @@ function updateTotal() {
 
 // Call the function to handle cart functionality
 // handleCart();
-
 
 //ORDER---------------------
 
@@ -692,6 +697,8 @@ async function submitOrder() {
       // Include other user input in address_to
     }
   };
+  console.log('ah yo',orderDetails)
+
   // console.log('ah yo this one:',lineItems);
 
   // Make a POST request to your server's /orders endpoint
@@ -701,32 +708,34 @@ async function submitOrder() {
   } else {
       fetchURLorder = 'https://drjoiserver-106ea7a60e39.herokuapp.com/orders';
   }
-
-  if (window.location.pathname.includes('cart')) {
-  fetch(fetchURLorder, {
-    method: 'POST',
-    body: JSON.stringify(orderDetails),
-    headers: {
-      'Content-Type': 'application/json',
-
-    },
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Printify order response:', data);
-
-      if (data.success && data.orderStatus === 'OK') {
-        currentStage = 4;
-      } else {
-        currentStage = 5;
-      }
-
-      orderModal.innerHTML = constructModalBody();
+  
+  if (window.location.pathname.includes('Cart')) {
+    fetch(fetchURLorder, {
+      method: 'POST',
+      body: JSON.stringify(orderDetails),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-    .catch(error => {
-      console.error('Error placing order with Printify:', error);
-    });
-}
+      .then(response => response.json())
+      .then(data => {
+        console.log('Order response:', data);
+  
+        if (data.success && data.orderStatus === 'OK') {
+          currentStage = 4;
+        } else {
+          currentStage = 5;
+        }
+  
+        orderModal.innerHTML = constructModalBody();
+      })
+      .catch(error => {
+        console.error('Error placing order:', error);
+        currentStage = 5;
+        orderModal.innerHTML = constructModalBody();
+      });
+  }
+  
 }
 
 // function formatPhoneNumber() {
@@ -1123,9 +1132,9 @@ function initializePayPal(amount) {
 
   let fetchURLpayvalidate = '';
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    fetchURLpayvalidate = 'http://localhost:5000/validate';
+    fetchURLpayvalidate = 'http://localhost:5000/paypal/validate';
   } else {
-    fetchURLpayvalidate = 'https://drjoiserver-106ea7a60e39.herokuapp.com/validate';
+    fetchURLpayvalidate = 'https://drjoiserver-106ea7a60e39.herokuapp.com/paypal/validate';
   }
 
   // Initialize the PayPal SDK here
@@ -1285,7 +1294,7 @@ const apiUrl = `${fetchURLpay}`;
 fetch(apiUrl)
   .then(response => response.json())
   .then(config => {
-    console.log('PayPal Client ID:', config.paypalClientId); // Check if client ID is successfully fetched
+    console.log('PayPal Client IDxxx:'); // Check if client ID is successfully fetched
     const script = document.createElement('script');
     script.src = `https://www.paypal.com/sdk/js?client-id=${config.paypalClientId}`;
     script.onload = function() {

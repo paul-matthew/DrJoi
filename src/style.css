@@ -10860,7 +10860,7 @@ transform: scale(1.2);
 }
 
 .remove-btn{
-  max-width:100px;
+  max-width:100px !important;
   background:rgba(33, 74, 109, 1) !important;
   color:white !important;
   width:80px;
