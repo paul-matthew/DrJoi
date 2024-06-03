@@ -1419,7 +1419,7 @@ height:305% !important;
   /* For the Professional Background Cards */
   @media (min-width: 576px) and (max-width: 809px) {
     .CardContent{
-    height:200px !important;
+    height:300px !important;
     min-width:50vh !important
     }
   }
@@ -1453,7 +1453,7 @@ height:305% !important;
     }
     @media (min-width: 810px) and (max-width: 1238px) {
       .CardContent1{
-      height:300px !important;
+      height:400px !important;
       min-width:50vh !important
       }
     }
@@ -1467,7 +1467,7 @@ height:305% !important;
   
     @media (min-width: 1343px){
       .CardContent1{
-      height:350px !important;
+      height:450px !important;
       min-width:22vh !important
       }
     }
