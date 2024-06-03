@@ -111,11 +111,21 @@ app.get('/maps/cities', async (req, res) => {
 
 // PayPal configuration endpoint
 app.get('/config', (req, res) => {
-  res.json({
-    paypalClientId: paypalClientId,
-    // paypalSandboxUrl: `https://www.sandbox.paypal.com/sdk/js?client-id=${paypalClientId}`,
-  });
+  try {
+    if (!paypalClientId) {
+      throw new Error('PayPal client ID not found in environment variables.');
+    }
+
+    res.json({
+      paypalClientId: paypalClientId,
+      // paypalSandboxUrl: `https://www.sandbox.paypal.com/sdk/js?client-id=${paypalClientId}`,
+    });
+  } catch (error) {
+    console.error('Error fetching PayPal config:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
+
 
 // PayPal validation endpoint
 app.post('/paypal/validate', async (req, res) => {
