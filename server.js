@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const mapAPIkey = process.env.MAP_API;
-const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
+// const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
 const printifyApiKey = process.env.PRINTIFY_API_KEY
 const printifyShopID = process.env.PRINTIFY_SHOPID
 const emailUser = process.env.EMAIL_USER;
@@ -21,7 +21,7 @@ const emailPass = process.env.EMAIL_PASS;
 // Configure PayPal SDK
 paypal.configure({
   mode: 'sandbox', // Change to 'live' for production
-  client_id: paypalClientId,
+  client_id: process.env.PAYPAL_CLIENT_ID_SB,
   // client_secret: paypalClientSecret,
 });
 
@@ -111,19 +111,10 @@ app.get('/maps/cities', async (req, res) => {
 
 // PayPal configuration endpoint
 app.get('/config', (req, res) => {
-  try {
-    if (!paypalClientId) {
-      throw new Error('PayPal client ID not found in environment variables.');
-    }
-
-    res.json({
-      paypalClientId: paypalClientId,
-      // paypalSandboxUrl: `https://www.sandbox.paypal.com/sdk/js?client-id=${paypalClientId}`,
-    });
-  } catch (error) {
-    console.error('Error fetching PayPal config:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+  res.json({
+    paypalClientId: process.env.PAYPAL_CLIENT_ID_SB,
+    silversurfer:"In the fresh",
+  });
 });
 
 
