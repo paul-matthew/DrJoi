@@ -316,7 +316,6 @@ fetch(fetchURL)
                     const colorMatchIndex = variant.options[1] === selectedColor?.id;
                     const sizeMatchIndex = variant.options[0]?.toString() === selectedSizeId.toString();
                     const fabricMatchIndex = variant.options[0]?.toString() === selectedFabricId.toString();
-                    console.log("ah yo", variant.options[1])
                     return colorMatchIndex && sizeMatchIndex && fabricMatchIndex;
                 });
             }
@@ -383,7 +382,6 @@ const skuToProductIdMap = {};
 function handleCart() {
     if (window.location.pathname.includes('Cart')) {
         // Create an order button
-        console.log("Handle Cart");
         const orderButton = document.createElement('button');
         orderButton.id = 'orderButton';
         orderButton.classList.add('order-btn');
@@ -697,7 +695,6 @@ async function submitOrder() {
       // Include other user input in address_to
     }
   };
-  console.log('ah yo',orderDetails)
 
   // console.log('ah yo this one:',lineItems);
 
@@ -1294,7 +1291,6 @@ const apiUrl = `${fetchURLpay}`;
 fetch(apiUrl)
   .then(response => response.json())
   .then(config => {
-    console.log('PayPal Client IDxxx:'); // Check if client ID is successfully fetched
     const script = document.createElement('script');
     script.src = `https://www.paypal.com/sdk/js?client-id=${config.paypalClientId}`;
     script.onload = function() {

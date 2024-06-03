@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
 import paypal from 'paypal-rest-sdk';
+import nodemailer from 'nodemailer';
+import { google } from 'googleapis';
 
 dotenv.config();
 
@@ -13,6 +15,8 @@ const mapAPIkey = process.env.MAP_API;
 const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
 const printifyApiKey = process.env.PRINTIFY_API_KEY
 const printifyShopID = process.env.PRINTIFY_SHOPID
+const emailUser = process.env.EMAIL_USER;
+const emailPass = process.env.EMAIL_PASS;
 
 // Configure PayPal SDK
 paypal.configure({
@@ -23,6 +27,15 @@ paypal.configure({
 
 app.use(express.json());
 app.use(cors());
+
+// Configure nodemailer with your email provider's SMTP settings
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // Example: 'gmail'
+  auth: {
+    user: emailUser,
+    pass: emailPass,
+  },
+});
 
 // Endpoint to fetch products from Printify
 app.get('/products', async (req, res) => {
@@ -162,6 +175,42 @@ app.post('/orders', async (req, res) => {
       console.log('Order placed successfully with Printify.');
       const responseBody = await orderResponse.json();
       orders.push(responseBody);  // Store the order details in memory
+      //Email Confirmation of receipt of Order
+
+      const mailOptions = {
+        from: emailUser,
+        to: address_to.email,
+        bcc: emailUser,
+        subject: 'Order Placed, Thank You! Exotic Relief by Dr. Joi',
+        html: `
+          <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <h2>Hello ${address_to.first_name},</h2>
+            <p>Thank you for placing your order with Exotic Relief by Dr. Joi. It is currently being processed, and you will receive a confirmation email with more details in the next few days.</p>
+            <h3>Order Details:</h3>
+            <p><strong>Order ID:</strong> ${responseBody.id}</p>
+            <p><strong>Shipping Address:</strong></p>
+            <p>
+              ${address_to.first_name} ${address_to.last_name}<br>
+              ${address_to.address1}<br>
+              ${address_to.address2 ? address_to.address2 + '<br>' : ''}
+              ${address_to.city}, ${address_to.region} ${address_to.zip}<br>
+              ${address_to.country}
+            </p>
+            <p>Thank you,</p>
+            <p>Dr. Joi</p>
+          </div>
+        `
+      };
+      
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error('Error sending email:', error);
+        } else {
+          console.log('Email sent:', info.response);
+        }
+      });
+
+
       res.status(200).json({   
         success: true,
         orderStatus: orderResponse.statusText,
