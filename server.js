@@ -113,7 +113,7 @@ app.get('/maps/cities', async (req, res) => {
 app.get('/config', (req, res) => {
   res.json({
     paypalClientId: paypalClientId,
-    paypalSandboxUrl: `https://www.sandbox.paypal.com/sdk/js?client-id=${paypalClientId}`,
+    // paypalSandboxUrl: `https://www.sandbox.paypal.com/sdk/js?client-id=${paypalClientId}`,
   });
 });
 
