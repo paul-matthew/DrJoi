@@ -111,10 +111,20 @@ app.get('/maps/cities', async (req, res) => {
 
 // PayPal configuration endpoint
 app.get('/config', (req, res) => {
-  res.json({
-    paypalClientId: process.env.PAYPAL_CLIENT_ID_SB,
-    silversurfer:"In the fresh",
-  });
+  try {
+    const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
+    if (!paypalClientId) {
+      throw new Error('PayPal client ID not found in environment variables.');
+    }
+
+    res.json({
+      paypalClientId: paypalClientId,
+      silversurfer: "In the fresh",
+    });
+  } catch (error) {
+    console.error('Error fetching PayPal config:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 
