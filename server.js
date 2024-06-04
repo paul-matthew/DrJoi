@@ -5,16 +5,14 @@ import cors from 'cors';
 import path from 'path';
 import paypal from 'paypal-rest-sdk';
 import nodemailer from 'nodemailer';
-import { google } from 'googleapis';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const mapAPIkey = process.env.MAP_API;
-// const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
-const printifyApiKey = process.env.PRINTIFY_API_KEY
-const printifyShopID = process.env.PRINTIFY_SHOPID
+const printifyApiKey = process.env.PRINTIFY_API_KEY;
+const printifyShopID = process.env.PRINTIFY_SHOPID;
 const emailUser = process.env.EMAIL_USER;
 const emailPass = process.env.EMAIL_PASS;
 
@@ -22,7 +20,7 @@ const emailPass = process.env.EMAIL_PASS;
 paypal.configure({
   mode: 'sandbox', // Change to 'live' for production
   client_id: process.env.PAYPAL_CLIENT_ID_SB,
-  // client_secret: paypalClientSecret,
+  client_secret: process.env.PAYPAL_CLIENT_SECRET_SB,
 });
 
 app.use(express.json());
@@ -40,9 +38,9 @@ const transporter = nodemailer.createTransport({
 // Endpoint to fetch products from Printify
 app.get('/products', async (req, res) => {
   try {
-    const printifyResponse = await fetch(`https://api.printify.com/v1/shops/${process.env.PRINTIFY_SHOPID}/products.json`, {
+    const printifyResponse = await fetch(`https://api.printify.com/v1/shops/${printifyShopID}/products.json`, {
       headers: {
-        Authorization: `Bearer ${process.env.PRINTIFY_API_KEY}`,
+        Authorization: `Bearer ${printifyApiKey}`,
       }
     });
 
@@ -67,16 +65,9 @@ app.get('/maps/regions', async (req, res) => {
     "X-CSCAPI-KEY": mapAPIkey
   };
 
-  const requestOptions = {
-    method: 'GET',
-    headers: headers
-  };
-
   try {
-    console.log("Requesting regions from:", apiUrl); // Log the API request URL
-    const response = await fetch(apiUrl, requestOptions);
+    const response = await fetch(apiUrl, { headers });
     const result = await response.json();
-    console.log("Regions received:", result); // Log the received regions
     res.json(result);
   } catch (error) {
     console.log('Error fetching states:', error);
@@ -86,21 +77,15 @@ app.get('/maps/regions', async (req, res) => {
 
 // Endpoint to fetch cities
 app.get('/maps/cities', async (req, res) => {
-  const selectedCountry = req.query.country;
-  const selectedRegion = req.query.region;
+  const { country, region } = req.query;
 
-  const apiUrl = `https://api.countrystatecity.in/v1/countries/${selectedCountry}/states/${encodeURIComponent(selectedRegion)}/cities`;
+  const apiUrl = `https://api.countrystatecity.in/v1/countries/${country}/states/${encodeURIComponent(region)}/cities`;
   const headers = {
     "X-CSCAPI-KEY": mapAPIkey
   };
 
-  const requestOptions = {
-    method: 'GET',
-    headers: headers
-  };
-
   try {
-    const response = await fetch(apiUrl, requestOptions);
+    const response = await fetch(apiUrl, { headers });
     const result = await response.json();
     res.json(result);
   } catch (error) {
@@ -118,15 +103,13 @@ app.get('/config', (req, res) => {
     }
 
     res.json({
-      paypalClientId: paypalClientId,
-      silversurfer: "In the fresh",
+      paypalClientId,
     });
   } catch (error) {
     console.error('Error fetching PayPal config:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 
 // PayPal validation endpoint
 app.post('/paypal/validate', async (req, res) => {
@@ -150,27 +133,18 @@ app.post('/paypal/validate', async (req, res) => {
   }
 });
 
-//ORDERS
-
+// ORDERS
 const orders = [];
 
 // Endpoint to create a new order
 app.post('/orders', async (req, res) => {
   const { address_to, line_items } = req.body;
 
-  if (!address_to) {
-    console.log("This is the address that was given:", address_to);
-    return res.status(400).json({ error: 'Invalid address data' });
-  }
-
-  if (!line_items) {
-    console.log("This is the product info for the order", line_items);
-    return res.status(400).json({ error: 'Invalid order/shipping data' });
+  if (!address_to || !line_items) {
+    return res.status(400).json({ error: 'Invalid address or order data' });
   }
 
   try {
-    console.log('Request Body:', req.body);
-
     const orderResponse = await fetch(`https://api.printify.com/v1/shops/${printifyShopID}/orders.json`, {
       method: 'POST',
       headers: {
@@ -180,14 +154,11 @@ app.post('/orders', async (req, res) => {
       body: JSON.stringify(req.body),
     });
 
-    console.log('Printify API Response:', orderResponse.status, orderResponse.statusText);
-
     if (orderResponse.ok) {
-      console.log('Order placed successfully with Printify.');
       const responseBody = await orderResponse.json();
-      orders.push(responseBody);  // Store the order details in memory
-      //Email Confirmation of receipt of Order
+      orders.push(responseBody); // Store the order details in memory
 
+      // Email Confirmation of receipt of Order
       const mailOptions = {
         from: emailUser,
         to: address_to.email,
@@ -212,7 +183,7 @@ app.post('/orders', async (req, res) => {
           </div>
         `
       };
-      
+
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           console.error('Error sending email:', error);
@@ -221,14 +192,12 @@ app.post('/orders', async (req, res) => {
         }
       });
 
-
       res.status(200).json({   
         success: true,
         orderStatus: orderResponse.statusText,
         message: 'Order placed successfully with Printify', 
       });
     } else {
-      console.error('Failed to place order with Printify.');
       res.status(500).json({   
         success: false,
         orderStatus: orderResponse.statusText,
@@ -260,9 +229,6 @@ function validatePaymentDetails(paymentDetails, total) {
     paymentDetails.purchase_units[0] &&
     paymentDetails.purchase_units[0].amount &&
     paymentDetails.purchase_units[0].amount.value === total.toString();
-
-  console.log("Paypal platform total", paymentDetails.purchase_units[0].amount.value);
-  console.log("client side total", total.toString());
 
   if (isValid) {
     console.log('Server validation complete');

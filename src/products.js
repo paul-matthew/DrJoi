@@ -1285,16 +1285,13 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
 } else {
   fetchURLpay = 'https://drjoiserver-106ea7a60e39.herokuapp.com/config';
 }
-console.log("this is url:",fetchURLpay)
 
 const apiUrl = `${fetchURLpay}`;
-console.log("this is apiurl:",apiUrl)
 
 
 fetch(apiUrl)
   .then(response => response.json())
   .then(config => {
-    console.log("hmm config",config);
     const script = document.createElement('script');
     script.src = `https://www.paypal.com/sdk/js?client-id=${config.paypalClientId}`;
     script.onload = function() {
