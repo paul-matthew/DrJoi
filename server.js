@@ -94,17 +94,25 @@ app.get('/maps/cities', async (req, res) => {
   }
 });
 
-// PayPal configuration endpoint
-const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
-
-app.get('/config', (_, res) => {
-  if (!paypalClientId) {
+// Define a middleware function to check for the existence of the PayPal client ID
+const paypalClientIdMiddleware = (req, res, next) => {
+  if (!process.env.PAYPAL_CLIENT_ID_SB) {
     console.error('PayPal client ID not found.');
     return res.status(500).json({ error: 'Internal Server Error' });
   }
+  
+  // Attach the PayPal client ID to the request object
+  req.paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
+  next();
+};
 
+// Use the middleware function before the /config route handler
+app.get('/config', paypalClientIdMiddleware, (req, res) => {
+  // Access the PayPal client ID from the request object
+  const paypalClientId = req.paypalClientId;
   res.json({ paypalClientId });
 });
+
 
 
 // PayPal validation endpoint
