@@ -97,7 +97,7 @@ app.get('/maps/cities', async (req, res) => {
 // PayPal configuration endpoint
 app.get('/config', (req, res) => {
   try {
-    const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
+    const paypalClientId = 123;
     if (!paypalClientId) {
       throw new Error('PayPal client ID not found in environment variables.');
     }
