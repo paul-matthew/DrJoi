@@ -97,7 +97,7 @@ app.get('/maps/cities', async (req, res) => {
 // PayPal configuration endpoint
 const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
 
-app.get('/config', (req, res) => {
+app.get('/config', (_, res) => {
   if (!paypalClientId) {
     console.error('PayPal client ID not found.');
     return res.status(500).json({ error: 'Internal Server Error' });
@@ -105,6 +105,7 @@ app.get('/config', (req, res) => {
 
   res.json({ paypalClientId });
 });
+
 
 // PayPal validation endpoint
 app.post('/paypal/validate', async (req, res) => {
