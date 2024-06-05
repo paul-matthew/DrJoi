@@ -1411,7 +1411,7 @@ let fetchURLmap = '';
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
 	fetchURLmap = 'http://localhost:5000/maps/cities';
 } else {
-	fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/cities';
+	fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/maps/cities';
 }
 
 const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
