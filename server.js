@@ -26,6 +26,16 @@ paypal.configure({
 app.use(express.json());
 app.use(cors());
 
+// PayPal configuration endpoint
+app.get('/config', (req, res) => {
+  const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
+  if (!paypalClientId) {
+    console.error('PayPal client ID not found.');
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+  res.json({ paypalClientId });
+});
+
 // Configure nodemailer with your email provider's SMTP settings
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Example: 'gmail'
@@ -93,19 +103,6 @@ app.get('/maps/cities', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-// PayPal configuration endpoint
-const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
-
-app.get('/config', async (_, res) => {
-  if (!paypalClientId) {
-    console.error('PayPal client ID not found.');
-    return res.status(500).json({ error: 'Internal Server Error' });
-  }
-
-  res.json({ paypalClientId });
-});
-
 
 // PayPal validation endpoint
 app.post('/paypal/validate', async (req, res) => {
