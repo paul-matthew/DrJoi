@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import path from 'path';
+// import path from 'path';
 import paypal from 'paypal-rest-sdk';
 import nodemailer from 'nodemailer';
 

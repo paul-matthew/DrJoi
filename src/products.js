@@ -1354,7 +1354,7 @@ async function region() {
 	if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
 	  fetchURLmap = 'http://localhost:5000/maps/regions';
 	} else {
-	  fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/regions';
+	  fetchURLmap = 'https://drjoiserver-106ea7a60e39.herokuapp.com/maps/regions';
 	}
   
 	const apiUrl = `${fetchURLmap}?country=${selectedCountry}`;
