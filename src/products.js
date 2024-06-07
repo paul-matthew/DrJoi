@@ -563,6 +563,7 @@ const inputValues = {
   firstName:'',
   lastName: '',
   email: '',
+  email2: '',
   // phone: '',
   country: '',
   region:'',
@@ -645,6 +646,7 @@ async function submitOrder() {
     firstName,
     lastName,
     email,
+    email2,
     // phone,
     country,
     region,
@@ -830,6 +832,8 @@ function constructModalBody() {
               <input type="text" id="lastNameInput" class="form-control" required value="${inputValues.lastName}">
               <label for="emailInput">Email<span style='color:red'>*</span>:</label>
               <input type="email" id="emailInput" class="form-control" required value="${inputValues.email}">
+              <label for="emailInput">Confirm email<span style='color:red'>*</span>:</label>
+              <input type="email" id="emailInput2" class="form-control" required value="${inputValues.email2}">
               <label for="countrySelect">Country<span style='color:red'>*</span>:</label>
               <select id="countryInput" class="form-control" required>
               <option>${inputValues.country}</option>
@@ -988,6 +992,7 @@ function saveInputValues() {
   const firstNameInput = document.getElementById('firstNameInput');
   const lastNameInput = document.getElementById('lastNameInput');
   const emailInput = document.getElementById('emailInput');
+  const emailInput2 = document.getElementById('emailInput2');
   // const phoneInput = document.getElementById('phoneInput');
   const countryInput = document.getElementById('countryInput');
   const regionInput = document.getElementById('regionInput');
@@ -999,6 +1004,7 @@ function saveInputValues() {
   if (firstNameInput) inputValues.firstName = firstNameInput.value;
   if (lastNameInput) inputValues.lastName = lastNameInput.value;
   if (emailInput) inputValues.email = emailInput.value;
+  if (emailInput2) inputValues.email2 = emailInput2.value;
   // if (phoneInput) inputValues.phone = phoneInput.value;
   if (countryInput) {
     inputValues.country = countryInput.value;
@@ -1040,7 +1046,12 @@ function saveInputValues() {
       return zipPattern.test(zipValue);
       }
     }
-  
+
+    // Function to validate if emails match
+    function validateEmailsMatch() {
+      return emailInput.value.trim() === emailInput2.value.trim();
+    }
+
     var validationMessage = document.getElementById('formincomplete');
     if (!validationMessage) {
       validationMessage = document.createElement('div');
@@ -1059,7 +1070,8 @@ function saveInputValues() {
     if (!initialSetupDone || 
       Array.from(formControls).some(input => input.value.trim() === '' && input !== address2Input) ||
       !validateEmailFormat(emailInput.value.trim()) ||
-      !validateZipCodeFormat(zipInput.value.trim()) 
+      !validateZipCodeFormat(zipInput.value.trim()) ||
+      !validateEmailsMatch()
       // || phoneInput.value.replace(/\D/g, '').length < 10
     ) 
       {
@@ -1085,13 +1097,15 @@ function saveInputValues() {
         });
     
         var emailIsValid = validateEmailFormat(emailInput.value.trim());
-        
+        var emailsMatch = validateEmailsMatch();
         var zipIsValid = validateZipCodeFormat(zipInput.value.trim());
             
-        var allFilledAndValid = allFieldsFilled && emailIsValid && zipIsValid;
+        var allFilledAndValid = allFieldsFilled && emailIsValid && zipIsValid && emailsMatch;
     
         if (!emailIsValid && emailInput.value.trim() !== '') {
           validationMessage2.innerHTML = 'Please provide a valid EMAIL';
+        } else if (!emailsMatch) {
+          validationMessage2.innerHTML = 'Email confirmation does not match';
         } else if ((!zipIsValid || zipInput.value.trim() === '')) {
           validationMessage2.innerHTML = 'Please review POSTAL/ZIP CODE format';
         } else {
