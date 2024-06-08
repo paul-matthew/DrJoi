@@ -646,7 +646,6 @@ async function submitOrder() {
     firstName,
     lastName,
     email,
-    email2,
     // phone,
     country,
     region,
