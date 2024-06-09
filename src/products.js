@@ -251,7 +251,7 @@ fetch(fetchURL)
         viewCartBtn.addEventListener('click', () => {
           // Call handleCartClick directly
           handleCartClick();
-          handleCart();
+          // handleCart();
           updateTotal();
         });
         viewCartBtn.setAttribute('data-bs-dismiss', 'modal');
@@ -380,7 +380,7 @@ let shipping = 19.99;
 const skuToProductIdMap = {};
 
 function handleCart() {
-    if (window.location.pathname.includes('Cart')) {
+    if (window.location.pathname.toLowerCase().includes('cart')) {
         // Create an order button
         const orderButton = document.createElement('button');
         orderButton.id = 'orderButton';
@@ -528,13 +528,18 @@ function handleCart() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const currentUrl = window.location.pathname.toLowerCase();
-  if (currentUrl === '/cart') {
-    console.log("works, loaded");
+
+  const currentUrl = window.location.pathname;
+  if (currentUrl === '/Cart') {
+    console.log("works1, loaded");
     handleCart();    
   }
-});
+
+  const currentUrl2 = window.location.pathname;
+  if (currentUrl2 === '/cart') {
+      console.log("works2, loaded");
+      handleCart();    
+  }//fiiixxxxxxxxxx
 
 
 // Define a function to update total

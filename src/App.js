@@ -5,6 +5,7 @@ import './style.css';
 import About from './aboutus.js'
 import Shop from './shop.js'
 import Deals from './deals.js'
+import LoveLab from './lovelab.js'
 import Wellness from './wellness.js'
 import Contact from './contact.js'
 import Cart from './cart.js'
@@ -13,7 +14,7 @@ import OverlaysMobile from './components/OverlaysMobile.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const desktopStateList = ["About", "Shop", "Deals", "Wellness", "Contact", "Cart"]
+const desktopStateList = ["About", "Shop", "Deals", "Wellness","Lovelab", "Contact", "Cart"]
 
 function App() {
   const [desktopState, setDesktopState] = useState('Homedesktop1');
@@ -181,6 +182,13 @@ function App() {
     changeUrl('/Wellness');
     // setShowCart(false);
   };
+  const handleLoveClick = () => {
+    setDisplayState('none');
+    setDisplayState2('0');
+    setDesktopState('Lovelab');
+    changeUrl('/Lovelab');
+    // setShowCart(false);
+  };
   const handleContactClick = () => {
     setDisplayState('none');
     setDisplayState2('0');
@@ -215,15 +223,16 @@ function App() {
 
   useEffect(() => {
     const currentUrl = window.location.pathname.toLowerCase();
-    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/contact','/cart'];
+    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/lovelab','/contact','/cart'];
     
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
       setDesktopState(stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)); // Capitalize the first letter
-      if (currentUrl === '/cart') {
-        console.log('sip');
-        // handleCart();    
-      }
+      // if (currentUrl === '/cart') {
+      //   console.log('sip');
+      //   // const { handleCart } = DisplayProducts();
+      //   // handleCart();    
+      // }
     } 
     else {
       setDesktopState('Homedesktop1'); // Set default state if URL doesn't match
@@ -251,6 +260,9 @@ function App() {
         <div className="ListitemDesktopNa" style={{ width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: '#0e3022',borderBottom:'solid black', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}onClick={() => handleBlogClick()}>
           <div className="Label" style={{ width: 131, textAlign: 'center', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word' }} >Deals</div>
         </div>
+        <div className="ListitemDesktopNa" style={{ width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: '#0e3022',borderBottom:'solid black', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}onClick={() => handleLoveClick()}>
+          <div className="Label" style={{ width: 131, textAlign: 'center', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word' }} >Coaching</div>
+        </div>
         <div className="ListitemDesktopNa" style={{ width: 115, height: '100%', paddingLeft: 38, paddingRight: 38, paddingTop: 0, paddingBottom: 0, background: '#0e3022',borderBottom:'solid black', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}onClick={() => handleWellnessClick()}>
           <div className="Label" style={{ width: 131, textAlign: 'center', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'PlayfairDisplay', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word' }} >Wellness</div>
         </div>
@@ -262,7 +274,7 @@ function App() {
       {/* {showCart && <Cart handleCartClick={handleCartClick} />} */}
       <DisplayProducts handleCartClick={handleCartClick} />
 
-      <MobileMenu handleContactClick={handleContactClick} handleWellnessClick={handleWellnessClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} desktopState={desktopState} />
+      <MobileMenu handleContactClick={handleContactClick} handleWellnessClick={handleWellnessClick} handleLoveClick={handleLoveClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} desktopState={desktopState} />
 
       <div className="Rectangle158" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Recwidth, height: '15vh', maxHeight: "10%", left: `${Overlay1.replace("vw", "")}%`, top: '73vh', position: 'absolute', background: 'rgba(33, 74, 109, 0.8)', transition: 'left 0.5s ease-in-out',border:'solid rgba(14, 29, 48, 1)' }} />
       <div className="Rectangle158" style={{ display: desktopStateList.includes(desktopState) ? "none":displayState, zIndex: displayState2, width: Recwidth, height: '15vh', maxHeight: "10%", left: `${Overlay2.replace("vw", "")}%`, top: '73vh', position: 'absolute', background: 'rgba(33, 74, 109, 0.8)', transition: 'left 0.5s ease-in-out',border:'solid rgba(14, 29, 48, 1)' }} />
@@ -342,6 +354,9 @@ function App() {
       )}
       {desktopState === 'Deals' && (
         <Deals />
+      )}
+      {desktopState === 'Lovelab' && (
+        <LoveLab />
       )}
       {desktopState === 'Wellness' && (
         <Wellness />

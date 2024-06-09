@@ -11013,3 +11013,88 @@ text-align: center;
 .products{
   margin-top:70px !important;
 }
+
+/* Love Lab CSS */
+/* LoveLab.css */
+.BlogContainer {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: white;
+}
+
+#NavlogoMobile img {
+  height: 7vh;
+  margin-top: 0vh;
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.Banner img {
+  z-index: 2;
+  width: 100vw;
+  max-height: 200px;
+  margin-top: 3vh;
+  object-fit: cover;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.section:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.sectionImage {
+  width: 40%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.sectionText {
+  width: 60%;
+}
+
+.sectionText h2 {
+  color: #282938;
+  font-size: clamp(24px, 3vw, 30px);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
+
+.sectionText p,
+.sectionText ul {
+  color: black;
+  font-size: clamp(14px, 2vw, 17px);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+.sectionText ul {
+  padding-left: 20px;
+}
+
+.sectionText ul li {
+  list-style-type: disc;
+  margin-bottom: 10px;
+}
+

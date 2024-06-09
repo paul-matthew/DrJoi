@@ -1525,3 +1525,147 @@ height:305% !important;
       max-width:47vw !important
     }
   }
+
+
+/*LOVE LA PAGE*/
+.contentContainer{
+  margin-bottom:50px;
+}
+
+.BlogContainer {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: white;
+}
+
+#NavlogoMobile img {
+  height: 7vh;
+  margin-top: 0vh;
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.Banner img {
+  z-index: 2;
+  width: 100vw;
+  max-height: 200px;
+  margin-top: 3vh;
+  object-fit: cover;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.MySkill {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 56.67px;
+  display: inline-flex;
+  padding: 0px 3vw;
+}
+
+.SectionTitle {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3vh;
+  display: flex;
+}
+
+.Content {
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 32px;
+  display: flex;
+}
+
+.MyExpertise {
+  align-self: stretch;
+  color: #282938;
+  font-size: clamp(40px, 4vw, 61px);
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.section:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.sectionImage {
+  width: 40%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.sectionText {
+  width: 60%;
+}
+
+.sectionText h2 {
+  color: #282938;
+  font-size: clamp(24px, 3vw, 30px);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
+
+.sectionText p,
+.sectionText ul {
+  color: black;
+  font-size: clamp(14px, 2vw, 17px);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+.sectionText ul {
+  padding-left: 20px;
+}
+
+.sectionText ul li {
+  list-style-type: disc;
+  margin-bottom: 10px;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .section:nth-child(even) {
+    flex-direction: column;
+  }
+
+  .sectionImage,
+  .sectionText {
+    width: 100%;
+  }
+  .coachingbull{
+    text-align: start;
+  }
+}
+

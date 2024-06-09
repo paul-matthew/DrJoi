@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
 
-function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, handleWellnessClick, handleContactClick, desktopState}) {
+function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, handleWellnessClick, handleLoveClick, handleContactClick, desktopState}) {
   const [openMenuContent, setOpenMenuContent] = React.useState(false);
 
   const handleClickBurgerMenu = (event) => {
@@ -22,6 +22,11 @@ function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, ha
   }
   const _handleWellnessClick = () => {
     handleWellnessClick()
+
+  }
+
+  const _handleLoveClick = () => {
+    handleLoveClick()
 
   }
 
@@ -80,7 +85,10 @@ function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, ha
 
             <div className={desktopState === "Wellness" ? "active-menu-mobile": "ListitemDesktopNa"} style={{ width: '100%', height: '100%',  padding: "8px 18px", background: '#0e3022', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
               <div className="Label" style={{ width: "100%", textAlign: 'left', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word', cursor: "pointer" }} onClick={_handleWellnessClick}>Wellness</div>
+            </div>
 
+            <div className={desktopState === "Lovelab" ? "active-menu-mobile": "ListitemDesktopNa"} style={{ width: '100%', height: '100%',  padding: "8px 18px", background: '#0e3022', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
+              <div className="Label" style={{ width: "100%", textAlign: 'left', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word', cursor: "pointer" }} onClick={_handleLoveClick}>Coaching</div>
             </div>
 
             <div className={desktopState === "Contact" ? "active-menu-mobile": "ListitemDesktopNa"} style={{ width: '100%', height: '100%',  padding: "8px 18px", background: '#0e3022', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
