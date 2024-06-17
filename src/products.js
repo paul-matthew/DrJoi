@@ -836,7 +836,7 @@ function constructModalBody() {
               <input type="text" id="lastNameInput" class="form-control" required value="${inputValues.lastName}">
               <label for="emailInput">Email<span style='color:red'>*</span>:</label>
               <input type="email" id="emailInput" class="form-control" required value="${inputValues.email}">
-              <label for="emailInput">Confirm email<span style='color:red'>*</span>:</label>
+              <label for="emailInput">Verify email<span style='color:red'>*</span>:</label>
               <input type="email" id="emailInput2" class="form-control" required value="${inputValues.email2}">
               <label for="countrySelect">Country<span style='color:red'>*</span>:</label>
               <select id="countryInput" class="form-control" required>
@@ -1109,7 +1109,7 @@ function saveInputValues() {
         if (!emailIsValid && emailInput.value.trim() !== '') {
           validationMessage2.innerHTML = 'Please provide a valid EMAIL';
         } else if (!emailsMatch) {
-          validationMessage2.innerHTML = 'Email confirmation does not match';
+          validationMessage2.innerHTML = 'Verified email does not match';
         } else if ((!zipIsValid || zipInput.value.trim() === '')) {
           validationMessage2.innerHTML = 'Please review POSTAL/ZIP CODE format';
         } else {
