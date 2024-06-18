@@ -6,6 +6,7 @@ import About from './aboutus.js'
 import Shop from './shop.js'
 import Deals from './deals.js'
 import LoveLab from './lovelab.js'
+import Terms from './terms.js'
 import Wellness from './wellness.js'
 import Contact from './contact.js'
 import Cart from './cart.js'
@@ -14,7 +15,7 @@ import OverlaysMobile from './components/OverlaysMobile.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const desktopStateList = ["About", "Shop", "Deals", "Wellness","Lovelab", "Contact", "Cart"]
+const desktopStateList = ["About", "Shop", "Deals", "Wellness","Lovelab", "Contact", "Cart", "Terms"]
 
 function App() {
   const [desktopState, setDesktopState] = useState('Homedesktop1');
@@ -196,6 +197,13 @@ function App() {
     changeUrl('/Contact');
     // setShowCart(false);
   };
+  const handleTermsClick = () => {
+    setDisplayState('none');
+    setDisplayState2('0');
+    setDesktopState('Terms');
+    changeUrl('/Terms');
+    // setShowCart(false);
+  };
   const handleHomeClick = () => {
     if (desktopState !== 'Homedesktop1') {
       set1stButton('Shop');
@@ -223,7 +231,7 @@ function App() {
 
   useEffect(() => {
     const currentUrl = window.location.pathname.toLowerCase();
-    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/lovelab','/contact','/cart'];
+    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/lovelab','/contact','/cart', '/terms'];
     
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
@@ -367,15 +375,18 @@ function App() {
       {desktopState === 'Cart' && (
         <Cart />
       )}
+      {desktopState === 'Terms' && (
+        <Terms />
+      )}
 
       <div className="Footerdesktop" style={{ zIndex: 4, width: '100%', height: 43, left: 0, bottom: '0vh', position: 'fixed', background: '#0e3022',border:'solid black' }}>
         <div className="Footerprivacy" style={{ height: 43, marginRight: 20, right: '0vw', top: 0, position: 'absolute', justifyContent: 'flex-start', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
           <div className="HeadingName" style={{ height: 43, paddingTop: 0, paddingBottom: 0, justifyContent: 'center', alignItems: 'flex-start', gap: 20, display: 'flex' }}>
             <div className="HeaderMenuDefault" style={{ alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
-              <div className="Label" style={{ color: 'white', fontSize: 'clamp(11px, 1vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word', textAlign: "center" }}>Terms of Use</div>
+              <div className="Label" style={{ color: 'white', fontSize: 'clamp(11px, 1vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word', textAlign: "center" }}onClick={() => handleTermsClick()}>Terms of Use</div>
             </div>
             <div className="MenuItemDefault" style={{ alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
-              <div className="Label" style={{ color: 'white', fontSize: 'clamp(11px, 1vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word' }}>Privacy</div>
+              <div className="Label" style={{ color: 'white', fontSize: 'clamp(11px, 1vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word' }}onClick={() => handleTermsClick()}>Privacy</div>
             </div>
             <div className="MenuItemDefault contact-footer" style={{ alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
               <div className="Label" style={{ color: 'white', fontSize: 'clamp(11px, 1vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', wordWrap: 'break-word' }}onClick={() => handleContactClick()}>Contact</div>
