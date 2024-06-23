@@ -230,17 +230,13 @@ function App() {
   };
 
   useEffect(() => {
-    const currentUrl = window.location.pathname.toLowerCase();
-    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/lovelab','/contact','/cart', '/terms'];
+    const currentUrl = window.location.pathname;
+    const allowedUrls = ['/About', '/Shop', '/Deals', '/Wellness', '/Lovelab','/Contact','/Cart', '/Terms'];
     
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
-      setDesktopState(stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)); // Capitalize the first letter
-      // if (currentUrl === '/cart') {
-      //   console.log('sip');
-      //   // const { handleCart } = DisplayProducts();
-      //   // handleCart();    
-      // }
+      setDesktopState(stateFromUrl); // Capitalize the first letter
+
     } 
     else {
       setDesktopState('Homedesktop1'); // Set default state if URL doesn't match
@@ -280,7 +276,7 @@ function App() {
       </div>
 
       {/* {showCart && <Cart handleCartClick={handleCartClick} />} */}
-      <DisplayProducts handleCartClick={handleCartClick} />
+      {/* <DisplayProducts handleCartClick={handleCartClick} /> */}
 
       <MobileMenu handleContactClick={handleContactClick} handleWellnessClick={handleWellnessClick} handleLoveClick={handleLoveClick} handleBlogClick={handleBlogClick} handleServicesClick={handleServicesClick} handleAboutClick={handleAboutClick} desktopState={desktopState} />
 
@@ -358,7 +354,10 @@ function App() {
         <About />
       )}
       {desktopState === 'Shop' && (
-        <Shop />
+        <>
+          <DisplayProducts handleCartClick={handleCartClick} />
+          <Shop />
+        </>
       )}
       {desktopState === 'Deals' && (
         <Deals />
@@ -373,7 +372,10 @@ function App() {
         <Contact />
       )}
       {desktopState === 'Cart' && (
-        <Cart />
+        <>
+          <DisplayProducts handleCartClick={handleCartClick} />
+          <Cart />
+        </>
       )}
       {desktopState === 'Terms' && (
         <Terms />

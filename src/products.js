@@ -535,11 +535,6 @@ function handleCart() {
     handleCart();    
   }
 
-  const currentUrl2 = window.location.pathname;
-  if (currentUrl2 === '/cart') {
-      console.log("works2, loaded");
-      handleCart();    
-  }//fiiixxxxxxxxxx
 
 
 // Define a function to update total
