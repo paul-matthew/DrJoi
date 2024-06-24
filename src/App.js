@@ -230,13 +230,17 @@ function App() {
   };
 
   useEffect(() => {
-    const currentUrl = window.location.pathname;
-    const allowedUrls = ['/About', '/Shop', '/Deals', '/Wellness', '/Lovelab','/Contact','/Cart', '/Terms'];
+    const currentUrl = window.location.pathname.toLowerCase();
+    const allowedUrls = ['/about', '/shop', '/deals', '/wellness', '/lovelab','/contact','/cart', '/terms'];
     
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace('/', ''); // Remove the leading slash
-      setDesktopState(stateFromUrl); // Capitalize the first letter
-
+      setDesktopState(stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)); // Capitalize the first letter
+      // if (currentUrl === '/cart') {
+      //   console.log('sip');
+      //   // const { handleCart } = DisplayProducts();
+      //   handleCart();    
+      // }
     } 
     else {
       setDesktopState('Homedesktop1'); // Set default state if URL doesn't match

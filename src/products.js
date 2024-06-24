@@ -558,9 +558,9 @@ function handleCart() {
 
 
   // const currentUrl = window.location.pathname;
-  // if (currentUrl === '/Cart') {
+  // if (currentUrl === '/cart') {
   //   console.log("works1, loaded");
-  //   // handleCart();    
+  //   handleCart();    
   // }
 
 
