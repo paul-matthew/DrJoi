@@ -79,8 +79,11 @@ fetch(fetchURL)
                   `).join('')}
                 </div>
                 <div class="main-container">
-                  <img src="${product.images[0].src}" class="img-fluid main-img" alt="${product.title}" loading="lazy">
+                <div class="magnify" id="magnify-${index + 1}">
+                  <img src="${product.images[0].src}" class="img-fluid main-img" alt="${product.title}" loading="lazy" id="main-image-${index + 1}">
+                  <div class="magnify-glass" id="magnify-glass-${index + 1}"></div>
                 </div>
+              </div>
               </div>
               <div class="color-options">
                 <h6></h6>
@@ -189,6 +192,30 @@ fetch(fetchURL)
       
 
         document.body.appendChild(productModal);
+
+        // Add the magnifying glass functionality
+        const magnifyGlass = productModal.querySelector(`#magnify-glass-${index + 1}`);
+        const mainImage = productModal.querySelector(`#main-image-${index + 1}`);
+        const magnify = productModal.querySelector(`#magnify-${index + 1}`);
+
+        magnify.addEventListener('mousemove', (e) => {
+          magnifyGlass.style.display = 'block';
+          let { left, top } = mainImage.getBoundingClientRect();
+          let x = e.pageX - left - window.pageXOffset;
+          let y = e.pageY - top - window.pageYOffset;
+          
+          let bgPosX = ((x / mainImage.width) * 100).toFixed(2);
+          let bgPosY = ((y / mainImage.height) * 100).toFixed(2);
+
+          magnifyGlass.style.left = `${x - magnifyGlass.offsetWidth / 2}px`;
+          magnifyGlass.style.top = `${y - magnifyGlass.offsetHeight / 2}px`;
+          magnifyGlass.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
+          magnifyGlass.style.backgroundImage = `url(${mainImage.src})`;
+        });
+
+        magnify.addEventListener('mouseleave', () => {
+          magnifyGlass.style.display = 'none';
+        });
 
         // JavaScript to handle color selection
         const colorOptions = productModal.querySelectorAll('.color-option');

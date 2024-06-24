@@ -11098,3 +11098,20 @@ text-align: center;
   margin-bottom: 10px;
 }
 
+.magnify {
+  position: relative;
+  cursor:crosshair;
+}
+
+.magnify-glass {
+  position: absolute;
+  border: 3px solid #000;
+  border-radius: 50%;
+  display: none;
+  width:250px; /* Double the original size */
+  height: 250px; /* Double the original size */
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  pointer-events: none;
+}
+
