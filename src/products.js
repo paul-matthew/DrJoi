@@ -884,6 +884,7 @@ function constructModalBody() {
               <div id='formincomplete' style='color:red; margin-top:5px;font-size:11px'></div>
               <div id='formincomplete2' style='color:red; margin-top:5px;font-size:11px'></div>
               <div style='font-size:10px; margin-top:15px'>By placing your order, you agree to Exotic Relief's <a href="./terms">Terms of Use, Privacy, and Refund Policies</a>.</div>
+              <div style='font-size:10px; margin-top:15px'>Please note that <b><u>ALL SALES ARE FINAL</u></b></div>
           </div>
         </div>
       `;
