@@ -37,7 +37,8 @@ fetch(fetchURL)
   .then(data => {
     const productsContainer = document.getElementById('products-container');
     if (data && data.data) {
-      data.data.forEach((product, index) => {
+      const reversedProducts = data.data.reverse();
+      reversedProducts.forEach((product, index) => {
         const productCard = document.createElement('div');
         productCard.classList.add('card-container');
         productCard.innerHTML = `
@@ -278,7 +279,7 @@ fetch(fetchURL)
         viewCartBtn.addEventListener('click', () => {
           // Call handleCartClick directly
           handleCartClick();
-          // handleCart();
+          handleCart();
           updateTotal();
         });
         viewCartBtn.setAttribute('data-bs-dismiss', 'modal');
@@ -556,11 +557,11 @@ function handleCart() {
 }
 
 
-  const currentUrl = window.location.pathname;
-  if (currentUrl === '/Cart') {
-    console.log("works1, loaded");
-    handleCart();    
-  }
+  // const currentUrl = window.location.pathname;
+  // if (currentUrl === '/Cart') {
+  //   console.log("works1, loaded");
+  //   // handleCart();    
+  // }
 
 
 

@@ -373,7 +373,7 @@ function App() {
       )}
       {desktopState === 'Cart' && (
         <>
-          <DisplayProducts handleCartClick={handleCartClick} />
+          {/* <DisplayProducts handleCartClick={handleCartClick} /> */}
           <Cart />
         </>
       )}
