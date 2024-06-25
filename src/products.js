@@ -6,14 +6,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { cartUtilities } from "./utils/cart.js";
 
 let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-if (
-  window.location.hostname === "localhost" ||
-  window.location.hostname === "127.0.0.1"
-) {
-  fetchURL = "http://localhost:5000/products";
-} else {
-  fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-}
+// if (
+//   window.location.hostname === "localhost" ||
+//   window.location.hostname === "127.0.0.1"
+// ) {
+//   fetchURL = "http://localhost:5000/products";
+// } else {
+//   fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
+// }
 
 //General -------------
 // Initialize a global array to store all selected SKUs
@@ -71,8 +71,8 @@ function constructModalBody() {
   switch (currentStage) {
     case 1:
       const price = cartUtilities.getTotalPrice() / 100;
-      const tax = price * 0.13;
-      const totalPayment = price + tax + shipping;
+      const tax = Math.round(price * 0.13 * 100) / 100;
+      const totalPayment = Math.round((price + tax + shipping) * 100) / 100;
       return `
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
