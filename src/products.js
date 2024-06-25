@@ -25,15 +25,15 @@ const DisplayProducts = (props) => {
     localStorage.setItem("selectedSKUs", JSON.stringify(updatedSKUs));
   };
   // PRODUCTS--------------
-  let fetchURL = "";
-  if (
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
-  ) {
-    fetchURL = "http://localhost:5000/products";
-  } else {
-    fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-  }
+  let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
+  // if (
+  //   window.location.hostname === "localhost" ||
+  //   window.location.hostname === "127.0.0.1"
+  // ) {
+  //   fetchURL = "http://localhost:5000/products";
+  // } else {
+  //   fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
+  // }
   if (window.location.pathname.includes("Shop")) {
     fetch(fetchURL)
       .then((response) => response.json())
@@ -598,10 +598,6 @@ const DisplayProducts = (props) => {
                 // Also, you can log or use the entire selectedSKUs array
                 console.log("All Selected SKUs:", selectedSKUs);
 
-                // Update the item count display in all modals
-                document.querySelectorAll(".item-count").forEach((span) => {
-                  span.textContent = itemCount;
-                });
                 // // To STORE the SKU locally
                 // localStorage.setItem(
                 //   "selectedSKUs",
@@ -617,6 +613,12 @@ const DisplayProducts = (props) => {
                   qty: parseInt(selectedQuantity),
                 };
                 cartUtilities.add(product);
+
+                // Update the item count display in all modals
+                document.querySelectorAll(".item-count").forEach((span) => {
+                  // span.textContent = itemCount;
+                  span.textContent = cartUtilities.getTotal();
+                });
               } else {
                 console.error(
                   "No matching variant found for the selected color and size."

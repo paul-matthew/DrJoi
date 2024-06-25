@@ -59,9 +59,19 @@ function clear() {
   addToCart([]);
 }
 
+function getTotal() {
+  const cartItem = getCartItems();
+  let total = 0;
+  cartItem.forEach((item) => {
+    total += parseInt(item.qty);
+  });
+  return total;
+}
+
 export const cartUtilities = {
   add,
   reduce,
   remove,
   clear,
+  getTotal,
 };

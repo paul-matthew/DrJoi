@@ -17,7 +17,7 @@ export function ProductContextProvider({ children }) {
       setProducts(() => data.data);
     }
     getData();
-  });
+  }, [window.location.pathname]);
   return (
     <ProductContext.Provider value={{ products }}>
       {children}
