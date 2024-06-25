@@ -3,6 +3,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 // eslint-disable-next-line
 import App from "./App.js";
+import { cartUtilities } from "./utils/cart.js";
 
 const DisplayProducts = (props) => {
   //PRINTIFY API------------------------------------------------------
@@ -24,12 +25,15 @@ const DisplayProducts = (props) => {
     localStorage.setItem("selectedSKUs", JSON.stringify(updatedSKUs));
   };
   // PRODUCTS--------------
-  let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-  // if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-  //     fetchURL = 'http://localhost:5000/products';
-  // } else {
-  //     fetchURL = 'https://drjoiserver-106ea7a60e39.herokuapp.com/products';
-  // }
+  let fetchURL = "";
+  if (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+  ) {
+    fetchURL = "http://localhost:5000/products";
+  } else {
+    fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
+  }
   if (window.location.pathname.includes("Shop")) {
     fetch(fetchURL)
       .then((response) => response.json())
@@ -598,16 +602,21 @@ const DisplayProducts = (props) => {
                 document.querySelectorAll(".item-count").forEach((span) => {
                   span.textContent = itemCount;
                 });
-                // To STORE the SKU locally
-                localStorage.setItem(
-                  "selectedSKUs",
-                  JSON.stringify(selectedSKUs)
-                );
-                // To RETRIEVE and log the stored SKUs locally
-                const storedSKUs = localStorage.getItem("selectedSKUs");
-                const retrievedSKUs = storedSKUs ? JSON.parse(storedSKUs) : [];
+                // // To STORE the SKU locally
+                // localStorage.setItem(
+                //   "selectedSKUs",
+                //   JSON.stringify(selectedSKUs)
+                // );
+                // // To RETRIEVE and log the stored SKUs locally
+                // const storedSKUs = localStorage.getItem("selectedSKUs");
+                // const retrievedSKUs = storedSKUs ? JSON.parse(storedSKUs) : [];
 
-                console.log("NEW Stored SKUs:", retrievedSKUs);
+                // console.log("NEW Stored SKUs:", retrievedSKUs);
+                const product = {
+                  id: selectedVariantSKU,
+                  qty: parseInt(selectedQuantity),
+                };
+                cartUtilities.add(product);
               } else {
                 console.error(
                   "No matching variant found for the selected color and size."
@@ -798,10 +807,10 @@ const DisplayProducts = (props) => {
             if (cartContainer) {
               cartContainer.parentNode.insertBefore(orderButton, cartContainer);
               cartContainer.parentNode.insertBefore(clearButton, cartContainer);
-              cartContainer.parentNode.insertBefore(
-                productsContainer,
-                cartContainer.nextSibling
-              );
+              // cartContainer.parentNode.insertBefore(
+              //   productsContainer,
+              //   cartContainer.nextSibling
+              // );
             } else {
               console.error("Cart container not found.");
             }
@@ -1587,7 +1596,7 @@ const DisplayProducts = (props) => {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
 
-  let fetchURLpay = "https://drjoiserver-106ea7a60e39.herokuapp.com/config";
+  let fetchURLpay = "";
   if (
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1"
