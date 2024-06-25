@@ -2,37 +2,608 @@ import "./style.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 // eslint-disable-next-line
-import App from "./App.js";
+
 import { cartUtilities } from "./utils/cart.js";
+
+let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
+// if (
+//   window.location.hostname === "localhost" ||
+//   window.location.hostname === "127.0.0.1"
+// ) {
+//   fetchURL = "http://localhost:5000/products";
+// } else {
+//   fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
+// }
+
+//General -------------
+// Initialize a global array to store all selected SKUs
+let selectedSKUs = [];
+//ORDER---------------------
+
+// Global variable to track the current stage
+let currentStage = 1;
+const inputValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  email2: "",
+  // phone: '',
+  country: "",
+  region: "",
+  city: "",
+  address: "",
+  address2: "",
+  zip: "",
+};
+
+//SHOPPING CART------------
+let subtotal = 0;
+let total = 0;
+let shipping = 19.99;
+
+// const currentUrl = window.location.pathname;
+// if (currentUrl === '/cart') {
+//   console.log("works1, loaded");
+//   handleCart();
+// }
+
+// Define a function to update total
+function updateTotal() {
+  // Calculate the total based on your logic
+  total = (subtotal + subtotal * 0.13 + shipping).toFixed(2);
+  // console.log('bread and tings', total);
+
+  // Dispatch a custom event to notify other parts of the application
+  const updateTotalEvent = new CustomEvent("updateTotalEvent", {
+    detail: { total: total },
+  });
+  document.dispatchEvent(updateTotalEvent);
+
+  return total;
+}
+
+// Create a modal element
+const orderModal = document.createElement("div");
+orderModal.classList.add("modal", "fade", "portfolio-modal");
+orderModal.id = "orderModal";
+
+function constructModalBody() {
+  switch (currentStage) {
+    case 1:
+      const price = cartUtilities.getTotalPrice() / 100;
+      const tax = price * 0.13;
+      const totalPayment = price + tax + shipping;
+      return `
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Total Cost</h5><span style="margin-left:5px">(USD)</span>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Display order summary and total cost here -->
+            <table style="border-collapse: collapse; width: 50%;">
+            <tr>
+                <td style="border: none;">Subtotal:</td>
+                <td style="border: none; text-align: left;">$${price}</td>
+            </tr>
+            <tr>
+                <td style="border: none;">Tax:</td>
+                <td style="border: none; text-align: left;">$${tax}</td>
+            </tr>
+            <tr>
+                <td style="border: none;">Shipping:</td>
+                <td style="border: none; text-align: left;">$${shipping}</td>
+            </tr>
+            <tr>
+                <td style="border: none; font-weight: bold;">Total:</td>
+                <td style="border: none; text-align: left; font-weight: bold;">$${totalPayment}</td>
+            </tr>
+        </table>
+            <button id="OrderDetailsButton" class="proceed-btn gen-btn mt-3">Order Details</button>
+          </div>
+        </div>
+      </div>
+    `;
+    case 2:
+      return `
+      <div class="modal-dialog modal-dialog-centered" style="top:30px; ">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Shipping Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="font-size: 16px; max-height: 650px; overflow-y: auto;" >
+            <label for="firstNameInput">First Name<span style='color:red'>*</span>:</label>
+            <input type="text" id="firstNameInput" class="form-control" required value="${inputValues.firstName}">
+            <label for="lastNameInput">Last Name<span style='color:red'>*</span>:</label>
+            <input type="text" id="lastNameInput" class="form-control" required value="${inputValues.lastName}">
+            <label for="emailInput">Email<span style='color:red'>*</span>:</label>
+            <input type="email" id="emailInput" class="form-control" required value="${inputValues.email}">
+            <label for="emailInput">Verify email<span style='color:red'>*</span>:</label>
+            <input type="email" id="emailInput2" class="form-control" required value="${inputValues.email2}">
+            <label for="countrySelect">Country<span style='color:red'>*</span>:</label>
+            <select id="countryInput" class="form-control" required>
+            <option>${inputValues.country}</option>
+            </select>                       
+            <label for="regionInput">State/Province/Region<span style='color:red'>*</span>:</label>
+            <select id="regionInput" class="form-control" required>
+              <option>${inputValues.region}</option>
+            </select>
+            <label for="cityinput">City<span style='color:red'>*</span>:</label>
+            <select id="cityInput" class="form-control" required>
+              <option>${inputValues.city}</option>
+            </select>              
+            <label for="addressinput">Address Line 1<span style='color:red'>*</span>:</label>
+            <input type="address" id="addressInput" class="form-control" required value="${inputValues.address}">
+            <label for="address2input">Address Line 2: <span style='font-size:10px'>(if applicable):</span></label>
+            <input type="address2" id="address2Input" class="form-control" required value="${inputValues.address2}" placeholder="Unit, Apartment, Suite, Floor, Building, Floor etc.">
+            <label for="zipinput">Postal Code/ZIP<span style='color:red'>*</span>:</label>
+            <input type="zip" id="zipInput" class="form-control" required value="${inputValues.zip}">
+            <button id="backButton" class="back-btn gen-btn mt-3">Back</button>
+            <button id="proceedpayment" class="proceed-btn gen-btn mt-3">Proceed to Payment</button>
+            <div id='formincomplete' style='color:red; margin-top:5px;font-size:11px'></div>
+            <div id='formincomplete2' style='color:red; margin-top:5px;font-size:11px'></div>
+            <div style='font-size:10px; margin-top:15px'>By placing your order, you agree to Exotic Relief's <a href="./terms">Terms of Use, Privacy, and Refund Policies</a>.</div>
+            <div style='font-size:10px; margin-top:15px'>Please note that <b><u>ALL SALES ARE FINAL</u></b></div>
+        </div>
+      </div>
+    `;
+    case 3:
+      return `
+      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Payment</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Display payment options here -->
+          <div id='paypal-parent'>
+          </div>              
+        <button id="backButton2" class="back-btn gen-btn mt-3">Back</button>
+        </div>
+      </div>
+    </div>
+    `;
+    case 4:
+      return `
+        <div class="modal-dialog modal-dialog-centered success-modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-black">Order Received!</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Display a larger text indicating the order has been received and is being processed -->
+              <div class="success-message">
+                <span class="checkmark larger-checkmark">&#10003;</span>
+                <p class="larger-text">Thanks for placing your order! It has been received and is being processed. You will receive an email notification with more details.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    case 5:
+      return `
+          <div class="modal-dialog modal-dialog-centered error-modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-black">Error!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="error-message">
+                  <span class="checkmark larger-error">&#10008;</span>
+                  <p class="larger-text">Please go back and check your provided information.  The order cannot be placed at this time.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+    default:
+      break;
+  }
+}
+
+// To RETRIEVE and log the stored SKUs locally
+const initializeSelectedSKUs = () => {
+  const storedSKUs = localStorage.getItem("selectedSKUs");
+  selectedSKUs = storedSKUs ? JSON.parse(storedSKUs) : [];
+};
+
+const updateSelectedSKUs = (updatedSKUs) => {
+  localStorage.setItem("selectedSKUs", JSON.stringify(updatedSKUs));
+};
+
+var initialSetupDone = false;
+
+function saveInputValues() {
+  // console.log('this is the', currentStage)
+  const firstNameInput = document.getElementById("firstNameInput");
+  const lastNameInput = document.getElementById("lastNameInput");
+  const emailInput = document.getElementById("emailInput");
+  const emailInput2 = document.getElementById("emailInput2");
+  // const phoneInput = document.getElementById('phoneInput');
+  const countryInput = document.getElementById("countryInput");
+  const regionInput = document.getElementById("regionInput");
+  const cityInput = document.getElementById("cityInput");
+  const addressInput = document.getElementById("addressInput");
+  const address2Input = document.getElementById("address2Input");
+  const zipInput = document.getElementById("zipInput");
+
+  if (firstNameInput) inputValues.firstName = firstNameInput.value;
+  if (lastNameInput) inputValues.lastName = lastNameInput.value;
+  if (emailInput) inputValues.email = emailInput.value;
+  if (emailInput2) inputValues.email2 = emailInput2.value;
+  // if (phoneInput) inputValues.phone = phoneInput.value;
+  if (countryInput) {
+    inputValues.country = countryInput.value;
+    console.log("Saved Country:", inputValues.country);
+  }
+  if (regionInput) inputValues.region = regionInput.value;
+  if (cityInput) inputValues.city = cityInput.value;
+  if (addressInput) inputValues.address = addressInput.value;
+  if (address2Input) inputValues.address2 = address2Input.value;
+  if (zipInput) inputValues.zip = zipInput.value;
+
+  if (currentStage === 2) {
+    var formControls = document.getElementsByClassName("form-control");
+    var proceedBtn = document.getElementById("proceedpayment");
+    var modalBody = document.querySelector(".modal-body"); // Adjust the selector based on your modal structure
+
+    // Function to validate email format
+    function validateEmailFormat(emailValue) {
+      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailPattern.test(emailValue);
+    }
+
+    // Function to validate zip code or Canadian postal code format
+    function validateZipCodeFormat(zipValue) {
+      // if (countryInput.value === 'TT') {
+      //   // Trinidad and Tobago doesn't require a postal code
+      //   var zipPattern = /^(\d{6}(-\d{4})?)$/;
+      //   return zipPattern.test(zipValue);
+      // }
+      let zipPattern;
+      if (countryInput.value === "US") {
+        // Allow for postal code with or without a space
+        zipPattern = /^(\d{5}(-\d{4})?)$/;
+        return zipPattern.test(zipValue);
+      } else if (countryInput.value === "CA") {
+        // Allow for postal code with or without a space
+        zipPattern =
+          /^([A-Za-z]\d[A-Za-z] \d[A-Za-z]\d|[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d)$/;
+        return zipPattern.test(zipValue);
+      }
+    }
+
+    // Function to validate if emails match
+    function validateEmailsMatch() {
+      return emailInput.value.trim() === emailInput2.value.trim();
+    }
+
+    var validationMessage = document.getElementById("formincomplete");
+    if (!validationMessage) {
+      validationMessage = document.createElement("div");
+      validationMessage.id = "validationMessage";
+      modalBody.appendChild(validationMessage);
+    }
+    var validationMessage2 = document.getElementById("formincomplete2");
+    if (!validationMessage2) {
+      validationMessage2 = document.createElement("div");
+      validationMessage2.id = "validationMessage2";
+      modalBody.appendChild(validationMessage2);
+    }
+
+    var validationMessageText = "";
+
+    if (
+      !initialSetupDone ||
+      Array.from(formControls).some(
+        (input) => input.value.trim() === "" && input !== address2Input
+      ) ||
+      !validateEmailFormat(emailInput.value.trim()) ||
+      !validateZipCodeFormat(zipInput.value.trim()) ||
+      !validateEmailsMatch()
+      // || phoneInput.value.replace(/\D/g, '').length < 10
+    ) {
+      // Set initial state
+      proceedBtn.disabled = true;
+      proceedBtn.classList.add("btn-disabled");
+      validationMessageText =
+        "Please fill in all required fields to proceed to payment.";
+    }
+
+    validationMessage.innerText = validationMessageText;
+    // var validationMessage2=document.createElement('div');
+    // validationMessage.appendChild(validationMessage2);
+
+    // Loop through each element with the 'form-control' class
+    Array.from(formControls).forEach(function (formControl) {
+      formControl.addEventListener("input", function () {
+        var inputsToCheck = Array.from(formControls).filter(function (input) {
+          return input !== address2Input;
+        });
+
+        var allFieldsFilled = inputsToCheck.every(function (input) {
+          return input.value.trim() !== "";
+        });
+
+        var emailIsValid = validateEmailFormat(emailInput.value.trim());
+        var emailsMatch = validateEmailsMatch();
+        var zipIsValid = validateZipCodeFormat(zipInput.value.trim());
+
+        var allFilledAndValid =
+          allFieldsFilled && emailIsValid && zipIsValid && emailsMatch;
+
+        if (!emailIsValid && emailInput.value.trim() !== "") {
+          validationMessage2.innerHTML = "Please provide a valid EMAIL";
+        } else if (!emailsMatch) {
+          validationMessage2.innerHTML = "Verified email does not match";
+        } else if (!zipIsValid || zipInput.value.trim() === "") {
+          validationMessage2.innerHTML = "Please review POSTAL/ZIP CODE format";
+        } else {
+          validationMessage2.innerHTML = "";
+        }
+
+        if (allFieldsFilled) {
+          validationMessageText = "";
+          validationMessage.innerText = validationMessageText;
+        }
+        proceedBtn.disabled = !allFilledAndValid;
+        proceedBtn.classList.toggle("btn-disabled", !allFilledAndValid);
+      });
+    });
+
+    initialSetupDone = true;
+  }
+}
+
+function handleOrderDetailsButton() {
+  currentStage = 2;
+
+  // Update only the modal body content
+  orderModal.innerHTML = constructModalBody();
+
+  // Save input values
+  saveInputValues();
+  orderModal.style.display = "block";
+}
+
+// Function to handle the order button click
+function handleOrderButtonClick() {
+  // Create the backdrop element
+  const backdrop = document.createElement("div");
+  backdrop.classList.add("modal-backdrop");
+  document.body.appendChild(backdrop);
+
+  // Set the modal content
+  orderModal.innerHTML = constructModalBody();
+
+  // Append the modal to the body
+  document.body.appendChild(orderModal);
+
+  // Disable scrolling on the body
+  document.body.style.overflow = "hidden";
+
+  // Show the modal
+  orderModal.style.display = "block";
+
+  const orderDetailsButton = orderModal.querySelector("#OrderDetailsButton");
+  orderDetailsButton.addEventListener("click", handleOrderDetailsButton);
+
+  // Function to hide the modal
+  function hideModal() {
+    backdrop.remove();
+    // Enable scrolling on the body
+    document.body.style.overflow = "";
+
+    orderModal.style.display = "none";
+    // Remove the modal from the DOM when hidden
+    orderModal.remove();
+  }
+
+  // Event listener to hide the modal when clicking outside of it
+  window.addEventListener("click", function (event) {
+    if (
+      event.target === orderModal ||
+      event.target.classList.contains("btn-close")
+    ) {
+      hideModal();
+      currentStage = 1;
+    }
+  });
+
+  // Reset the currentStage to 1 when the modal is closed
+  // orderModal.addEventListener('hidden.bs.modal', function () {
+  //   currentStage = 1;
+  // });
+}
+
+//CLEAR --------------------
+
+export function handleCart() {
+  const skuToProductIdMap = {};
+  if (window.location.pathname.toLowerCase().includes("cart")) {
+    // Create an order button
+    const orderButton = document.createElement("button");
+    orderButton.id = "orderButton";
+    orderButton.classList.add("order-btn");
+    orderButton.innerText = "Order Now";
+
+    // Add a click event listener to the order button
+    orderButton.addEventListener("click", handleOrderButtonClick);
+    // orderButton.addEventListener("click", () => console.log("hello"));
+
+    // Fetch product data based on SKUs
+    fetch(fetchURL)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.data) {
+          const productsContainer = document.createElement("div");
+          productsContainer.classList.add("products", "row", "mb-93");
+
+          // Iterate over the fetched product data and create elements
+          data.data.forEach((product) => {
+            // Check if the product has at least one variant with a matching SKU
+            if (
+              product.variants.some((variant) =>
+                selectedSKUs.includes(variant.sku)
+              )
+            ) {
+              selectedSKUs.forEach((selectedSKU) => {
+                const matchingVariant = product.variants.find(
+                  (variant) => variant.sku === selectedSKU
+                );
+                if (matchingVariant) {
+                  skuToProductIdMap[matchingVariant.sku] = product.id;
+                }
+                if (matchingVariant) {
+                  const matchingSKU = matchingVariant.sku;
+                  const existingCartItem = document.querySelector(
+                    `.cart-item[data-sku="${matchingSKU}"]`
+                  );
+                  subtotal += matchingVariant.price / 100;
+                  total += matchingVariant.price / 100;
+                  updateTotal();
+
+                  if (existingCartItem) {
+                    // If the item with the same SKU already exists, update its quantity
+                    const quantityElement =
+                      existingCartItem.querySelector(".quantity");
+                    const currentQuantity = parseInt(
+                      quantityElement.innerText,
+                      10
+                    );
+                    quantityElement.innerText = currentQuantity + 1;
+                  } else {
+                    // Create and append the new cart item
+                    const cartItem = document.createElement("div");
+                    cartItem.classList.add("cart-item", "row", "mb-3");
+                    cartItem.setAttribute("data-sku", matchingSKU);
+                    cartItem.setAttribute("data-product-id", product.id); // Add product ID attribute
+                    cartItem.setAttribute(
+                      "data-variant-id",
+                      matchingVariant.id
+                    ); // Add variant ID attribute
+
+                    const matchingImage = product.images.find((image) =>
+                      image.variant_ids.includes(matchingVariant.id)
+                    );
+
+                    // Product image
+                    const productImage = document.createElement("img");
+                    productImage.src = matchingImage ? matchingImage.src : "";
+                    productImage.alt = product.title;
+                    productImage.classList.add(
+                      "col-2",
+                      "img-fluid",
+                      "productimg"
+                    );
+                    productImage.loading = "lazy";
+
+                    // Product details
+                    const productDetails = document.createElement("div");
+                    productDetails.classList.add("col-8");
+                    productDetails.innerHTML = `
+                                          <hr style="border-top: 5px solid rgba(33, 74, 109, 1); margin: 1px 0;">
+                                          <h5 style='font-family: IGLight;'>${
+                                            product.title
+                                          }</h5>
+                                          <p style="margin: 0;"><span style="font-weight: bold;">Color & Size:</span> ${
+                                            matchingVariant.title
+                                          }</p>
+                                          <p style="margin: 0;"><span style="font-weight: bold;">Price:</span> $${
+                                            matchingVariant.price / 100
+                                          } USD</p>
+                                          <p style="margin: 0;"><span style="font-weight: bold;">Quantity:</span> <span class="quantity">1</span></p>
+                                      `;
+
+                    // Remove item button
+                    const removeItemButton = document.createElement("button");
+                    removeItemButton.innerText = "Remove";
+                    removeItemButton.classList.add("col-2", "remove-btn");
+                    removeItemButton.addEventListener("click", () => {
+                      // Find the index of the item with the matching SKU in the cart
+                      const matchingSKU = matchingVariant.sku;
+                      const quantityElement =
+                        cartItem.querySelector(".quantity");
+                      const currentQuantity = parseInt(
+                        quantityElement.innerText,
+                        10
+                      );
+                      console.log("Current Quantity:", currentQuantity); // Log current quantity for debugging
+                      subtotal -= matchingVariant.price / 100;
+                      total -= matchingVariant.price / 100;
+                      updateTotal();
+
+                      if (currentQuantity > 1) {
+                        // If the quantity is more than 1, decrease it
+                        quantityElement.innerText = currentQuantity - 1;
+                        const indexOfMatchingSKU =
+                          selectedSKUs.indexOf(matchingSKU);
+
+                        // Check if the SKU appears more than once in the array
+                        if (indexOfMatchingSKU !== -1) {
+                          // Remove only the first occurrence of the SKU
+                          selectedSKUs.splice(indexOfMatchingSKU, 1);
+                        }
+
+                        // Update selectedSKUs with the modified array
+                        updateSelectedSKUs(selectedSKUs);
+                      } else {
+                        // If the quantity is 1, remove the entire cart item
+                        cartItem.parentNode.removeChild(cartItem);
+
+                        // Update selectedSKUs with the filtered array
+                        const updatedSelectedSKUs = selectedSKUs.filter(
+                          (item) => item !== matchingSKU
+                        );
+                        updateSelectedSKUs(updatedSelectedSKUs);
+                      }
+
+                      // Log the updated array
+                      console.log("Updated SKUs:", selectedSKUs);
+                      // console.log(`Remove item with SKU: ${matchingSKU}`);
+                    });
+
+                    // Append elements to the cart item
+                    cartItem.appendChild(productImage);
+                    cartItem.appendChild(productDetails);
+                    cartItem.appendChild(removeItemButton);
+
+                    // Append cart item to the products container
+                    productsContainer.appendChild(cartItem);
+                  }
+                }
+              });
+            }
+          });
+
+          // Insert productsContainer into the DOM
+          const cartContainer = document.getElementById("cart-container");
+          if (cartContainer) {
+            cartContainer.parentNode.prepend(orderButton);
+            // cartContainer.parentNode.prepend(clearButton);
+          } else {
+            console.error("Cart container not found.");
+          }
+        } else {
+          console.log("Product data is missing or undefined.");
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+}
 
 const DisplayProducts = (props) => {
   //PRINTIFY API------------------------------------------------------
 
-  //General -------------
-  // Initialize a global array to store all selected SKUs
-  let selectedSKUs = [];
-
-  // To RETRIEVE and log the stored SKUs locally
-  const initializeSelectedSKUs = () => {
-    const storedSKUs = localStorage.getItem("selectedSKUs");
-    selectedSKUs = storedSKUs ? JSON.parse(storedSKUs) : [];
-  };
-
   initializeSelectedSKUs();
 
-  const updateSelectedSKUs = (updatedSKUs) => {
-    localStorage.setItem("selectedSKUs", JSON.stringify(updatedSKUs));
-  };
   // PRODUCTS--------------
-  let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-  // if (
-  //   window.location.hostname === "localhost" ||
-  //   window.location.hostname === "127.0.0.1"
-  // ) {
-  //   fetchURL = "http://localhost:5000/products";
-  // } else {
-  //   fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-  // }
+
   if (window.location.pathname.includes("Shop")) {
     fetch(fetchURL)
       .then((response) => response.json())
@@ -635,297 +1206,14 @@ const DisplayProducts = (props) => {
       .catch((error) => console.error(error));
   }
 
-  //SHOPPING CART------------
-  let subtotal = 0;
-  let total = 0;
-  let shipping = 19.99;
-  const skuToProductIdMap = {};
-
-  function handleCart() {
-    if (window.location.pathname.toLowerCase().includes("cart")) {
-      // Create an order button
-      const orderButton = document.createElement("button");
-      orderButton.id = "orderButton";
-      orderButton.classList.add("order-btn");
-      orderButton.innerText = "Order Now";
-
-      // Add a click event listener to the order button
-      orderButton.addEventListener("click", handleOrderButtonClick);
-      // orderButton.addEventListener("click", () => console.log("hello"));
-
-      // Create a clear button
-      const clearButton = document.createElement("button");
-      clearButton.id = "clearButton";
-      clearButton.classList.add("clear-btn");
-      clearButton.innerText = "Clear";
-
-      // Add a click event listener to the clear button
-      clearButton.addEventListener("click", handleClearButtonClick);
-
-      // Fetch product data based on SKUs
-      fetch(fetchURL)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data && data.data) {
-            const productsContainer = document.createElement("div");
-            productsContainer.classList.add("products", "row", "mb-93");
-
-            // Iterate over the fetched product data and create elements
-            data.data.forEach((product) => {
-              // Check if the product has at least one variant with a matching SKU
-              if (
-                product.variants.some((variant) =>
-                  selectedSKUs.includes(variant.sku)
-                )
-              ) {
-                selectedSKUs.forEach((selectedSKU) => {
-                  const matchingVariant = product.variants.find(
-                    (variant) => variant.sku === selectedSKU
-                  );
-                  if (matchingVariant) {
-                    skuToProductIdMap[matchingVariant.sku] = product.id;
-                  }
-                  if (matchingVariant) {
-                    const matchingSKU = matchingVariant.sku;
-                    const existingCartItem = document.querySelector(
-                      `.cart-item[data-sku="${matchingSKU}"]`
-                    );
-                    subtotal += matchingVariant.price / 100;
-                    total += matchingVariant.price / 100;
-                    updateTotal();
-
-                    if (existingCartItem) {
-                      // If the item with the same SKU already exists, update its quantity
-                      const quantityElement =
-                        existingCartItem.querySelector(".quantity");
-                      const currentQuantity = parseInt(
-                        quantityElement.innerText,
-                        10
-                      );
-                      quantityElement.innerText = currentQuantity + 1;
-                    } else {
-                      // Create and append the new cart item
-                      const cartItem = document.createElement("div");
-                      cartItem.classList.add("cart-item", "row", "mb-3");
-                      cartItem.setAttribute("data-sku", matchingSKU);
-                      cartItem.setAttribute("data-product-id", product.id); // Add product ID attribute
-                      cartItem.setAttribute(
-                        "data-variant-id",
-                        matchingVariant.id
-                      ); // Add variant ID attribute
-
-                      const matchingImage = product.images.find((image) =>
-                        image.variant_ids.includes(matchingVariant.id)
-                      );
-
-                      // Product image
-                      const productImage = document.createElement("img");
-                      productImage.src = matchingImage ? matchingImage.src : "";
-                      productImage.alt = product.title;
-                      productImage.classList.add(
-                        "col-2",
-                        "img-fluid",
-                        "productimg"
-                      );
-                      productImage.loading = "lazy";
-
-                      // Product details
-                      const productDetails = document.createElement("div");
-                      productDetails.classList.add("col-8");
-                      productDetails.innerHTML = `
-                                            <hr style="border-top: 5px solid rgba(33, 74, 109, 1); margin: 1px 0;">
-                                            <h5 style='font-family: IGLight;'>${
-                                              product.title
-                                            }</h5>
-                                            <p style="margin: 0;"><span style="font-weight: bold;">Color & Size:</span> ${
-                                              matchingVariant.title
-                                            }</p>
-                                            <p style="margin: 0;"><span style="font-weight: bold;">Price:</span> $${
-                                              matchingVariant.price / 100
-                                            } USD</p>
-                                            <p style="margin: 0;"><span style="font-weight: bold;">Quantity:</span> <span class="quantity">1</span></p>
-                                        `;
-
-                      // Remove item button
-                      const removeItemButton = document.createElement("button");
-                      removeItemButton.innerText = "Remove";
-                      removeItemButton.classList.add("col-2", "remove-btn");
-                      removeItemButton.addEventListener("click", () => {
-                        // Find the index of the item with the matching SKU in the cart
-                        const matchingSKU = matchingVariant.sku;
-                        const quantityElement =
-                          cartItem.querySelector(".quantity");
-                        const currentQuantity = parseInt(
-                          quantityElement.innerText,
-                          10
-                        );
-                        console.log("Current Quantity:", currentQuantity); // Log current quantity for debugging
-                        subtotal -= matchingVariant.price / 100;
-                        total -= matchingVariant.price / 100;
-                        updateTotal();
-
-                        if (currentQuantity > 1) {
-                          // If the quantity is more than 1, decrease it
-                          quantityElement.innerText = currentQuantity - 1;
-                          const indexOfMatchingSKU =
-                            selectedSKUs.indexOf(matchingSKU);
-
-                          // Check if the SKU appears more than once in the array
-                          if (indexOfMatchingSKU !== -1) {
-                            // Remove only the first occurrence of the SKU
-                            selectedSKUs.splice(indexOfMatchingSKU, 1);
-                          }
-
-                          // Update selectedSKUs with the modified array
-                          updateSelectedSKUs(selectedSKUs);
-                        } else {
-                          // If the quantity is 1, remove the entire cart item
-                          cartItem.parentNode.removeChild(cartItem);
-
-                          // Update selectedSKUs with the filtered array
-                          const updatedSelectedSKUs = selectedSKUs.filter(
-                            (item) => item !== matchingSKU
-                          );
-                          updateSelectedSKUs(updatedSelectedSKUs);
-                        }
-
-                        // Log the updated array
-                        console.log("Updated SKUs:", selectedSKUs);
-                        // console.log(`Remove item with SKU: ${matchingSKU}`);
-                      });
-
-                      // Append elements to the cart item
-                      cartItem.appendChild(productImage);
-                      cartItem.appendChild(productDetails);
-                      cartItem.appendChild(removeItemButton);
-
-                      // Append cart item to the products container
-                      productsContainer.appendChild(cartItem);
-                    }
-                  }
-                });
-              }
-            });
-
-            // Insert productsContainer into the DOM
-            const cartContainer = document.getElementById("cart-container");
-            if (cartContainer) {
-              cartContainer.parentNode.prepend(orderButton);
-              // cartContainer.parentNode.prepend(clearButton);
-            } else {
-              console.error("Cart container not found.");
-            }
-          } else {
-            console.log("Product data is missing or undefined.");
-          }
-        })
-        .catch((error) => console.error(error));
-    }
-  }
-
-  // const currentUrl = window.location.pathname;
-  // if (currentUrl === '/cart') {
-  //   console.log("works1, loaded");
-  //   handleCart();
-  // }
-
-  // Define a function to update total
-  function updateTotal() {
-    // Calculate the total based on your logic
-    total = (subtotal + subtotal * 0.13 + shipping).toFixed(2);
-    // console.log('bread and tings', total);
-
-    // Dispatch a custom event to notify other parts of the application
-    const updateTotalEvent = new CustomEvent("updateTotalEvent", {
-      detail: { total: total },
-    });
-    document.dispatchEvent(updateTotalEvent);
-
-    return total;
-  }
-
   // Call the function to handle cart functionality
   // handleCart();
 
-  //ORDER---------------------
-
-  // Global variable to track the current stage
-  let currentStage = 1;
-  const inputValues = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    email2: "",
-    // phone: '',
-    country: "",
-    region: "",
-    city: "",
-    address: "",
-    address2: "",
-    zip: "",
-  };
   const random = generateRandom6DigitNumber();
   const randomlabel = generateRandom6DigitNumber();
 
   function generateRandom6DigitNumber() {
     return Math.floor(100000 + Math.random() * 900000);
-  }
-
-  // Create a modal element
-  const orderModal = document.createElement("div");
-  orderModal.classList.add("modal", "fade", "portfolio-modal");
-  orderModal.id = "orderModal";
-
-  // Function to handle the order button click
-  function handleOrderButtonClick() {
-    // Create the backdrop element
-    const backdrop = document.createElement("div");
-    backdrop.classList.add("modal-backdrop");
-    document.body.appendChild(backdrop);
-
-    console.log("Modal Opened");
-
-    // Set the modal content
-    orderModal.innerHTML = constructModalBody();
-
-    // Append the modal to the body
-    document.body.appendChild(orderModal);
-
-    // Disable scrolling on the body
-    document.body.style.overflow = "hidden";
-
-    // Show the modal
-    orderModal.style.display = "block";
-
-    const orderDetailsButton = orderModal.querySelector("#OrderDetailsButton");
-    orderDetailsButton.addEventListener("click", handleOrderDetailsButton);
-
-    // Function to hide the modal
-    function hideModal() {
-      backdrop.remove();
-      // Enable scrolling on the body
-      document.body.style.overflow = "";
-
-      orderModal.style.display = "none";
-      // Remove the modal from the DOM when hidden
-      orderModal.remove();
-    }
-
-    // Event listener to hide the modal when clicking outside of it
-    window.addEventListener("click", function (event) {
-      if (
-        event.target === orderModal ||
-        event.target.classList.contains("btn-close")
-      ) {
-        hideModal();
-        currentStage = 1;
-      }
-    });
-
-    // Reset the currentStage to 1 when the modal is closed
-    // orderModal.addEventListener('hidden.bs.modal', function () {
-    //   currentStage = 1;
-    // });
   }
 
   // Initialize an array to store line items for the order
@@ -1074,157 +1362,6 @@ const DisplayProducts = (props) => {
   //   });
   // });
 
-  function constructModalBody() {
-    switch (currentStage) {
-      case 1:
-        const price = cartUtilities.getTotalPrice() / 100;
-        const tax = price * 0.13;
-        const totalPayment = price + tax + shipping;
-        return `
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Total Cost</h5><span style="margin-left:5px">(USD)</span>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <!-- Display order summary and total cost here -->
-              <table style="border-collapse: collapse; width: 50%;">
-              <tr>
-                  <td style="border: none;">Subtotal:</td>
-                  <td style="border: none; text-align: left;">$${price}</td>
-              </tr>
-              <tr>
-                  <td style="border: none;">Tax:</td>
-                  <td style="border: none; text-align: left;">$${tax}</td>
-              </tr>
-              <tr>
-                  <td style="border: none;">Shipping:</td>
-                  <td style="border: none; text-align: left;">$${shipping}</td>
-              </tr>
-              <tr>
-                  <td style="border: none; font-weight: bold;">Total:</td>
-                  <td style="border: none; text-align: left; font-weight: bold;">$${totalPayment}</td>
-              </tr>
-          </table>
-              <button id="OrderDetailsButton" class="proceed-btn gen-btn mt-3">Order Details</button>
-            </div>
-          </div>
-        </div>
-      `;
-      case 2:
-        return `
-        <div class="modal-dialog modal-dialog-centered" style="top:30px; ">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Shipping Information</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="font-size: 16px; max-height: 650px; overflow-y: auto;" >
-              <label for="firstNameInput">First Name<span style='color:red'>*</span>:</label>
-              <input type="text" id="firstNameInput" class="form-control" required value="${inputValues.firstName}">
-              <label for="lastNameInput">Last Name<span style='color:red'>*</span>:</label>
-              <input type="text" id="lastNameInput" class="form-control" required value="${inputValues.lastName}">
-              <label for="emailInput">Email<span style='color:red'>*</span>:</label>
-              <input type="email" id="emailInput" class="form-control" required value="${inputValues.email}">
-              <label for="emailInput">Verify email<span style='color:red'>*</span>:</label>
-              <input type="email" id="emailInput2" class="form-control" required value="${inputValues.email2}">
-              <label for="countrySelect">Country<span style='color:red'>*</span>:</label>
-              <select id="countryInput" class="form-control" required>
-              <option>${inputValues.country}</option>
-              </select>                       
-              <label for="regionInput">State/Province/Region<span style='color:red'>*</span>:</label>
-              <select id="regionInput" class="form-control" required>
-                <option>${inputValues.region}</option>
-              </select>
-              <label for="cityinput">City<span style='color:red'>*</span>:</label>
-              <select id="cityInput" class="form-control" required>
-                <option>${inputValues.city}</option>
-              </select>              
-              <label for="addressinput">Address Line 1<span style='color:red'>*</span>:</label>
-              <input type="address" id="addressInput" class="form-control" required value="${inputValues.address}">
-              <label for="address2input">Address Line 2: <span style='font-size:10px'>(if applicable):</span></label>
-              <input type="address2" id="address2Input" class="form-control" required value="${inputValues.address2}" placeholder="Unit, Apartment, Suite, Floor, Building, Floor etc.">
-              <label for="zipinput">Postal Code/ZIP<span style='color:red'>*</span>:</label>
-              <input type="zip" id="zipInput" class="form-control" required value="${inputValues.zip}">
-              <button id="backButton" class="back-btn gen-btn mt-3">Back</button>
-              <button id="proceedpayment" class="proceed-btn gen-btn mt-3">Proceed to Payment</button>
-              <div id='formincomplete' style='color:red; margin-top:5px;font-size:11px'></div>
-              <div id='formincomplete2' style='color:red; margin-top:5px;font-size:11px'></div>
-              <div style='font-size:10px; margin-top:15px'>By placing your order, you agree to Exotic Relief's <a href="./terms">Terms of Use, Privacy, and Refund Policies</a>.</div>
-              <div style='font-size:10px; margin-top:15px'>Please note that <b><u>ALL SALES ARE FINAL</u></b></div>
-          </div>
-        </div>
-      `;
-      case 3:
-        return `
-        <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Payment</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <!-- Display payment options here -->
-            <div id='paypal-parent'>
-            </div>              
-          <button id="backButton2" class="back-btn gen-btn mt-3">Back</button>
-          </div>
-        </div>
-      </div>
-      `;
-      case 4:
-        return `
-          <div class="modal-dialog modal-dialog-centered success-modal">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title text-black">Order Received!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <!-- Display a larger text indicating the order has been received and is being processed -->
-                <div class="success-message">
-                  <span class="checkmark larger-checkmark">&#10003;</span>
-                  <p class="larger-text">Thanks for placing your order! It has been received and is being processed. You will receive an email notification with more details.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      case 5:
-        return `
-            <div class="modal-dialog modal-dialog-centered error-modal">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title text-black">Error!</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="error-message">
-                    <span class="checkmark larger-error">&#10008;</span>
-                    <p class="larger-text">Please go back and check your provided information.  The order cannot be placed at this time.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          `;
-      default:
-        break;
-    }
-  }
-
-  function handleOrderDetailsButton() {
-    console.log("Modal 2nd page, Order details");
-    currentStage = 2;
-
-    // Update only the modal body content
-    orderModal.innerHTML = constructModalBody();
-
-    // Save input values
-    saveInputValues();
-    orderModal.style.display = "block";
-  }
-
   orderModal.addEventListener("click", function (event) {
     const targetId = event.target.id;
     switch (targetId) {
@@ -1278,151 +1415,6 @@ const DisplayProducts = (props) => {
       populateCountryOptions(); // Assuming this function exists
     }
   });
-
-  var initialSetupDone = false;
-
-  function saveInputValues() {
-    // console.log('this is the', currentStage)
-    const firstNameInput = document.getElementById("firstNameInput");
-    const lastNameInput = document.getElementById("lastNameInput");
-    const emailInput = document.getElementById("emailInput");
-    const emailInput2 = document.getElementById("emailInput2");
-    // const phoneInput = document.getElementById('phoneInput');
-    const countryInput = document.getElementById("countryInput");
-    const regionInput = document.getElementById("regionInput");
-    const cityInput = document.getElementById("cityInput");
-    const addressInput = document.getElementById("addressInput");
-    const address2Input = document.getElementById("address2Input");
-    const zipInput = document.getElementById("zipInput");
-
-    if (firstNameInput) inputValues.firstName = firstNameInput.value;
-    if (lastNameInput) inputValues.lastName = lastNameInput.value;
-    if (emailInput) inputValues.email = emailInput.value;
-    if (emailInput2) inputValues.email2 = emailInput2.value;
-    // if (phoneInput) inputValues.phone = phoneInput.value;
-    if (countryInput) {
-      inputValues.country = countryInput.value;
-      console.log("Saved Country:", inputValues.country);
-    }
-    if (regionInput) inputValues.region = regionInput.value;
-    if (cityInput) inputValues.city = cityInput.value;
-    if (addressInput) inputValues.address = addressInput.value;
-    if (address2Input) inputValues.address2 = address2Input.value;
-    if (zipInput) inputValues.zip = zipInput.value;
-
-    if (currentStage === 2) {
-      var formControls = document.getElementsByClassName("form-control");
-      var proceedBtn = document.getElementById("proceedpayment");
-      var modalBody = document.querySelector(".modal-body"); // Adjust the selector based on your modal structure
-
-      // Function to validate email format
-      function validateEmailFormat(emailValue) {
-        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailPattern.test(emailValue);
-      }
-
-      // Function to validate zip code or Canadian postal code format
-      function validateZipCodeFormat(zipValue) {
-        // if (countryInput.value === 'TT') {
-        //   // Trinidad and Tobago doesn't require a postal code
-        //   var zipPattern = /^(\d{6}(-\d{4})?)$/;
-        //   return zipPattern.test(zipValue);
-        // }
-        let zipPattern;
-        if (countryInput.value === "US") {
-          // Allow for postal code with or without a space
-          zipPattern = /^(\d{5}(-\d{4})?)$/;
-          return zipPattern.test(zipValue);
-        } else if (countryInput.value === "CA") {
-          // Allow for postal code with or without a space
-          zipPattern =
-            /^([A-Za-z]\d[A-Za-z] \d[A-Za-z]\d|[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d)$/;
-          return zipPattern.test(zipValue);
-        }
-      }
-
-      // Function to validate if emails match
-      function validateEmailsMatch() {
-        return emailInput.value.trim() === emailInput2.value.trim();
-      }
-
-      var validationMessage = document.getElementById("formincomplete");
-      if (!validationMessage) {
-        validationMessage = document.createElement("div");
-        validationMessage.id = "validationMessage";
-        modalBody.appendChild(validationMessage);
-      }
-      var validationMessage2 = document.getElementById("formincomplete2");
-      if (!validationMessage2) {
-        validationMessage2 = document.createElement("div");
-        validationMessage2.id = "validationMessage2";
-        modalBody.appendChild(validationMessage2);
-      }
-
-      var validationMessageText = "";
-
-      if (
-        !initialSetupDone ||
-        Array.from(formControls).some(
-          (input) => input.value.trim() === "" && input !== address2Input
-        ) ||
-        !validateEmailFormat(emailInput.value.trim()) ||
-        !validateZipCodeFormat(zipInput.value.trim()) ||
-        !validateEmailsMatch()
-        // || phoneInput.value.replace(/\D/g, '').length < 10
-      ) {
-        // Set initial state
-        proceedBtn.disabled = true;
-        proceedBtn.classList.add("btn-disabled");
-        validationMessageText =
-          "Please fill in all required fields to proceed to payment.";
-      }
-
-      validationMessage.innerText = validationMessageText;
-      // var validationMessage2=document.createElement('div');
-      // validationMessage.appendChild(validationMessage2);
-
-      // Loop through each element with the 'form-control' class
-      Array.from(formControls).forEach(function (formControl) {
-        formControl.addEventListener("input", function () {
-          var inputsToCheck = Array.from(formControls).filter(function (input) {
-            return input !== address2Input;
-          });
-
-          var allFieldsFilled = inputsToCheck.every(function (input) {
-            return input.value.trim() !== "";
-          });
-
-          var emailIsValid = validateEmailFormat(emailInput.value.trim());
-          var emailsMatch = validateEmailsMatch();
-          var zipIsValid = validateZipCodeFormat(zipInput.value.trim());
-
-          var allFilledAndValid =
-            allFieldsFilled && emailIsValid && zipIsValid && emailsMatch;
-
-          if (!emailIsValid && emailInput.value.trim() !== "") {
-            validationMessage2.innerHTML = "Please provide a valid EMAIL";
-          } else if (!emailsMatch) {
-            validationMessage2.innerHTML = "Verified email does not match";
-          } else if (!zipIsValid || zipInput.value.trim() === "") {
-            validationMessage2.innerHTML =
-              "Please review POSTAL/ZIP CODE format";
-          } else {
-            validationMessage2.innerHTML = "";
-          }
-
-          if (allFieldsFilled) {
-            validationMessageText = "";
-            validationMessage.innerText = validationMessageText;
-          }
-          proceedBtn.disabled = !allFilledAndValid;
-          proceedBtn.classList.toggle("btn-disabled", !allFilledAndValid);
-        });
-      });
-
-      initialSetupDone = true;
-    }
-  }
 
   function initializePayPal(amount) {
     // Get the container for the PayPal button
@@ -1560,37 +1552,6 @@ const DisplayProducts = (props) => {
   //       // You can also show an error message to the user
   //   });
   // }
-
-  //CLEAR --------------------
-
-  function handleClearButtonClick() {
-    // Display a confirmation popup
-    const isConfirmed = window.confirm("Remove all items from your cart?");
-
-    // Check if the user confirmed
-    if (isConfirmed) {
-      const cartItems = document.querySelectorAll(".cart-item");
-
-      // Iterate through each cart item and remove it
-      cartItems.forEach((cartItem) => {
-        // Find the matching SKU for each cart item
-        const matchingSKU = cartItem.dataset.sku;
-
-        // Update selectedSKUs with the filtered array
-        const updatedSelectedSKUs = selectedSKUs.filter(
-          (item) => item !== matchingSKU
-        );
-        updateSelectedSKUs(updatedSelectedSKUs);
-
-        // Remove the cart item from the DOM
-        cartItem.parentNode.removeChild(cartItem);
-      });
-
-      console.log("All items cleared from the cart.");
-    } else {
-      console.log("Clear operation canceled by the user.");
-    }
-  }
 
   // PAYPAL CONNECTION ----------------
   const headers = new Headers();
