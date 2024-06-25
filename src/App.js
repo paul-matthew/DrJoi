@@ -266,10 +266,10 @@ function App() {
       className="Homepage"
       style={{
         width: "100%",
-        overflow: "hidden",
+        overflowX: "hidden",
         position: "relative",
         background: "white",
-        border: "hidden red",
+        minHeight: "100vh",
       }}
     >
       <div
@@ -1092,7 +1092,7 @@ function App() {
           height: 43,
           left: 0,
           bottom: "0vh",
-          position: "sticky",
+          position: "fixed",
           background: "#0e3022",
           border: "solid black",
         }}
