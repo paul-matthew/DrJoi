@@ -157,7 +157,7 @@ function Shop() {
                 data-aos="fade-up"
                 data-aos-delay="200"
                 data-aos-duration="1000"
-                style={{ marginBottom: "50px" }}
+                style={{ marginBottom: "50px", minHeight: "50vh" }}
               ></div>
             </FadeInSection>
             {/* <div className="Frame2230" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>

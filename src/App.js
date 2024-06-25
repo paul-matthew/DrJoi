@@ -1092,7 +1092,7 @@ function App() {
           height: 43,
           left: 0,
           bottom: "0vh",
-          position: "relative",
+          position: "sticky",
           background: "#0e3022",
           border: "solid black",
         }}
