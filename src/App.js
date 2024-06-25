@@ -749,6 +749,7 @@ function App() {
           style={{
             width: "100%",
             height: "100vh",
+            position: "absolute",
             display: desktopStateList.includes(desktopState)
               ? "none"
               : "static",
