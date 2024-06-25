@@ -747,9 +747,6 @@ function App() {
           id="Homedesktop1"
           className="Homedesktop1"
           style={{
-            left: 0,
-            top: 0,
-            position: "absolute",
             width: "100%",
             height: "100vh",
             display: desktopStateList.includes(desktopState)
