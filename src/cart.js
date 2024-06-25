@@ -4,7 +4,7 @@ import "./style.css";
 import { CartItem } from "./components/CartItem/index.jsx";
 import { useProducts } from "./components/ProductsContext/index.jsx";
 import { cartUtilities } from "./utils/cart.js";
-import { handleCart } from "./products.js";
+import { handleCart, updateTotalCartItemOnShopModal } from "./products.js";
 
 function Cart() {
   const [cartItem, setCartItem] = useState([]);
@@ -26,6 +26,7 @@ function Cart() {
     if (isConfirmed) {
       cartUtilities.clear();
       getCartItems();
+      updateTotalCartItemOnShopModal();
     }
   }
 

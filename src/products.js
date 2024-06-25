@@ -597,6 +597,13 @@ export function handleCart() {
   }
 }
 
+export function updateTotalCartItemOnShopModal() {
+  // Update the item count display in all modals
+  document.querySelectorAll(".item-count").forEach((span) => {
+    span.textContent = cartUtilities.getTotal();
+  });
+}
+
 const DisplayProducts = (props) => {
   //PRINTIFY API------------------------------------------------------
 
@@ -1187,11 +1194,7 @@ const DisplayProducts = (props) => {
                 console.log(product);
                 cartUtilities.add(product);
 
-                // Update the item count display in all modals
-                document.querySelectorAll(".item-count").forEach((span) => {
-                  // span.textContent = itemCount;
-                  span.textContent = cartUtilities.getTotal();
-                });
+                updateTotalCartItemOnShopModal();
               } else {
                 console.error(
                   "No matching variant found for the selected color and size."

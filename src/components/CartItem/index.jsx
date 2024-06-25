@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./style.module.css";
 import { cartUtilities } from "../../utils/cart";
+import { updateTotalCartItemOnShopModal } from "../../products";
 
 export function CartItem({ id, qty, update, product }) {
   const [count, setCount] = useState(qty);
@@ -13,11 +14,13 @@ export function CartItem({ id, qty, update, product }) {
       id,
       qty: parseInt(val),
     });
+    updateTotalCartItemOnShopModal();
   }
 
   function remove() {
     cartUtilities.remove(id);
     update();
+    updateTotalCartItemOnShopModal();
   }
 
   return (
