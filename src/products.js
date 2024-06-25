@@ -11,7 +11,6 @@ const DisplayProducts = (props) => {
   //General -------------
   // Initialize a global array to store all selected SKUs
   let selectedSKUs = [];
-  let itemCount = 0; // Total item count for all products
 
   // To RETRIEVE and log the stored SKUs locally
   const initializeSelectedSKUs = () => {
@@ -583,6 +582,7 @@ const DisplayProducts = (props) => {
               // Check if a variant was found
               if (selectedVariant) {
                 const selectedVariantSKU = selectedVariant.sku;
+                const selectedVariantPrice = selectedVariant.price;
 
                 // Add the selected SKU to the global array based on quantity
                 for (let i = 0; i < selectedQuantity; i++) {
@@ -590,7 +590,7 @@ const DisplayProducts = (props) => {
                 }
 
                 // Update total item count
-                itemCount = selectedSKUs.length;
+                // itemCount = selectedSKUs.length;
 
                 // Now you can use the selectedVariantSKU in your cart logic
                 console.log("Selected Variant SKU:", selectedVariantSKU);
@@ -611,7 +611,9 @@ const DisplayProducts = (props) => {
                 const product = {
                   id: selectedVariantSKU,
                   qty: parseInt(selectedQuantity),
+                  price: selectedVariantPrice,
                 };
+                console.log(product);
                 cartUtilities.add(product);
 
                 // Update the item count display in all modals
@@ -808,9 +810,8 @@ const DisplayProducts = (props) => {
             // Insert productsContainer into the DOM
             const cartContainer = document.getElementById("cart-container");
             if (cartContainer) {
-            cartContainer.parentNode.prepend(orderButton);
-            cartContainer.parentNode.prepend(clearButton);
-      
+              cartContainer.parentNode.prepend(orderButton);
+              // cartContainer.parentNode.prepend(clearButton);
             } else {
               console.error("Cart container not found.");
             }
@@ -1076,6 +1077,9 @@ const DisplayProducts = (props) => {
   function constructModalBody() {
     switch (currentStage) {
       case 1:
+        const price = cartUtilities.getTotalPrice() / 100;
+        const tax = price * 0.13;
+        const totalPayment = price + tax + shipping;
         return `
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -1088,15 +1092,11 @@ const DisplayProducts = (props) => {
               <table style="border-collapse: collapse; width: 50%;">
               <tr>
                   <td style="border: none;">Subtotal:</td>
-                  <td style="border: none; text-align: left;">$${subtotal.toFixed(
-                    2
-                  )}</td>
+                  <td style="border: none; text-align: left;">$${price}</td>
               </tr>
               <tr>
                   <td style="border: none;">Tax:</td>
-                  <td style="border: none; text-align: left;">$${(
-                    subtotal * 0.13
-                  ).toFixed(2)}</td>
+                  <td style="border: none; text-align: left;">$${tax}</td>
               </tr>
               <tr>
                   <td style="border: none;">Shipping:</td>
@@ -1104,7 +1104,7 @@ const DisplayProducts = (props) => {
               </tr>
               <tr>
                   <td style="border: none; font-weight: bold;">Total:</td>
-                  <td style="border: none; text-align: left; font-weight: bold;">$${total}</td>
+                  <td style="border: none; text-align: left; font-weight: bold;">$${totalPayment}</td>
               </tr>
           </table>
               <button id="OrderDetailsButton" class="proceed-btn gen-btn mt-3">Order Details</button>

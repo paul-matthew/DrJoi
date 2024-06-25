@@ -17,7 +17,10 @@ function addToCart(product) {
     cartItems.push(product);
   } else {
     const idx = cartItems.indexOf(curr);
-    cartItems[idx] = product;
+    cartItems[idx] = {
+      ...product,
+      price: curr.price,
+    };
   }
   addToStorage(cartItems);
 }
@@ -40,13 +43,18 @@ function add(product) {
   if (!currItem) {
     currItem = {
       id: product.id,
-      qty: 1,
+      qty: product.qty,
+      price: product.price,
     };
   } else {
     const currQty = parseInt(currItem.qty);
     currItem.qty = currQty + product.qty;
   }
   addToCart(currItem);
+}
+
+function upsert(product) {
+  addToCart(product);
 }
 
 function remove(id) {
@@ -68,10 +76,23 @@ function getTotal() {
   return total;
 }
 
+function getTotalPrice() {
+  let total = 0;
+
+  const cartItems = getCartItems();
+  cartItems.forEach((item) => {
+    total += parseInt(item.qty) * parseInt(item.price);
+  });
+
+  return total;
+}
+
 export const cartUtilities = {
   add,
+  upsert,
   reduce,
   remove,
   clear,
   getTotal,
+  getTotalPrice,
 };

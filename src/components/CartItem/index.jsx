@@ -6,14 +6,13 @@ export function CartItem({ id, qty, update, product }) {
   const [count, setCount] = useState(qty);
   if (!product) return <p>loading cart item...</p>;
   const currSkus = product.variants.find((sku) => sku.sku === id);
-  function add() {
-    setCount((prev) => (prev += 1));
-    cartUtilities.add({ id, qty: 1 });
-  }
-
-  function reduce() {
-    setCount((prev) => (prev -= 1));
-    cartUtilities.reduce(id);
+  function upsert(e) {
+    const val = e.target.value <= 0 ? 1 : e.target.value;
+    setCount(() => val);
+    cartUtilities.upsert({
+      id,
+      qty: parseInt(val),
+    });
   }
 
   function remove() {
@@ -26,7 +25,7 @@ export function CartItem({ id, qty, update, product }) {
       <div className={styles.img}>
         <img loading="lazy" src={product.images[0].src} alt={product.title} />
       </div>
-      <div>
+      <div className={styles.content}>
         <p className={styles.title}>{product.title}</p>
         <p className={styles.price}>
           variant : <span>{currSkus.title}</span>
@@ -34,23 +33,22 @@ export function CartItem({ id, qty, update, product }) {
         <p className={styles.price}>
           price : <span>${currSkus.price / 100}</span>
         </p>
+        <label className={styles.price}>
+          qty :
+          <input
+            type="number"
+            min={1}
+            value={count}
+            className={styles.input}
+            onChange={upsert}
+          />
+        </label>
         <p className={styles.price}>
           total : <span>${(currSkus.price * count) / 100}</span>
         </p>
-        <div className={styles.controls}>
-          <div className={styles.qty_container}>
-            <button className={styles.btn} onClick={add}>
-              add
-            </button>
-            <p className={styles.qty}>{count}</p>
-            <button className={styles.reduce_btn} onClick={reduce}>
-              reduce
-            </button>
-          </div>
-          <button className={styles.remove} onClick={remove}>
-            remove
-          </button>
-        </div>
+        <button className={styles.remove} onClick={remove}>
+          remove
+        </button>
       </div>
     </div>
   );

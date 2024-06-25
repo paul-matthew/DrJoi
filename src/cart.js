@@ -118,9 +118,15 @@ function Cart() {
           data-aos="fade-up"
           data-aos-delay="200"
           data-aos-duration="1000"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "32px",
+          }}
         >
-          {/* <button onClick={clear}>clear</button>
-          <button id="orderButton">order now</button> */}
+          <button onClick={clear} id="clearButton" className="clear-btn">
+            clear
+          </button>
           {cartItem.map((product, i) => {
             return (
               <CartItem
