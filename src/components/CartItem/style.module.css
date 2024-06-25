@@ -1,12 +1,13 @@
 .container {
   width: fit-content;
-  max-width: 50vw;
-  margin-inline: auto;
+
+  display: flex;
+  align-items: center;
 }
 .img {
   aspect-ratio: 1;
-  max-width: 300px;
-  width: 100%;
+  max-height: 200px;
+  height: 100%;
 }
 
 .img img {
@@ -29,6 +30,7 @@
 }
 .price {
   font-weight: 500;
+  line-height: 1em;
 }
 
 .remove {

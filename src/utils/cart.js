@@ -56,7 +56,7 @@ function remove(id) {
 }
 
 function clear() {
-  addToCart([]);
+  addToStorage([]);
 }
 
 function getTotal() {

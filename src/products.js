@@ -649,6 +649,7 @@ const DisplayProducts = (props) => {
 
       // Add a click event listener to the order button
       orderButton.addEventListener("click", handleOrderButtonClick);
+      // orderButton.addEventListener("click", () => console.log("hello"));
 
       // Create a clear button
       const clearButton = document.createElement("button");
@@ -807,12 +808,9 @@ const DisplayProducts = (props) => {
             // Insert productsContainer into the DOM
             const cartContainer = document.getElementById("cart-container");
             if (cartContainer) {
-              cartContainer.parentNode.insertBefore(orderButton, cartContainer);
-              cartContainer.parentNode.insertBefore(clearButton, cartContainer);
-              // cartContainer.parentNode.insertBefore(
-              //   productsContainer,
-              //   cartContainer.nextSibling
-              // );
+            cartContainer.parentNode.prepend(orderButton);
+            cartContainer.parentNode.prepend(clearButton);
+      
             } else {
               console.error("Cart container not found.");
             }

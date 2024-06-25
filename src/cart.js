@@ -3,6 +3,7 @@ import "./App.css";
 import "./style.css";
 import { CartItem } from "./components/CartItem/index.jsx";
 import { useProducts } from "./components/ProductsContext/index.jsx";
+import { cartUtilities } from "./utils/cart.js";
 
 function Cart() {
   const [cartItem, setCartItem] = useState([]);
@@ -17,6 +18,15 @@ function Cart() {
   useEffect(() => {
     getCartItems();
   }, []);
+
+  function clear() {
+    const isConfirmed = window.confirm("Remove all items from your cart?");
+    if (isConfirmed) {
+      cartUtilities.clear();
+      getCartItems();
+    }
+  }
+
   return (
     <section style={{ minHeight: "100vh" }}>
       <div id="NavlogoMobile">
@@ -96,13 +106,21 @@ function Cart() {
           </div>
         </div>
       </div>
-      <div className="container-xl">
+      <div
+        className="container-xl"
+        style={{
+          position: "relative",
+          paddingTop: "5rem",
+        }}
+      >
         <div
           id="cart-container"
           data-aos="fade-up"
           data-aos-delay="200"
           data-aos-duration="1000"
         >
+          {/* <button onClick={clear}>clear</button>
+          <button id="orderButton">order now</button> */}
           {cartItem.map((product, i) => {
             return (
               <CartItem
