@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/static/css/main.752512df.css",
-    "main.js": "/static/js/main.23805288.js",
+    "main.js": "/static/js/main.6beac944.js",
     "static/js/787.101608bf.chunk.js": "/static/js/787.101608bf.chunk.js",
     "static/media/greenhori5.jpeg": "/static/media/greenhori5.78d505a040d7cd154079.jpeg",
     "static/media/PlayfairDisplay.ttf": "/static/media/PlayfairDisplay.bf46a6bcddc9999a295e.ttf",
     "static/media/Rochester-Regular.ttf": "/static/media/Rochester-Regular.0a173c6fb82974687a5e.ttf",
     "index.html": "/index.html",
     "main.752512df.css.map": "/static/css/main.752512df.css.map",
-    "main.23805288.js.map": "/static/js/main.23805288.js.map",
+    "main.6beac944.js.map": "/static/js/main.6beac944.js.map",
     "787.101608bf.chunk.js.map": "/static/js/787.101608bf.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.752512df.css",
-    "static/js/main.23805288.js"
+    "static/js/main.6beac944.js"
   ]
 }

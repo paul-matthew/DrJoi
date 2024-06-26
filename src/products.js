@@ -5,15 +5,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { cartUtilities } from "./utils/cart.js";
 
-let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-// if (
-//   window.location.hostname === "localhost" ||
-//   window.location.hostname === "127.0.0.1"
-// ) {
-//   fetchURL = "http://localhost:5000/products";
-// } else {
-//   fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-// }
+let fetchURL = "";
+if (
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+) {
+  fetchURL = "http://localhost:5000/products";
+} else {
+  fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
+}
 
 //General -------------
 // Initialize a global array to store all selected SKUs
@@ -1228,15 +1228,15 @@ const DisplayProducts = (props) => {
     console.log("Cart Items:", cartItems);
 
     const {
-        firstName,
-        lastName,
-        email,
-        country,
-        region,
-        city,
-        address,
-        address2,
-        zip,
+      firstName,
+      lastName,
+      email,
+      country,
+      region,
+      city,
+      address,
+      address2,
+      zip,
     } = inputValues;
 
     // Initialize an array to store all line items for the order
@@ -1244,80 +1244,80 @@ const DisplayProducts = (props) => {
 
     // Iterate over each cart item and populate lineItems
     cartItems.forEach((item) => {
-        if (item.product_id && item.variant_id) { // Ensure product_id and variant_id exist
-            lineItems.push({
-                product_id: item.product_id,
-                variant_id: item.variant_id,
-                quantity: item.qty,
-            });
-        } else {
-            console.error(`Missing product_id or variant_id for item:`, item);
-            // Handle missing IDs (e.g., show error message, skip item, etc.)
-        }
+      if (item.product_id && item.variant_id) {
+        // Ensure product_id and variant_id exist
+        lineItems.push({
+          product_id: item.product_id,
+          variant_id: item.variant_id,
+          quantity: item.qty,
+        });
+      } else {
+        console.error(`Missing product_id or variant_id for item:`, item);
+        // Handle missing IDs (e.g., show error message, skip item, etc.)
+      }
     });
 
     // Construct the order details
     const orderDetails = {
-        external_id: random.toString(),
-        label: randomlabel.toString(),
-        line_items: lineItems,
-        shipping_method: 1,
-        is_printify_express: false,
-        send_shipping_notification: false,
-        address_to: {
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            country: country,
-            region: region,
-            address1: address,
-            address2: address2,
-            city: city,
-            zip: zip,
-            // Include other user input in address_to
-        },
+      external_id: random.toString(),
+      label: randomlabel.toString(),
+      line_items: lineItems,
+      shipping_method: 1,
+      is_printify_express: false,
+      send_shipping_notification: false,
+      address_to: {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        country: country,
+        region: region,
+        address1: address,
+        address2: address2,
+        city: city,
+        zip: zip,
+        // Include other user input in address_to
+      },
     };
     console.log("Order Details:", orderDetails);
 
     // Make a POST request to your server's /orders endpoint
     let fetchURLorder = "";
     if (
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1"
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
     ) {
-        fetchURLorder = "http://localhost:5000/orders";
+      fetchURLorder = "http://localhost:5000/orders";
     } else {
-        fetchURLorder = "https://drjoiserver-106ea7a60e39.herokuapp.com/orders";
+      fetchURLorder = "https://drjoiserver-106ea7a60e39.herokuapp.com/orders";
     }
 
     if (window.location.pathname.includes("Cart")) {
-        fetch(fetchURLorder, {
-            method: "POST",
-            body: JSON.stringify(orderDetails),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
+      fetch(fetchURLorder, {
+        method: "POST",
+        body: JSON.stringify(orderDetails),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
-            console.log("Order response:", data);
+          console.log("Order response:", data);
 
-            if (data.success && data.orderStatus === "OK") {
-                currentStage = 4;
-            } else {
-                currentStage = 5;
-            }
+          if (data.success && data.orderStatus === "OK") {
+            currentStage = 4;
+          } else {
+            currentStage = 5;
+          }
 
-            orderModal.innerHTML = constructModalBody();
+          orderModal.innerHTML = constructModalBody();
         })
         .catch((error) => {
-            console.error("Error placing order:", error);
-            currentStage = 5;
-            orderModal.innerHTML = constructModalBody();
+          console.error("Error placing order:", error);
+          currentStage = 5;
+          orderModal.innerHTML = constructModalBody();
         });
     }
-}
-
+  }
 
   // function formatPhoneNumber() {
   //   // var phoneInput = document.getElementById('phoneInput');
