@@ -45,6 +45,8 @@ function add(product) {
       id: product.id,
       qty: product.qty,
       price: product.price,
+      variant_id: product.variant_id,
+      product_id: product.product_id,
     };
   } else {
     const currQty = parseInt(currItem.qty);
@@ -95,4 +97,5 @@ export const cartUtilities = {
   clear,
   getTotal,
   getTotalPrice,
+  getCartItems,
 };

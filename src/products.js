@@ -1186,13 +1186,14 @@ const DisplayProducts = (props) => {
                 // const retrievedSKUs = storedSKUs ? JSON.parse(storedSKUs) : [];
 
                 // console.log("NEW Stored SKUs:", retrievedSKUs);
-                const product = {
+                const data = {
                   id: selectedVariantSKU,
                   qty: parseInt(selectedQuantity),
                   price: selectedVariantPrice,
+                  variant_id: selectedVariant.id,
+                  product_id: product.id,
                 };
-                console.log(product);
-                cartUtilities.add(product);
+                cartUtilities.add(data);
 
                 updateTotalCartItemOnShopModal();
               } else {
@@ -1224,7 +1225,7 @@ const DisplayProducts = (props) => {
 
   async function submitOrder() {
     // Find all cart items
-    const cartItems = document.querySelectorAll(".cart-item");
+    const cartItems = cartUtilities.getCartItems();
 
     const {
       firstName,
@@ -1240,21 +1241,12 @@ const DisplayProducts = (props) => {
     } = inputValues;
 
     // Iterate over each cart item
-    cartItems.forEach((cartItem) => {
-      // const sku = cartItem.getAttribute('data-sku');
-      const quantityElement = cartItem.querySelector(".quantity");
-      const productId = cartItem.getAttribute("data-product-id");
-      const variantId = cartItem.getAttribute("data-variant-id");
-
-      // Extract the quantity as an integer
-      const quantity = parseInt(quantityElement.innerText, 10);
-
-      // Add the line item to the array
+    cartItems.forEach((item) => {
       lineItems.push({
         // "sku": sku,
-        product_id: productId,
-        variant_id: variantId,
-        quantity: quantity,
+        product_id: item.product_id,
+        variant_id: item.variant_id,
+        quantity: item.qty,
       });
     });
 
