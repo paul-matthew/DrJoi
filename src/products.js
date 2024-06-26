@@ -1445,7 +1445,7 @@ const DisplayProducts = (props) => {
 
     // Initialize the PayPal SDK here
     if (currentStage === 3) {
-      // eslint-disable-next-line
+      // eslint-disable-next-line no-undef
       paypal
         .Buttons({
           createOrder: function (_, actions) {

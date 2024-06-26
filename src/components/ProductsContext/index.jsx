@@ -17,6 +17,7 @@ export function ProductContextProvider({ children }) {
       setProducts(() => data.data);
     }
     getData();
+    // eslint-disable-next-line
   }, [window.location.pathname]);
   return (
     <ProductContext.Provider value={{ products }}>
