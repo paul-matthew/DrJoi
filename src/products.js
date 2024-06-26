@@ -66,13 +66,14 @@ function updateTotal() {
 const orderModal = document.createElement("div");
 orderModal.classList.add("modal", "fade", "portfolio-modal");
 orderModal.id = "orderModal";
+let totalPayment = 0;
 
 function constructModalBody() {
   switch (currentStage) {
     case 1:
       const price = cartUtilities.getTotalPrice() / 100;
       const tax = Math.round(price * 0.13 * 100) / 100;
-      const totalPayment = Math.round((price + tax + shipping) * 100) / 100;
+      totalPayment = Math.round((price + tax + shipping) * 100) / 100;
       return `
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -1221,98 +1222,102 @@ const DisplayProducts = (props) => {
   }
 
   // Initialize an array to store line items for the order
-  const lineItems = [];
-
   async function submitOrder() {
     // Find all cart items
     const cartItems = cartUtilities.getCartItems();
+    console.log("Cart Items:", cartItems);
 
     const {
-      firstName,
-      lastName,
-      email,
-      // phone,
-      country,
-      region,
-      city,
-      address,
-      address2,
-      zip,
+        firstName,
+        lastName,
+        email,
+        country,
+        region,
+        city,
+        address,
+        address2,
+        zip,
     } = inputValues;
 
-    // Iterate over each cart item
+    // Initialize an array to store all line items for the order
+    const lineItems = [];
+
+    // Iterate over each cart item and populate lineItems
     cartItems.forEach((item) => {
-      lineItems.push({
-        // "sku": sku,
-        product_id: item.product_id,
-        variant_id: item.variant_id,
-        quantity: item.qty,
-      });
+        if (item.product_id && item.variant_id) { // Ensure product_id and variant_id exist
+            lineItems.push({
+                product_id: item.product_id,
+                variant_id: item.variant_id,
+                quantity: item.qty,
+            });
+        } else {
+            console.error(`Missing product_id or variant_id for item:`, item);
+            // Handle missing IDs (e.g., show error message, skip item, etc.)
+        }
     });
 
     // Construct the order details
     const orderDetails = {
-      external_id: random.toString,
-      label: randomlabel.toString,
-      line_items: lineItems,
-      shipping_method: 1,
-      is_printify_express: false,
-      send_shipping_notification: false,
-      address_to: {
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        // "phone": phone,
-        country: country,
-        region: region,
-        address1: address,
-        address2: address2,
-        city: city,
-        zip: zip,
-        // Include other user input in address_to
-      },
+        external_id: random.toString(),
+        label: randomlabel.toString(),
+        line_items: lineItems,
+        shipping_method: 1,
+        is_printify_express: false,
+        send_shipping_notification: false,
+        address_to: {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            country: country,
+            region: region,
+            address1: address,
+            address2: address2,
+            city: city,
+            zip: zip,
+            // Include other user input in address_to
+        },
     };
-
-    // console.log('ah yo this one:',lineItems);
+    console.log("Order Details:", orderDetails);
 
     // Make a POST request to your server's /orders endpoint
     let fetchURLorder = "";
     if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
     ) {
-      fetchURLorder = "http://localhost:5000/orders";
+        fetchURLorder = "http://localhost:5000/orders";
     } else {
-      fetchURLorder = "https://drjoiserver-106ea7a60e39.herokuapp.com/orders";
+        fetchURLorder = "https://drjoiserver-106ea7a60e39.herokuapp.com/orders";
     }
 
     if (window.location.pathname.includes("Cart")) {
-      fetch(fetchURLorder, {
-        method: "POST",
-        body: JSON.stringify(orderDetails),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+        fetch(fetchURLorder, {
+            method: "POST",
+            body: JSON.stringify(orderDetails),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Order response:", data);
+            console.log("Order response:", data);
 
-          if (data.success && data.orderStatus === "OK") {
-            currentStage = 4;
-          } else {
-            currentStage = 5;
-          }
+            if (data.success && data.orderStatus === "OK") {
+                currentStage = 4;
+            } else {
+                currentStage = 5;
+            }
 
-          orderModal.innerHTML = constructModalBody();
+            orderModal.innerHTML = constructModalBody();
         })
         .catch((error) => {
-          console.error("Error placing order:", error);
-          currentStage = 5;
-          orderModal.innerHTML = constructModalBody();
+            console.error("Error placing order:", error);
+            currentStage = 5;
+            orderModal.innerHTML = constructModalBody();
         });
     }
-  }
+}
+
 
   // function formatPhoneNumber() {
   //   // var phoneInput = document.getElementById('phoneInput');
@@ -1442,13 +1447,13 @@ const DisplayProducts = (props) => {
         .Buttons({
           createOrder: function (_, actions) {
             saveInputValues();
-            console.log("Amount to be sent to PayPal:", total);
+            console.log("Amount to be sent to PayPal:", totalPayment);
 
             return actions.order.create({
               purchase_units: [
                 {
                   amount: {
-                    value: total,
+                    value: totalPayment,
                   },
                   // shipping: {
                   //   name: {
@@ -1488,7 +1493,7 @@ const DisplayProducts = (props) => {
                 body: JSON.stringify({
                   order: data,
                   paymentDetails: details,
-                  total: total,
+                  total: totalPayment,
                 }),
               })
                 .then((response) => response.json())
