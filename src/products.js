@@ -6,14 +6,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { cartUtilities } from "./utils/cart.js";
 
 let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-// if (
-//   window.location.hostname === "localhost" ||
-//   window.location.hostname === "127.0.0.1"
-// ) {
-//   fetchURL = "http://localhost:5000/products";
-// } else {
-//   fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
-// }
+if (
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+) {
+  fetchURL = "http://localhost:5000/products";
+} else {
+  fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
+}
 
 //General -------------
 // Initialize a global array to store all selected SKUs
