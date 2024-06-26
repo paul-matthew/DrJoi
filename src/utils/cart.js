@@ -51,6 +51,10 @@ function add(product) {
   } else {
     const currQty = parseInt(currItem.qty);
     currItem.qty = currQty + product.qty;
+
+    currItem.price = product.price ?? currItem.price;
+    currItem.variant_id = product.variant_id ?? currItem.variant_id;
+    currItem.product_id = product.product_id ?? currItem.product_id;
   }
   addToCart(currItem);
 }

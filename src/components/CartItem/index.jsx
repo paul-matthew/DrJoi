@@ -10,9 +10,13 @@ export function CartItem({ id, qty, update, product }) {
   function upsert(e) {
     const val = e.target.value < 0 ? Math.abs(e.target.value) : e.target.value;
     setCount(() => val);
+    if (!val) return;
     cartUtilities.upsert({
       id,
       qty: parseInt(val),
+      price: currSkus.price,
+      variant_id: currSkus.id,
+      product_id: product.id,
     });
     updateTotalCartItemOnShopModal();
   }
