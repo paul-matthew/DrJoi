@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { cartUtilities } from "./utils/cart.js";
 
-let fetchURL = "";
+let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
 if (
   window.location.hostname === "localhost" ||
   window.location.hostname === "127.0.0.1"
