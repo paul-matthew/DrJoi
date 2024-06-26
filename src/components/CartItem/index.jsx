@@ -8,7 +8,7 @@ export function CartItem({ id, qty, update, product }) {
   if (!product) return <p>loading cart item...</p>;
   const currSkus = product.variants.find((sku) => sku.sku === id);
   function upsert(e) {
-    const val = e.target.value <= 0 ? 1 : e.target.value;
+    const val = e.target.value < 0 ? Math.abs(e.target.value) : e.target.value;
     setCount(() => val);
     cartUtilities.upsert({
       id,
