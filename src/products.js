@@ -37,9 +37,9 @@ const inputValues = {
 };
 
 //SHOPPING CART------------
-let subtotal = 0;
-let total = 0;
-let shipping = 19.99;
+// let subtotal = 0;
+// let total = 0;
+let shipping = 19.99; //No longer in use
 
 // const currentUrl = window.location.pathname;
 // if (currentUrl === '/cart') {
@@ -48,19 +48,19 @@ let shipping = 19.99;
 // }
 
 // Define a function to update total
-function updateTotal() {
-  // Calculate the total based on your logic
-  total = (subtotal + subtotal * 0.13 + shipping).toFixed(2);
-  // console.log('bread and tings', total);
+// function updateTotal() {
+//   // Calculate the total based on your logic
+//   total = (subtotal + subtotal * 0.13 + shipping).toFixed(2);
+//   // console.log('bread and tings', total);
 
-  // Dispatch a custom event to notify other parts of the application
-  const updateTotalEvent = new CustomEvent("updateTotalEvent", {
-    detail: { total: total },
-  });
-  document.dispatchEvent(updateTotalEvent);
+//   // Dispatch a custom event to notify other parts of the application
+//   const updateTotalEvent = new CustomEvent("updateTotalEvent", {
+//     detail: { total: total },
+//   });
+//   document.dispatchEvent(updateTotalEvent);
 
-  return total;
-}
+//   return total;
+// }
 
 // Create a modal element
 const orderModal = document.createElement("div");
@@ -68,44 +68,67 @@ orderModal.classList.add("modal", "fade", "portfolio-modal");
 orderModal.id = "orderModal";
 let totalPayment = 0;
 
+// Example function to calculate shipping cost based on country, region, and city
+function calculateShippingCost(country, region, city) {
+  let shippingCost = 0;
+
+  if (country === 'US') {
+    shippingCost = 20; // Example shipping cost for USA
+  } else {
+    shippingCost = 30; // Example shipping cost for other countries
+  }
+
+  return shippingCost;
+}
+
+// Example function to get tax rate based on country
+function getTaxRate(country) {
+  let taxRate = 0;
+
+  if (country === 'US') {
+    taxRate = 0.07; // Example tax rate for USA (8%)
+  } else {
+    taxRate = 0.13; // Example tax rate for other countries (10%)
+  }
+
+  return taxRate;
+}
+
+
 function constructModalBody() {
   switch (currentStage) {
     case 1:
       const price = cartUtilities.getTotalPrice() / 100;
-      const tax = Math.round(price * 0.13 * 100) / 100;
-      totalPayment = Math.round((price + tax + shipping) * 100) / 100;
       return `
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Total Cost</h5><span style="margin-left:5px">(USD)</span>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <!-- Display order summary and total cost here -->
-            <table style="border-collapse: collapse; width: 50%;">
-            <tr>
-                <td style="border: none;">Subtotal:</td>
-                <td style="border: none; text-align: left;">$${price}</td>
-            </tr>
-            <tr>
-                <td style="border: none;">Tax:</td>
-                <td style="border: none; text-align: left;">$${tax}</td>
-            </tr>
-            <tr>
-                <td style="border: none;">Shipping:</td>
-                <td style="border: none; text-align: left;">$${shipping}</td>
-            </tr>
-            <tr>
-                <td style="border: none; font-weight: bold;">Total:</td>
-                <td style="border: none; text-align: left; font-weight: bold;">$${totalPayment}</td>
-            </tr>
-        </table>
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Subtotal <span style="font-size: 14px;">(Before Taxes & Shipping) (USD)</span></h5><span style="margin-left:5px"></span>              
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Display order summary and total cost here -->
+              <table style="border-collapse: collapse; width: 50%;">
+              <!--<tr>
+                  <td style="border: none;">Subtotal:</td>
+                  <td style="border: none; text-align: left;">$${price}</td>
+              </tr>
+              <tr>
+                  <td style="border: none;">Shipping:</td>
+                  <td style="border: none; text-align: left;">$${shipping}</td>
+              </tr>-->
+              <tr>
+                  <td style="border: none; font-weight: bold;">Subtotal:</td>
+                  <td style="border: none; text-align: left; font-weight: bold;">$${Math.round((price) * 100) / 100}</td>
+              </tr>
+            </table>
+            <p style="font-size: 14px; color: gray;margin-top:10px">Final amount including taxes and shipping will be calculated at checkout based on your shipping address.</p>
             <button id="OrderDetailsButton" class="proceed-btn gen-btn mt-3">Order Details</button>
           </div>
         </div>
       </div>
-    `;
+      `;
+    
     case 2:
       return `
       <div class="modal-dialog modal-dialog-centered" style="top:30px; ">
@@ -142,7 +165,7 @@ function constructModalBody() {
             <label for="zipinput">Postal Code/ZIP<span style='color:red'>*</span>:</label>
             <input type="zip" id="zipInput" class="form-control" required value="${inputValues.zip}">
             <button id="backButton" class="back-btn gen-btn mt-3">Back</button>
-            <button id="proceedpayment" class="proceed-btn gen-btn mt-3">Proceed to Payment</button>
+            <button id="proceedpayment1" class="proceed-btn gen-btn mt-3">Total Cost</button>
             <div id='formincomplete' style='color:red; margin-top:5px;font-size:11px'></div>
             <div id='formincomplete2' style='color:red; margin-top:5px;font-size:11px'></div>
             <div style='font-size:10px; margin-top:15px'>By placing your order, you agree to Exotic Relief's <a href="./terms">Terms of Use, Privacy, and Refund Policies</a>.</div>
@@ -150,6 +173,49 @@ function constructModalBody() {
         </div>
       </div>
     `;
+
+    case 2.5: // New case for displaying shipping costs and tax before payment
+      const shippingCost = calculateShippingCost(inputValues.country, inputValues.region, inputValues.city);
+      const taxRate = getTaxRate(inputValues.country);
+      const subtotal = cartUtilities.getTotalPrice() / 100;
+      const taxAmount = Math.round(subtotal * taxRate * 100) / 100;
+      totalPayment = Math.round((subtotal + shippingCost + taxAmount) * 100) / 100;
+
+      return `
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Order Summary<span style="font-size: 14px;">(USD)</span></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Display shipping costs, tax, and total before payment -->
+              <table style="border-collapse: collapse; width: 50%;">
+                <tr>
+                  <td style="border: none;">Subtotal:</td>
+                  <td style="border: none; text-align: left;">$${subtotal}</td>
+                </tr>
+                <tr>
+                  <td style="border: none;">Shipping:</td>
+                  <td style="border: none; text-align: left;">$${shippingCost}</td>
+                </tr>
+                <tr>
+                  <td style="border: none;">Tax (${(taxRate * 100).toFixed(2)}%):</td>
+                  <td style="border: none; text-align: left;">$${taxAmount}</td>
+                </tr>
+                <tr>
+                  <td style="border: none; font-weight: bold;">Total:</td>
+                  <td style="border: none; text-align: left; font-weight: bold;">$${totalPayment}</td>
+                </tr>
+              </table>
+              <p style="font-size: 14px; color: gray;margin-top:10px">Review your order details before proceeding to payment.</p>
+              <button id="backButton2" class="back-btn gen-btn mt-3">Back</button>
+              <button id="proceedpayment" class="proceed-btn gen-btn mt-3">Proceed to Payment</button>
+            </div>
+          </div>
+        </div>
+      `;
+
     case 3:
       return `
       <div class="modal-dialog modal-dialog-centered">
@@ -162,7 +228,7 @@ function constructModalBody() {
           <!-- Display payment options here -->
           <div id='paypal-parent'>
           </div>              
-        <button id="backButton2" class="back-btn gen-btn mt-3">Back</button>
+        <button id="backButton3" class="back-btn gen-btn mt-3">Back</button>
         </div>
       </div>
     </div>
@@ -213,9 +279,9 @@ const initializeSelectedSKUs = () => {
   selectedSKUs = storedSKUs ? JSON.parse(storedSKUs) : [];
 };
 
-const updateSelectedSKUs = (updatedSKUs) => {
-  localStorage.setItem("selectedSKUs", JSON.stringify(updatedSKUs));
-};
+// const updateSelectedSKUs = (updatedSKUs) => {
+//   localStorage.setItem("selectedSKUs", JSON.stringify(updatedSKUs));
+// };
 
 var initialSetupDone = false;
 
@@ -250,7 +316,7 @@ function saveInputValues() {
 
   if (currentStage === 2) {
     var formControls = document.getElementsByClassName("form-control");
-    var proceedBtn = document.getElementById("proceedpayment");
+    var proceedBtn = document.getElementById("proceedpayment1");
     var modalBody = document.querySelector(".modal-body"); // Adjust the selector based on your modal structure
 
     // Function to validate email format
@@ -425,7 +491,7 @@ function handleOrderButtonClick() {
 //CLEAR --------------------
 
 export function handleCart() {
-  const skuToProductIdMap = {};
+  // const skuToProductIdMap = {};
   if (window.location.pathname.toLowerCase().includes("cart")) {
     // Create an order button
     const orderButton = document.createElement("button");
@@ -446,141 +512,141 @@ export function handleCart() {
           productsContainer.classList.add("products", "row", "mb-93");
 
           // Iterate over the fetched product data and create elements
-          data.data.forEach((product) => {
-            // Check if the product has at least one variant with a matching SKU
-            if (
-              product.variants.some((variant) =>
-                selectedSKUs.includes(variant.sku)
-              )
-            ) {
-              selectedSKUs.forEach((selectedSKU) => {
-                const matchingVariant = product.variants.find(
-                  (variant) => variant.sku === selectedSKU
-                );
-                if (matchingVariant) {
-                  skuToProductIdMap[matchingVariant.sku] = product.id;
-                }
-                if (matchingVariant) {
-                  const matchingSKU = matchingVariant.sku;
-                  const existingCartItem = document.querySelector(
-                    `.cart-item[data-sku="${matchingSKU}"]`
-                  );
-                  subtotal += matchingVariant.price / 100;
-                  total += matchingVariant.price / 100;
-                  updateTotal();
+          // data.data.forEach((product) => {
+          //   // Check if the product has at least one variant with a matching SKU
+          //   if (
+          //     product.variants.some((variant) =>
+          //       selectedSKUs.includes(variant.sku)
+          //     )
+          //   ) {
+          //     selectedSKUs.forEach((selectedSKU) => {
+          //       const matchingVariant = product.variants.find(
+          //         (variant) => variant.sku === selectedSKU
+          //       );
+          //       if (matchingVariant) {
+          //         skuToProductIdMap[matchingVariant.sku] = product.id;
+          //       }
+          //       if (matchingVariant) {
+          //         const matchingSKU = matchingVariant.sku;
+          //         const existingCartItem = document.querySelector(
+          //           `.cart-item[data-sku="${matchingSKU}"]`
+          //         );
+          //         subtotal += matchingVariant.price / 100;
+          //         total += matchingVariant.price / 100;
+          //         updateTotal();
 
-                  if (existingCartItem) {
-                    // If the item with the same SKU already exists, update its quantity
-                    const quantityElement =
-                      existingCartItem.querySelector(".quantity");
-                    const currentQuantity = parseInt(
-                      quantityElement.innerText,
-                      10
-                    );
-                    quantityElement.innerText = currentQuantity + 1;
-                  } else {
-                    // Create and append the new cart item
-                    const cartItem = document.createElement("div");
-                    cartItem.classList.add("cart-item", "row", "mb-3");
-                    cartItem.setAttribute("data-sku", matchingSKU);
-                    cartItem.setAttribute("data-product-id", product.id); // Add product ID attribute
-                    cartItem.setAttribute(
-                      "data-variant-id",
-                      matchingVariant.id
-                    ); // Add variant ID attribute
+          //         if (existingCartItem) {
+          //           // If the item with the same SKU already exists, update its quantity
+          //           const quantityElement =
+          //             existingCartItem.querySelector(".quantity");
+          //           const currentQuantity = parseInt(
+          //             quantityElement.innerText,
+          //             10
+          //           );
+          //           quantityElement.innerText = currentQuantity + 1;
+          //         } else {
+          //           // Create and append the new cart item
+          //           const cartItem = document.createElement("div");
+          //           cartItem.classList.add("cart-item", "row", "mb-3");
+          //           cartItem.setAttribute("data-sku", matchingSKU);
+          //           cartItem.setAttribute("data-product-id", product.id); // Add product ID attribute
+          //           cartItem.setAttribute(
+          //             "data-variant-id",
+          //             matchingVariant.id
+          //           ); // Add variant ID attribute
 
-                    const matchingImage = product.images.find((image) =>
-                      image.variant_ids.includes(matchingVariant.id)
-                    );
+          //           const matchingImage = product.images.find((image) =>
+          //             image.variant_ids.includes(matchingVariant.id)
+          //           );
 
-                    // Product image
-                    const productImage = document.createElement("img");
-                    productImage.src = matchingImage ? matchingImage.src : "";
-                    productImage.alt = product.title;
-                    productImage.classList.add(
-                      "col-2",
-                      "img-fluid",
-                      "productimg"
-                    );
-                    productImage.loading = "lazy";
+          //           // Product image
+          //           const productImage = document.createElement("img");
+          //           productImage.src = matchingImage ? matchingImage.src : "";
+          //           productImage.alt = product.title;
+          //           productImage.classList.add(
+          //             "col-2",
+          //             "img-fluid",
+          //             "productimg"
+          //           );
+          //           productImage.loading = "lazy";
 
-                    // Product details
-                    const productDetails = document.createElement("div");
-                    productDetails.classList.add("col-8");
-                    productDetails.innerHTML = `
-                                          <hr style="border-top: 5px solid rgba(33, 74, 109, 1); margin: 1px 0;">
-                                          <h5 style='font-family: IGLight;'>${
-                                            product.title
-                                          }</h5>
-                                          <p style="margin: 0;"><span style="font-weight: bold;">Color & Size:</span> ${
-                                            matchingVariant.title
-                                          }</p>
-                                          <p style="margin: 0;"><span style="font-weight: bold;">Price:</span> $${
-                                            matchingVariant.price / 100
-                                          } USD</p>
-                                          <p style="margin: 0;"><span style="font-weight: bold;">Quantity:</span> <span class="quantity">1</span></p>
-                                      `;
+          //           // Product details
+          //           const productDetails = document.createElement("div");
+          //           productDetails.classList.add("col-8");
+          //           productDetails.innerHTML = `
+          //             <hr style="border-top: 5px solid rgba(33, 74, 109, 1); margin: 1px 0;">
+          //             <h5 style='font-family: IGLight;'>${
+          //               product.title
+          //             }</h5>
+          //             <p style="margin: 0;"><span style="font-weight: bold;">Color & Size:</span> ${
+          //               matchingVariant.title
+          //             }</p>
+          //             <p style="margin: 0;"><span style="font-weight: bold;">Price:</span> $${
+          //               matchingVariant.price / 100
+          //             } USD</p>
+          //             <p style="margin: 0;"><span style="font-weight: bold;">Quantity:</span> <span class="quantity">1</span></p>
+          //         `;
 
-                    // Remove item button
-                    const removeItemButton = document.createElement("button");
-                    removeItemButton.innerText = "Remove";
-                    removeItemButton.classList.add("col-2", "remove-btn");
-                    removeItemButton.addEventListener("click", () => {
-                      // Find the index of the item with the matching SKU in the cart
-                      const matchingSKU = matchingVariant.sku;
-                      const quantityElement =
-                        cartItem.querySelector(".quantity");
-                      const currentQuantity = parseInt(
-                        quantityElement.innerText,
-                        10
-                      );
-                      console.log("Current Quantity:", currentQuantity); // Log current quantity for debugging
-                      subtotal -= matchingVariant.price / 100;
-                      total -= matchingVariant.price / 100;
-                      updateTotal();
+          //           // Remove item button
+          //           const removeItemButton = document.createElement("button");
+          //           removeItemButton.innerText = "Remove";
+          //           removeItemButton.classList.add("col-2", "remove-btn");
+          //           removeItemButton.addEventListener("click", () => {
+          //             // Find the index of the item with the matching SKU in the cart
+          //             const matchingSKU = matchingVariant.sku;
+          //             const quantityElement =
+          //               cartItem.querySelector(".quantity");
+          //             const currentQuantity = parseInt(
+          //               quantityElement.innerText,
+          //               10
+          //             );
+          //             console.log("Current Quantity:", currentQuantity); // Log current quantity for debugging
+          //             subtotal -= matchingVariant.price / 100;
+          //             total -= matchingVariant.price / 100;
+          //             updateTotal();
 
-                      if (currentQuantity > 1) {
-                        // If the quantity is more than 1, decrease it
-                        quantityElement.innerText = currentQuantity - 1;
-                        const indexOfMatchingSKU =
-                          selectedSKUs.indexOf(matchingSKU);
+          //             if (currentQuantity > 1) {
+          //               // If the quantity is more than 1, decrease it
+          //               quantityElement.innerText = currentQuantity - 1;
+          //               const indexOfMatchingSKU =
+          //                 selectedSKUs.indexOf(matchingSKU);
 
-                        // Check if the SKU appears more than once in the array
-                        if (indexOfMatchingSKU !== -1) {
-                          // Remove only the first occurrence of the SKU
-                          selectedSKUs.splice(indexOfMatchingSKU, 1);
-                        }
+          //               // Check if the SKU appears more than once in the array
+          //               if (indexOfMatchingSKU !== -1) {
+          //                 // Remove only the first occurrence of the SKU
+          //                 selectedSKUs.splice(indexOfMatchingSKU, 1);
+          //               }
 
-                        // Update selectedSKUs with the modified array
-                        updateSelectedSKUs(selectedSKUs);
-                      } else {
-                        // If the quantity is 1, remove the entire cart item
-                        cartItem.parentNode.removeChild(cartItem);
+          //               // Update selectedSKUs with the modified array
+          //               updateSelectedSKUs(selectedSKUs);
+          //             } else {
+          //               // If the quantity is 1, remove the entire cart item
+          //               cartItem.parentNode.removeChild(cartItem);
 
-                        // Update selectedSKUs with the filtered array
-                        const updatedSelectedSKUs = selectedSKUs.filter(
-                          (item) => item !== matchingSKU
-                        );
-                        updateSelectedSKUs(updatedSelectedSKUs);
-                      }
+          //               // Update selectedSKUs with the filtered array
+          //               const updatedSelectedSKUs = selectedSKUs.filter(
+          //                 (item) => item !== matchingSKU
+          //               );
+          //               updateSelectedSKUs(updatedSelectedSKUs);
+          //             }
 
-                      // Log the updated array
-                      console.log("Updated SKUs:", selectedSKUs);
-                      // console.log(`Remove item with SKU: ${matchingSKU}`);
-                    });
+          //             // Log the updated array
+          //             console.log("Updated SKUs:", selectedSKUs);
+          //             // console.log(`Remove item with SKU: ${matchingSKU}`);
+          //           });
 
-                    // Append elements to the cart item
-                    cartItem.appendChild(productImage);
-                    cartItem.appendChild(productDetails);
-                    cartItem.appendChild(removeItemButton);
+          //           // Append elements to the cart item
+          //           cartItem.appendChild(productImage);
+          //           cartItem.appendChild(productDetails);
+          //           cartItem.appendChild(removeItemButton);
 
-                    // Append cart item to the products container
-                    productsContainer.appendChild(cartItem);
-                  }
-                }
-              });
-            }
-          });
+          //           // Append cart item to the products container
+          //           productsContainer.appendChild(cartItem);
+          //         }
+          //       }
+          //     });
+          //   }
+          // });
 
           // Insert productsContainer into the DOM
           const cartContainer = document.getElementById("cart-container");
@@ -1038,7 +1104,7 @@ const DisplayProducts = (props) => {
               // Call handleCartClick directly
               handleCartClick();
               handleCart();
-              updateTotal();
+              // updateTotal();
             });
             viewCartBtn.setAttribute("data-bs-dismiss", "modal");
 
@@ -1370,6 +1436,12 @@ const DisplayProducts = (props) => {
         orderModal.innerHTML = constructModalBody();
         saveInputValues();
         break;
+      case "proceedpayment1":
+        currentStage = 2.5;
+        saveInputValues();
+        orderModal.innerHTML = constructModalBody();
+        initializePayPal();
+        break;
       case "proceedpayment":
         currentStage = 3;
         saveInputValues();
@@ -1383,6 +1455,11 @@ const DisplayProducts = (props) => {
         break;
       case "backButton2":
         currentStage = 2;
+        orderModal.innerHTML = constructModalBody();
+        saveInputValues();
+        break;
+      case "backButton3":
+        currentStage = 2.5;
         orderModal.innerHTML = constructModalBody();
         saveInputValues();
         break;
@@ -1453,7 +1530,7 @@ const DisplayProducts = (props) => {
               purchase_units: [
                 {
                   amount: {
-                    value: totalPayment,
+                    value: totalPayment.toString(),
                   },
                   // shipping: {
                   //   name: {
