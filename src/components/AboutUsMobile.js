@@ -8,13 +8,8 @@ function AboutUsMobile() {
     const [desktopState] = useState('About1');  
     
     const scrollToMySkills = () => {
-        const mySkillsElement = document.getElementById('my-skills-mobile');
-        if (mySkillsElement) {
-            const yOffset = -50; // Adjust this value as needed
-            const y = mySkillsElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-    };
+        window.location.href = '#my-skills-mobile'; 
+      };
 
   return (
     

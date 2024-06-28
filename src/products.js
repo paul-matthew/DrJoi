@@ -1647,7 +1647,7 @@ const DisplayProducts = (props) => {
               })
                 .then((response) => response.json())
                 .then((responseData) => {
-                  // console.log("Response Data is:",responseData);
+                  console.log("Response Data is:",responseData);
                   if (responseData.success) {
                     // If the server validates the payment, proceed with your logic
                     submitOrder();

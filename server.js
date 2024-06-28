@@ -265,8 +265,8 @@ function validatePaymentDetails(paymentDetails, total) {
     paymentDetails.purchase_units &&
     paymentDetails.purchase_units[0] &&
     paymentDetails.purchase_units[0].amount &&
-    paymentDetails.purchase_units[0].amount.value === total.toString();
-
+    parseFloat(paymentDetails.purchase_units[0].amount.value) === parseFloat(total);
+    
   if (isValid) {
     console.log('Server validation complete');
   } else {

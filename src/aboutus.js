@@ -12,15 +12,7 @@ import greenhori5Image from "./greenhori5.jpeg";
 function About() {
   const [desktopState] = useState("About1");
   const scrollToMySkills = () => {
-    const mySkillsElement = document.getElementById("my-skills1");
-    if (mySkillsElement) {
-      const yOffset = -70; // Adjust this value as needed
-      const y =
-        mySkillsElement.getBoundingClientRect().top +
-        window.pageYOffset +
-        yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
+    window.location.href = '#my-skills'; 
   };
 
   // const handleAboutClick = () => {
@@ -99,7 +91,6 @@ function About() {
                 marginTop: "60px",
               }}
             >
-              {/* <div className="E3StrategicSolutions" style={{ alignSelf: 'stretch', color: 'black', fontSize: 'clamp(16px, 3vw, 3vw)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word', marginTop:'20px' }}>Exotic Relief by Dr. Joi</div> */}
               <div
                 className="Content"
                 style={{
@@ -169,6 +160,7 @@ function About() {
                     justifyContent: "center",
                     marginTop: "10px",
                     marginLeft: "10px",
+                    zIndex:1,
                   }}
                 >
                   <a
@@ -198,7 +190,7 @@ function About() {
                 </div>
               </div>
             </div>
-            <div id="my-skills1" style={{ backgroundColor: "white" }}>
+            <div id="my-skills" style={{ backgroundColor: "white" }}>
               <div
                 className="MySkill"
                 style={{
