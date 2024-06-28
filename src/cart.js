@@ -89,7 +89,7 @@ function Cart() {
               flexDirection: "column",
               justifyContent: "flex-start",
               alignItems: "flex-start",
-              gap: 32,
+              gap: 3,
               display: "flex",
             }}
           >
@@ -106,6 +106,7 @@ function Cart() {
             >
               Cart
             </div>
+            <div style={{color:'black',fontSize:'16px'}}>Shipping limited to US & CA only</div>
           </div>
         </div>
       </div>

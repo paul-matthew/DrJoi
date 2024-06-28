@@ -143,7 +143,11 @@ function Shop() {
                       marginTop: "30px",
                     }}
                   >
-                    Limited Time Offers <div style={{color:'black',fontSize:'25px'}}>UP TO 25% OFF</div>
+                    Limited Time Offers 
+                    <div style={{color:'black',fontSize:'25px'}}>UP TO 25% OFF</div>
+                    <div style={{color:'black',fontSize:'14px'}}>
+                      <b><u>FREE</u></b> Shipping for all US based purchases over $100 (before taxes)
+                    </div>
                   </div>
                 </div>
               </div>

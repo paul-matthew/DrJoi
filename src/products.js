@@ -253,6 +253,12 @@ function constructModalBody() {
       const taxRate = getTaxRate(inputValues.country);
       const subtotal = cartUtilities.getTotalPrice() / 100;
       const taxAmount = Math.round(subtotal * taxRate * 100) / 100;
+
+      // Check if subtotal is over $100 to apply free shipping
+      if (subtotal > 100 && inputValues.country==='US') {
+        shippingCost = 0;
+      }
+
       console.log('updated shipping:',shippingCost);
       totalPayment = Math.round((subtotal + shippingCost + taxAmount) * 100) / 100;
 
@@ -781,7 +787,7 @@ const DisplayProducts = (props) => {
                   <div class='card-price' style='color: grey; font-size: 0.8em;'>
                   <span style='text-decoration: line-through;'>$${(product.variants
                     .filter((variant) => variant.is_enabled)
-                    .reduce((maxPrice, variant) => (variant.price > maxPrice ? variant.price : maxPrice), 0) / 75).toFixed(2)}</span>
+                    .reduce((maxPrice, variant) => (variant.price > maxPrice ? variant.price : maxPrice), 0) / 75).toFixed(2)}</span> <!--75 is because its 25% off!-->
                   <br>
                 </div>
                 
@@ -1006,12 +1012,7 @@ const DisplayProducts = (props) => {
                 </select>
               </div>
 
-        
-            
-            
-              
-            
-
+    
               <div class="size-and-quantity-options" style="display: flex; align-items: center;">
                 <div class="size-options" style="margin-right: 20px;">
                   <h6 style='font-weight:bold; display: inline;'>Size Options:</h6>
