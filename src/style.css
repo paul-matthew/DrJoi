@@ -4790,6 +4790,12 @@ fieldset:disabled .btn {
   }
 }
 
+@media(min-width:767px){
+  .productimage{
+    min-height:300px;
+  }
+  }
+
 @media (max-width: 700px) {
   .card {
     min-height: 250px !important;

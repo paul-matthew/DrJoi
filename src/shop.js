@@ -143,7 +143,7 @@ function Shop() {
                       marginTop: "30px",
                     }}
                   >
-                    Limited Time Offers
+                    Limited Time Offers <div style={{color:'black',fontSize:'25px'}}>UP TO 25% OFF</div>
                   </div>
                 </div>
               </div>

@@ -760,21 +760,32 @@ const DisplayProducts = (props) => {
         const productsContainer = document.getElementById("products-container");
         if (data && data.data) {
           const reversedProducts = data.data.reverse();
+          let counter=0;
           reversedProducts.forEach((product, index) => {
             const productCard = document.createElement("div");
             productCard.classList.add("card-container");
             productCard.innerHTML = `
-          <a data-bs-toggle="modal" href="#productitem${index + 1}">
+          <a data-bs-toggle="modal" href="#productitem${index + 1}"style="text-decoration: none;">
             <div class="card">
+            <div class='productimage'>
               <img src="${product.images[0].src}" class="card-img-top" alt="${
               product.title
             }"loading="lazy">
+              <div class="new-label">NEW</div>
+            </div>
               <div class="card-body">
                 <div class="title-price">
                   <div class="service-info">
                     <h5 class="card-title2">${product.title}</h5>
                   </div>
-                    <div class='card-price'>
+                  <div class='card-price' style='color: grey; font-size: 0.8em;'>
+                  <span style='text-decoration: line-through;'>$${(product.variants
+                    .filter((variant) => variant.is_enabled)
+                    .reduce((maxPrice, variant) => (variant.price > maxPrice ? variant.price : maxPrice), 0) / 75).toFixed(2)}</span>
+                  <br>
+                </div>
+                
+                    <div class='card-price'style='color:red;font-weight:bold'>
                       $${
                         product.variants
                           .filter((variant) => variant.is_enabled)
@@ -793,6 +804,25 @@ const DisplayProducts = (props) => {
           </a>
         `;
             productsContainer.appendChild(productCard);
+
+          const newLabel = productCard.querySelector('.new-label');
+          if (newLabel && counter<3) {
+            newLabel.style.position = 'absolute';
+            newLabel.style.bottom = '50%';
+            newLabel.style.left = '30px';
+            newLabel.style.backgroundColor = 'red';
+            newLabel.style.color = 'white';
+            newLabel.style.padding = '5px';
+            newLabel.style.fontWeight = 'bold';
+            newLabel.style.maxWidth='50px';
+            newLabel.style.zIndex = '1'; // Ensure it overlays the image
+            counter++;
+          }
+          else{
+            if (newLabel) {
+              newLabel.style.display = 'none';
+            }          
+          }
 
             const productModal = document.createElement("div");
             productModal.classList.add("portfolio-modal", "modal", "fade");
