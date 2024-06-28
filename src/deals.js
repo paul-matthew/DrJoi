@@ -198,7 +198,7 @@ const Deals = () => {
                             }}
                           >
                             <b>Offer: </b>
-                            <a href="www.placeholder.com">
+                            <a href="https://www.placeholder.com"target="_blank"rel="noreferrer">
                               www.placeholder.com
                             </a>
                             <div>
@@ -300,7 +300,7 @@ const Deals = () => {
                             }}
                           >
                             <b>Offer: </b>
-                            <a href="www.placeholder.com">
+                            <a href="https://www.placeholder.com"target="_blank"rel="noreferrer">
                               www.placeholder.com
                             </a>
                             <div>
@@ -402,7 +402,7 @@ const Deals = () => {
                             }}
                           >
                             <b>Offer: </b>
-                            <a href="www.placeholder.com">
+                            <a href="https://www.placeholder.com"target="_blank"rel="noreferrer">
                               www.placeholder.com
                             </a>
                             <div>

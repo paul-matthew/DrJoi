@@ -1218,7 +1218,7 @@ function App() {
                   textAlign: "center",
                 }}
               >
-                <a href="https://www.pmdaybreak.com" style={{ color: "white" }}>
+                <a href="https://www.pmdaybreak.com" target="_blank"rel="noreferrer"style={{ color: "white" }}>
                   Web Design: PM Daybreak
                 </a>
               </div>
