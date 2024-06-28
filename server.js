@@ -208,6 +208,50 @@ app.get('/orders', (req, res) => {
   res.status(200).json(orders);
 });
 
+// SHIPPING COSTS
+const shipping = [];
+
+// Endpoint to calculate shipping cost
+app.post('/shipping-cost', async (req, res) => {
+  const { address_to, line_items } = req.body;
+
+  try {
+    // Make a request to Printify's API to calculate shipping cost
+    const shippingResponse = await fetch(`https://api.printify.com/v1/shops/${printifyShopID}/orders/shipping.json`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${printifyApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ address_to, line_items }),
+    });
+
+    if (!shippingResponse.ok) {
+      const errorData = await shippingResponse.json();
+      return res.status(500).json({ success: false, error: `Failed to calculate shipping cost: ${errorData.error}` });
+    }
+
+    const shippingData = await shippingResponse.json();
+    shipping.push(shippingData); // Store shipping data in the array
+
+    res.status(200).json({ success: true, shippingCost: shippingData.standard });
+  } catch (error) {
+    console.error('Error calculating shipping cost:', error);
+    res.status(500).json({ success: false, error: 'Failed to calculate shipping cost' });
+  }
+});
+
+// Endpoint to fetch all shipping cost details
+app.get('/shipping-cost', async (req, res) => {
+  try {
+    res.status(200).json(shipping);
+  } catch (error) {
+    console.error('Error fetching shipping cost details:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch shipping cost details' });
+  }
+});
+
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

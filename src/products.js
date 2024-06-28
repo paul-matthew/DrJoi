@@ -68,19 +68,6 @@ orderModal.classList.add("modal", "fade", "portfolio-modal");
 orderModal.id = "orderModal";
 let totalPayment = 0;
 
-// Example function to calculate shipping cost based on country, region, and city
-function calculateShippingCost(country, region, city) {
-  let shippingCost = 0;
-
-  if (country === 'US') {
-    shippingCost = 20; // Example shipping cost for USA
-  } else {
-    shippingCost = 30; // Example shipping cost for other countries
-  }
-
-  return shippingCost;
-}
-
 // Example function to get tax rate based on country
 function getTaxRate(country) {
   let taxRate = 0;
@@ -94,6 +81,94 @@ function getTaxRate(country) {
   return taxRate;
 }
 
+  //Shipping - FUNCTION CURRENTLY NOT BEING USED
+  let shippingCost = 0
+  async function calculateShippingCost() {
+
+    const cartItems = cartUtilities.getCartItems();
+
+
+    const {
+      firstName,
+      lastName,
+      email,
+      country,
+      region,
+      city,
+      address,
+      address2,
+      zip,
+    } = inputValues;
+
+    // Initialize an array to store all line items for the order
+    const lineItems = [];
+
+    cartItems.forEach((item) => {
+      if (item.product_id && item.variant_id) {
+        // Ensure product_id and variant_id exist
+        lineItems.push({
+          product_id: item.product_id,
+          variant_id: item.variant_id,
+          quantity: item.qty,
+        });
+      } else {
+        console.error(`Missing product_id or variant_id for item:`, item);
+        // Handle missing IDs (e.g., show error message, skip item, etc.)
+      }
+    });
+
+    // Construct the order details
+    const ShippingCalc = {
+      line_items: lineItems,
+      address_to: {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        country: country,
+        region: region,
+        address1: address,
+        address2: address2,
+        city: city,
+        zip: zip,
+      },
+    };
+    console.log("Shipping Details:", ShippingCalc);
+  
+    let fetchURL = '';
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      fetchURL = 'http://localhost:5000/shipping-cost';
+    } else {
+      fetchURL = 'https://drjoiserver-106ea7a60e39.herokuapp.com/shipping-cost';
+    }
+  
+    fetch(fetchURL, {
+      method: 'POST',
+      body: JSON.stringify(ShippingCalc),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // Assuming shipping cost is returned with order data
+          shippingCost = Math.round((data.shippingCost / 100 * 1.10) * 100) / 100;// Update global shippingCost..adding 10% margin due to flucations in coversion rate
+
+          console.log('Shipping cost updated:', shippingCost);
+          currentStage = 2.5;
+          saveInputValues();
+          orderModal.innerHTML = constructModalBody();
+        } else {
+          console.error('Failed to fetch shipping cost:', data.error);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching shipping cost:', error);
+      });
+      console.log('DONE')
+
+  }
+  
 
 function constructModalBody() {
   switch (currentStage) {
@@ -122,7 +197,7 @@ function constructModalBody() {
                   <td style="border: none; text-align: left; font-weight: bold;">$${Math.round((price) * 100) / 100}</td>
               </tr>
             </table>
-            <p style="font-size: 14px; color: gray;margin-top:10px">Final amount including taxes and shipping will be calculated at checkout based on your shipping address.</p>
+            <p style="font-size: 14px; color: gray;margin-top:10px">Taxes and shipping will be added at checkout based on your shipping address.</p>
             <button id="OrderDetailsButton" class="proceed-btn gen-btn mt-3">Order Details</button>
           </div>
         </div>
@@ -165,7 +240,7 @@ function constructModalBody() {
             <label for="zipinput">Postal Code/ZIP<span style='color:red'>*</span>:</label>
             <input type="zip" id="zipInput" class="form-control" required value="${inputValues.zip}">
             <button id="backButton" class="back-btn gen-btn mt-3">Back</button>
-            <button id="proceedpayment1" class="proceed-btn gen-btn mt-3">Total Cost</button>
+            <button id="totalcost" class="proceed-btn gen-btn mt-3">Total Cost</button>
             <div id='formincomplete' style='color:red; margin-top:5px;font-size:11px'></div>
             <div id='formincomplete2' style='color:red; margin-top:5px;font-size:11px'></div>
             <div style='font-size:10px; margin-top:15px'>By placing your order, you agree to Exotic Relief's <a href="./terms">Terms of Use, Privacy, and Refund Policies</a>.</div>
@@ -175,10 +250,10 @@ function constructModalBody() {
     `;
 
     case 2.5: // New case for displaying shipping costs and tax before payment
-      const shippingCost = calculateShippingCost(inputValues.country, inputValues.region, inputValues.city);
       const taxRate = getTaxRate(inputValues.country);
       const subtotal = cartUtilities.getTotalPrice() / 100;
       const taxAmount = Math.round(subtotal * taxRate * 100) / 100;
+      console.log('updated shipping:',shippingCost);
       totalPayment = Math.round((subtotal + shippingCost + taxAmount) * 100) / 100;
 
       return `
@@ -316,7 +391,7 @@ function saveInputValues() {
 
   if (currentStage === 2) {
     var formControls = document.getElementsByClassName("form-control");
-    var proceedBtn = document.getElementById("proceedpayment1");
+    var proceedBtn = document.getElementById("totalcost");
     var modalBody = document.querySelector(".modal-body"); // Adjust the selector based on your modal structure
 
     // Function to validate email format
@@ -1428,7 +1503,7 @@ const DisplayProducts = (props) => {
   //   });
   // });
 
-  orderModal.addEventListener("click", function (event) {
+  orderModal.addEventListener("click", async function (event) {
     const targetId = event.target.id;
     switch (targetId) {
       case "OrderDetailsButton":
@@ -1436,11 +1511,8 @@ const DisplayProducts = (props) => {
         orderModal.innerHTML = constructModalBody();
         saveInputValues();
         break;
-      case "proceedpayment1":
-        currentStage = 2.5;
-        saveInputValues();
-        orderModal.innerHTML = constructModalBody();
-        initializePayPal();
+      case "totalcost":
+        await calculateShippingCost();
         break;
       case "proceedpayment":
         currentStage = 3;
@@ -1466,28 +1538,28 @@ const DisplayProducts = (props) => {
       default:
         break;
     }
-
+  
     // Add event listeners for country and region select inputs
     if (currentStage === 2) {
       const countryInput = document.getElementById("countryInput");
       const regionInput = document.getElementById("regionInput");
       // const cityInput = document.getElementById('cityInput');
-
+  
       // Function to populate country options when input gains focus
       countryInput.addEventListener("focus", async () => {
         await populateCountryOptions();
       });
-
+  
       // Function to update regions based on selected country
       countryInput.addEventListener("change", async () => {
         await region(); // Update regions
       });
-
+  
       // Function to update cities based on selected region
       regionInput.addEventListener("change", async () => {
         await fetchCities(); // Update cities
       });
-
+  
       // Optionally, you can populate country options initially
       populateCountryOptions(); // Assuming this function exists
     }
@@ -1603,32 +1675,6 @@ const DisplayProducts = (props) => {
     }
   }
 
-  //Shipping - FUNCTION CURRENTLY NOT BEING USED
-
-  // function calculateShippingCost() {
-  //   // Fetch the order details, such as selectedSKUs and any other relevant information
-
-  //   // Make a POST request to Printify's shipping cost endpoint
-  //   fetch(fetchURL)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //       // Handle the response from Printify
-  //       console.log('Printify shipping cost response:', data);
-
-  //       // You can extract and use the shipping cost options from the response
-  //       const standardShippingCost = data.standard || 0;
-  //       const expressShippingCost = data.express || 0;
-  //       const priorityShippingCost = data.priority || 0;
-  //       const printifyExpressShippingCost = data.printify_express || 0;
-
-  //       // You can use these shipping cost values as needed in your application
-  //   })
-  //   .catch(error => {
-  //       // Handle any errors that occur during the fetch
-  //       console.error('Error calculating shipping cost with Printify:', error);
-  //       // You can also show an error message to the user
-  //   });
-  // }
 
   // PAYPAL CONNECTION ----------------
   const headers = new Headers();
