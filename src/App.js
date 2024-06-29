@@ -267,6 +267,7 @@ function App() {
       style={{
         width: "100%",
         overflowX: "hidden",
+        // overflowY: "hidden",
         position: "relative",
         background: "white",
         minHeight: "100vh",

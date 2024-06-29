@@ -1654,3 +1654,36 @@ button:hover {
     text-align: start;
   }
 }
+
+/* LOVE LAB DROPDOWN */
+.buttonsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px; /* Adjust spacing between buttons */
+}
+
+.infoButton {
+  background-color: rgb(14,48,34); /* Button background color */
+  color: #ffffff !important; /* Button text color */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.infoButton:hover {
+  background-color: rgb(28, 95, 67); /* Hover background color */
+  scale: 1.1;
+  color:white !important;
+}
+
+@media (max-width:800px){
+  .section{
+    max-width:85vw
+  }
+  .sectionImage{
+    max-width:85vw
+  }
+}

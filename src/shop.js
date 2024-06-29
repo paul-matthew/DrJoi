@@ -13,11 +13,13 @@ function Shop() {
         style={{
           maxWidth: "100vw",
           overflowX: "hidden",
+          overflowY: "hidden",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           padding: "20px",
           background: "white",
+          marginBottom:"100px",
         }}
       >
         <div id="NavlogoMobile">

@@ -4,13 +4,7 @@ import "./App.css";
 
 const LoveLab = () => {
   return (
-    <div
-      className="BlogContainer"
-      style={{
-        maxWidth: "100vw",
-        overflow: "hidden",
-      }}
-    >
+    <div className="BlogContainer" style={{overflowY:'hidden'}}>
       <div id="NavlogoMobile">
         <img
           src="./logo-green3.png"
@@ -22,42 +16,12 @@ const LoveLab = () => {
         <img src="./bannerflower.png" alt="banner" />
       </div>
       <div className="contentContainer">
-        <div
-          className="MySkill"
-          style={{
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            gap: 56.67,
-            display: "inline-flex",
-            padding: "0px 3vw",
-          }}
-        >
-          <div
-            className="SectionTitle"
-            style={{
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "flex-start",
-              gap: "3vh",
-              display: "flex",
-            }}
-          >
-            <div
-              className="Content"
-              style={{
-                alignSelf: "stretch",
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                gap: 32,
-                display: "flex",
-              }}
-            >
+        <div className="MySkill">
+          <div className="SectionTitle">
+            <div className="Content">
               <div
                 className="MyExpertise"
                 style={{
-                  alignSelf: "stretch",
                   color: "#282938",
                   fontSize: "clamp(40px, 4vw, 61px)",
                   fontFamily: "PlayfairDisplay",
@@ -78,54 +42,141 @@ const LoveLab = () => {
                 className="sectionImage"
               />
               <div className="sectionText">
-                <h2>Personal Guidance</h2>
+                <h2>Personal Coaching</h2>
                 <p>
-                  By leveraging my positive and supportive persona, I want to
-                  help men navigate the complexities of dating and relationships
-                  by providing valuable insights and guidance while encouraging
-                  a sense of empowerment and self-improvement among my audience.
+                  Offering one-on-one coaching sessions to provide you with
+                  personalized guidance and support in your dating journey. Book
+                  an appointment today to start making positive changes.
                 </p>
               </div>
             </div>
           </FadeInSection>
+
+          <div className="section" style={{ marginTop: "20px" }}>
+            <div className="sectionText">
+              <h3>Discover My Coaching Services</h3>
+            </div>
+            <div className="buttonsContainer">
+              <button
+                className="infoButton"
+                onClick={() =>
+                  window.open(
+                    "https://exoticrelief.setmore.com/beta/services/cf66b8eb-db57-4cde-900e-16c2ea7a34c9?source=easyshare",
+                    "_blank"
+                  )
+                }
+              >
+                Finding Love
+              </button>
+              <button
+                className="infoButton"
+                onClick={() =>
+                  window.open(
+                    "https://exoticrelief.setmore.com/beta/services/76ed5a2c-d73d-4a10-8136-8abd0872a954?source=easyshare",
+                    "_blank"
+                  )
+                }
+              >
+                Fixing Love
+              </button>
+              <button
+                className="infoButton"
+                onClick={() =>
+                  window.open(
+                    "https://exoticrelief.setmore.com/beta/services/1a59a8a9-5fe2-4dde-bfc0-794533574481?source=easyshare",
+                    "_blank"
+                  )
+                }
+              >
+                Self-Esteem
+              </button>
+              <button
+                className="infoButton"
+                onClick={() =>
+                  window.open(
+                    "https://exoticrelief.setmore.com/beta/services/b068a1db-14a1-45b8-8731-8a04d48019bf?source=easyshare",
+                    "_blank"
+                  )
+                }
+              >
+                Personal
+              </button>
+              <button
+                className="infoButton"
+                onClick={() =>
+                  window.open(
+                    "https://exoticrelief.setmore.com/beta/services/3d7a7aef-57fe-4e2a-9299-e6f2301e6700?source=easyshare",
+                    "_blank"
+                  )
+                }
+              >
+                Image Consulting
+              </button>
+              <button
+                className="infoButton"
+                onClick={() =>
+                  window.open(
+                    "https://exoticrelief.setmore.com/beta/services/35062118-735a-47a5-98fc-905ffc11e2fa?source=easyshare",
+                    "_blank"
+                  )
+                }
+              >
+                Self-Improvement
+              </button>
+              <button
+                className="infoButton"
+                onClick={() =>
+                  window.open(
+                    "https://exoticrelief.setmore.com/beta/services/bde59724-c761-457e-9a9f-bedc1563b0d4?source=easyshare",
+                    "_blank"
+                  )
+                }
+              >
+                General
+              </button>
+            </div>
+          </div>
+
           <FadeInSection>
             <div className="section">
               <div className="sectionText">
-                <h2>Live Podcasts</h2>
-                <p>8pm Wednesdays – Live Podcasts</p>
+                <h2>Personalized Guidance</h2>
                 <p>
-                  Join me every Wednesday at 8pm for engaging live podcasts
-                  where we explore topics on dating, relationships, and personal
-                  growth. Participate in real-time discussions, ask questions,
-                  and share your experiences in a supportive community.
-                </p>
-                <p>
-                  These sessions provide practical advice and insights to help
-                  you improve your relationships and personal development. Don't
-                  miss the chance to connect with like-minded individuals and
-                  gain valuable knowledge every Wednesday evening.
+                  By leveraging my positive and supportive persona, I want to help
+                  men navigate the complexities of dating and relationships by
+                  providing valuable insights and guidance while encouraging a
+                  sense of empowerment and self-improvement among my audience.
                 </p>
               </div>
-              <img
-                src="./home2.png"
-                alt="Live Podcasts"
-                className="sectionImage"
-              />
-            </div>
-          </FadeInSection>
-          <FadeInSection>
-            <div className="section">
               <img
                 src="./home3.png"
                 alt="Personalized Coaching"
                 className="sectionImage"
               />
+            </div>
+          </FadeInSection>
+
+          <FadeInSection>
+            <div className="section">
+              <img
+                src="./home2.png"
+                alt="Live Podcasts"
+                className="sectionImage"
+              />
               <div className="sectionText">
-                <h2>Personalized Coaching</h2>
+                <h2>Live Podcasts</h2>
+                <p>8pm Wednesdays – Live Podcasts</p>
                 <p>
-                  Offering one-on-one coaching sessions to provide you with
-                  personalized guidance and support in your dating journey. Book
-                  an appointment today to start making positive changes.
+                  Join me every Wednesday at 8pm for engaging live podcasts where
+                  we explore topics on dating, relationships, and personal growth.
+                  Participate in real-time discussions, ask questions, and share
+                  your experiences in a supportive community.
+                </p>
+                <p>
+                  These sessions provide practical advice and insights to help you
+                  improve your relationships and personal development. Don't miss
+                  the chance to connect with like-minded individuals and gain
+                  valuable knowledge every Wednesday evening.
                 </p>
               </div>
             </div>
@@ -154,5 +205,6 @@ const LoveLab = () => {
     </div>
   );
 };
+
 
 export default LoveLab;

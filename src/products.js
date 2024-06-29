@@ -37,9 +37,9 @@ const inputValues = {
 };
 
 //SHOPPING CART------------
-// let subtotal = 0;
+let subtotal = 0;
 // let total = 0;
-let shipping = 19.99; //No longer in use
+let shipping = 0; 
 
 // const currentUrl = window.location.pathname;
 // if (currentUrl === '/cart') {
@@ -82,7 +82,8 @@ function getTaxRate(country) {
 }
 
   //Shipping - FUNCTION CURRENTLY NOT BEING USED
-  let shippingCost = 0
+  let shippingCost = 0;
+  let taxAmount = 0;
   async function calculateShippingCost() {
 
     const cartItems = cartUtilities.getCartItems();
@@ -251,8 +252,8 @@ function constructModalBody() {
 
     case 2.5: // New case for displaying shipping costs and tax before payment
       const taxRate = getTaxRate(inputValues.country);
-      const subtotal = cartUtilities.getTotalPrice() / 100;
-      const taxAmount = Math.round(subtotal * taxRate * 100) / 100;
+      subtotal = cartUtilities.getTotalPrice() / 100;
+      taxAmount = Math.round(subtotal * taxRate * 100) / 100;
 
       // Check if subtotal is over $100 to apply free shipping
       if (subtotal > 100 && inputValues.country==='US') {
@@ -290,6 +291,7 @@ function constructModalBody() {
                 </tr>
               </table>
               <p style="font-size: 14px; color: gray;margin-top:10px">Review your order details before proceeding to payment.</p>
+              <p style="font-size: 14px; color: gray;">Standard shipping within continental US is typically 3-7 business days.  Shipping within Canada can be up to 30 business days.</p>
               <button id="backButton2" class="back-btn gen-btn mt-3">Back</button>
               <button id="proceedpayment" class="proceed-btn gen-btn mt-3">Proceed to Payment</button>
             </div>
@@ -1050,8 +1052,9 @@ const DisplayProducts = (props) => {
                           );
                           return (
                             variant &&
-                            variant.is_available &&
-                            variant.is_enabled
+                            variant.is_available
+                            //REMOVED BELOW LINE TO MAKE WATER BOTTLE WORK
+                            // && variant.is_enabled
                           );
                         })
                         .map(
@@ -1422,6 +1425,8 @@ const DisplayProducts = (props) => {
           product_id: item.product_id,
           variant_id: item.variant_id,
           quantity: item.qty,
+          title: item.title,
+          price: item.price,
         });
       } else {
         console.error(`Missing product_id or variant_id for item:`, item);
@@ -1449,6 +1454,10 @@ const DisplayProducts = (props) => {
         zip: zip,
         // Include other user input in address_to
       },
+      subtotal: subtotal,         
+      shippingCost: shippingCost, 
+      totalPayment: totalPayment,
+      taxAmount:taxAmount, 
     };
     console.log("Order Details:", orderDetails);
 
@@ -1624,87 +1633,69 @@ const DisplayProducts = (props) => {
     if (currentStage === 3) {
       // eslint-disable-next-line no-undef
       paypal
-        .Buttons({
-          createOrder: function (_, actions) {
-            saveInputValues();
-            console.log("Amount to be sent to PayPal:", totalPayment);
-
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: totalPayment.toString(),
-                  },
-                  // shipping: {
-                  //   name: {
-                  //     full_name: inputValues.firstName + ' ' + inputValues.lastName,
-                  //     phone: inputValues.phone,
-                  //     email: inputValues.email,
-                  //   },
-                  //   address: {
-                  //     country_code: 'US',
-                  //     address_line_1: inputValues.address,
-                  //     address_line_2: '',
-                  //     admin_area_2: inputValues.city,
-                  //     admin_area_1: inputValues.region,
-                  //     postal_code: 'xxxxx',
-                  //   },
-
-                  // },
+      .Buttons({
+        createOrder: function (_, actions) {
+          // Validate and sanitize input values before using them
+          saveInputValues();
+          console.log("Amount to be sent to PayPal:", totalPayment);
+  
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: totalPayment.toString(),
                 },
-              ],
-              application_context: {
-                shipping_preference: "NO_SHIPPING",
               },
-            });
-          },
-          onApprove: function (data, actions) {
-            return actions.order.capture().then(function (details) {
-              console.log("Transaction details:", details);
-              // console.log('Transaction Customer details', details.payer);
-              // console.log('Transaction value:', details.purchase_units[0].amount.value);
-
-              // Send payment details to the server for further validation
-              fetch(fetchURLpayvalidate, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  order: data,
-                  paymentDetails: details,
-                  total: totalPayment,
-                }),
-              })
-                .then((response) => response.json())
-                .then((responseData) => {
-                  console.log("Response Data is:",responseData);
-                  if (responseData.success) {
-                    // If the server validates the payment, proceed with your logic
-                    submitOrder();
-                  } else {
-                    console.error(
-                      "Error processing payment on the server:",
-                      responseData.error
-                    );
-                    currentStage = 5;
-                    orderModal.innerHTML = constructModalBody();
-
-                    // Display an error message to the user
-                    alert("Error processing payment: " + responseData.error);
-                  }
-                })
-                .catch((error) => {
-                  console.error("Error communicating with the server:", error);
+            ],
+            application_context: {
+              shipping_preference: "NO_SHIPPING",
+            },
+          });
+        },
+        onApprove: function (data, actions) {
+          return actions.order.capture().then(function (details) {
+            console.log("Transaction details:", details);
+  
+            // Send payment details to the server for further validation
+            fetch(fetchURLpayvalidate, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                order: data,
+                paymentDetails: details,
+                total: totalPayment,
+              }),
+            })
+              .then((response) => response.json())
+              .then((responseData) => {
+                console.log("Response Data is:", responseData);
+                if (responseData.success) {
+                  // If the server validates the payment, proceed with your logic
+                  submitOrder();
+                } else {
+                  console.error(
+                    "Error processing payment on the server:",
+                    responseData.error
+                  );
+                  currentStage = 5;
+                  orderModal.innerHTML = constructModalBody();
+  
                   // Display an error message to the user
-                  alert("Error communicating with the server");
-                });
-            });
-          },
-        })
-        .render("#paypal-button-container");
-    }
-  }
+                  alert("Error processing payment: " + responseData.error);
+                }
+              })
+              .catch((error) => {
+                console.error("Error communicating with the server:", error);
+                // Display an error message to the user
+                alert("Error communicating with the server");
+              });
+          });
+        },
+      })
+      .render("#paypal-button-container");
+  }  }
 
 
   // PAYPAL CONNECTION ----------------

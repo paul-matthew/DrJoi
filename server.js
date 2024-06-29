@@ -132,6 +132,8 @@ const orders = [];
 // Endpoint to create a new order
 app.post('/orders', async (req, res) => {
   const { address_to, line_items } = req.body;
+  const { subtotal,taxAmount,shippingCost,totalPayment } = req.body;
+
 
   if (!address_to || !line_items) {
     return res.status(400).json({ error: 'Invalid address or order data' });
@@ -152,30 +154,80 @@ app.post('/orders', async (req, res) => {
       orders.push(responseBody); // Store the order details in memory
 
       // Email Confirmation of receipt of Order
-      const mailOptions = {
-        from: emailUser,
-        to: address_to.email,
-        bcc: emailUser,
-        subject: 'Order Placed, Thank You! Exotic Relief by Dr. Joi',
-        html: `
-          <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-            <h2>Hello ${address_to.first_name},</h2>
-            <p>Thank you for placing your order with Exotic Relief by Dr. Joi. It is currently being processed, and you will receive a confirmation email with more details in the next few days.</p>
-            <h3>Order Details:</h3>
-            <p><strong>Order ID:</strong> ${responseBody.id}</p>
-            <p><strong>Shipping Address:</strong></p>
-            <p>
-              ${address_to.first_name} ${address_to.last_name}<br>
-              ${address_to.address1}<br>
-              ${address_to.address2 ? address_to.address2 + '<br>' : ''}
-              ${address_to.city}, ${address_to.region} ${address_to.zip}<br>
-              ${address_to.country}
-            </p>
-            <p>Thank you,</p>
-            <p>Dr. Joi</p>
-          </div>
-        `
+      const getShippingTime = (country) => {
+        switch (country.toUpperCase()) {
+          case 'US':
+            return '3-7 business days after order is processed';
+          case 'CA':
+            return 'up to 30 business days after order is processed';
+          default:
+            return 'varies by location';
+        }
       };
+      
+      const shippingTime = getShippingTime(address_to.country);
+      console.log("Received line_items:", line_items);
+      
+      const lineItemsHtml = line_items.map(item => `
+      <tr style='padding-top:20px'>
+        <td style="padding: 5px; border-bottom: 1px solid #ddd;"><b>Product ID</b>:${item.product_id}</td>
+        <td style="padding: 5px; text-align: right; border-bottom: 1px solid #ddd;">$${item.price/100} ea</td>
+        <td style="padding: 5px; text-align: right; border-bottom: 1px solid #ddd;">x${item.quantity}</td>
+      </tr>
+    `).join('');
+    
+    const mailOptions = {
+      from: emailUser,
+      to: address_to.email,
+      bcc: emailUser,
+      subject: 'Order Placed, Thank You! Exotic Relief by Dr. Joi',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
+          <h2 style="text-align: center;">Thank You for Your Order!</h2>
+          <p style="text-align: center;">Hello ${address_to.first_name},</p>
+          <p style="text-align: center;">Thank you for placing your order with Exotic Relief by Dr. Joi. It is currently being processed, and you will recieve a notification once the order has been shipped.</p>
+          <h3 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">Order Details</h3>
+          <p><strong>Order ID:</strong> ${responseBody.id}</p>
+          <h3 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">Shipping Address</h3>
+          <p>
+            ${address_to.first_name} ${address_to.last_name}<br>
+            ${address_to.address1}<br>
+            ${address_to.address2 ? address_to.address2 + '<br>' : ''}
+            ${address_to.city}, ${address_to.region} ${address_to.zip}<br>
+            ${address_to.country}
+          </p>
+          <h3 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">Cost Breakdown</h3>
+          ${lineItemsHtml}
+          <table style="padding-top:20px; width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="border: 1px solid #ccc; padding: 10px;"><strong>Subtotal</strong></td>
+              <td style="border: 1px solid #ccc; padding: 10px; text-align: right;">$${subtotal.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #ccc; padding: 10px;"><strong>Tax</strong></td>
+              <td style="border: 1px solid #ccc; padding: 10px; text-align: right;">$${taxAmount.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #ccc; padding: 10px;"><strong>Shipping Cost</strong></td>
+              <td style="border: 1px solid #ccc; padding: 10px; text-align: right;">$${shippingCost.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #ccc; padding: 10px;"><strong>Total Cost</strong></td>
+              <td style="border: 1px solid #ccc; padding: 10px; text-align: right;"><strong>$${totalPayment.toFixed(2)}</strong></td>
+            </tr>
+            <tbody>
+          </tbody>
+          </table>
+          <h3 style="border-bottom: 2px solid #eee; padding-bottom: 5px;">Shipping Information</h3>
+          <p>Estimated Shipping Time: ${shippingTime}</p>
+          <p style="text-align: start;">Thank you,</p>
+          <p style="text-align: start;">Dr. Joi</p>
+        </div>
+      `
+    };  
+    
+    
+      
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -266,7 +318,7 @@ function validatePaymentDetails(paymentDetails, total) {
     paymentDetails.purchase_units[0] &&
     paymentDetails.purchase_units[0].amount &&
     parseFloat(paymentDetails.purchase_units[0].amount.value) === parseFloat(total);
-    
+
   if (isValid) {
     console.log('Server validation complete');
   } else {
