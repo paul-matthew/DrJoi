@@ -29,7 +29,7 @@ const LoveLab = () => {
                   wordWrap: "break-word",
                 }}
               >
-                Love Lab
+                The Love Lab
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@ const LoveLab = () => {
             </div>
           </FadeInSection>
 
-          <FadeInSection>
+          {/* <FadeInSection>
             <div className="section">
               <img
                 src="./home2.png"
@@ -180,7 +180,7 @@ const LoveLab = () => {
                 </p>
               </div>
             </div>
-          </FadeInSection>
+          </FadeInSection> */}
         </div>
       </div>
       <a

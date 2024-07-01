@@ -116,7 +116,8 @@ const Deals = () => {
                   <div
                     className="Card"
                     style={{
-                      maxWidth: "100%",
+                      maxWidth: "50%",
+                      maxHeight:'500px',
                       flex: "1 1 0",
                       background: "white",
                       boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -218,8 +219,9 @@ const Deals = () => {
                   <div
                     className="Card"
                     style={{
-                      maxWidth: "100%",
+                      maxWidth: "50%",
                       flex: "1 1 0",
+                      maxHeight:'500px',
                       background: "white",
                       boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                       flexDirection: "column",
@@ -237,7 +239,7 @@ const Deals = () => {
                         borderRadius: 8,
                         objectFit: "cover",
                       }}
-                      src="./shopping.jpg"
+                      src="./amazon-deals.jpg"
                       alt="Placeholder"
                     />
                     <div
@@ -300,24 +302,19 @@ const Deals = () => {
                             }}
                           >
                             <b>Offer: </b>
-                            <a href="https://www.placeholder.com"target="_blank"rel="noreferrer">
-                              www.placeholder.com
+                            <a href="https://www.amazon.com/shop/theebonijoi"target="_blank"rel="noreferrer">
+                              www.amazon.com/shop/theebonijoi.com
                             </a>
                             <div>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Nulla nec justo eget ex consectetur luctus
-                              sit amet eu sapien. Phasellus vel felis id magna
-                              convallis feugiat. Nam ullamcorper ante vitae
-                              felis consectetur, eu vehicula quam placerat.
-                              Integer euismod massa non dolor porta, sed semper
-                              arcu vestibulum.
+                            Explore our curated selection of mental health and self-care products from Amazon to support your wellness journey. 
+                            By purchasing through our affiliate links, you help us earn a small commission at no extra cost to you, enabling us to continue providing valuable resources.
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     className="Card"
                     style={{
                       maxWidth: "100%",
@@ -418,7 +415,7 @@ const Deals = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </FadeInSection>
             </div>

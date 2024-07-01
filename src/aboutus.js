@@ -252,6 +252,7 @@ function About() {
                       className="Card Card1"
                       style={{
                         maxWidth: "100%",
+                        maxHeight:'900px',
                         flex: "1 1 0",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -270,7 +271,7 @@ function About() {
                           borderRadius: 8,
                           objectFit: "cover",
                         }}
-                        src="./exp1.jpg"
+                        src="./professional.jpg"
                         alt="Placeholder"
                       />
                       <div
@@ -356,6 +357,7 @@ function About() {
                       className="Card Card1"
                       style={{
                         maxWidth: "100%",
+                        maxHeight:'900px',
                         flex: "1 1 0",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -375,7 +377,7 @@ function About() {
                           borderRadius: 8,
                           objectFit: "cover",
                         }}
-                        src="./exp2.jpg"
+                        src="./grad.jpg"
                         alt="Placeholder"
                       />
                       <div
@@ -458,6 +460,7 @@ function About() {
                       className="Card Card1"
                       style={{
                         maxWidth: "100%",
+                        maxHeight:'900px',
                         flex: "1 1 0",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -477,7 +480,7 @@ function About() {
                           borderRadius: 8,
                           objectFit: "cover",
                         }}
-                        src="./exp3.jpg"
+                        src="./expertise.jpg"
                         alt="Placeholder"
                       />
                       <div
@@ -562,6 +565,7 @@ function About() {
                       className="Card Card1"
                       style={{
                         maxWidth: "100%",
+                        maxHeight:'900px',
                         flex: "1 1 0",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
