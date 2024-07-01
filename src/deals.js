@@ -116,7 +116,7 @@ const Deals = () => {
                   <div
                     className="Card"
                     style={{
-                      maxWidth: "50%",
+                      maxWidth: "100%",
                       maxHeight:'500px',
                       flex: "1 1 0",
                       background: "white",
@@ -219,7 +219,7 @@ const Deals = () => {
                   <div
                     className="Card"
                     style={{
-                      maxWidth: "50%",
+                      maxWidth: "100%",
                       flex: "1 1 0",
                       maxHeight:'500px',
                       background: "white",

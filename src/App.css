@@ -387,6 +387,7 @@
   }
   .Card {
     max-width: "25vw" !important;
+    min-width:'40%' !important;
   }
   .Card1 {
     max-height: 600px !important;
@@ -399,6 +400,7 @@
   }
   .Card {
     max-width: "25vw" !important;
+    min-width:'40%' !important;
   }
   .Card1 {
     height: 700px !important;

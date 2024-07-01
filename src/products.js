@@ -770,6 +770,10 @@ const DisplayProducts = (props) => {
           const reversedProducts = data.data.reverse();
           let counter=0;
           reversedProducts.forEach((product, index) => {
+            const maxPrice=product.variants
+              .filter((variant) => variant.is_enabled)
+              .reduce((maxPrice, variant) => (variant.price > maxPrice ? variant.price : maxPrice), 0);
+              
             const productCard = document.createElement("div");
             productCard.classList.add("card-container");
             productCard.innerHTML = `
@@ -787,25 +791,16 @@ const DisplayProducts = (props) => {
                     <h5 class="card-title2">${product.title}</h5>
                   </div>
                   <div class='card-price' style='color: grey; font-size: 0.8em;'>
-                  <span style='text-decoration: line-through;'>$${(product.variants
-                    .filter((variant) => variant.is_enabled)
-                    .reduce((maxPrice, variant) => (variant.price > maxPrice ? variant.price : maxPrice), 0) / 75).toFixed(2)}</span> <!--75 is because its 25% off!-->
+                  <span style='text-decoration: line-through;'>$${(maxPrice/ 75).toFixed(2)}</span> <!--75 is because its 25% off!-->
                   <br>
                 </div>
                 
                     <div class='card-price'style='color:red;font-weight:bold'>
                       $${
-                        product.variants
-                          .filter((variant) => variant.is_enabled)
-                          .reduce(
-                            (maxPrice, variant) =>
-                              variant.price > maxPrice
-                                ? variant.price
-                                : maxPrice,
-                            0
-                          ) / 100
+                        (maxPrice/ 100).toFixed(2)
                       }
                     </div>
+                    <span style="visibility:hidden;">-</span><!--Placeholder to temp fix bug-->
                   </div>
               </div>
             </div>

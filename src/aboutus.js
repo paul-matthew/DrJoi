@@ -749,17 +749,19 @@ function About() {
                         marginBottom: "20px",
                       }}
                     >
-                      <img
-                        className="PlaceholderImage"
-                        style={{
-                          alignSelf: "stretch",
-                          height: 200,
-                          borderRadius: 8,
-                          objectFit: "cover",
-                        }}
-                        src="./affirmation.jpg"
-                        alt="Placeholder"
-                      />
+                    <video
+                      className="PlaceholderVideo"
+                      style={{
+                        alignSelf: "stretch",
+                        height: 200,
+                        borderRadius: 8,
+                        objectFit: "cover",
+                      }}
+                      controls
+                    >
+                      <source src="./sample-affirmation.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                       <div
                         className="CardContent1"
                         style={{
@@ -850,17 +852,19 @@ function About() {
                         marginBottom: "20px",
                       }}
                     >
-                      <img
-                        className="PlaceholderImage"
-                        style={{
-                          alignSelf: "stretch",
-                          height: 200,
-                          borderRadius: 8,
-                          objectFit: "cover",
-                        }}
-                        src="./selflove.jpeg"
-                        alt="Placeholder"
-                      />
+                    <video
+                      className="PlaceholderVideo"
+                      style={{
+                        alignSelf: "stretch",
+                        height: 200,
+                        borderRadius: 8,
+                        objectFit: "cover",
+                      }}
+                      controls
+                    >
+                      <source src="./sample-affirmation.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                       <div
                         className="CardContent1"
                         style={{
@@ -952,17 +956,19 @@ function About() {
                         marginBottom: "20px",
                       }}
                     >
-                      <img
-                        className="PlaceholderImage"
-                        style={{
-                          alignSelf: "stretch",
-                          height: 200,
-                          borderRadius: 8,
-                          objectFit: "cover",
-                        }}
-                        src="./meditation1.jpeg"
-                        alt="Placeholder"
-                      />
+                    <video
+                      className="PlaceholderVideo"
+                      style={{
+                        alignSelf: "stretch",
+                        height: 200,
+                        borderRadius: 8,
+                        objectFit: "cover",
+                      }}
+                      controls
+                    >
+                      <source src="./sample-affirmation.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                       <div
                         className="CardContent1"
                         style={{
