@@ -117,7 +117,7 @@ function Shop() {
                     </div>
                     <button className="Button"
                       onClick={() => setModalOpen(true)} 
-                      style={{ position: "absolute", top: 0, right: 10, }}
+                      style={{ position: "absolute", top: 10, right: 10, }}
                     ><div className="Label">
                       Donations
                     </div>
