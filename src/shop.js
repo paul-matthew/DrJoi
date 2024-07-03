@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "./style.css";
 // import ServicesMobile from './components/ServicesMobile';
 import FadeInSection from "./components/FadeIn.js";
 import "./products.js";
+import DonationModal from "./components/DonationModal.js";
 
 function Shop() {
+  const [isModalOpen, setModalOpen] = useState(false);
   return (
     <>
       <div
@@ -113,6 +115,14 @@ function Shop() {
                     >
                       Shop
                     </div>
+                    <button className="Button"
+                      onClick={() => setModalOpen(true)} 
+                      style={{ position: "absolute", top: 0, right: 10, }}
+                    ><div className="Label">
+                      Donations
+                    </div>
+                    </button>
+                    <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />        
                   </div>
                   <div
                     className="MyExpertise"
