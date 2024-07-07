@@ -5,11 +5,24 @@ const PayPalButton = ({ amount }) => {
   const paypalRef = useRef();
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = "https://www.paypal.com/sdk/js?client-id=AZiLd6zqQUwa01x2PvxtcQw9hQY4p99xS61WRn2yDHBZxWdCVS4aLQbCA1CcUGj9HuF9AC9QwQ9qxfNC";
-    script.onload = () => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    let fetchURLpay = "";
+    if (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    ) {
+      fetchURLpay = "http://localhost:5000/config";
+    } else {
+      fetchURLpay = "https://drjoiserver-106ea7a60e39.herokuapp.com/config";
+    }
+
+    const apiUrl = `${fetchURLpay}`;
+
+    const initializePayPal = () => {
       window.paypal.Buttons({
-        createOrder: (data, actions) => {
+        createOrder: (actions) => {
           return actions.order.create({
             purchase_units: [{
               amount: {
@@ -18,17 +31,29 @@ const PayPalButton = ({ amount }) => {
             }]
           });
         },
-        onApprove: (data, actions) => {
+        onApprove: (actions) => {
           return actions.order.capture().then(details => {
             alert('Donation successful!');
           });
         }
       }).render(paypalRef.current);
     };
-    document.body.appendChild(script);
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((config) => {
+        const script = document.createElement("script");
+        script.src = `https://www.paypal.com/sdk/js?client-id=${config.paypalClientId}`;
+        script.onload = () => initializePayPal(config.paypalClientId);
+        document.head.appendChild(script);
+      })
+      .catch((error) => console.error("Error fetching configuration:", error));
 
     return () => {
-      document.body.removeChild(script);
+      const scriptElement = document.querySelector(`script[src*="paypal.com/sdk/js"]`);
+      if (scriptElement) {
+        document.head.removeChild(scriptElement);
+      }
     };
   }, [amount]);
 
@@ -36,4 +61,5 @@ const PayPalButton = ({ amount }) => {
 };
 
 export default PayPalButton;
+
 

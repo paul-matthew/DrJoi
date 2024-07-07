@@ -16,6 +16,12 @@ const DonationModal = ({ isOpen, onClose }) => {
     }
   }, [onClose]);
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && !paymentMethod) {
+      handleDonateClick('paypal');
+    }
+  };
+
   useEffect(() => {
     if (isOpen) {
       document.addEventListener('mousedown', handleOutsideClick);
@@ -72,6 +78,7 @@ const DonationModal = ({ isOpen, onClose }) => {
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          onKeyPress={handleKeyPress}
           placeholder="Enter amount"
           style={{ width: '100%', marginBottom: '10px' }}
         />
