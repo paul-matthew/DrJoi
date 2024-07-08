@@ -19,7 +19,7 @@ function AboutUsMobile() {
         <div>
             <div className="Aboutus" style={{width: '101%', height:'100%',position: 'absolute', backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 1)), url(${greenhori5Image})`,  top: "2vh"}}>
                 <div className="Image" style={{width: '80%', height: 'auto', right: 0, top: 0, position: 'absolute', objectFit: "cover"}}>
-                    <img className="Samplebio21" style={{width: 'auto', height: '80vh', right: 0, top: '10vh', position: 'absolute',opacity:'100%'}} src="/aboutme2c-icon3.png" alt='Placeholder'/>
+                    <img className="Samplebio21" style={{width: 'auto', height: '80vh', right: 0, top: '10vh', position: 'absolute',opacity:'100%'}} src="/aboutme2c-icon3-new.png" alt='Placeholder'/>
                 </div>
                 <div className="Intro" style={{ position: "relative",width: '85vw', height: '100vh', left: "5vw", top: 0, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 12, display: 'inline-flex'}}>
                     {/* <div className="E3StrategicSolutions" style={{alignSelf: 'stretch', fontSize: 'clamp(16px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', textTransform: 'uppercase', wordWrap: 'break-word'}}>E3 STRATEGIC SOLUTIONS</div> */}

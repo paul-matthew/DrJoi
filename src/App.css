@@ -1687,6 +1687,7 @@ button:hover {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px; /* Adjust spacing between buttons */
+  max-width:600px;
 }
 
 .infoButton {

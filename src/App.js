@@ -772,7 +772,8 @@ function App() {
             <img
               className="AboutMem2"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              src="./home1e-trop2.png"
+              // src="./home1e-trop2.png"
+              src="./home1e-trop2-new.png"
               alt="About me"
             />
           </div>

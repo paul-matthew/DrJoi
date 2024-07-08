@@ -72,7 +72,7 @@ function About() {
                   top: "5vh",
                   position: "absolute",
                 }}
-                src="./aboutme-icon2.png"
+                src="./aboutme2c-icon3-new.png"
                 alt="Placeholder"
               />
             </div>

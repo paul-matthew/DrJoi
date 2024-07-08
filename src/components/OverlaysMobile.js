@@ -327,7 +327,8 @@ const OverlaysMobile = ({
             <img
               className="AboutMem2"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              src="./home1f-trop3.png"
+              // src="./home1f-trop3.png"
+              src="./home1f-trop3-new.png"
               alt="About me"
             />
           </div>
@@ -368,10 +369,10 @@ const OverlaysMobile = ({
                   fontFamily: "Rochester",
                   lineHeight: 1,
                   wordWrap: "break-word",
-                  textShadow: "2 2 2px rgba(255, 255, 255, 1)",
+                  textShadow: "6  px 6px 6px rgba(255, 255, 255, 1)",
                 }}
               >
-                Exotic Relief by Dr. Joi
+                {/* Exotic Relief by Dr. Joi */}
               </div>
             </div>
             <div style={{ maxWidth: "160px" }}>
@@ -382,7 +383,7 @@ const OverlaysMobile = ({
                   textShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                   alignSelf: "stretch",
                   color: "black",
-                  fontSize: "clamp(20px, 2.5vw, 20px)",
+                  fontSize: "clamp(30px, 2.5vw, 20px)",
                   fontFamily: "PlayfairDisplay",
                   fontWeight: "400",
                   lineHeight: 1.5,

@@ -33,11 +33,11 @@ const LoveLab = () => {
               </div>
             </div>
           </div>
-
+          <div className='coach-container'>
           <FadeInSection>
             <div className="section">
               <img
-                src="./home1c.png"
+                src="./coach1.jpg"
                 alt="Personal Guidance"
                 className="sectionImage"
               />
@@ -52,10 +52,11 @@ const LoveLab = () => {
             </div>
           </FadeInSection>
 
-          <div className="section" style={{ marginTop: "20px" }}>
-            <div className="sectionText">
-              <h3>Discover My Coaching Services</h3>
+          <div className="section" style={{ margin: "20px",justifyContent:'center' }}>
+          <div className="sectionText caption-mobile"style={{maxWidth:'300px',visibility:'visible'}}>
+              <h2>Discover My Coaching Services</h2>
             </div>
+
             <div className="buttonsContainer">
               <button
                 className="infoButton"
@@ -135,10 +136,18 @@ const LoveLab = () => {
                 General
               </button>
             </div>
+            <div className="sectionText caption-desktop"style={{maxWidth:'300px',visibility:"hidden"}}>
+              <h2>Discover My Coaching Services</h2>
+            </div>
           </div>
 
           <FadeInSection>
-            <div className="section">
+            <div className="section" style={{justifyContent:'flex-start'}}>
+            <img
+                src="./guidance.jpg"
+                alt="Personalized Coaching"
+                className="sectionImage"
+              />
               <div className="sectionText">
                 <h2>Personalized Guidance</h2>
                 <p>
@@ -148,11 +157,7 @@ const LoveLab = () => {
                   sense of empowerment and self-improvement among my audience.
                 </p>
               </div>
-              <img
-                src="./home3.png"
-                alt="Personalized Coaching"
-                className="sectionImage"
-              />
+
             </div>
           </FadeInSection>
 
@@ -181,6 +186,7 @@ const LoveLab = () => {
               </div>
             </div>
           </FadeInSection> */}
+          </div>
         </div>
       </div>
       <a
