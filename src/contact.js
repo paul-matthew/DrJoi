@@ -9,6 +9,7 @@ function Contact() {
     const [subscribeEmail, setSubscribeEmail] = useState('');
     const [subscribeResponse, setSubscribeResponse] = useState('');
     const modalRef = useRef(null);
+    // const [contactResponse, setContactResponse] = useState('');
 
     const smallScreen = clientWidth <= 640;
 
@@ -74,6 +75,49 @@ function Contact() {
         }
     };
 
+    let contactFetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/contact";
+    if (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    ) {
+      contactFetchURL = "http://localhost:5000/contact";
+    }
+    
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        
+        const formData = {
+          name: event.target.name.value,
+          email: event.target.email.value,
+          message: event.target.message.value,
+        };
+      
+        try {
+          const response = await fetch(contactFetchURL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          });
+      
+          if (!response.ok) {
+            throw new Error('Failed to send message. Please try again.');
+          }
+      
+          const data = await response.json(); // Parse JSON response
+          console.log('Success:', data); // Log success message
+          alert('Email sent successfully!');
+          window.location.reload();           
+          // Handle success message display or any other logic
+        } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');        
+        }
+      };
+      
+            
+
     return (
         <div className="ContactX" style={{ width: '100vw', right: '0', }}>
             <div id='NavlogoMobile'>
@@ -82,29 +126,31 @@ function Contact() {
             {desktopState === 'Contact1' && (
                 <FadeInSection>
                     <div className="ContactX" style={{ width: '100%', top: "2vh", display: 'flex', justifyContent: 'center', alignItems: 'center', position: "relative" }}>
-                        <form className="ContactForm" style={{ width: '70%', minHeight: '30vh', border: 'solid gray', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)' }}>
-                            <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(26px, 3vw, 30px)', fontFamily: 'PlaydairDisplay', fontWeight: '700' }}>Contact Me</p>
-                            <div className="FormGroup">
-                                <input type="text" id="name" name="name" placeholder={smallScreen ? "Name" : "Enter your name"} required />
-                            </div>
-                            <div className="FormGroup">
-                                <input type="email" id="email" name="email" placeholder={smallScreen ? "Email" : "Enter your email"} required />
-                            </div>
-                            <div className="FormGroup">
-                                <textarea id="message" name="message" rows="4" placeholder={smallScreen ? "Message" : "Enter your message"} required style={{ minHeight: '10vh' }}></textarea>
-                            </div>
-                            <div className="FormGroup last-form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <button className='Button' type="submit"><div className='Label' style={{ fontFamily: 'PlayfairDisplay' }}>Submit</div></button>
-                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                                    <a href="https://www.instagram.com/theebonijoi/" target="_blank" rel="noopener noreferrer">
-                                        <i className="fab fa-instagram" style={{ fontSize: '20px', color: 'black', marginRight: '10px' }}></i>
-                                    </a>
-                                    <a href="https://www.tiktok.com/@TheEboniJoi" target="_blank" rel="noopener noreferrer">
-                                        <i className="fab fa-tiktok" style={{ fontSize: '20px', color: 'black' }}></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
+                    <form className="ContactForm" style={{ width: '70%', minHeight: '30vh', border: 'solid gray', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)' }} onSubmit={handleSubmit}>
+                    <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(26px, 3vw, 30px)', fontFamily: 'PlaydairDisplay', fontWeight: '700' }}>Contact Me</p>
+                    <div className="FormGroup">
+                        <input type="text" id="name" name="name" placeholder={smallScreen ? "Name" : "Enter your name"} required />
+                    </div>
+                    <div className="FormGroup">
+                        <input type="email" id="email" name="email" placeholder={smallScreen ? "Email" : "Enter your email"} required />
+                    </div>
+                    <div className="FormGroup">
+                        <textarea id="message" name="message" rows="4" placeholder={smallScreen ? "Message" : "Enter your message"} required style={{ minHeight: '10vh' }}></textarea>
+                    </div>
+                    <div className="FormGroup last-form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <button className='Button' type="submit"><div className='Label' style={{ fontFamily: 'PlayfairDisplay' }}>Submit</div></button>
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                        <a href="https://www.instagram.com/theebonijoi/" target="_blank" rel="noopener noreferrer">
+                            <i className="fab fa-instagram" style={{ fontSize: '20px', color: 'black', marginRight: '10px' }}></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@TheEboniJoi" target="_blank" rel="noopener noreferrer">
+                            <i className="fab fa-tiktok" style={{ fontSize: '20px', color: 'black' }}></i>
+                        </a>
+                        </div>
+                    </div>
+                    </form>
+                    {/* {contactResponse && <p style={{display:'absolute',zIndex:'2'}}>{contactResponse}</p>} */}
+
                     </div>
                 </FadeInSection>
             )}

@@ -341,6 +341,26 @@ app.get('/subscribe', (req, res) => {
   res.status(200).json(orders);
 });
 
+app.post('/contact', (req, res) => {
+  const { name, email, message } = req.body;
+
+  const mailOptions = {
+    from: email,
+    to: 'DoctorJoi@exoticrelief.com', // Your email address
+    subject: `Contact Form Submission from ${name}`,
+    text: message,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send('Error sending email');
+    } else {
+      console.log('Email sent:', info.response);
+      res.status(200).json({ message: 'Email sent' });    
+    }
+  });
+});
 
 // Start the server
 app.listen(PORT, () => {
