@@ -303,6 +303,44 @@ app.get('/shipping-cost', async (req, res) => {
   }
 });
 
+// Endpoint to handle subscription using Mailjet
+app.post('/subscribe', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const mailjetApiKey = process.env.MAILJET_API_KEY;
+    const mailjetApiSecret = process.env.MAILJET_API_SECRET;
+    const contactListId = process.env.MAILJET_CONTACT_LIST_ID;
+
+    const response = await fetch(`https://api.mailjet.com/v3/REST/contactslist/${contactListId}/managemanycontacts`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${Buffer.from(`${mailjetApiKey}:${mailjetApiSecret}`).toString('base64')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "Action": "addnoforce",
+        "Contacts": [
+          { "Email": email }
+        ]
+      })
+    });
+
+    if (response.ok) {
+      res.json({ message: 'Subscription successful!' });
+    } else {
+      res.json({ message: 'Failed to subscribe. Please try again.' });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'An error occurred. Please try again.' });
+  }
+});
+
+app.get('/subscribe', (req, res) => {
+  res.status(200).json(orders);
+});
+
 
 // Start the server
 app.listen(PORT, () => {

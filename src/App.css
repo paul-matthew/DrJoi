@@ -601,7 +601,8 @@
 
 .ContactForm {
   background: white;
-  padding: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -638,13 +639,13 @@ button:hover {
 }
 
 .ContactForm {
-  top: 17vh;
-  position: absolute;
+  top: 20vh;
+  position: relative;
 }
 @media (min-width: 576px) {
   .ContactForm {
-    top: 10vh !important;
-    position: absolute;
+    top: 12vh !important;
+    position: relative;
   }
 }
 
@@ -687,6 +688,51 @@ button:hover {
       }
   
     }
+  }
+} */
+
+@keyframes pulse {
+  0% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+  100% {
+      transform: scale(1);
+  }
+}
+
+.subscribe-button {
+  animation: pulse 2s infinite;
+}
+
+
+.subscribe-button:hover{
+  transform: scale(1.1) !important;
+  background-color:white !important;
+  color:black !important;
+}
+
+/* #subscribe-form{
+  margin-top: 110px;
+}
+@media(min-width:667px){
+  #subscribe-form{
+    margin-top: 140px !important;
+  }
+}
+@media(min-width:500px) and (max-width:667px){
+  #subscribe-form{
+    margin-top: 210px !important;
+  }
+}
+@media(max-width:500px){
+  #subscribe-form{
+    margin-top: 80px !important;
+  }
+  #subscribe-form p{
+    font-size: 16px !important;
   }
 } */
 
