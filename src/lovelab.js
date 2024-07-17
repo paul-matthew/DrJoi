@@ -7,7 +7,7 @@ const LoveLab = () => {
     <div className="BlogContainer" style={{overflowY:'hidden'}}>
       <div id="NavlogoMobile">
         <img
-          src="./logo-green3.png"
+          src="./logo-green4.png"
           alt="logo mobile"
           onClick={() => (window.location.href = "./")}
         />

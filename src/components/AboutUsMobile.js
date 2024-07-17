@@ -14,7 +14,7 @@ function AboutUsMobile() {
   return (
     
     <div className="AboutUs-mobile" style={{width: '100%', height: '100vh', right:'0', position: 'relative', background: 'white', maxWidth: "100%", display: "none"}}>
-        <div id='NavlogoMobile'><img src='/logo-green3.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => window.location.href = './'}/></div>
+        <div id='NavlogoMobile'><img src='/logo-green4.png' alt='logo mobile'style={{height:'7vh',marginTop:'0vh'}}onClick={() => window.location.href = './'}/></div>
         {desktopState === 'About1' && (
         <div>
             <div className="Aboutus" style={{width: '101%', height:'100%',position: 'absolute', backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 1)), url(${greenhori5Image})`,  top: "2vh"}}>

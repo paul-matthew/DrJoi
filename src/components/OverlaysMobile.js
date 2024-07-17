@@ -131,7 +131,7 @@ const OverlaysMobile = ({
     <div className="overlays-container-mobile" style={{ display: "none" }}>
       <div id="NavlogoMobile">
         <img
-          src="./logo-green3.png"
+          src="./logo-green4.png"
           alt="logo mobile"
           style={{ height: "7vh", marginTop: "0vh" }}
           onClick={() => handleHomeClick()}

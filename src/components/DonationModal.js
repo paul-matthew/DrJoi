@@ -83,8 +83,8 @@ const DonationModal = ({ isOpen, onClose }) => {
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
         onKeyPress={handleKeyPress}
-        placeholder="Enter amount"
-        style={{ width: '40%', maxHeight:'40px',margin: '10px',padding:'5px', border:'solid 1px black' }}
+        placeholder="Donation amount"
+        style={{ maxWidth: '200px', height:'45px',margin: '10px',padding:'5px', border:'solid 1px black', textAlign:'center' }}
     />
     {paymentMethod ? (
         paymentMethod === 'paypal' ? (

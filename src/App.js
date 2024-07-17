@@ -14,6 +14,7 @@ import MobileMenu from "./components/MobileMenu.js";
 import OverlaysMobile from "./components/OverlaysMobile.js";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+import LoadingScreen from "./components/LoadingScreen.js";
 
 const desktopStateList = [
   "About",
@@ -39,8 +40,20 @@ function App() {
   const [Recwidth, setwidthRec] = useState("25vw");
   // const [showCart, setShowCart] = useState(false);
   const [displayed, setDisplayed] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false);
 
   const isHomeDesktop = !desktopStateList.includes(desktopState);
+
+  useEffect(() => {
+    // Simulate loading duration
+    setTimeout(() => {
+      setFadeOut(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 200); // Wait for the fade out transition to complete
+    }, 3000); // 3 seconds of pulsing before fading out
+  }, []);
 
   const handleButtonClick = (newState) => {
     if (desktopState === "Homedesktop1") {
@@ -261,6 +274,9 @@ function App() {
     }
   }, []);
 
+  if (loading && desktopState === "Homedesktop1" ) {
+    return <LoadingScreen  hidden={fadeOut}/>;
+  }
   return (
     <div
       className="Homepage"
@@ -314,7 +330,7 @@ function App() {
             <img
               className="Logo1"
               style={{ width: "auto", height: "8vh", marginTop: "0px" }}
-              src="./logo-green3.png"
+              src="./logo-green4.png"
               alt="logo"
             />
           </div>

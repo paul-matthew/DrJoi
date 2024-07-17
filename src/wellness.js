@@ -18,7 +18,7 @@ const Wellness = () => {
     >
       <div id="NavlogoMobile">
         <img
-          src="./logo-green3.png"
+          src="./logo-green4.png"
           alt="logo mobile"
           style={{
             height: "7vh",

@@ -6,7 +6,7 @@ const Terms = () => {
   return (
     <div className="BlogContainer">
       <div id='NavlogoMobile'>
-        <img src='./logo-green3.png' alt='logo mobile' onClick={() => window.location.href = './'} />
+        <img src='./logo-green4.png' alt='logo mobile' onClick={() => window.location.href = './'} />
       </div>
       <div className='Banner'>
         <img src='./bannerflower.png' alt='banner' />

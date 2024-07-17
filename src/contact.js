@@ -77,7 +77,7 @@ function Contact() {
     return (
         <div className="ContactX" style={{ width: '100vw', right: '0', }}>
             <div id='NavlogoMobile'>
-                <img src='./logo-green3.png' alt='logo mobile' style={{ height: '7vh', marginTop: '0vh' }} onClick={() => window.location.href = './'} />
+                <img src='./logo-green4.png' alt='logo mobile' style={{ height: '7vh', marginTop: '0vh' }} onClick={() => window.location.href = './'} />
             </div>
             {desktopState === 'Contact1' && (
                 <FadeInSection>
@@ -114,7 +114,7 @@ function Contact() {
                     position: 'fixed',
                     right: '3%',
                     top: '12%',
-                    zIndex: 10,
+                    zIndex: 1,
                     backgroundColor: 'black',
                     color: 'white',
                     padding: '10px 10px',
@@ -140,42 +140,52 @@ function Contact() {
                     alignItems: 'center',
                     zIndex: 10
                 }}>
-                    <div className="modal-content" ref={modalRef} style={{
-                        backgroundColor: 'white',
-                        padding: '20px',
-                        borderRadius: '5px',
-                        width: '80%',
-                        maxWidth: '500px',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+                <div className="modal-content modal-newsletter" ref={modalRef} style={{
+                    background: `url('./DrJoiTwists.jpg')`,
+                    backgroundSize: 'cover', // Ensure the background image covers the entire area
+                    backgroundPosition: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    padding: '20px',
+                    borderRadius: '5px',
+                    width: '80%',
+                    height: '80%',
+                    maxWidth: '40vw',
+                    maxHeight: '70vh',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                    alignItems: 'center'
+                }}>
+                    <div>
+                    <h2 style={{ maxWidth:'300px',textAlign: 'center',background: `rgba(255, 255, 255, 0.8)`,border:'solid 1px black',boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",marginTop: '150px',fontWeight:'bold',fontSize: "clamp(20px, 2vw, 1.5vw)",paddingLeft:'8px',paddingRight:'8px' }}>Subscribe to my Newsletter</h2>
+                    <p style={{ maxWidth:'300px',textAlign: 'center',background: `rgba(255, 255, 255, 0.8)`,border:'solid 1px black',boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",paddingLeft:'8px',paddingRight:'8px',fontSize: "clamp(14px, 2vw, 1.5vw)" }}>Stay up to date with my content focusing on mental health and wellness, my personal products, offers and everything else Dr. Joi.</p>
+                    <form onSubmit={handleSubscribe} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                        <input
+                            type="email"
+                            id="newsletter-email"
+                            placeholder="Enter your email"
+                            required
+                            style={{ maxWidth:'300px',width: '100%', padding: '10px', marginBottom: '10px',border:'solid 1px black',boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                            value={subscribeEmail}
+                            onChange={(e) => setSubscribeEmail(e.target.value)}
+                        />
+                        <button className='Button' type="submit" style={{ cursor: 'pointer' }}>Subscribe</button>
+                    </form>
+                    <div id="response">{subscribeResponse}</div>
+                    <button className='news-close' onClick={() => setModalOpen(false)} style={{
+                        position: 'absolute',
+                        color: 'black',
+                        top: '10px',
+                        right: '10px',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        fontSize: '20px',
+                        cursor: 'pointer'
                     }}>
-                        <h2 style={{ textAlign: 'center' }}>Subscribe to my Newsletter</h2>
-                        <p style={{ textAlign: 'center' }}>Stay updated with my mental health and wellness content, products, offers and everything Dr. Joi.</p>
-                        <form onSubmit={handleSubscribe} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <input
-                                type="email"
-                                id="newsletter-email"
-                                placeholder="Enter your email"
-                                required
-                                style={{ width: '70%', padding: '10px', marginBottom: '10px' }}
-                                value={subscribeEmail}
-                                onChange={(e) => setSubscribeEmail(e.target.value)}
-                            />
-                            <button className='Button' type="submit" style={{ cursor: 'pointer' }}>Subscribe</button>
-                        </form>
-                        <div id="response">{subscribeResponse}</div>
-                        <button className='news-close' onClick={() => setModalOpen(false)} style={{
-                            position: 'absolute',
-                            color: 'black',
-                            top: '10px',
-                            right: '10px',
-                            backgroundColor: 'transparent',
-                            border: 'none',
-                            fontSize: '20px',
-                            cursor: 'pointer'
-                        }}>
-                            &times;
-                        </button>
+                        &times;
+                    </button>
                     </div>
+                </div>
                 </div>
             )}
         </div>
