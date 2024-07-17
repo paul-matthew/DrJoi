@@ -77,7 +77,7 @@ const DonationModal = ({ isOpen, onClose }) => {
         X
     </button>
     <h2 style={{color:'white'}}>Donate</h2>
-    <p style={{color:'white'}}>All donations are used to further promote mental health and wellness through Exotic Relief by Dr. Joi. Refer to Term of Use for more information.</p>
+    <p style={{color:'white'}}>All donations are used to further promote mental health and wellness through Exotic Relief by Dr. Joi. Refer to Terms of Use for more information.</p>
     <input
         type="number"
         value={amount}

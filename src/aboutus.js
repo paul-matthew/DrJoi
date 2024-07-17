@@ -60,7 +60,7 @@ function About() {
                 bottom: 0,
                 position: "absolute",
               }}
-            >
+            ><FadeInSection>
               <img
                 className="aboutmepic"
                 style={{
@@ -75,6 +75,8 @@ function About() {
                 src="./aboutme2c-icon3-new.png"
                 alt="Placeholder"
               />
+            </FadeInSection>
+
             </div>
             <div
               className="Intro"
