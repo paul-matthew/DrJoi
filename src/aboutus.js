@@ -150,8 +150,8 @@ function About() {
                   className="Button"
                   style={{ marginTop: "20px", zIndex: 1 }}
                 >
-                  <div className="Label" onClick={scrollToMySkills}>
-                    READ MORE
+                  <div className="Label" onClick={scrollToMySkills} style={{ color: "white", fontFamily: "PlayfairDisplay" }}>
+                    Read More
                   </div>
                 </div>
                 <div

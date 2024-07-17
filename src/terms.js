@@ -46,6 +46,16 @@ const Terms = () => {
                 <p><b>Damaged or Defective Items:</b> In the event that you receive a damaged or defective item, please contact us within 15 days of delivery. Provide a clear image of the issue along with your order details. We will review the information and, if applicable, offer a replacement or a refund for the damaged item.</p>
                 <p><b>How to Contact Us:</b> For any issues regarding damaged or defective items, please use the "Contact" form. We aim to respond to all inquiries within 48 hours.</p>
               </div>
+
+              {/* Donation Policy Section */}
+              <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
+                <div id="donationspolicy" className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(40px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>Donations Policy</div>
+                <p>Thank you for considering a donation to Exotic Relief by Dr. Joi. Your support allows us to further promote mental health and wellness through educational content and materials.</p>
+                <p><b>Use of Donations:</b> All donations received by Exotic Relief by Dr. Joi are managed directly by our organization. These funds are used to produce additional content and materials aimed at educating the public on mental health and wellness topics.</p>
+                <p><b>Commitment to Transparency:</b> We are committed to transparency in how donations are used. Regular updates on the use of funds will be provided to donors through our website and communications.</p>
+                <p><b>Contact Information:</b> For any questions or concerns regarding donations, please use the "Contact" form on our website. We value your support and are grateful for your contributions to our mission.</p>
+              </div>
+
               
             </div>
           </div>
