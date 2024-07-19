@@ -41,19 +41,8 @@ function App() {
   // const [showCart, setShowCart] = useState(false);
   const [displayed, setDisplayed] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [fadeOut, setFadeOut] = useState(false);
 
   const isHomeDesktop = !desktopStateList.includes(desktopState);
-
-  useEffect(() => {
-    // Simulate loading duration
-    setTimeout(() => {
-      setFadeOut(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, 200); // Wait for the fade out transition to complete
-    }, 3000); // 3 seconds of pulsing before fading out
-  }, []);
 
   const handleButtonClick = (newState) => {
     if (desktopState === "Homedesktop1") {
@@ -272,10 +261,24 @@ function App() {
     } else {
       setDesktopState("Homedesktop1"); // Set default state if URL doesn't match
     }
-  }, []);
+    if(desktopState==='Homedesktop1'){
+      // Simulate a loading time of 2 seconds
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+    else{//This is so that the loader does show on any of the other pages.  If i do it another way the DisplayProducts gets displayed multiple times!
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
 
-  if (loading && desktopState === "Homedesktop1" ) {
-    return <LoadingScreen  hidden={fadeOut}/>;
+  }, [desktopState]);
+
+  if (loading) {
+    return <LoadingScreen />;
   }
   return (
     <div
