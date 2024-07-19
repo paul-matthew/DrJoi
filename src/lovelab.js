@@ -196,7 +196,7 @@ const LoveLab = () => {
           right: "-2px",
           top: "25%",
           display: "block",
-          zIndex: "20000",
+          zIndex: "1",
         }}
         rel="noreferrer"
         target="_blank"
