@@ -260,8 +260,9 @@ function App() {
       // }
     } else {
       setDesktopState("Homedesktop1"); // Set default state if URL doesn't match
-    }
-    if(desktopState==='Homedesktop1'){
+    } 
+
+    if(currentUrl==='/'){
       // Simulate a loading time of 2 seconds
       const timer = setTimeout(() => {
         setLoading(false);
@@ -275,7 +276,7 @@ function App() {
       return () => clearTimeout(timer);
     }
 
-  }, [desktopState]);
+  }, []);
 
   if (loading) {
     return <LoadingScreen />;
