@@ -8,4 +8,4 @@ node_modules
 build/
 src/components/TestComponent.js
 old
-# public/videos/
+public/videos/
