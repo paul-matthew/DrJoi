@@ -1600,7 +1600,7 @@ const DisplayProducts = (props) => {
     }
   });
 
-  function initializePayPal(amount) {
+  function initializePayPal() {
     // Get the container for the PayPal button
     const paypalContainer = document.getElementById("paypal-parent");
 
@@ -1639,6 +1639,11 @@ const DisplayProducts = (props) => {
               {
                 amount: {
                   value: totalPayment.toString(),
+                  // breakdown: {
+                  //   item_total: { value: totalPayment },
+                  //   tax_total: { value: taxAmount.toFixed(2) },
+                  //   shipping: { value: shippingCost.toFixed(2) }
+                  // }
                 },
               },
             ],
@@ -1661,6 +1666,8 @@ const DisplayProducts = (props) => {
                 order: data,
                 paymentDetails: details,
                 total: totalPayment,
+                taxAmount: taxAmount,
+                shippingCost: shippingCost              
               }),
             })
               .then((response) => response.json())
@@ -1690,7 +1697,8 @@ const DisplayProducts = (props) => {
         },
       })
       .render("#paypal-button-container");
-  }  }
+    } 
+   }
 
 
   // PAYPAL CONNECTION ----------------

@@ -383,7 +383,7 @@ const OverlaysMobile = ({
                   textShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                   alignSelf: "stretch",
                   color: "black",
-                  fontSize: "clamp(30px, 2.5vw, 20px)",
+                  fontSize: "clamp(28px, 2.5vw, 20px)",
                   fontFamily: "PlayfairDisplay",
                   fontWeight: "400",
                   lineHeight: 1.5,

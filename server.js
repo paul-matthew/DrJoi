@@ -106,14 +106,14 @@ app.get('/maps/cities', async (req, res) => {
 
 // PayPal validation endpoint
 app.post('/paypal/validate', async (req, res) => {
-  const { paymentDetails, total } = req.body;
+  const { paymentDetails, total, taxAmount, shippingCost } = req.body;
 
-  if (!paymentDetails) {
+  if (!paymentDetails || total === undefined || taxAmount === undefined || shippingCost === undefined) {
     return res.status(400).json({ error: 'Invalid request data' });
   }
 
   try {
-    const isPaymentValid = validatePaymentDetails(paymentDetails, total);
+    const isPaymentValid = validatePaymentDetails(paymentDetails, total, taxAmount, shippingCost);
 
     if (isPaymentValid) {
       res.json({ success: true });

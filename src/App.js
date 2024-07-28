@@ -793,7 +793,7 @@ function App() {
               className="AboutMem2"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
               // src="./home1e-trop2.png"
-              src="./home1e-trop2-new.png"
+              src="./homepg1.png"
               alt="About me"
             />
           </div>
@@ -828,8 +828,8 @@ function App() {
                 style={{
                   zIndex: 1,
                   color: "black",
-                  fontSize: "clamp(45px, 4vw, 75px)",
-                  fontFamily: "Rochester",
+                  fontSize: "clamp(45px, 3.5vw, 75px)",
+                  fontFamily: "PlayfairDisplay",
                   lineHeight: 1,
                   wordWrap: "break-word",
                   textShadow: "2 2 2px rgba(255, 255, 255, 1)",
@@ -848,7 +848,7 @@ function App() {
                 fontSize: "clamp(30px, 2.5vw, 30px)",
                 fontFamily: "PlayfairDisplay",
                 fontWeight: "400",
-                lineHeight: 1.5,
+                lineHeight: 0.5,
                 wordWrap: "break-word",
               }}
             >
