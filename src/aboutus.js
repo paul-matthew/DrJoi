@@ -761,7 +761,7 @@ function About() {
                       }}
                       controls
                     >
-                      <source src="./sample-affirmation.mp4" type="video/mp4" />
+                      <source src="./videos/GoodMorning.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                       <div
@@ -864,7 +864,7 @@ function About() {
                       }}
                       controls
                     >
-                      <source src="./sample-affirmation.mp4" type="video/mp4" />
+                      <source src="./videos/GoodAfternoon.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                       <div
@@ -968,7 +968,7 @@ function About() {
                       }}
                       controls
                     >
-                      <source src="./sample-affirmation.mp4" type="video/mp4" />
+                      <source src="./videos/GoodNight.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                       <div

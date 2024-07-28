@@ -126,7 +126,7 @@ function AboutUsMobile() {
                         <div className="Row" style={{ flexWrap: "wrap", justifyContent: "flex-start",marginBottom:'160px' }}>
                             <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                             <video className="PlaceholderVideo"style={{alignSelf: "stretch",height: 200,borderRadius: 8,objectFit: "cover",}}controls>
-                                <source src="./sample-affirmation.mp4" type="video/mp4" />
+                                <source src="./videos/GoodMorning.mp4" type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>                                
                             <div className="CardContent" style={{ alignSelf: 'stretch', height: '340px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
@@ -140,7 +140,7 @@ function AboutUsMobile() {
                             </div>
                             <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                 <video className="PlaceholderVideo"style={{alignSelf: "stretch",height: 200,borderRadius: 8,objectFit: "cover",}}controls>
-                                    <source src="./sample-affirmation.mp4" type="video/mp4" />
+                                    <source src="./videos/GoodAfternoon.mp4" type="video/mp4" />
                                     Your browser does not support the video tag.
                                 </video>                                
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '340px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
@@ -154,7 +154,7 @@ function AboutUsMobile() {
                             </div>
                             <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                 <video className="PlaceholderVideo"style={{alignSelf: "stretch",height: 200,borderRadius: 8,objectFit: "cover",}}controls>
-                                    <source src="./sample-affirmation.mp4" type="video/mp4" />
+                                    <source src="./videos/GoodNight.mp4" type="video/mp4" />
                                     Your browser does not support the video tag.
                                 </video>                                
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '340px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
