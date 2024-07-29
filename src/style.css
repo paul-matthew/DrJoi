@@ -14419,3 +14419,7 @@ text-align: center;
   background-size: 300% 300%;
   pointer-events: none;
 }
+
+.products-container{
+  z-index:1;
+}

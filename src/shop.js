@@ -67,6 +67,7 @@ function Shop() {
             alignItems: "center",
           }}
         >
+          <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />        
           <FadeInSection>
             <div style={{ backgroundColor: "white" }}>
               <div
@@ -122,7 +123,6 @@ function Shop() {
                       Donations
                     </div>
                     </button>
-                    <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />        
                   </div>
                   <div
                     className="MyExpertise"
