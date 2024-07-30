@@ -34,12 +34,13 @@ const inputValues = {
   address: "",
   address2: "",
   zip: "",
+  donation:"",
 };
 
 //SHOPPING CART------------
 let subtotal = 0;
 // let total = 0;
-let shipping = 0; 
+// let shipping = 0; 
 
 // const currentUrl = window.location.pathname;
 // if (currentUrl === '/cart') {
@@ -170,7 +171,6 @@ function getTaxRate(country) {
 
   }
   
-
 function constructModalBody() {
   switch (currentStage) {
     case 1:
@@ -184,21 +184,22 @@ function constructModalBody() {
             </div>
             <div class="modal-body">
               <!-- Display order summary and total cost here -->
+              <p style="font-size: 14px; color: gray;margin-top:10px">Taxes and shipping will be added at checkout based on your shipping address.</p>
               <table style="border-collapse: collapse; width: 50%;">
-              <!--<tr>
-                  <td style="border: none;">Subtotal:</td>
-                  <td style="border: none; text-align: left;">$${price}</td>
-              </tr>
-              <tr>
-                  <td style="border: none;">Shipping:</td>
-                  <td style="border: none; text-align: left;">$${shipping}</td>
-              </tr>-->
               <tr>
                   <td style="border: none; font-weight: bold;">Subtotal:</td>
                   <td style="border: none; text-align: left; font-weight: bold;">$${Math.round((price) * 100) / 100}</td>
               </tr>
             </table>
-            <p style="font-size: 14px; color: gray;margin-top:10px">Taxes and shipping will be added at checkout based on your shipping address.</p>
+            <p style="font-size: 14px; color: gray;margin-top:10px">We invite you to support Exotic Relief by Dr. Joi with a donation. For additional information, please refer to our Terms of Use.</p>
+            <table style="border-collapse: collapse; width: 50%;">
+            <tr>
+              <td style="border: none; font-weight: bold;">Donation:</td>
+              <td style="border: none; text-align: left;">
+              <input type="number" id="donationInput" value="${(parseFloat(inputValues.donation) || 0).toFixed(2)}" step="1.00" min="0" style="width: 100px; text-align: right;">
+              </td>
+            </tr>
+            </table>
             <button id="OrderDetailsButton" class="proceed-btn gen-btn mt-3">Order Details</button>
           </div>
         </div>
@@ -261,8 +262,9 @@ function constructModalBody() {
       }
 
       console.log('updated shipping:',shippingCost);
-      totalPayment = Math.round((subtotal + shippingCost + taxAmount) * 100) / 100;
-
+      const donationAmount = parseFloat(inputValues.donation) || 0; // Ensure donationAmount is a number
+      totalPayment = Math.round((subtotal + shippingCost + taxAmount + donationAmount) * 100) / 100;
+      
       return `
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -284,6 +286,10 @@ function constructModalBody() {
                 <tr>
                   <td style="border: none;">Tax (${(taxRate * 100).toFixed(2)}%):</td>
                   <td style="border: none; text-align: left;">$${taxAmount}</td>
+                </tr>
+                <tr>
+                  <td style="border: none;">Donation:</td>
+                  <td style="border: none; text-align: left;">$${(parseFloat(inputValues.donation).toFixed(2))}</td>
                 </tr>
                 <tr>
                   <td style="border: none; font-weight: bold;">Total:</td>
@@ -381,6 +387,7 @@ function saveInputValues() {
   const addressInput = document.getElementById("addressInput");
   const address2Input = document.getElementById("address2Input");
   const zipInput = document.getElementById("zipInput");
+  const donationInput = document.getElementById("donationInput");
 
   if (firstNameInput) inputValues.firstName = firstNameInput.value;
   if (lastNameInput) inputValues.lastName = lastNameInput.value;
@@ -396,6 +403,7 @@ function saveInputValues() {
   if (addressInput) inputValues.address = addressInput.value;
   if (address2Input) inputValues.address2 = address2Input.value;
   if (zipInput) inputValues.zip = zipInput.value;
+  if (donationInput) {inputValues.donation = donationInput.value;console.log("Donation amount:",inputValues.donation)}
 
   if (currentStage === 2) {
     var formControls = document.getElementsByClassName("form-control");
@@ -510,16 +518,17 @@ function saveInputValues() {
   }
 }
 
-function handleOrderDetailsButton() {
-  currentStage = 2;
+// function handleOrderDetailsButton() {
+//   currentStage = 2;
 
-  // Update only the modal body content
-  orderModal.innerHTML = constructModalBody();
+//   // Update only the modal body content
+//   orderModal.innerHTML = constructModalBody();
 
-  // Save input values
-  saveInputValues();
-  orderModal.style.display = "block";
-}
+//   // Save input values
+//   // saveInputValues();
+//   orderModal.style.display = "block";
+//   console.log('latest',inputValues.donation);
+// }
 
 // Function to handle the order button click
 function handleOrderButtonClick() {
@@ -539,10 +548,7 @@ function handleOrderButtonClick() {
 
   // Show the modal
   orderModal.style.display = "block";
-
-  const orderDetailsButton = orderModal.querySelector("#OrderDetailsButton");
-  orderDetailsButton.addEventListener("click", handleOrderDetailsButton);
-
+  
   // Function to hide the modal
   function hideModal() {
     backdrop.remove();
@@ -560,6 +566,7 @@ function handleOrderButtonClick() {
       event.target === orderModal ||
       event.target.classList.contains("btn-close")
     ) {
+      saveInputValues();
       hideModal();
       currentStage = 1;
     }
@@ -570,6 +577,15 @@ function handleOrderButtonClick() {
   //   currentStage = 1;
   // });
 }
+
+// const orderDetailsButton = orderModal.querySelector("#OrderDetailsButton");
+// if (orderDetailsButton) {
+//   orderDetailsButton.addEventListener("click", function() {
+//     saveInputValues();
+//     console.log('yep');
+//     handleOrderDetailsButton();
+//   });
+// }
 
 //CLEAR --------------------
 
@@ -1542,9 +1558,9 @@ const DisplayProducts = (props) => {
     const targetId = event.target.id;
     switch (targetId) {
       case "OrderDetailsButton":
+        saveInputValues();
         currentStage = 2;
         orderModal.innerHTML = constructModalBody();
-        saveInputValues();
         break;
       case "totalcost":
         await calculateShippingCost();
@@ -1601,104 +1617,129 @@ const DisplayProducts = (props) => {
   });
 
   function initializePayPal() {
-    // Get the container for the PayPal button
-    const paypalContainer = document.getElementById("paypal-parent");
+      // Get the container for the PayPal button
+      const paypalContainer = document.getElementById("paypal-parent");
 
-    // Create a new div for the PayPal button
-    const paypalButtonContainer = document.createElement("div");
-    paypalButtonContainer.id = "paypal-button-container";
+      // Create a new div for the PayPal button
+      const paypalButtonContainer = document.createElement("div");
+      paypalButtonContainer.id = "paypal-button-container";
 
-    // Append the PayPal button container to the parent container
-    if (currentStage === 3) {
-      paypalContainer.appendChild(paypalButtonContainer);
-    }
+      // Append the PayPal button container to the parent container
+      if (currentStage === 3) {
+          paypalContainer.appendChild(paypalButtonContainer);
+      }
 
-    let fetchURLpayvalidate = "";
-    if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
-    ) {
-      fetchURLpayvalidate = "http://localhost:5000/paypal/validate";
-    } else {
-      fetchURLpayvalidate =
-        "https://drjoiserver-106ea7a60e39.herokuapp.com/paypal/validate";
-    }
+      let fetchURLpayvalidate = "";
+      if (
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1"
+      ) {
+          fetchURLpayvalidate = "http://localhost:5000/paypal/validate";
+      } else {
+          fetchURLpayvalidate =
+              "https://drjoiserver-106ea7a60e39.herokuapp.com/paypal/validate";
+      }
 
-    // Initialize the PayPal SDK here
-    if (currentStage === 3) {
-      // eslint-disable-next-line no-undef
-      paypal
-      .Buttons({
-        createOrder: function (_, actions) {
-          // Validate and sanitize input values before using them
-          saveInputValues();
-          console.log("Amount to be sent to PayPal:", totalPayment);
-  
-          return actions.order.create({
-            purchase_units: [
-              {
-                amount: {
-                  value: totalPayment.toString(),
-                  // breakdown: {
-                  //   item_total: { value: totalPayment },
-                  //   tax_total: { value: taxAmount.toFixed(2) },
-                  //   shipping: { value: shippingCost.toFixed(2) }
-                  // }
-                },
+      // Initialize the PayPal SDK here
+      if (currentStage === 3) {
+          // eslint-disable-next-line no-undef
+          paypal.Buttons({
+              createOrder: function (_, actions) {
+                  // Validate and sanitize input values before using them
+                  saveInputValues();
+                  console.log("Amount to be sent to PayPal:", totalPayment);
+
+                  // Ensure breakdown values are numbers and formatted correctly
+                  const formattedSubtotal = parseFloat(subtotal).toFixed(2);
+                  const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
+                  const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
+                  const formattedDonationCost = parseFloat(inputValues.donation).toFixed(2);
+
+
+                  return actions.order.create({
+                      purchase_units: [
+                          {
+                              amount: {
+                                  value: totalPayment.toFixed(2),
+                                  breakdown: {
+                                      item_total: {
+                                          currency_code: "USD",
+                                          value: formattedSubtotal
+                                      },
+                                      tax_total: {
+                                          currency_code: "USD",
+                                          value: formattedTaxAmount
+                                      },
+                                      shipping: {
+                                          currency_code: "USD",
+                                          value: formattedShippingCost
+                                      },
+                                      handling: {
+                                        currency_code: "USD",
+                                        value: formattedDonationCost
+                                    }
+                                  }
+                              },
+                          },
+                      ],
+                      application_context: {
+                          shipping_preference: "NO_SHIPPING",
+                      },
+                  }).catch(error => {
+                      console.error("Error creating PayPal order:", error);
+                      alert("Error creating PayPal order. Please check the console for details.");
+                  });
               },
-            ],
-            application_context: {
-              shipping_preference: "NO_SHIPPING",
-            },
-          });
-        },
-        onApprove: function (data, actions) {
-          return actions.order.capture().then(function (details) {
-            console.log("Transaction details:", details);
-  
-            // Send payment details to the server for further validation
-            fetch(fetchURLpayvalidate, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
+              onApprove: function (data, actions) {
+                  return actions.order.capture().then(function (details) {
+                      console.log("Transaction details:", details);
+
+                      // Send payment details to the server for further validation
+                      fetch(fetchURLpayvalidate, {
+                          method: "POST",
+                          headers: {
+                              "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                              order: data,
+                              paymentDetails: details,
+                              total: totalPayment,
+                              taxAmount: taxAmount,
+                              shippingCost: shippingCost              
+                          }),
+                      })
+                          .then((response) => response.json())
+                          .then((responseData) => {
+                              console.log("Response Data is:", responseData);
+                              if (responseData.success) {
+                                  // If the server validates the payment, proceed with your logic
+                                  submitOrder();
+                              } else {
+                                  console.error(
+                                      "Error processing payment on the server:",
+                                      responseData.error
+                                  );
+                                  currentStage = 5;
+                                  orderModal.innerHTML = constructModalBody();
+
+                                  // Display an error message to the user
+                                  alert("Error processing payment: " + responseData.error);
+                              }
+                          })
+                          .catch((error) => {
+                              console.error("Error communicating with the server:", error);
+                              // Display an error message to the user
+                              alert("Error communicating with the server");
+                          });
+                  }).catch(error => {
+                      console.error("Error capturing PayPal order:", error);
+                      alert("Error capturing PayPal order. Please check the console for details.");
+                  });
               },
-              body: JSON.stringify({
-                order: data,
-                paymentDetails: details,
-                total: totalPayment,
-                taxAmount: taxAmount,
-                shippingCost: shippingCost              
-              }),
-            })
-              .then((response) => response.json())
-              .then((responseData) => {
-                console.log("Response Data is:", responseData);
-                if (responseData.success) {
-                  // If the server validates the payment, proceed with your logic
-                  submitOrder();
-                } else {
-                  console.error(
-                    "Error processing payment on the server:",
-                    responseData.error
-                  );
-                  currentStage = 5;
-                  orderModal.innerHTML = constructModalBody();
-  
-                  // Display an error message to the user
-                  alert("Error processing payment: " + responseData.error);
-                }
-              })
-              .catch((error) => {
-                console.error("Error communicating with the server:", error);
-                // Display an error message to the user
-                alert("Error communicating with the server");
-              });
-          });
-        },
-      })
-      .render("#paypal-button-container");
-    } 
-   }
+          }).render("#paypal-button-container");
+      }
+  }
+
 
 
   // PAYPAL CONNECTION ----------------
