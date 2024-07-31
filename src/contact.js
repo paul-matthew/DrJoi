@@ -274,7 +274,7 @@ function Contact() {
                             style={{ marginRight: '8px' }}
                         />
                         {' I have read and accept the '}
-                        <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: '#007BFF' }}>Privacy Policy</a>
+                        <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#007BFF' }}>Privacy Policy</a>
                     </label>
                 </div>
                 <button className='Button' type="submit" style={{
