@@ -277,7 +277,7 @@ function Contact() {
                         <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#007BFF' }}>Privacy Policy</a>
                     </label>
                 </div>
-                <button className='Button' type="submit" style={{
+                <button className='btn' type="submit" style={{
                     backgroundColor: '#007BFF',
                     color: 'white',
                     padding: '10px 20px',
@@ -288,7 +288,7 @@ function Contact() {
                     fontSize: 'clamp(16px, 2vw, 18px)'
                 }}>Subscribe</button>
             </form>
-            <div id="response" style={{ marginTop: '15px', color: 'black' }}>{subscribeResponse}</div>
+            <div id="response" style={{ marginTop: '15px', color: 'white' }}>{subscribeResponse}</div>
             <button className='news-close' onClick={() => setModalOpen(false)} style={{
                 position: 'absolute',
                 color: 'black',
