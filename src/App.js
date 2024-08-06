@@ -7,7 +7,7 @@ import Shop from "./shop.js";
 import Deals from "./deals.js";
 import LoveLab from "./lovelab.js";
 import Terms from "./terms.js";
-import Wellness from "./wellness.js";
+// import Wellness from "./wellness.js";
 import Contact from "./contact.js";
 import Cart from "./cart.js";
 import MobileMenu from "./components/MobileMenu.js";
@@ -20,7 +20,7 @@ const desktopStateList = [
   "About",
   "Shop",
   "Deals",
-  "Wellness",
+  // "Wellness",
   "Lovelab",
   "Contact",
   "Cart",
@@ -40,7 +40,7 @@ function App() {
   const [Recwidth, setwidthRec] = useState("25vw");
   // const [showCart, setShowCart] = useState(false);
   const [displayed, setDisplayed] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const isHomeDesktop = !desktopStateList.includes(desktopState);
 
@@ -241,7 +241,7 @@ function App() {
       "/about",
       "/shop",
       "/deals",
-      "/wellness",
+      // "/wellness",
       "/lovelab",
       "/contact",
       "/cart",
@@ -262,25 +262,23 @@ function App() {
       setDesktopState("Homedesktop1"); // Set default state if URL doesn't match
     } 
 
-    if(currentUrl==='/'){
-      // Simulate a loading time of 2 seconds
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-    else{//This is so that the loader does show on any of the other pages.  If i do it another way the DisplayProducts gets displayed multiple times!
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 0);
-      return () => clearTimeout(timer);
-    }
+    // if(currentUrl==='/'){
+    //   // Simulate a loading time of 2 seconds
+    //   const timer = setTimeout(() => {
+    //     setLoading(false);
+    //   }, 2000);
+    //   return () => clearTimeout(timer);
+    // }
+    // else{//This is so that the loader does show on any of the other pages.  If i do it another way the DisplayProducts gets displayed multiple times!
+    //   const timer = setTimeout(() => {
+    //     setLoading(false);
+    //   }, 0);
+    //   return () => clearTimeout(timer);
+    // }
 
   }, []);
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
+
   return (
     <div
       className="Homepage"
@@ -292,7 +290,8 @@ function App() {
         background: "white",
         minHeight: "100vh",
       }}
-    >
+    >      <LoadingScreen />
+
       <div
         className="Navdesktop"
         style={{ zIndex: 2, position: "fixed", width: "100%" }}
@@ -486,7 +485,7 @@ function App() {
             Coaching
           </div>
         </div>
-        <div
+        {/* <div
           className="ListitemDesktopNa"
           style={{
             width: 115,
@@ -518,7 +517,7 @@ function App() {
           >
             Wellness
           </div>
-        </div>
+        </div> */}
         <div
           className="ListitemDesktopNa"
           style={{
@@ -793,7 +792,7 @@ function App() {
               className="AboutMem2"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
               // src="./home1e-trop2.png"
-              src="./homepg1.png"
+              src="./homepg4.png"
               alt="About me"
             />
           </div>
@@ -903,7 +902,7 @@ function App() {
             <img
               className="AboutMem2"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              src="./home3h.jpg"
+              src="./home3h.png"
               alt="Boardroom"
             />
           </div>
@@ -943,6 +942,7 @@ function App() {
                   lineHeight: 1.1,
                   wordWrap: "break-word",
                   textAlign: "end",
+                  marginRight:'40px',
                 }}
               >
                 Unlock Exlusive Deals
@@ -959,6 +959,7 @@ function App() {
                 wordWrap: "break-word",
                 textAlign: "end",
                 maxWidth: "25vw",
+                marginRight:'40px',
               }}
             >
               Explore Curated Selections and Partnerships for Top-Quality
@@ -966,7 +967,8 @@ function App() {
             </div>
             <div
               className="Button"
-              style={{ background: "rgba(33, 74, 109, 1)" }}
+              style={{ background: "rgba(33, 74, 109, 1)", marginRight:'40px',
+            }}
             >
               <div
                 className="Label"
@@ -1012,7 +1014,7 @@ function App() {
             <img
               className="AboutMem2"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              src="./home2w.jpg"
+              src="./home2wc.png"
               alt="Planning"
             />
           </div>
@@ -1097,7 +1099,7 @@ function App() {
       )}
       {desktopState === "Deals" && <Deals />}
       {desktopState === "Lovelab" && <LoveLab />}
-      {desktopState === "Wellness" && <Wellness />}
+      {/* {desktopState === "Wellness" && <Wellness />} */}
       {desktopState === "Contact" && <Contact />}
       {desktopState === "Cart" && (
         <>

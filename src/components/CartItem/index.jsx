@@ -30,7 +30,7 @@ export function CartItem({ id, qty, update, product }) {
   return (
     <div className={styles.container}>
       <div className={styles.img}>
-        <img loading="lazy" src={product.images[0].src} alt={product.title} />
+        <img loading="lazy" style={{minWidth:'190px'}} src={product.images[0].src} alt={product.title} />
       </div>
       <div className={styles.content}>
         <p className={styles.title}>{product.title}</p>

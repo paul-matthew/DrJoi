@@ -1,7 +1,8 @@
 import "./style.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-// eslint-disable-next-line
+import taxRates from "./components/taxrates.js";
+import cityRates from './components/TaxCity.js';
 
 import { cartUtilities } from "./utils/cart.js";
 
@@ -70,16 +71,19 @@ orderModal.id = "orderModal";
 let totalPayment = 0;
 
 // Example function to get tax rate based on country
-function getTaxRate(country) {
-  let taxRate = 0;
+function getTaxRates(region, city) {
+  // Construct the city key with the state/province code
+  const cityKey = `${city}, ${region}`;
+  console.log (city, region);
 
-  if (country === 'US') {
-    taxRate = 0.07; // Example tax rate for USA (8%)
-  } else {
-    taxRate = 0.13; // Example tax rate for other countries (10%)
-  }
+  // Get the base rate from state/provincial tax rates
+  const baseRate = taxRates[region] || taxRates['default'];
 
-  return taxRate;
+  // Get the additional rate from city-level tax rates if applicable
+  const cityRate = cityRates[cityKey] || cityRates['default'];
+
+  // Return the total tax rate
+  return baseRate + cityRate;
 }
 
   //Shipping - FUNCTION CURRENTLY NOT BEING USED
@@ -252,7 +256,7 @@ function constructModalBody() {
     `;
 
     case 2.5: // New case for displaying shipping costs and tax before payment
-      const taxRate = getTaxRate(inputValues.country);
+      const taxRate = getTaxRates(inputValues.region,inputValues.city);
       subtotal = cartUtilities.getTotalPrice() / 100;
       taxAmount = Math.round(subtotal * taxRate * 100) / 100;
 
@@ -786,6 +790,10 @@ const DisplayProducts = (props) => {
           const reversedProducts = data.data.reverse();
           let counter=0;
           reversedProducts.forEach((product, index) => {
+            const isInStock = product.variants.some(variant => variant.is_available);
+            if (!isInStock) {
+              return;
+            }
             const maxPrice=product.variants
               .filter((variant) => variant.is_enabled)
               .reduce((maxPrice, variant) => (variant.price > maxPrice ? variant.price : maxPrice), 0);
@@ -793,35 +801,34 @@ const DisplayProducts = (props) => {
             const productCard = document.createElement("div");
             productCard.classList.add("card-container");
             productCard.innerHTML = `
-          <a data-bs-toggle="modal" href="#productitem${index + 1}"style="text-decoration: none;">
-            <div class="card">
-            <div class='productimage'>
-              <img src="${product.images[0].src}" class="card-img-top" alt="${
-              product.title
-            }"loading="lazy">
-              <div class="new-label">NEW</div>
-            </div>
-              <div class="card-body">
-                <div class="title-price">
-                  <div class="service-info">
-                    <h5 class="card-title2">${product.title}</h5>
-                  </div>
-                  <div class='card-price' style='color: grey; font-size: 0.8em;'>
-                  <span style='text-decoration: line-through;'>$${(maxPrice/ 75).toFixed(2)}</span> <!--75 is because its 25% off!-->
-                  <br>
+            <a data-bs-toggle="modal" href="#productitem${index + 1}" style="text-decoration: none;">
+              <div class="card">
+                <div class='productimage'>
+                  ${
+                    product.images && product.images.length > 0
+                      ? `<img src="${product.images[0].src}" class="card-img-top" alt="${product.title}" loading="lazy">`
+                      : '<div class="no-image">No image available</div>'
+                  }
+                  <div class="new-label">NEW</div>
                 </div>
-                
-                    <div class='card-price'style='color:red;font-weight:bold'>
-                      $${
-                        (maxPrice/ 100).toFixed(2)
-                      }
+                <div class="card-body">
+                  <div class="title-price">
+                    <div class="service-info">
+                      <h5 class="card-title2">${product.title}</h5>
                     </div>
-                    <span style="visibility:hidden;">-</span><!--Placeholder to temp fix bug-->
+                    <div class='card-price' style='color: grey; font-size: 0.8em;'>
+                      <span style='text-decoration: line-through;'>$${(maxPrice / 75).toFixed(2)}</span> <!-- 75 is because it's 25% off! -->
+                      <br>
+                    </div>
+                    <div class='card-price' style='color:red;font-weight:bold'>
+                      $${(maxPrice / 100).toFixed(2)}
+                    </div>
+                    <span style="visibility:hidden;">-</span><!-- Placeholder to temp fix bug -->
                   </div>
+                </div>
               </div>
-            </div>
-          </a>
-        `;
+            </a>
+          `;
             productsContainer.appendChild(productCard);
 
           const newLabel = productCard.querySelector('.new-label');
