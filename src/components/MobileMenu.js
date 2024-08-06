@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
 
-function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, handleWellnessClick, handleLoveClick, handleContactClick, desktopState}) {
+function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, handleDonationsClick, handleLoveClick, handleContactClick, desktopState}) {
   const [openMenuContent, setOpenMenuContent] = React.useState(false);
 
   const handleClickBurgerMenu = (event) => {
@@ -18,6 +18,10 @@ function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, ha
 
   const _handleBlogClick = () => {
     handleBlogClick()
+
+  }
+    const _handleDonationsClick = () => {
+    handleDonationsClick()
 
   }
   // const _handleWellnessClick = () => {
@@ -82,6 +86,11 @@ function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, ha
               <div className="Label" style={{ width: "100%", textAlign: 'left', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word', cursor: "pointer" }} onClick={_handleBlogClick}>Deals</div>
 
             </div>
+
+            <div className={desktopState === "Donations" ? "active-menu-mobile": "ListitemDesktopNa"} style={{ width: '100%', height: '100%',  padding: "8px 18px", background: '#0e3022', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
+              <div className="Label" style={{ width: "100%", textAlign: 'left', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word', cursor: "pointer" }} onClick={_handleDonationsClick}>Donations</div>
+            </div>
+
 
             {/* <div className={desktopState === "Wellness" ? "active-menu-mobile": "ListitemDesktopNa"} style={{ width: '100%', height: '100%',  padding: "8px 18px", background: '#0e3022', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
               <div className="Label" style={{ width: "100%", textAlign: 'left', color: 'white', fontSize: 'clamp(13px, 2vw, 16px)', fontFamily: 'Roboto', fontWeight: '500', letterSpacing: 2, wordWrap: 'break-word', cursor: "pointer" }} onClick={_handleWellnessClick}>Wellness</div>

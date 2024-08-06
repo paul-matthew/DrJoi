@@ -7,6 +7,7 @@ import Shop from "./shop.js";
 import Deals from "./deals.js";
 import LoveLab from "./lovelab.js";
 import Terms from "./terms.js";
+import Donations from "./donations.js";
 // import Wellness from "./wellness.js";
 import Contact from "./contact.js";
 import Cart from "./cart.js";
@@ -20,6 +21,7 @@ const desktopStateList = [
   "About",
   "Shop",
   "Deals",
+  "Donations",
   // "Wellness",
   "Lovelab",
   "Contact",
@@ -182,12 +184,18 @@ function App() {
     changeUrl("/Deals");
     // setShowCart(false);
   };
-  const handleWellnessClick = () => {
+  // const handleWellnessClick = () => {
+  //   setDisplayState("none");
+  //   setDisplayState2("0");
+  //   setDesktopState("Wellness");
+  //   changeUrl("/Wellness");
+  //   // setShowCart(false);
+  // };
+  const handleDonationsClick = () => {
     setDisplayState("none");
     setDisplayState2("0");
-    setDesktopState("Wellness");
-    changeUrl("/Wellness");
-    // setShowCart(false);
+    setDesktopState("Donations");
+    changeUrl("/Donations");
   };
   const handleLoveClick = () => {
     setDisplayState("none");
@@ -241,6 +249,7 @@ function App() {
       "/about",
       "/shop",
       "/deals",
+      "/donations",
       // "/wellness",
       "/lovelab",
       "/contact",
@@ -485,6 +494,39 @@ function App() {
             Coaching
           </div>
         </div>
+        <div
+          className="ListitemDesktopNa"
+          style={{
+            width: 115,
+            height: "100%",
+            paddingLeft: 38,
+            paddingRight: 38,
+            paddingTop: 0,
+            paddingBottom: 0,
+            background: "#0e3022",
+            borderBottom: "solid black",
+            justifyContent: "center",
+            alignItems: "center",
+            display: "inline-flex",
+          }}
+          onClick={() => handleDonationsClick()}
+        >
+          <div
+            className="Label"
+            style={{
+              width: 131,
+              textAlign: "center",
+              color: "white",
+              fontSize: "clamp(13px, 2vw, 16px)",
+              fontFamily: "PlayfairDisplay",
+              fontWeight: "500",
+              letterSpacing: 2,
+              wordWrap: "break-word",
+            }}
+          >
+            Donations
+          </div>
+        </div>
         {/* <div
           className="ListitemDesktopNa"
           style={{
@@ -558,7 +600,8 @@ function App() {
 
       <MobileMenu
         handleContactClick={handleContactClick}
-        handleWellnessClick={handleWellnessClick}
+        handleDonationsClick={handleDonationsClick}
+        // handleWellnessClick={handleWellnessClick}
         handleLoveClick={handleLoveClick}
         handleBlogClick={handleBlogClick}
         handleServicesClick={handleServicesClick}
@@ -753,7 +796,8 @@ function App() {
           }
           displayState2={displayState2}
           desktopState={desktopState}
-          handleWellnessClick={handleWellnessClick}
+          handleDonationsClick={handleDonationsClick}
+          // handleWellnessClick={handleWellnessClick}
           handleBlogClick={handleBlogClick}
           handleServicesClick={handleServicesClick}
           handleAboutClick={handleAboutClick}
@@ -1099,6 +1143,7 @@ function App() {
       )}
       {desktopState === "Deals" && <Deals />}
       {desktopState === "Lovelab" && <LoveLab />}
+      {desktopState === "Donations" && <Donations />}
       {/* {desktopState === "Wellness" && <Wellness />} */}
       {desktopState === "Contact" && <Contact />}
       {desktopState === "Cart" && (
