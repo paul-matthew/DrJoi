@@ -1865,8 +1865,6 @@ button:hover {
   left: 0; /* Align it to the left of the container */
   width: 100%; /* Full width of the container */
   height: 100vh; /* Full viewport height */
-  background: rgba(0, 0, 0, 0.8); /* Semi-transparent dark background */
-  color: white; /* Text color for contrast */
   display: flex; /* Use flexbox to center content */
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */

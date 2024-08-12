@@ -275,6 +275,10 @@ function App() {
 
   }, []);
 
+  if (desktopState === "WellKnown") {
+    return <WellKnownContent />;
+  }
+
   // const WellKnownContent = () => {
   //   return (
   //     <div className="WellKnownContent">
