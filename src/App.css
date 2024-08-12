@@ -1859,24 +1859,5 @@ button:hover {
   color: red;
   font-size: 14px;
 }
-.WellKnownContent {
-  position: absolute; /* Ensure it’s positioned correctly relative to its container */
-  top: 0; /* Align it to the top of the container */
-  left: 0; /* Align it to the left of the container */
-  width: 100%; /* Full width of the container */
-  height: 100vh; /* Full viewport height */
-  display: flex; /* Use flexbox to center content */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  z-index: 10; /* Ensure it’s above other content */
-  padding: 20px; /* Add some padding around the content */
-  box-sizing: border-box; /* Include padding in the width and height */
-  transition: opacity 0.3s ease-in-out; /* Smooth transition for opacity changes */
-  overflow: auto; /* Add scrollbars if content overflows */
-  word-wrap: break-word; /* Ensure long words break and wrap */
-  overflow-wrap: break-word; /* Ensures long words break and wrap */
-  word-break: break-all; /* Break long words or numbers to prevent overflow */
-}
 
 
