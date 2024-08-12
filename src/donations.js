@@ -1,9 +1,49 @@
 import "./App.css";
 import FadeInSection from "./components/FadeIn.js";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from "./components/CheckOutForm.js";
+import { loadStripe } from '@stripe/stripe-js';
 
 const Donations = () => {
+  const [stripePromise, setStripePromise] = useState(null);
+  const [clientSecret, setClientSecret] = useState('');
+  const [amount, setAmount] = useState(5000); // Default amount in cents
+
+  useEffect(() => {
+    let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      fetchURL = "http://localhost:5000/stripe/publishable-key";
+    }
+  
+    fetch(fetchURL)
+      .then(response => response.json())
+      .then(data => {
+        setStripePromise(loadStripe(data.publishableKey));
+      })
+      .catch(error => console.error("Error fetching publishable key:", error));
+  }, []);
+
+  const handleDonate = () => {
+    let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      fetchURL = "http://localhost:5000/stripe/create-payment-intent";
+    }
+
+    fetch(fetchURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: amount, // Use the user-specified amount
+      }),
+    })
+      .then(response => response.json())
+      .then(data => setClientSecret(data.clientSecret))
+      .catch(error => console.error("Error fetching payment intent:", error));
+  };
+
   return (
     <div
       className="BlogContainer"
@@ -116,14 +156,30 @@ const Donations = () => {
                 >
                   “
                   <i>
-                  All donations are used to further promote mental health and wellness through Exotic Relief by Dr. Joi. 
-                  Refer to Terms of Use for more information.
+                    All donations are used to further promote mental health and wellness through Exotic Relief by Dr. Joi. 
+                    Refer to Terms of Use for more information.
                   </i>
                   ” - Dr. Joi
                 </div>
               </div>
-              <FadeInSection>
-              </FadeInSection>
+              {/* <FadeInSection> */}
+                <div>
+                  <input
+                    type="number"
+                    value={amount / 100}
+                    onChange={(e) => setAmount(e.target.value * 100)}
+                    style={{ marginBottom: "10px" }}
+                  />
+                  <button onClick={handleDonate} style={{ padding: "10px", fontSize: "16px" }}>
+                    Donate ${amount / 100}
+                  </button>
+                </div>
+                {stripePromise && clientSecret && (
+                  <Elements stripe={stripePromise} options={{ clientSecret }}>
+                    <CheckoutForm />
+                  </Elements>
+                )}
+              {/* </FadeInSection> */}
             </div>
           </div>
         </FadeInSection>
@@ -133,3 +189,4 @@ const Donations = () => {
 };
 
 export default Donations;
+

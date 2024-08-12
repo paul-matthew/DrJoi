@@ -5,6 +5,7 @@ import cors from 'cors';
 // import path from 'path';
 import paypal from 'paypal-rest-sdk';
 import nodemailer from 'nodemailer';
+import Stripe from 'stripe';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ const printifyApiKey = process.env.PRINTIFY_API_KEY;
 const printifyShopID = process.env.PRINTIFY_SHOPID;
 const emailUser = process.env.EMAIL_USER;
 const emailPass = process.env.EMAIL_PASS;
+const stripe = Stripe(process.env.STRIPE_CLIENT_SECRET_SB); 
 
 // Configure PayPal SDK
 paypal.configure({
@@ -43,6 +45,58 @@ const transporter = nodemailer.createTransport({
     user: emailUser,
     pass: emailPass,
   },
+});
+
+app.get('/stripe/publishable-key', (req, res) => {
+  res.json({ publishableKey: process.env.STRIPE_CLIENT_ID_SB });
+});
+
+app.post('/stripe/create-payment-intent', async (req, res) => {
+  const { amount } = req.body;
+  console.log("This is the amount:",amount);
+
+  if (!amount) {
+    return res.status(400).json({ error: 'YO Missing required param: amount.' });
+  }
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: 'usd',
+    });
+    res.json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Stripe webhook endpoint
+app.post('/stripe/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+  } catch (err) {
+    console.error('Webhook signature verification failed:', err);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntent = event.data.object;
+      console.log('PaymentIntent was successful:', paymentIntent);
+      break;
+    case 'payment_intent.payment_failed':
+      const paymentFailure = event.data.object;
+      console.error('PaymentIntent failed:', paymentFailure);
+      break;
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  res.status(200).json({ received: true });
 });
 
 // Endpoint to fetch products from Printify

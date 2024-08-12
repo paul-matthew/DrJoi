@@ -9,3 +9,5 @@ build/
 src/components/TestComponent.js
 old
 public/videos
+/localhost.pem
+/localhost-key.pem
