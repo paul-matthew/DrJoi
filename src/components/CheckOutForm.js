@@ -11,27 +11,30 @@ function CheckoutForm() {
 
     useEffect(() => {
         if (stripe) {
+            // Create a Payment Request object
             const pr = stripe.paymentRequest({
-                country: 'US',
-                currency: 'usd',
+                country: 'US', // Country for Apple Pay
+                currency: 'usd', // Currency for Apple Pay
                 total: {
                     label: 'Total',
-                    amount: 2000, // Amount in cents
+                    amount: 2000, // Total amount in cents
                 },
                 requestPayerName: true,
                 requestPayerEmail: true,
-                paymentMethodTypes: ['card'], // Only include 'card' for Google Pay
+                paymentMethodTypes: ['card'], // Includes support for Apple Pay
             });
-
+    
+            // Check if the Payment Request API is available and can make payments
             pr.canMakePayment().then((result) => {
                 if (result) {
                     setCanMakePayment(true);
                 }
             });
-
+    
             setPaymentRequest(pr);
         }
     }, [stripe]);
+    
 
     const handleSubmit = async (event) => {
         event.preventDefault();

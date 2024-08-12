@@ -6,6 +6,8 @@ import cors from 'cors';
 import paypal from 'paypal-rest-sdk';
 import nodemailer from 'nodemailer';
 import Stripe from 'stripe';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
 dotenv.config();
 
@@ -17,6 +19,9 @@ const printifyShopID = process.env.PRINTIFY_SHOPID;
 const emailUser = process.env.EMAIL_USER;
 const emailPass = process.env.EMAIL_PASS;
 const stripe = Stripe(process.env.STRIPE_CLIENT_SECRET_SB); 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 // Configure PayPal SDK
 paypal.configure({
@@ -27,6 +32,7 @@ paypal.configure({
 
 app.use(express.json());
 app.use(cors());
+app.use('/well-known', express.static(join(__dirname, 'well-known')));
 
 // PayPal configuration endpoint
 app.get('/config', (req, res) => {
