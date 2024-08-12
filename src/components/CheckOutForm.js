@@ -20,7 +20,7 @@ function CheckoutForm() {
                 },
                 requestPayerName: true,
                 requestPayerEmail: true,
-                // paymentMethodTypes: ['card'], // Only include 'card' for Google Pay
+                paymentMethodTypes: ['card'], // Only include 'card' for Google Pay
             });
 
             pr.canMakePayment().then((result) => {
