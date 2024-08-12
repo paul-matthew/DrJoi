@@ -34,13 +34,13 @@ app.use(express.json());
 app.use(cors());
 
 
-app.use('/well-known', (req, res, next) => {
+app.use('/.well-known', (req, res, next) => {
   if (req.url === '/apple-developer-merchantid-domain-association') {
     res.setHeader('Content-Type', 'text/plain');
   }
   next();
 });
-app.use('/well-known', express.static(join(__dirname, 'well-known')));
+app.use('/.well-known', express.static(join(__dirname, 'well-known')));
 
 // PayPal configuration endpoint
 app.get('/config', (req, res) => {
