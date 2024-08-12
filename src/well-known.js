@@ -28,7 +28,9 @@ const WellKnownContent = () => {
   }, [fetchURL]);
 
   return (
-    <div className="WellKnownContent" dangerouslySetInnerHTML={{ __html: fileContent }} />
+    <div className="WellKnownContent">
+      <pre>{fileContent}</pre> {/* Display file content */}
+    </div>
   );
 };
 
