@@ -16,6 +16,7 @@ import OverlaysMobile from "./components/OverlaysMobile.js";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoadingScreen from "./components/LoadingScreen.js";
+import WellKnownContent  from './well-known.js';
 
 const desktopStateList = [
   "About",
@@ -255,38 +256,32 @@ function App() {
       "/contact",
       "/cart",
       "/terms",
+      "/well-known"
     ];
 
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace("/", ""); // Remove the leading slash
-      setDesktopState(
-        stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)
-      ); // Capitalize the first letter
-      // if (currentUrl === '/cart') {
-      //   console.log('sip');
-      //   // const { handleCart } = DisplayProducts();
-      //   handleCart();
-      // }
+      if (stateFromUrl === "well-known") {
+        // Handle the /well-known route specifically
+        setDesktopState("WellKnown"); // Set state for /well-known
+      } else {
+        setDesktopState(
+          stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)
+        ); // Capitalize the first letter
+      }
     } else {
       setDesktopState("Homedesktop1"); // Set default state if URL doesn't match
-    } 
-
-    // if(currentUrl==='/'){
-    //   // Simulate a loading time of 2 seconds
-    //   const timer = setTimeout(() => {
-    //     setLoading(false);
-    //   }, 2000);
-    //   return () => clearTimeout(timer);
-    // }
-    // else{//This is so that the loader does show on any of the other pages.  If i do it another way the DisplayProducts gets displayed multiple times!
-    //   const timer = setTimeout(() => {
-    //     setLoading(false);
-    //   }, 0);
-    //   return () => clearTimeout(timer);
-    // }
+    }
 
   }, []);
 
+  // const WellKnownContent = () => {
+  //   return (
+  //     <div className="WellKnownContent">
+  //       <pre>{wellKnownContent}</pre> {/* Display file content */}
+  //     </div>
+  //   );
+  // };
 
   return (
     <div
@@ -805,7 +800,7 @@ function App() {
           setDesktopState={setDesktopState}
         />
       )}
-
+{desktopState === "WellKnown" && <WellKnownContent />}
       {desktopState === "Homedesktop1" && (
         <div
           id="Homedesktop1"
