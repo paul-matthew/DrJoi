@@ -256,12 +256,12 @@ function App() {
       "/contact",
       "/cart",
       "/terms",
-      "/well-known"
+      "/.well-known/apple-developer-merchantid-domain-association"
     ];
 
     if (allowedUrls.includes(currentUrl)) {
       const stateFromUrl = currentUrl.replace("/", ""); // Remove the leading slash
-      if (stateFromUrl === "well-known") {
+      if (stateFromUrl === ".well-known/apple-developer-merchantid-domain-association") {
         // Handle the /well-known route specifically
         setDesktopState("WellKnown"); // Set state for /well-known
       } else {
