@@ -3,6 +3,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import taxRates from "./components/taxrates.js";
 import cityRates from './components/TaxCity.js';
+// import Stripe from 'stripe';
+// import {CardElement } from "@stripe/react-stripe-js";
+import { loadStripe } from '@stripe/stripe-js';
+// import { handleSubmit } from './components/CheckOutForm.js';
 
 import { cartUtilities } from "./utils/cart.js";
 
@@ -16,7 +20,7 @@ if (
   fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
 }
 
-//General -------------
+//General -------------------------------------------------------------------------------
 // Initialize a global array to store all selected SKUs
 let selectedSKUs = [];
 //ORDER---------------------
@@ -38,31 +42,8 @@ const inputValues = {
   donation:"",
 };
 
-//SHOPPING CART------------
+//SHOPPING CART-------------------------------------------------------------------------------
 let subtotal = 0;
-// let total = 0;
-// let shipping = 0; 
-
-// const currentUrl = window.location.pathname;
-// if (currentUrl === '/cart') {
-//   console.log("works1, loaded");
-//   handleCart();
-// }
-
-// Define a function to update total
-// function updateTotal() {
-//   // Calculate the total based on your logic
-//   total = (subtotal + subtotal * 0.13 + shipping).toFixed(2);
-//   // console.log('bread and tings', total);
-
-//   // Dispatch a custom event to notify other parts of the application
-//   const updateTotalEvent = new CustomEvent("updateTotalEvent", {
-//     detail: { total: total },
-//   });
-//   document.dispatchEvent(updateTotalEvent);
-
-//   return total;
-// }
 
 // Create a modal element
 const orderModal = document.createElement("div");
@@ -89,6 +70,7 @@ function getTaxRates(region, city) {
   //Shipping - FUNCTION CURRENTLY NOT BEING USED
   let shippingCost = 0;
   let taxAmount = 0;
+  let donationAmount = 0;
   async function calculateShippingCost() {
 
     const cartItems = cartUtilities.getCartItems();
@@ -266,7 +248,7 @@ function constructModalBody() {
       }
 
       console.log('updated shipping:',shippingCost);
-      const donationAmount = parseFloat(inputValues.donation) || 0; // Ensure donationAmount is a number
+      const donationAmount = parseFloat(inputValues.donation); // Ensure donationAmount is a number
       totalPayment = Math.round((subtotal + shippingCost + taxAmount + donationAmount) * 100) / 100;
       
       return `
@@ -293,7 +275,7 @@ function constructModalBody() {
                 </tr>
                 <tr>
                   <td style="border: none;">Donation:</td>
-                  <td style="border: none; text-align: left;">$${(parseFloat(inputValues.donation).toFixed(2))}</td>
+                  <td style="border: none; text-align: left;">$${donationAmount}</td>
                 </tr>
                 <tr>
                   <td style="border: none; font-weight: bold;">Total:</td>
@@ -313,19 +295,18 @@ function constructModalBody() {
       return `
       <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Payment</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- Display payment options here -->
-          <div id='paypal-parent'>
-          </div>              
-        <button id="backButton3" class="back-btn gen-btn mt-3">Back</button>
-        </div>
+          <div class="modal-header">
+              <h5 class="modal-title">Payment</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <!-- Payment options container -->
+              <div id="paypal-parent" class="checkout-form"></div>
+              <button id="backButton3" class="back-btn gen-btn mt-3">Back</button>
+          </div>
       </div>
-    </div>
-    `;
+  </div>
+      `;
     case 4:
       return `
         <div class="modal-dialog modal-dialog-centered success-modal">
@@ -372,9 +353,6 @@ const initializeSelectedSKUs = () => {
   selectedSKUs = storedSKUs ? JSON.parse(storedSKUs) : [];
 };
 
-// const updateSelectedSKUs = (updatedSKUs) => {
-//   localStorage.setItem("selectedSKUs", JSON.stringify(updatedSKUs));
-// };
 
 var initialSetupDone = false;
 
@@ -522,18 +500,6 @@ function saveInputValues() {
   }
 }
 
-// function handleOrderDetailsButton() {
-//   currentStage = 2;
-
-//   // Update only the modal body content
-//   orderModal.innerHTML = constructModalBody();
-
-//   // Save input values
-//   // saveInputValues();
-//   orderModal.style.display = "block";
-//   console.log('latest',inputValues.donation);
-// }
-
 // Function to handle the order button click
 function handleOrderButtonClick() {
   // Create the backdrop element
@@ -582,16 +548,7 @@ function handleOrderButtonClick() {
   // });
 }
 
-// const orderDetailsButton = orderModal.querySelector("#OrderDetailsButton");
-// if (orderDetailsButton) {
-//   orderDetailsButton.addEventListener("click", function() {
-//     saveInputValues();
-//     console.log('yep');
-//     handleOrderDetailsButton();
-//   });
-// }
-
-//CLEAR --------------------
+//CLEAR --------------------------------------------------------------
 
 export function handleCart() {
   // const skuToProductIdMap = {};
@@ -614,144 +571,6 @@ export function handleCart() {
           const productsContainer = document.createElement("div");
           productsContainer.classList.add("products", "row", "mb-93");
 
-          // Iterate over the fetched product data and create elements
-          // data.data.forEach((product) => {
-          //   // Check if the product has at least one variant with a matching SKU
-          //   if (
-          //     product.variants.some((variant) =>
-          //       selectedSKUs.includes(variant.sku)
-          //     )
-          //   ) {
-          //     selectedSKUs.forEach((selectedSKU) => {
-          //       const matchingVariant = product.variants.find(
-          //         (variant) => variant.sku === selectedSKU
-          //       );
-          //       if (matchingVariant) {
-          //         skuToProductIdMap[matchingVariant.sku] = product.id;
-          //       }
-          //       if (matchingVariant) {
-          //         const matchingSKU = matchingVariant.sku;
-          //         const existingCartItem = document.querySelector(
-          //           `.cart-item[data-sku="${matchingSKU}"]`
-          //         );
-          //         subtotal += matchingVariant.price / 100;
-          //         total += matchingVariant.price / 100;
-          //         updateTotal();
-
-          //         if (existingCartItem) {
-          //           // If the item with the same SKU already exists, update its quantity
-          //           const quantityElement =
-          //             existingCartItem.querySelector(".quantity");
-          //           const currentQuantity = parseInt(
-          //             quantityElement.innerText,
-          //             10
-          //           );
-          //           quantityElement.innerText = currentQuantity + 1;
-          //         } else {
-          //           // Create and append the new cart item
-          //           const cartItem = document.createElement("div");
-          //           cartItem.classList.add("cart-item", "row", "mb-3");
-          //           cartItem.setAttribute("data-sku", matchingSKU);
-          //           cartItem.setAttribute("data-product-id", product.id); // Add product ID attribute
-          //           cartItem.setAttribute(
-          //             "data-variant-id",
-          //             matchingVariant.id
-          //           ); // Add variant ID attribute
-
-          //           const matchingImage = product.images.find((image) =>
-          //             image.variant_ids.includes(matchingVariant.id)
-          //           );
-
-          //           // Product image
-          //           const productImage = document.createElement("img");
-          //           productImage.src = matchingImage ? matchingImage.src : "";
-          //           productImage.alt = product.title;
-          //           productImage.classList.add(
-          //             "col-2",
-          //             "img-fluid",
-          //             "productimg"
-          //           );
-          //           productImage.loading = "lazy";
-
-          //           // Product details
-          //           const productDetails = document.createElement("div");
-          //           productDetails.classList.add("col-8");
-          //           productDetails.innerHTML = `
-          //             <hr style="border-top: 5px solid rgba(33, 74, 109, 1); margin: 1px 0;">
-          //             <h5 style='font-family: IGLight;'>${
-          //               product.title
-          //             }</h5>
-          //             <p style="margin: 0;"><span style="font-weight: bold;">Color & Size:</span> ${
-          //               matchingVariant.title
-          //             }</p>
-          //             <p style="margin: 0;"><span style="font-weight: bold;">Price:</span> $${
-          //               matchingVariant.price / 100
-          //             } USD</p>
-          //             <p style="margin: 0;"><span style="font-weight: bold;">Quantity:</span> <span class="quantity">1</span></p>
-          //         `;
-
-          //           // Remove item button
-          //           const removeItemButton = document.createElement("button");
-          //           removeItemButton.innerText = "Remove";
-          //           removeItemButton.classList.add("col-2", "remove-btn");
-          //           removeItemButton.addEventListener("click", () => {
-          //             // Find the index of the item with the matching SKU in the cart
-          //             const matchingSKU = matchingVariant.sku;
-          //             const quantityElement =
-          //               cartItem.querySelector(".quantity");
-          //             const currentQuantity = parseInt(
-          //               quantityElement.innerText,
-          //               10
-          //             );
-          //             console.log("Current Quantity:", currentQuantity); // Log current quantity for debugging
-          //             subtotal -= matchingVariant.price / 100;
-          //             total -= matchingVariant.price / 100;
-          //             updateTotal();
-
-          //             if (currentQuantity > 1) {
-          //               // If the quantity is more than 1, decrease it
-          //               quantityElement.innerText = currentQuantity - 1;
-          //               const indexOfMatchingSKU =
-          //                 selectedSKUs.indexOf(matchingSKU);
-
-          //               // Check if the SKU appears more than once in the array
-          //               if (indexOfMatchingSKU !== -1) {
-          //                 // Remove only the first occurrence of the SKU
-          //                 selectedSKUs.splice(indexOfMatchingSKU, 1);
-          //               }
-
-          //               // Update selectedSKUs with the modified array
-          //               updateSelectedSKUs(selectedSKUs);
-          //             } else {
-          //               // If the quantity is 1, remove the entire cart item
-          //               cartItem.parentNode.removeChild(cartItem);
-
-          //               // Update selectedSKUs with the filtered array
-          //               const updatedSelectedSKUs = selectedSKUs.filter(
-          //                 (item) => item !== matchingSKU
-          //               );
-          //               updateSelectedSKUs(updatedSelectedSKUs);
-          //             }
-
-          //             // Log the updated array
-          //             console.log("Updated SKUs:", selectedSKUs);
-          //             // console.log(`Remove item with SKU: ${matchingSKU}`);
-          //           });
-
-          //           // Append elements to the cart item
-          //           cartItem.appendChild(productImage);
-          //           cartItem.appendChild(productDetails);
-          //           cartItem.appendChild(removeItemButton);
-
-          //           // Append cart item to the products container
-          //           productsContainer.appendChild(cartItem);
-          //         }
-          //       }
-          //     });
-          //   }
-          // });
-
-          // Insert productsContainer into the DOM
           const cartContainer = document.getElementById("cart-container");
           if (cartContainer) {
             cartContainer.parentNode.prepend(orderButton);
@@ -1404,8 +1223,6 @@ const DisplayProducts = (props) => {
       .catch((error) => console.error(error));
   }
 
-  // Call the function to handle cart functionality
-  // handleCart();
 
   const random = generateRandom6DigitNumber();
   const randomlabel = generateRandom6DigitNumber();
@@ -1518,49 +1335,6 @@ const DisplayProducts = (props) => {
     }
   }
 
-  // function formatPhoneNumber() {
-  //   // var phoneInput = document.getElementById('phoneInput');
-  //   var phoneInput = document.getElementById('phoneInput');
-  //   console.log('trigger fingers')
-
-  //   // Remove any non-numeric characters
-  //   var phoneNumber = phoneInput.value.replace(/\D/g, '');
-
-  //   // Format the phone number as needed
-  //   if (phoneNumber.length >= 10) {
-  //     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-  //   }
-
-  //   // Update the input value
-  //   phoneInput.value = phoneNumber;
-  // }
-
-  // document.addEventListener("DOMContentLoaded", function() {
-  //   // Add event listener to the 'phoneInput' element
-  //   document.getElementById('phoneInput').addEventListener('input', function(event) {
-  //     // Get the input value
-  //     var inputValue = event.target.value;
-
-  //     // Remove any non-numeric characters
-  //     var numericValue = inputValue.replace(/\D/g, '');
-
-  //     // Format the numeric value as needed (e.g., 123-456-7890)
-  //     var formattedValue = numericValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-
-  //     // Update the input value
-  //     event.target.value = formattedValue;
-
-  //     // Check if the input value contains non-numeric characters
-  //     if (inputValue !== numericValue) {
-  //       // Display an error message
-  //       document.getElementById('phoneErrorMessage').textContent = 'Please enter only numbers.';
-  //     } else {
-  //       // Clear the error message if input is valid
-  //       document.getElementById('phoneErrorMessage').textContent = '';
-  //     }
-  //   });
-  // });
-
   orderModal.addEventListener("click", async function (event) {
     const targetId = event.target.id;
     switch (targetId) {
@@ -1623,129 +1397,163 @@ const DisplayProducts = (props) => {
     }
   });
 
-  function initializePayPal() {
-      // Get the container for the PayPal button
-      const paypalContainer = document.getElementById("paypal-parent");
 
-      // Create a new div for the PayPal button
-      const paypalButtonContainer = document.createElement("div");
-      paypalButtonContainer.id = "paypal-button-container";
+  
+  async function initializePayPal() {
+    if (currentStage === 3) {
+        const stripeContainer = document.getElementById("paypal-parent");
+        if (!stripeContainer) {
+            console.error("Element with ID 'paypal-parent' not found.");
+            return;
+        }
 
-      // Append the PayPal button container to the parent container
-      if (currentStage === 3) {
-          paypalContainer.appendChild(paypalButtonContainer);
-      }
+        // Create and append the payment form
+        const stripeFormContainer = document.createElement("form");
+        stripeFormContainer.id = "payment-form";
+        
+        const cardElementDiv = document.createElement("div");
+        cardElementDiv.id = "stripe-form-container";
+        stripeFormContainer.appendChild(cardElementDiv);
+        
+        const cardErrorsDiv = document.createElement("div");
+        cardErrorsDiv.id = "card-errors";
+        cardErrorsDiv.setAttribute("role", "alert");
+        stripeFormContainer.appendChild(cardErrorsDiv);
+        stripeContainer.appendChild(stripeFormContainer);
+        
+        // Create and append the Pay button
+        const payButton = document.createElement("button");
+        payButton.type = "submit";
+        payButton.className = "pay-button";
+        payButton.textContent = "Pay";
+        stripeContainer.appendChild(payButton);
 
-      let fetchURLpayvalidate = "";
-      if (
-          window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1"
-      ) {
-          fetchURLpayvalidate = "http://localhost:5000/paypal/validate";
-      } else {
-          fetchURLpayvalidate =
-              "https://drjoiserver-106ea7a60e39.herokuapp.com/paypal/validate";
-      }
+        const fetchURLstripeCreatePaymentIntent = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? "http://localhost:5000/stripe/create-payment-intent"
+            : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
 
-      // Initialize the PayPal SDK here
-      if (currentStage === 3) {
-          // eslint-disable-next-line no-undef
-          paypal.Buttons({
-              createOrder: function (_, actions) {
-                  // Validate and sanitize input values before using them
-                  saveInputValues();
-                  console.log("Amount to be sent to PayPal:", totalPayment);
+        const fetchURLstripeValidate = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? "http://localhost:5000/stripe/validate"
+            : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/validate";
 
-                  // Ensure breakdown values are numbers and formatted correctly
-                  const formattedSubtotal = parseFloat(subtotal).toFixed(2);
-                  const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
-                  const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
-                  const formattedDonationCost = parseFloat(inputValues.donation).toFixed(2);
+        const fetchStripeKey = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? "http://localhost:5000/stripe/publishable-key"
+            : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
+
+        try {
+            // Fetch the Stripe publishable key
+            const keyResponse = await fetch(fetchStripeKey);
+            const { publishableKey } = await keyResponse.json();
+            if (!publishableKey) {
+                throw new Error("Failed to retrieve Stripe publishable key");
+            }
+
+            // Initialize Stripe elements
+            const stripe = await loadStripe(publishableKey);
+            const elements = stripe.elements();
+            const cardElement = elements.create('card');
+            cardElement.mount('#stripe-form-container');
+
+            // Handle the payment submission
+            payButton.addEventListener('click', async (event) => {
+                event.preventDefault();
+                if (!stripe || !elements) {
+                    console.error("Stripe or elements not loaded.");
+                    return;
+                }
+                
+                try {
+                    // Format the payment details
+                    const formattedSubtotal = parseFloat(subtotal).toFixed(2);
+                    const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
+                    const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
+                    // const formattedDonationAmount = parseFloat(donationAmount).toFixed(2);
+                    console.log('donation atm is:',inputValues.donation)
+                    
+                    // Validate the payment details on the server
+                    const validationResponse = await fetch(fetchURLstripeValidate, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            amount: totalPayment * 100, // Stripe expects the amount in cents
+                            taxAmount: taxAmount,
+                            shippingCost: shippingCost,
+                            donationAmount: parseFloat(inputValues.donation) || 0,
+                            subtotal: formattedSubtotal,
+                        }),
+                    });
+                    
+                    const validationData = await validationResponse.json();
+                    if (!validationData.success) {
+                        throw new Error("Payment validation failed: " + (validationData.error || 'Unknown error'));
+                    }
+
+                    // Create a PaymentIntent on the server
+                    const paymentIntentResponse = await fetch(fetchURLstripeCreatePaymentIntent, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            amount: totalPayment * 100, // Stripe expects the amount in cents
+                            description: `Order total of $${totalPayment.toFixed(2)}`,
+                            metadata: {
+                                subtotal: formattedSubtotal,
+                                tax: formattedTaxAmount,
+                                shipping: formattedShippingCost,
+                                donation: inputValues.donation,
+                            },
+                        }),
+                    });
+
+                    const paymentIntentData = await paymentIntentResponse.json();
+                    if (!paymentIntentData.clientSecret) {
+                        throw new Error("Failed to get client secret from Stripe");
+                    }
+
+                    const clientSecret = paymentIntentData.clientSecret;
+
+                    // Handle the payment confirmation
+                    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+                        payment_method: {
+                            card: cardElement,
+                        },
+                    });
+
+                    console.log('Stripe PaymentIntent Response:', { paymentIntent, error });
+
+                    if (error) {
+                        console.error("Error confirming card payment:", error);
+                        alert("Error confirming card payment. Please check the console for details.");
+                    } else if (paymentIntent.status === 'succeeded') {
+                        submitOrder();
+                        console.log("Order submitted successfully");
+
+                        console.log("Payment succeeded:", paymentIntent);
+                    }
+                } catch (error) {
+                    console.error("Error during payment process:", error);
+                    alert("Error during payment process. Please check the console for details.");
+                }
+            });
+
+            const form = document.getElementById('payment-form');
+            if (!form) {
+                console.error("Payment form not found");
+                alert("Payment form not found. Please check the page structure.");
+            }
+        } catch (error) {
+            console.error("Error initializing Stripe:", error);
+            alert("Error initializing Stripe. Please check the console for details.");
+        }
+    }
+}
 
 
-                  return actions.order.create({
-                      purchase_units: [
-                          {
-                              amount: {
-                                  value: totalPayment.toFixed(2),
-                                  breakdown: {
-                                      item_total: {
-                                          currency_code: "USD",
-                                          value: formattedSubtotal
-                                      },
-                                      tax_total: {
-                                          currency_code: "USD",
-                                          value: formattedTaxAmount
-                                      },
-                                      shipping: {
-                                          currency_code: "USD",
-                                          value: formattedShippingCost
-                                      },
-                                      handling: {
-                                        currency_code: "USD",
-                                        value: formattedDonationCost
-                                    }
-                                  }
-                              },
-                          },
-                      ],
-                      application_context: {
-                          shipping_preference: "NO_SHIPPING",
-                      },
-                  }).catch(error => {
-                      console.error("Error creating PayPal order:", error);
-                      alert("Error creating PayPal order. Please check the console for details.");
-                  });
-              },
-              onApprove: function (data, actions) {
-                  return actions.order.capture().then(function (details) {
-                      console.log("Transaction details:", details);
 
-                      // Send payment details to the server for further validation
-                      fetch(fetchURLpayvalidate, {
-                          method: "POST",
-                          headers: {
-                              "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify({
-                              order: data,
-                              paymentDetails: details,
-                              total: totalPayment,
-                              taxAmount: taxAmount,
-                              shippingCost: shippingCost              
-                          }),
-                      })
-                          .then((response) => response.json())
-                          .then((responseData) => {
-                              console.log("Response Data is:", responseData);
-                              if (responseData.success) {
-                                  // If the server validates the payment, proceed with your logic
-                                  submitOrder();
-                              } else {
-                                  console.error(
-                                      "Error processing payment on the server:",
-                                      responseData.error
-                                  );
-                                  currentStage = 5;
-                                  orderModal.innerHTML = constructModalBody();
 
-                                  // Display an error message to the user
-                                  alert("Error processing payment: " + responseData.error);
-                              }
-                          })
-                          .catch((error) => {
-                              console.error("Error communicating with the server:", error);
-                              // Display an error message to the user
-                              alert("Error communicating with the server");
-                          });
-                  }).catch(error => {
-                      console.error("Error capturing PayPal order:", error);
-                      alert("Error capturing PayPal order. Please check the console for details.");
-                  });
-              },
-          }).render("#paypal-button-container");
-      }
-  }
 
 
 

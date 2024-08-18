@@ -65,24 +65,35 @@ app.get('/stripe/publishable-key', (req, res) => {
   res.json({ publishableKey: process.env.STRIPE_CLIENT_ID_SB });
 });
 
+const paymentIntentsStore = {};
+
 app.post('/stripe/create-payment-intent', async (req, res) => {
-  const { amount } = req.body;
-  console.log("This is the amount:",amount);
+    const { amount, description, metadata, donationId } = req.body;
 
-  if (!amount) {
-    return res.status(400).json({ error: 'YO Missing required param: amount.' });
-  }
+    try {
+        let paymentIntent = paymentIntentsStore[donationId];
 
-  try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency: 'usd',
-    });
-    res.json({ clientSecret: paymentIntent.client_secret });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+        if (paymentIntent && paymentIntent.status === 'requires_payment_method') {
+            return res.json({ clientSecret: paymentIntent.client_secret });
+        }
+
+        paymentIntent = await stripe.paymentIntents.create({
+            amount: amount,
+            currency: 'usd',
+            description: description,
+            metadata: metadata,
+        });
+
+        paymentIntentsStore[donationId] = paymentIntent;
+
+        res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (error) {
+        console.error('Error creating payment intent:', error);
+        res.status(500).json({ error: 'Failed to create payment intent' });
+    }
 });
+
+
 
 // Stripe webhook endpoint
 app.post('/stripe/webhook', express.raw({ type: 'application/json' }), (req, res) => {
@@ -191,6 +202,43 @@ app.post('/paypal/validate', async (req, res) => {
   } catch (error) {
     console.error('Error processing PayPal order:', error);
     res.status(500).json({ success: false, error: 'Failed to process PayPal order' });
+  }
+});
+
+app.post('/stripe/validate', async (req, res) => {
+  const {amount, taxAmount, shippingCost,donationAmount,subtotal } = req.body;
+
+  if (amount === undefined || taxAmount === undefined || shippingCost === undefined || donationAmount === undefined || subtotal === undefined) {
+    console.error("bossman",amount,taxAmount,shippingCost,donationAmount )
+    console.error('Invalid request data:', req.body);
+    return res.status(400).json({ error: 'Invalid request data' });
+  }
+
+  try {
+    const isPaymentValid = validatePaymentDetails(amount, taxAmount, shippingCost,donationAmount, subtotal);
+
+    if (isPaymentValid) {
+      console.log('Payment validated successfully:', {
+        amount,
+        taxAmount,
+        shippingCost,
+        donationAmount,
+        subtotal,
+      });
+      res.json({ success: true });
+    } else {
+      console.error('Invalid payment detected:', {
+        amount,
+        taxAmount,
+        shippingCost,
+        donationAmount,
+        subtotal
+      });
+      res.status(400).json({ success: false, error: 'Invalid payment' });
+    }
+  } catch (error) {
+    console.error('Error processing Stripe payment:', error);
+    res.status(500).json({ success: false, error: 'Failed to process Stripe payment' });
   }
 });
 
@@ -436,21 +484,25 @@ app.listen(PORT, () => {
 });
 
 // Function to validate payment details
-function validatePaymentDetails(paymentDetails, total) {
-  const isValid =
-    paymentDetails &&
-    paymentDetails.status === 'COMPLETED' &&
-    paymentDetails.purchase_units &&
-    paymentDetails.purchase_units[0] &&
-    paymentDetails.purchase_units[0].amount &&
-    parseFloat(paymentDetails.purchase_units[0].amount.value) === parseFloat(total);
+function validatePaymentDetails(amount, taxAmount, shippingCost, donationAmount, subtotal) {
+  const expectedAmount = Math.round((subtotal*100 + taxAmount*100 + shippingCost*100 + donationAmount*100) * 100) / 100;;
+  const amountReceived = amount; 
+  const isValid = amountReceived === expectedAmount;
 
   if (isValid) {
-    console.log('Server validation complete');
+    console.log('Server validation complete for payment amount.');
   } else {
-    console.log('Server validation error');
-    console.log('paymentDetails:', paymentDetails);
+    console.log('Server validation error with details:', {
+      received: amountReceived,
+      amount:amount,
+      subtotal:subtotal*100,
+      shippingCost:shippingCost*100,
+      donationAmount:donationAmount,
+      taxAmount:taxAmount*100,
+      expected: expectedAmount,
+    });
   }
 
   return isValid;
 }
+

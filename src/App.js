@@ -172,9 +172,7 @@ function App() {
     setDesktopState("Shop");
     changeUrl("/Shop");
     if (!displayed) {
-      // Call DisplayProducts only if it hasn't been called yet
       setDisplayed(true);
-      // DisplayProducts();
     }
   };
   const handleBlogClick = () => {
@@ -262,28 +260,9 @@ function App() {
       setDesktopState(
         stateFromUrl.charAt(0).toUpperCase() + stateFromUrl.slice(1)
       ); // Capitalize the first letter
-      // if (currentUrl === '/cart') {
-      //   console.log('sip');
-      //   // const { handleCart } = DisplayProducts();
-      //   handleCart();
-      // }
     } else {
       setDesktopState("Homedesktop1"); // Set default state if URL doesn't match
     } 
-
-    // if(currentUrl==='/'){
-    //   // Simulate a loading time of 2 seconds
-    //   const timer = setTimeout(() => {
-    //     setLoading(false);
-    //   }, 2000);
-    //   return () => clearTimeout(timer);
-    // }
-    // else{//This is so that the loader does show on any of the other pages.  If i do it another way the DisplayProducts gets displayed multiple times!
-    //   const timer = setTimeout(() => {
-    //     setLoading(false);
-    //   }, 0);
-    //   return () => clearTimeout(timer);
-    // }
 
   }, []);
 
@@ -594,9 +573,6 @@ function App() {
           </div>
         </div>
       </div>
-
-      {/* {showCart && <Cart handleCartClick={handleCartClick} />} */}
-      {/* <DisplayProducts handleCartClick={handleCartClick} /> */}
 
       <MobileMenu
         handleContactClick={handleContactClick}
@@ -1148,7 +1124,6 @@ function App() {
       {desktopState === "Contact" && <Contact />}
       {desktopState === "Cart" && (
         <>
-          {/* <DisplayProducts handleCartClick={handleCartClick} /> */}
           <Cart />
         </>
       )}
