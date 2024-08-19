@@ -287,6 +287,10 @@ app.post('/stripe/calculate-taxes', async (req, res) => {
         console.log('Extracted tax rate:', taxRate);
       }
     });
+    if(!region==='LA'){
+      taxRate = 0; // Default to 0 if no rate found
+      console.log("Out of state taxrate", taxRate);
+    }
 
     // Return the tax rate to the client
     res.status(200).json({ taxRate: taxRate });
