@@ -1,8 +1,6 @@
 import "./style.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-import taxRates from "./components/taxrates.js";
-import cityRates from './components/TaxCity.js';
 // import Stripe from 'stripe';
 // import {CardElement } from "@stripe/react-stripe-js";
 import { loadStripe } from '@stripe/stripe-js';
@@ -51,26 +49,12 @@ orderModal.classList.add("modal", "fade", "portfolio-modal");
 orderModal.id = "orderModal";
 let totalPayment = 0;
 
-// Example function to get tax rate based on country
-function getTaxRates(region, city) {
-  // Construct the city key with the state/province code
-  const cityKey = `${city}, ${region}`;
-  console.log (city, region);
-
-  // Get the base rate from state/provincial tax rates
-  const baseRate = taxRates[region] || taxRates['default'];
-
-  // Get the additional rate from city-level tax rates if applicable
-  const cityRate = cityRates[cityKey] || cityRates['default'];
-
-  // Return the total tax rate
-  return baseRate + cityRate;
-}
-
   //Shipping - FUNCTION CURRENTLY NOT BEING USED
   let shippingCost = 0;
   let taxAmount = 0;
-  let donationAmount = 0;
+  let taxRate = 0
+  
+  // let donationAmount = 0;
   async function calculateShippingCost() {
 
     const cartItems = cartUtilities.getCartItems();
@@ -156,6 +140,43 @@ function getTaxRates(region, city) {
       console.log('DONE')
 
   }
+
+  async function calculateTax() {
+    const fetchStripeTax = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000/stripe/calculate-taxes"
+        : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/calculate-taxes";
+
+    try {
+        const taxResponse = await fetch(fetchStripeTax, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                region: inputValues.region,
+                city: inputValues.city,
+                country: inputValues.country,
+                zip: inputValues.zip,
+                address: inputValues.address,
+            }),
+        });
+
+        const taxData = await taxResponse.json();
+        if (taxData.error) {
+            throw new Error("Failed to fetch taxes: " + taxData.error);
+        }
+
+        taxRate = (taxData.taxRate)/100 || 0; // Default to 0 if no rate found
+        console.log("Client side tax rate:", taxRate);
+
+        return taxRate;
+
+    } catch (error) {
+        console.error("Error fetching tax rate:", error);
+        alert("Error fetching tax rate. Please check the console for details.");
+        return 0;
+    }
+}
   
 function constructModalBody() {
   switch (currentStage) {
@@ -238,7 +259,6 @@ function constructModalBody() {
     `;
 
     case 2.5: // New case for displaying shipping costs and tax before payment
-      const taxRate = getTaxRates(inputValues.region,inputValues.city);
       subtotal = cartUtilities.getTotalPrice() / 100;
       taxAmount = Math.round(subtotal * taxRate * 100) / 100;
 
@@ -1344,7 +1364,9 @@ const DisplayProducts = (props) => {
         orderModal.innerHTML = constructModalBody();
         break;
       case "totalcost":
+        saveInputValues();
         await calculateShippingCost();
+        await calculateTax();
         break;
       case "proceedpayment":
         currentStage = 3;
@@ -1454,22 +1476,23 @@ const DisplayProducts = (props) => {
             const cardElement = elements.create('card');
             cardElement.mount('#stripe-form-container');
 
-            // Handle the payment submission
+            // Add event listener to the Pay button
             payButton.addEventListener('click', async (event) => {
                 event.preventDefault();
                 if (!stripe || !elements) {
                     console.error("Stripe or elements not loaded.");
                     return;
                 }
-                
+
                 try {
-                    // Format the payment details
+                    // Calculate the tax amount based on the subtotal
                     const formattedSubtotal = parseFloat(subtotal).toFixed(2);
+                    const taxAmount = (subtotal * taxRate).toFixed(2);
                     const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
                     const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
-                    // const formattedDonationAmount = parseFloat(donationAmount).toFixed(2);
-                    console.log('donation atm is:',inputValues.donation)
-                    
+                    const formattedDonationAmount = parseFloat(inputValues.donation) || 0;
+                    console.log("bruh taxamount and rate:", taxAmount, taxRate);
+
                     // Validate the payment details on the server
                     const validationResponse = await fetch(fetchURLstripeValidate, {
                         method: "POST",
@@ -1477,10 +1500,10 @@ const DisplayProducts = (props) => {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            amount: totalPayment * 100, // Stripe expects the amount in cents
-                            taxAmount: taxAmount,
-                            shippingCost: shippingCost,
-                            donationAmount: parseFloat(inputValues.donation) || 0,
+                            amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
+                            taxAmount: formattedTaxAmount,
+                            shippingCost: formattedShippingCost,
+                            donationAmount: formattedDonationAmount,
                             subtotal: formattedSubtotal,
                         }),
                     });
@@ -1497,7 +1520,7 @@ const DisplayProducts = (props) => {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            amount: totalPayment * 100, // Stripe expects the amount in cents
+                            amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
                             description: `Order total of $${totalPayment.toFixed(2)}`,
                             metadata: {
                                 subtotal: formattedSubtotal,
@@ -1530,7 +1553,6 @@ const DisplayProducts = (props) => {
                     } else if (paymentIntent.status === 'succeeded') {
                         submitOrder();
                         console.log("Order submitted successfully");
-
                         console.log("Payment succeeded:", paymentIntent);
                     }
                 } catch (error) {
@@ -1538,15 +1560,9 @@ const DisplayProducts = (props) => {
                     alert("Error during payment process. Please check the console for details.");
                 }
             });
-
-            const form = document.getElementById('payment-form');
-            if (!form) {
-                console.error("Payment form not found");
-                alert("Payment form not found. Please check the page structure.");
-            }
         } catch (error) {
-            console.error("Error initializing Stripe:", error);
-            alert("Error initializing Stripe. Please check the console for details.");
+            console.error("Error during initialization process:", error);
+            alert("Error during initialization process. Please check the console for details.");
         }
     }
 }

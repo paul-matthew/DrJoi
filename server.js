@@ -78,7 +78,7 @@ app.post('/stripe/create-payment-intent', async (req, res) => {
         }
 
         paymentIntent = await stripe.paymentIntents.create({
-            amount: amount,
+            amount: Math.round(amount),
             currency: 'usd',
             description: description,
             metadata: metadata,
@@ -241,6 +241,62 @@ app.post('/stripe/validate', async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to process Stripe payment' });
   }
 });
+
+app.post('/stripe/calculate-taxes', async (req, res) => {
+  const { country, region, city, address, zip } = req.body;
+
+  if (!country || !region || !city || !address || !zip) {
+    return res.status(400).json({ error: 'Invalid country, region, city, address, or zip' });
+  }
+
+  console.log('Received request to fetch tax rate with country:', country, 'region:', region, 'city:', city, 'address:', address, 'zip:', zip);
+
+  try {
+    // Create a tax calculation with the specified tax code
+    const calculation = await stripe.tax.calculations.create({
+      currency: 'usd',
+      customer_details: {
+        address: {
+          line1: address,
+          city: city,
+          state: region,
+          postal_code: zip,
+          country: country,
+        },
+        address_source: 'shipping',
+      },
+      line_items: [
+        {
+          amount: 1000, // Placeholder amount
+          tax_code: 'txcd_99999999', // Use the specified tax code
+          reference: 'L1',
+        },
+      ],
+      expand: ['line_items.data.tax_breakdown'],
+    });
+
+    // console.log('Tax calculation result:', calculation);
+
+    // Check tax breakdown
+    const taxBreakdown = calculation.tax_breakdown || [];
+    let taxRate = 0;
+
+    taxBreakdown.forEach(breakdown => {
+      if (breakdown.tax_rate_details && breakdown.tax_rate_details.percentage_decimal) {
+        taxRate = breakdown.tax_rate_details.percentage_decimal; // Extract percentage_decimal
+        console.log('Extracted tax rate:', taxRate);
+      }
+    });
+
+    // Return the tax rate to the client
+    res.status(200).json({ taxRate: taxRate });
+  } catch (error) {
+    console.error('Error fetching tax rate:', error);
+    res.status(500).json({ error: 'Failed to fetch tax rate' });
+  }
+});
+
+
 
 // ORDERS
 const orders = [];
@@ -485,8 +541,8 @@ app.listen(PORT, () => {
 
 // Function to validate payment details
 function validatePaymentDetails(amount, taxAmount, shippingCost, donationAmount, subtotal) {
-  const expectedAmount = Math.round((subtotal*100 + taxAmount*100 + shippingCost*100 + donationAmount*100) * 100) / 100;;
-  const amountReceived = amount; 
+  const expectedAmount = Math.round(((subtotal*100 + taxAmount*100 + shippingCost*100 + donationAmount*100) * 100) / 100);
+  const amountReceived = Math.round(amount); 
   const isValid = amountReceived === expectedAmount;
 
   if (isValid) {
