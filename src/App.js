@@ -43,6 +43,7 @@ function App() {
   // const [showCart, setShowCart] = useState(false);
   const [displayed, setDisplayed] = useState(false);
   // const [loading, setLoading] = useState(true);
+  const [showLoadingScreen, setShowLoadingScreen] = useState(false);
 
   const isHomeDesktop = !desktopStateList.includes(desktopState);
 
@@ -262,6 +263,11 @@ function App() {
       ); // Capitalize the first letter
     } else {
       setDesktopState("Homedesktop1"); // Set default state if URL doesn't match
+    }
+    if (currentUrl === '/') {
+      setShowLoadingScreen(true);
+    } else {
+      setShowLoadingScreen(false);
     } 
 
   }, []);
@@ -278,8 +284,8 @@ function App() {
         background: "white",
         minHeight: "100vh",
       }}
-    >      <LoadingScreen />
-
+    >      
+    {showLoadingScreen && <LoadingScreen />}
       <div
         className="Navdesktop"
         style={{ zIndex: 2, position: "fixed", width: "100%" }}
@@ -867,7 +873,7 @@ function App() {
                 fontSize: "clamp(30px, 2.5vw, 30px)",
                 fontFamily: "PlayfairDisplay",
                 fontWeight: "400",
-                lineHeight: 0.5,
+                lineHeight: 1.0,
                 wordWrap: "break-word",
               }}
             >

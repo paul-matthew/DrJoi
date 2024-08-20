@@ -8,7 +8,9 @@ node_modules
 build/
 src/components/TestComponent.js
 old
-public/videos
+public/videos/GoodAfternoon.mp4
+public/videos/GoodMorning.mp4
+public/videos/GoodNight.mp4
 /localhost.pem
 /localhost-key.pem
 /src/products copy.js

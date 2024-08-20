@@ -1784,11 +1784,44 @@ button:hover {
 }
 
 .pulsing-heart {
+  position: absolute;
   width: 300px;
   height: 300px;
   background: url('../public/heartwlogo.png') no-repeat center center;
   background-size: contain;
-  animation: pulseheart 1s infinite;
+  animation: pulseheart 3.3s infinite;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 2s ease-in-out; /* Smooth fade-in and fade-out */
+  z-index: 2; /* Ensures it is on top of the video */
+}
+
+.heart-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1; /* Ensures the video is behind the heart */
+}
+
+@keyframes pulseheart {
+  0% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  25% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  75% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
@@ -1812,14 +1845,39 @@ button:hover {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow: hidden;
   transition: opacity 1s ease, visibility 1s ease;
-  animation: fadeOut 2s forwards; /* Adjusted animation timing */
-  animation-delay: 1s; }
-
-.loading-screen.hidden {
-  opacity: 0;
-  visibility: hidden;
 }
+
+.loading-screen.fade-out {
+  animation: fadeOut 1s forwards; /* Duration of the fade-out */
+}
+
+.portrait {
+  display: none; /* Hide portrait video by default */
+}
+
+.landscape {
+  display: none; /* Hide landscape video by default */
+}
+
+@media (orientation: portrait) {
+  .portrait {
+    display: block; /* Show portrait video in portrait mode */
+  }
+}
+
+@media (orientation: landscape) {
+  .landscape {
+    display: block; /* Show landscape video in landscape mode */
+  }
+}
+
+
+
+
+
+/*STRIPE*/
 
 .checkout-form {
   display: flex;
