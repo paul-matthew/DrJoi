@@ -1,15 +1,29 @@
 import "./App.css";
 import FadeInSection from "./components/FadeIn.js";
-import React, { useState } from "react";
+import React, { useState,useEffect, useRef} from "react";
 import DonationModal from "./components/DonationModal.js";
 
 const Donations = () => {
   const [expandedSection, setExpandedSection] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const contentWrapperRef = useRef(null);
 
   const toggleSection = (section) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
+
+  const handleClickOutside = (event) => {
+    if (contentWrapperRef.current && !contentWrapperRef.current.contains(event.target)) {
+      setExpandedSection(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
 
   return (
     <div
@@ -55,6 +69,7 @@ const Donations = () => {
       </div>
       <div
         className="ContentWrapper"
+        ref={contentWrapperRef}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -64,14 +79,26 @@ const Donations = () => {
           maxWidth: "800px",
         }}
       >
-      <button className="Button"
-        onClick={() => setModalOpen(true)} 
-        style={{ position: "absolute", top: '15vh', right: 10,zIndex:'1' }}
-      ><div className="Label"style={{ color: "white", fontFamily: "PlayfairDisplay" }}>
-        DONATE
-      </div>
-      </button>
-      <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />        
+        <button
+          className="donate-button"
+          onClick={() => setModalOpen(true)} 
+          style={{ 
+            position: "absolute", 
+            top: '12vh', 
+            right: '3%',
+            zIndex:'1',
+            backgroundColor: 'red',
+            color: 'white',
+            padding: '10px 10px', 
+            marginRight: '20px',
+            cursor: 'pointer',
+            border: 'solid 1px black',
+            borderRadius: '15px',
+          }}
+        >
+          Donations
+        </button>
+        <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />        
 
         <FadeInSection>
           <div
@@ -136,6 +163,7 @@ const Donations = () => {
                 </button>
                 <div
                   className={`section-content ${expandedSection === "purpose" ? "visible" : "hidden"}`}
+                  style={{margin:'10px'}}
                 >
                   <p style={{ paddingTop: "20px" }}>
                     As a future Clinical Neuropsychopharmacologist dedicated to advancing mental health care, I am passionate about addressing depression, anxiety, and related conditions through innovative research and holistic approaches. The Exotic Relief Research & Mental Health Institute is committed to breaking the stigma associated with mental illness and promoting a deeper understanding of neurodivergence. Your contributions will enable us to conduct groundbreaking research into the root causes of mental health disorders and addiction, develop effective treatments, and support educational initiatives that foster awareness and acceptance. Additionally, our global expeditions will explore natural health practices in remote regions, offering valuable insights into maintaining mental and physical well-being. Your support is vital in driving these efforts forward and creating a more inclusive and compassionate society.
@@ -151,6 +179,7 @@ const Donations = () => {
                 </button>
                 <div
                   className={`section-content ${expandedSection === "allocation" ? "visible" : "hidden"}`}
+                  style={{margin:'10px'}}
                 >
                   <p>
                     Donations to the Exotic Relief Research & Mental Health Institute will be directed towards critical research, community outreach, and international projects aimed at enhancing mental health. Funds will support laboratory research, clinical trials, and innovative programs that address the underlying causes of mental health issues and addiction. We will also invest in educational campaigns to challenge and change societal perceptions of mental illness. As the Institute operates under a recognized 501(c)(3) nonprofit framework, contributions are tax-deductible, offering you a meaningful way to support a transformative cause. Every donation plays a crucial role in advancing our mission to revolutionize mental health care, support those with unique perspectives, and champion natural health practices globally. Your involvement is instrumental in shaping a future where mental health is understood, valued, and effectively addressed.

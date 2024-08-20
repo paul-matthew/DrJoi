@@ -639,12 +639,12 @@ button:hover {
 }
 
 .ContactForm {
-  top: 20vh;
+  top: 3vh;
   position: relative;
 }
 @media (min-width: 576px) {
   .ContactForm {
-    top: 12vh !important;
+    top: 2vh !important;
     position: relative;
   }
 }
@@ -703,12 +703,12 @@ button:hover {
   }
 }
 
-.subscribe-button {
+.subscribe-button,.donate-button {
   animation: pulse 2s infinite;
 }
 
 
-.subscribe-button:hover{
+.subscribe-button:hover,.donate-button:hover{
   transform: scale(1.1) !important;
   background-color:white !important;
   color:black !important;

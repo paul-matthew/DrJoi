@@ -116,13 +116,29 @@ function Contact() {
     };
 
     return (
-        <div className="ContactX" style={{ width: '100vw', right: '0' }}>
+        <div className="    " style={{ width: '100vw', right: '0' }}>
             <div id='NavlogoMobile'>
-                <img src='./logo-green4.png' alt='logo mobile' style={{ height: '7vh', marginTop: '0vh' }} onClick={() => window.location.href = './'} />
+                <img src='./logo-green4.png' alt='logo mobile' style={{ height: '7vh', marginTop: '0vh'}} onClick={() => window.location.href = './'} />
             </div>
+            <div className="Banner">
+        <img
+          src="./bannerflower.png"
+          alt="banner"
+          style={{
+            zIndex: 2,
+            width: "100vw",
+            maxHeight: "200px",
+            marginTop: "5.5vh",
+            left: 0,
+            top: 0,
+            objectFit: "cover",
+          }}
+        />
+      </div>
+
             {desktopState === 'Contact1' && (
                 <FadeInSection>
-                    <div className="ContactX" style={{ width: '100%', top: "2vh", display: 'flex', justifyContent: 'center', alignItems: 'center', position: "relative" }}>
+                    <div className="ContactX" style={{ width: '100%', top: "0vh", display: 'flex', justifyContent: 'center', alignItems: 'center', position: "relative" }}>
                         <form className="ContactForm" style={{ width: '70%', minHeight: '30vh', border: 'solid gray', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)' }} onSubmit={handleSubmit}>
                             <p className='contact-title' style={{ margin: "10px auto", textAlign: "center", color: 'black', fontSize: 'clamp(26px, 3vw, 30px)', fontFamily: 'PlaydairDisplay', fontWeight: '700' }}>Contact Me</p>
                             <div className="FormGroup">
@@ -154,7 +170,7 @@ function Contact() {
                 style={{
                     position: 'fixed',
                     right: '3%',
-                    top: '12%',
+                    top: '12vh',
                     zIndex: 1,
                     backgroundColor: 'red',
                     color: 'white',

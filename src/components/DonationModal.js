@@ -65,6 +65,7 @@ const DonationModal = ({ isOpen, onClose }) => {
       <div
         style={{
           background: `url('./hands.jpg')`,
+          bottom:'80px',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
@@ -72,7 +73,7 @@ const DonationModal = ({ isOpen, onClose }) => {
           margin: '100px auto',
           width: '80vw',
           maxWidth: '600px', // Max width for the modal
-          height: '80vh',
+          height: '90vh',
           maxHeight: '90vh', // Max height for the modal
           borderRadius: '10px',
           border: 'solid black',
