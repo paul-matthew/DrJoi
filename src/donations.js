@@ -1,222 +1,171 @@
 import "./App.css";
 import FadeInSection from "./components/FadeIn.js";
-import React, { useEffect, useState } from "react";
-import { Elements } from '@stripe/react-stripe-js';
-import CheckoutForm from "./components/CheckOutForm.js";
-import { loadStripe } from '@stripe/stripe-js';
-
+import React, { useState } from "react";
+import DonationModal from "./components/DonationModal.js";
 
 const Donations = () => {
-    const [stripePromise, setStripePromise] = useState(null);
-    const [clientSecret, setClientSecret] = useState('');
-    const [amount, setAmount] = useState(0); // Default amount in cents
-    const [showForm, setShowForm] = useState(false); // New state to control form visibility
-  
-    useEffect(() => {
-      let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
-      if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-        fetchURL = "http://localhost:5000/stripe/publishable-key";
-      }
-    
-      fetch(fetchURL)
-        .then(response => response.json())
-        .then(data => {
-          setStripePromise(loadStripe(data.publishableKey));
-        })
-        .catch(error => console.error("Error fetching publishable key:", error));
-    }, []);
-  
-    const handleStripeDisplay = () => {
-      // Only show the form on button click
-      setShowForm(true);
-    };
-  
-    const handlePaymentIntentCreation = async () => {
-        if (amount > 0) {
-          let fetchURL1 = "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
-          if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-            fetchURL1 = "http://localhost:5000/stripe/create-payment-intent";
-          }
-      
-          const description = `Donation of $${(amount / 100).toFixed(2)}`;
-          const metadata = {
-            subtotal: amount, // Replace with the actual subtotal value
-            tax: amount*0.13,           // Replace with the actual tax value
-            shipping: 100, // Replace with the actual shipping value
-            donation: 10, // Amount in dollars
-          };
-      
-          try {
-            const response = await fetch(fetchURL1, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                amount, 
-                description, 
-                metadata
-              }), 
-            });
-      
-            const data = await response.json();
-            setClientSecret(data.clientSecret);
-            console.log("eh",data.clientSecret);
-          } catch (error) {
-            console.error("Error creating payment intent:", error);
-          }
-        } else {
-          alert("Please enter a valid donation amount.");
-        }
-      };
-      
-  
-    return (
+  const [expandedSection, setExpandedSection] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const toggleSection = (section) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  return (
+    <div
+      className="DonationContainer"
+      style={{
+        maxWidth: "100vw",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "20px",
+        paddingBottom: "50px", // Extra space at the bottom
+        background: "#f9f9f9",
+      }}
+    >
+      <div id="NavlogoMobile">
+        <img
+          src="./logo-green4.png"
+          alt="logo mobile"
+          style={{
+            height: "7vh",
+            marginTop: "0vh",
+            position: "fixed",
+            left: 10,
+            top: 10,
+            cursor: "pointer",
+          }}
+          onClick={() => (window.location.href = "./")}
+        />
+      </div>
+      <div className="Banner">
+        <img
+          src="./bannerflower.png"
+          alt="banner"
+          style={{
+            zIndex: 2,
+            width: "100vw",
+            maxHeight: "200px",
+            marginTop: "3vh",
+            objectFit: "cover",
+          }}
+        />
+      </div>
       <div
-        className="BlogContainer"
+        className="ContentWrapper"
         style={{
-          maxWidth: "100vw",
-          overflow: "hidden",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "20px",
-          background: "white",
+          marginTop: "30px",
+          width: "100%",
+          maxWidth: "800px",
         }}
       >
-        <div id="NavlogoMobile">
-          <img
-            src="./logo-green4.png"
-            alt="logo mobile"
+      <button className="Button"
+        onClick={() => setModalOpen(true)} 
+        style={{ position: "absolute", top: '15vh', right: 10,zIndex:'1' }}
+      ><div className="Label"style={{ color: "white", fontFamily: "PlayfairDisplay" }}>
+        DONATE
+      </div>
+      </button>
+      <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />        
+
+        <FadeInSection>
+          <div
+            className="DonationContent"
             style={{
-              height: "7vh",
-              marginTop: "0vh",
-              position: "fixed",
-              left: 10,
-              top: 10,
+              backgroundColor: "white",
+              padding: "20px",
+              borderRadius: "8px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              width: "100%",
+              position: "relative",
             }}
-            onClick={() => (window.location.href = "./")}
-          />
-        </div>
-        <div className="Banner">
-          <img
-            src="./bannerflower.png"
-            alt="banner"
-            style={{
-              zIndex: 2,
-              width: "100vw",
-              maxHeight: "200px",
-              marginTop: "3vh",
-              objectFit: "cover",
-            }}
-          />
-        </div>
-        <div
-          className="PostsWrapper"
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "20px",
-            marginTop: "30px",
-          }}
-        >
-          <FadeInSection>
-            <div style={{ backgroundColor: "white" }}>
-              <div
-                className="MySkill"
+          >
+            <img
+              src="./hands.jpg"
+              alt="Helping hands"
+              style={{
+                position: "absolute",
+                top: "0",
+                left: "0",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                opacity: "0.3",
+                zIndex: "1",
+              }}
+            />
+            <div
+              className="TextOverlay"
+              style={{
+                position: "relative",
+                zIndex: "2",
+                color: "#282938",
+                fontFamily: "PlayfairDisplay",
+              }}
+            >
+              <h1
                 style={{
-                  height: "auto",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
-                  gap: 56.67,
-                  display: "inline-flex",
-                  padding: "0px 3vw",
+                  fontSize: "clamp(30px, 5vw, 50px)",
+                  textAlign: "center",
+                  marginBottom: "20px",
                 }}
               >
-                <div
-                  className="SectionTitle"
-                  style={{
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "flex-start",
-                    gap: "1vh",
-                    display: "flex",
-                  }}
+                Donations
+              </h1>
+              <p
+                style={{
+                  fontSize: "clamp(16px, 4vw, 20px)",
+                  textAlign: "center",
+                  fontStyle: "italic",
+                  marginBottom: "20px",
+                }}
+              >
+                “All donations are used to further promote mental health and wellness through Exotic Relief by Dr. Joi. Refer to Terms of Use for more information.” - Dr. Joi
+              </p>
+              <div className="Section" style={{ marginBottom: "20px"}}>
+                <button
+                  className="button"
+                  onClick={() => toggleSection("purpose")}
                 >
-                  <div
-                    className="Content"
-                    style={{
-                      alignSelf: "stretch",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                      alignItems: "flex-start",
-                      gap: 32,
-                      display: "flex",
-                    }}
-                  >
-                    <div
-                      className="MyExpertise"
-                      style={{
-                        alignSelf: "stretch",
-                        color: "#282938",
-                        fontSize: "clamp(40px, 4vw, 61px)",
-                        fontFamily: "PlayfairDisplay",
-                        fontWeight: "700",
-                        wordWrap: "break-word",
-                      }}
-                    >
-                      Donations
-                    </div>
-                  </div>
-                  <div
-                    className="MyExpertise"
-                    style={{
-                      alignSelf: "stretch",
-                      color: "#282938",
-                      fontSize: "clamp(15px, 4vw, 25px)",
-                      fontFamily: "PlayfairDisplay",
-                      fontWeight: "500",
-                      wordWrap: "break-word",
-                    }}
-                  >
-                    “
-                    <i>
-                      All donations are used to further promote mental health and wellness through Exotic Relief by Dr. Joi. 
-                      Refer to Terms of Use for more information.
-                    </i>
-                    ” - Dr. Joi
-                  </div>
+                  Purpose and Impact
+                </button>
+                <div
+                  className={`section-content ${expandedSection === "purpose" ? "visible" : "hidden"}`}
+                >
+                  <p style={{ paddingTop: "20px" }}>
+                    As a future Clinical Neuropsychopharmacologist dedicated to advancing mental health care, I am passionate about addressing depression, anxiety, and related conditions through innovative research and holistic approaches. The Exotic Relief Research & Mental Health Institute is committed to breaking the stigma associated with mental illness and promoting a deeper understanding of neurodivergence. Your contributions will enable us to conduct groundbreaking research into the root causes of mental health disorders and addiction, develop effective treatments, and support educational initiatives that foster awareness and acceptance. Additionally, our global expeditions will explore natural health practices in remote regions, offering valuable insights into maintaining mental and physical well-being. Your support is vital in driving these efforts forward and creating a more inclusive and compassionate society.
+                  </p>
                 </div>
-                <div>
-                  <input
-                    type="number"
-                    value={amount / 100}
-                    onChange={(e) => setAmount(e.target.value * 100)}
-                    style={{ marginBottom: "10px" }}
-                  />
-                  <button onClick={handleStripeDisplay} style={{ padding: "10px", fontSize: "16px" }}>
-                    Donate ${amount / 100}
-                  </button>
+              </div>
+              <div className="Section">
+                <button
+                  className="button"
+                  onClick={() => toggleSection("allocation")}
+                >
+                  Allocation and Benefits
+                </button>
+                <div
+                  className={`section-content ${expandedSection === "allocation" ? "visible" : "hidden"}`}
+                >
+                  <p>
+                    Donations to the Exotic Relief Research & Mental Health Institute will be directed towards critical research, community outreach, and international projects aimed at enhancing mental health. Funds will support laboratory research, clinical trials, and innovative programs that address the underlying causes of mental health issues and addiction. We will also invest in educational campaigns to challenge and change societal perceptions of mental illness. As the Institute operates under a recognized 501(c)(3) nonprofit framework, contributions are tax-deductible, offering you a meaningful way to support a transformative cause. Every donation plays a crucial role in advancing our mission to revolutionize mental health care, support those with unique perspectives, and champion natural health practices globally. Your involvement is instrumental in shaping a future where mental health is understood, valued, and effectively addressed.
+                  </p>
                 </div>
-                {stripePromise && showForm && (
-                  <Elements stripe={stripePromise}>
-                    <CheckoutForm 
-                      clientSecret={clientSecret} 
-                      handlePaymentIntentCreation={handlePaymentIntentCreation} 
-                    />
-                  </Elements>
-                )}
               </div>
             </div>
-          </FadeInSection>
-        </div>
+          </div>
+        </FadeInSection>
       </div>
-    );
-  };
-  
+    </div>
+  );
+};
 
 export default Donations;
+
 
 

@@ -1491,7 +1491,6 @@ const DisplayProducts = (props) => {
                     const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
                     const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
                     const formattedDonationAmount = parseFloat(inputValues.donation) || 0;
-                    console.log("bruh taxamount and rate:", taxAmount, taxRate);
 
                     // Validate the payment details on the server
                     const validationResponse = await fetch(fetchURLstripeValidate, {
@@ -1685,21 +1684,21 @@ const DisplayProducts = (props) => {
           );
           fetchCities();
           break;
-        case "TT":
-          // Assuming 'TT' API response contains ISO and name properties
-          // Sort the Trinidad and Tobago regions alphabetically by name
-          const sortedTTRegions = result.sort((a, b) =>
-            a.name.localeCompare(b.name)
-          );
-          addOptions(
-            regionSelect,
-            sortedTTRegions.map((state) => ({
-              value: state.iso2,
-              text: state.name,
-            }))
-          );
-          fetchCities();
-          break;
+        // case "TT":
+        //   // Assuming 'TT' API response contains ISO and name properties
+        //   // Sort the Trinidad and Tobago regions alphabetically by name
+        //   const sortedTTRegions = result.sort((a, b) =>
+        //     a.name.localeCompare(b.name)
+        //   );
+        //   addOptions(
+        //     regionSelect,
+        //     sortedTTRegions.map((state) => ({
+        //       value: state.iso2,
+        //       text: state.name,
+        //     }))
+        //   );
+        //   fetchCities();
+        //   break;
         case "US":
           // For 'US', filter out regions with ISO codes starting with "UM-"
           const filteredUSRegions = filterUSRegions(result);

@@ -1860,4 +1860,52 @@ button:hover {
   font-size: 14px;
 }
 
+/* Smooth transitions for sections */
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+}
+
+/* Button styles */
+.button {
+  background-color: #007bff;
+  color: #fff !important;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: black;
+  color:white;
+}
+
+/* Section styles */
+.section-content {
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  line-height: 1.6;
+  transition: max-height 0.6s ease, opacity 0.6s ease;
+  overflow: hidden;
+}
+
+.section-content.hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+.section-content.visible {
+  max-height: 500px; /* Adjust based on content height */
+  opacity: 1;
+}
 

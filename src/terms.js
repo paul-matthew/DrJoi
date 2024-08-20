@@ -51,7 +51,7 @@ const Terms = () => {
               <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
                 <div id="donationspolicy" className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(40px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>Donations Policy</div>
                 <p>Thank you for considering a donation to Exotic Relief by Dr. Joi. Your support allows us to further promote mental health and wellness through educational content and materials.</p>
-                <p><b>Use of Donations:</b> All donations received by Exotic Relief by Dr. Joi are managed directly by our organization. These funds are used to produce additional content and materials aimed at educating the public on mental health and wellness topics.</p>
+                <p><b>Use of Donations:</b> All donations received are managed directly by Exotic Relief by Dr. Joi. These funds are dedicated to advancing mental health care through innovative research and holistic approaches, supporting groundbreaking research, effective treatments, and educational initiatives that foster awareness and acceptance.</p>
                 <p><b>Commitment to Transparency:</b> We are committed to transparency in how donations are used. Regular updates on the use of funds will be provided to donors through our website and communications.</p>
                 <p><b>Contact Information:</b> For any questions or concerns regarding donations, please use the "Contact" form on our website. We value your support and are grateful for your contributions to our mission.</p>
               </div>

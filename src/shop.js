@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import "./style.css";
 // import ServicesMobile from './components/ServicesMobile';
 import FadeInSection from "./components/FadeIn.js";
 import "./products.js";
-import DonationModal from "./components/DonationModal.js";
+// import DonationModal from "./components/DonationModal.js";
 
 function Shop() {
-  const [isModalOpen, setModalOpen] = useState(false);
+  // const [isModalOpen, setModalOpen] = useState(false);
   return (
     <>
       <div
@@ -67,7 +67,7 @@ function Shop() {
             alignItems: "center",
           }}
         >
-          <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />        
+          {/* <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />         */}
           <FadeInSection>
             <div style={{ backgroundColor: "white" }}>
               <div
@@ -116,13 +116,13 @@ function Shop() {
                     >
                       Shop
                     </div>
-                    <button className="Button"
+                    {/* <button className="Button"
                       onClick={() => setModalOpen(true)} 
                       style={{ position: "absolute", top: 10, right: 10, }}
                     ><div className="Label"style={{ color: "white", fontFamily: "PlayfairDisplay" }}>
                       Donations
                     </div>
-                    </button>
+                    </button> */}
                   </div>
                   <div
                     className="MyExpertise"
