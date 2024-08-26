@@ -314,19 +314,21 @@ function constructModalBody() {
     case 3:
       return `
       <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">Payment</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <!-- Payment options container -->
-              <div id="paypal-parent" class="checkout-form"></div>
-              <button id="backButton3" class="back-btn gen-btn mt-3">Back</button>
-              <img src="./stripe-logo.png" style="height: 100px;float: right;margin-bottom:40px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Payment options container -->
+                <div id="paypal-parent" class="checkout-form"></div>
+                <button id="backButton3" class="back-btn gen-btn mt-3">Back</button>
+                <a href="./terms" target="_blank">
+                  <img src="./stripe-logo.png" class='stripelogo'>
+                </a>
+            </div>
           </div>
       </div>
-  </div>
       `;
     case 4:
       return `
@@ -1448,7 +1450,7 @@ const DisplayProducts = (props) => {
         const payButton = document.createElement("button");
         payButton.type = "submit";
         payButton.className = "pay-button";
-        payButton.textContent = "Pay";
+        payButton.textContent = `Pay: $${totalPayment}`;
         stripeContainer.appendChild(payButton);
 
         const fetchURLstripeCreatePaymentIntent = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
