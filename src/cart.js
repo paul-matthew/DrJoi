@@ -12,7 +12,7 @@ function Cart() {
 
   function getCartItems() {
     const skus = localStorage.getItem("selectedSKUs");
-    const parsedSkus = JSON.parse(skus);
+    const parsedSkus = JSON.parse(skus) || [];;
     setCartItem(() => parsedSkus);
   }
 
@@ -131,8 +131,8 @@ function Cart() {
           <button onClick={clear} id="clearButton" className="clear-btn">
             clear
           </button>
-          {cartItem.map((product, i) => {
-            return (
+          {cartItem?.length > 0 ? (
+            cartItem.map((product, i) => (
               <CartItem
                 key={i}
                 update={getCartItems}
@@ -141,8 +141,10 @@ function Cart() {
                 )}
                 {...product}
               />
-            );
-          })}
+            ))
+          ) : (
+            <p>Your cart is empty.</p>
+          )}
         </div>
       </div>
     </section>
