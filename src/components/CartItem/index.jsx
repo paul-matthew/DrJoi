@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./style.module.css";
-import { cartUtilities } from "../../utils/cart";
-import { updateTotalCartItemOnShopModal } from "../../products";
+import { cartUtilities } from "../../utils/cart.js";
+import { updateTotalCartItemOnShopModal } from "../../products.js";
 
 export function CartItem({ id, qty, update, product }) {
   const [count, setCount] = useState(qty);

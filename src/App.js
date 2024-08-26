@@ -232,7 +232,6 @@ function App() {
     }
     changeUrl("/");
   };
-  // eslint-disable-next-line
   const handleCartClick = () => {
     setDisplayState("none");
     setDisplayState2("0");
