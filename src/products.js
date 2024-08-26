@@ -323,6 +323,7 @@ function constructModalBody() {
               <!-- Payment options container -->
               <div id="paypal-parent" class="checkout-form"></div>
               <button id="backButton3" class="back-btn gen-btn mt-3">Back</button>
+              <img src="./stripe-logo.png" style="height: 100px;float: right;margin-bottom:40px">
           </div>
       </div>
   </div>

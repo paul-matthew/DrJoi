@@ -85,12 +85,11 @@ const Donations = () => {
           style={{ 
             position: "absolute", 
             top: '12vh', 
-            right: '3%',
             zIndex:'1',
             backgroundColor: 'red',
             color: 'white',
             padding: '10px 10px', 
-            marginRight: '20px',
+            // marginRight: '20px',
             cursor: 'pointer',
             border: 'solid 1px black',
             borderRadius: '15px',
@@ -152,7 +151,11 @@ const Donations = () => {
                   marginBottom: "20px",
                 }}
               >
-                “All donations are used to further promote mental health and wellness through Exotic Relief by Dr. Joi. Refer to Terms of Use for more information.” - Dr. Joi
+                “	The Exotic Relief Research & Mental Health Institute is dedicated to advancing the understanding and treatment of mental health conditions and addictions. 
+                All donations to the nonprofit organization are used to further innovative research, global exploration of natural health practices, and community outreach aimed at reducing stigma and support neurodiversity individuals.” - Dr. Joi
+              </p>
+              <p>
+                All donations made are tax-deductible, as they support our mission through our 501(c)(3) nonprofit organization.
               </p>
               <div className="Section" style={{ marginBottom: "20px"}}>
                 <button

@@ -45,7 +45,7 @@ const LoveLab = () => {
                 <h2>Personal Coaching</h2>
                 <p>
                   Offering one-on-one coaching sessions to provide you with
-                  personalized guidance and support in your dating journey. Book
+                  personalized guidance and support in your journey. Book
                   an appointment today to start making positive changes.
                 </p>
               </div>
@@ -151,10 +151,10 @@ const LoveLab = () => {
               <div className="sectionText">
                 <h2>Personalized Guidance</h2>
                 <p>
-                  By leveraging my positive and supportive persona, I want to help
-                  men navigate the complexities of dating and relationships by
-                  providing valuable insights and guidance while encouraging a
-                  sense of empowerment and self-improvement among my audience.
+                Life can be incredibly tough, and sometimes it feels like no one truly understands the struggles you’re facing. 
+                Whether you're battling mental health challenges, feeling lost or lonely, navigating the unique experiences of being neurodivergent, or need help with a situation, I’m here to support you. 
+                My coaching isn’t just about giving advice; it’s about walking with you through your journey, offering compassionate guidance, and helping you find your way to a place of peace and strength. 
+                I’m here for anyone who needs a listening ear and a caring heart. Let’s work together to rediscover the hope and purpose that sometimes gets buried in life’s challenges.
                 </p>
               </div>
 
