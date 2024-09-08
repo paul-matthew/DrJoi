@@ -6,6 +6,7 @@ const DonationModal = ({ isOpen, onClose }) => {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [selectedAmount, setSelectedAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleDonateClick = (method) => {
     setPaymentMethod(method);
@@ -18,8 +19,18 @@ const DonationModal = ({ isOpen, onClose }) => {
 
   const handleCustomAmountChange = (event) => {
     const value = event.target.value;
-    setCustomAmount(value);
-    setAmount(value);
+    
+    // Regular expression to allow only numbers with up to two decimal places
+    const moneyFormat = /^\d*\.?\d{0,2}$/;
+  
+    if (moneyFormat.test(value)) {
+      setCustomAmount(value);
+      setAmount(value);
+    }
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
   const handleKeyPress = (event) => {
@@ -58,13 +69,13 @@ const DonationModal = ({ isOpen, onClose }) => {
         height: '100vh',
         zIndex: 999,
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        textAlign: 'center', // Center the content horizontally
+        textAlign: 'center',
         overflowY: 'auto', // Allow scrolling for overflow content
       }}
     >
       <div
         style={{
-          background: `url('./hands.jpg')`,
+          background: `url('./hands2.jpg')`,
           bottom:'80px',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -82,14 +93,15 @@ const DonationModal = ({ isOpen, onClose }) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center', // Center the content vertically
+          alignItems: 'center',
+          overflowY: 'auto', // Enable scrolling within the modal
         }}
       >
         <button
           onClick={onClose}
           style={{
             position: 'absolute',
-            color: 'white',
+            color: 'black',
             top: '10px',
             right: '10px',
             backgroundColor: 'transparent',
@@ -100,11 +112,8 @@ const DonationModal = ({ isOpen, onClose }) => {
         >
           X
         </button>
-        <h2 style={{ color: 'white', fontSize: 'clamp(2.5rem, 2.5vw, 2.5rem)' }}>Donate</h2>
-        <p style={{ color: 'white', fontSize: 'clamp(1.2rem, 2vw, 1.5rem)', textAlign: 'center' }}>
-          All donations are used to further promote mental health and wellness through Exotic Relief by Dr. Joi. Refer to Terms of Use for more information.
-        </p>
-        
+        <h2 style={{ color: 'black', fontSize: 'clamp(2.5rem, 2.5vw, 2.5rem)' }}>Donate</h2>
+
         <div style={{ marginBottom: '10px', textAlign: 'center', position: 'relative', width: '100%' }}>
           {['10', '20', '50', '100'].map((value) => (
             <button
@@ -169,9 +178,29 @@ const DonationModal = ({ isOpen, onClose }) => {
           </div>
         </div>
 
+        {selectedAmount && (
+          <input
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="Enter your email"
+            style={{
+              maxWidth: '200px',
+              height: '45px',
+              padding: '5px',
+              border: 'solid 1px black',
+              textAlign: 'center',
+              fontSize: 'clamp(1rem, 2vw, 1.5rem)',
+              marginBottom: '10px'
+            }}
+          />
+        )}
+
         {paymentMethod ? (
           paymentMethod === 'paypal' ? (
-            <PayPalButton amount={amount} />
+            <div style={{ width: '100%' }}>
+              <PayPalButton amount={amount} email={email} />
+            </div>
           ) : (
             <div>Card Payment Integration</div>
           )
@@ -190,6 +219,10 @@ const DonationModal = ({ isOpen, onClose }) => {
             Enter
           </button>
         )}
+
+        <p style={{ color: 'black', fontSize: 'clamp(0.7rem, 2vw, 1.0rem)', textAlign: 'center' }}>
+          Refer to Terms of Use for more information on Donation Policy.
+        </p>
       </div>
     </div>
   );

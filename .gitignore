@@ -13,5 +13,6 @@ public/videos/GoodMorning.mp4
 public/videos/GoodNight.mp4
 /localhost.pem
 /localhost-key.pem
-/src/products copy.js
+/src/products(paypal).js
+/src/products(stripe).js
 /notes.txt

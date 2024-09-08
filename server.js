@@ -538,29 +538,95 @@ app.post('/contact', (req, res) => {
   });
 });
 
+app.post('/donation-email', (req, res) => {
+  const { email, amount} = req.body;
+
+  const mailOptions = {
+    from: 'Drjoi@exoticrelief.com',
+    to: email,
+    subject: 'Donation Receipt from Exotic Relief Research & Mental Health Institute',
+    html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <h1 style="color: #333;">Donation Receipt</h1>
+            <p>Dear Donor (${email}),</p>
+            <p>Thank you for your generous donation of <strong>$${amount}</strong> to Exotic Relief Research & Mental Health Institute.</p>
+            <p>Your support helps us continue our mission to provide relief and support to those in need.</p>
+            
+            <p><strong>Date of Donation:</strong> ${new Date().toLocaleDateString()}</p>
+            
+            <h2 style="color: #333;">Organization Details</h2>
+            <p><strong>Organization's Name:</strong> Exotic Relief Research & Mental Health Institute</p>
+            <p><strong>Address:</strong> 8814 VETERANS MEMORIAL BLVD ST 3110, METAIRIE, LA 70003</p>
+            <p><strong>EIN:</strong> 01-0820699</p>
+            
+            <h2 style="color: #333;">Tax Information</h2>
+            <p><strong>Non-Profit Status:</strong> We are a tax-exempt entity under section 501(c)(3) of the Internal Revenue Code.</p>
+            <p><strong>No Goods or Services Provided:</strong> No goods or services were provided in exchange for this donation.</p>
+            
+            <p>If you have any questions or need further assistance, please feel free to contact us at <a href="mailto:Drjoi@exoticrelief.com">Drjoi@exoticrelief.com</a>.</p>
+            <p>Thank you once again for your support!</p>
+            <p>Best regards,</p>
+            <p>Dr. Joi</p>
+            <p><strong>Exotic Relief Research & Mental Health Institute</strong></p>
+            <p><strong>Website:</strong> <a href="https://www.exoticrelief.com">www.exoticrelief.com</a></p>
+        </div>`
+};
+
+
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending email:', error);
+      return res.status(500).send('Error sending email');
+    }
+    console.log('Email sent:', info.response);
+    res.status(200).send('Email sent');
+  });
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-// Function to validate payment details
-function validatePaymentDetails(amount, taxAmount, shippingCost, donationAmount, subtotal) {
-  const expectedAmount = Math.round(((subtotal*100 + taxAmount*100 + shippingCost*100 + donationAmount*100) * 100) / 100);
-  const amountReceived = Math.round(amount); 
-  const isValid = amountReceived === expectedAmount;
+// Function to validate payment details FOR STRIPE
+// function validatePaymentDetails(amount, taxAmount, shippingCost, donationAmount, subtotal) {
+//   const expectedAmount = Math.round(((subtotal*100 + taxAmount*100 + shippingCost*100 + donationAmount*100) * 100) / 100);
+//   const amountReceived = Math.round(amount); 
+//   const isValid = amountReceived === expectedAmount;
+
+//   if (isValid) {
+//     console.log('Server validation complete for payment amount.');
+//   } else {
+//     console.log('Server validation error with details:', {
+//       received: amountReceived,
+//       amount:amount,
+//       subtotal:subtotal*100,
+//       shippingCost:shippingCost*100,
+//       donationAmount:donationAmount,
+//       taxAmount:taxAmount*100,
+//       expected: expectedAmount,
+//     });
+//   }
+
+//   return isValid;
+// }
+
+// Function to validate payment details FOR PAYPAL
+function validatePaymentDetails(paymentDetails, total) {
+  const isValid =
+    paymentDetails &&
+    paymentDetails.status === 'COMPLETED' &&
+    paymentDetails.purchase_units &&
+    paymentDetails.purchase_units[0] &&
+    paymentDetails.purchase_units[0].amount &&
+    parseFloat(paymentDetails.purchase_units[0].amount.value) === parseFloat(total);
 
   if (isValid) {
-    console.log('Server validation complete for payment amount.');
+    console.log('Server validation complete');
   } else {
-    console.log('Server validation error with details:', {
-      received: amountReceived,
-      amount:amount,
-      subtotal:subtotal*100,
-      shippingCost:shippingCost*100,
-      donationAmount:donationAmount,
-      taxAmount:taxAmount*100,
-      expected: expectedAmount,
-    });
+    console.log('Server validation error');
+    console.log('paymentDetails:', paymentDetails);
   }
 
   return isValid;

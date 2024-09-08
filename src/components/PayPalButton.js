@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const PayPalButton = ({ amount }) => {
+const PayPalButton = ({ amount, email }) => {
   const paypalRef = useRef();
 
   useEffect(() => {
@@ -40,15 +40,40 @@ const PayPalButton = ({ amount }) => {
                 currency_code: 'USD',
                 value: amount
               }
-            }]
+            }],
+            application_context: {
+              shipping_preference: "NO_SHIPPING" // This disables shipping options
+            }
           });
         },
-        onApprove: (data, actions) => {
-          return actions.order.capture().then(details => {
+        onApprove: async (data, actions) => {
+          try {
+            await actions.order.capture();
             alert('Donation successful!');
-          }).catch(error => {
+            
+            // Send donation details to server
+            let fetchDonations = "https://drjoiserver-106ea7a60e39.herokuapp.com/donation-email";
+            if (
+              window.location.hostname === "localhost" ||
+              window.location.hostname === "127.0.0.1"
+            ) {
+              fetchDonations = "http://localhost:5000/donation-email";
+            } else {
+              fetchDonations = "https://drjoiserver-106ea7a60e39.herokuapp.com/donation-email";
+            }
+            await fetch(fetchDonations, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                email,  // User's email for sending the receipt
+                amount, // Donation amount
+              })
+            });
+          } catch (error) {
             console.error('Error capturing order:', error);
-          });
+          }
         },
         onError: (err) => {
           console.error('PayPal error:', err);
@@ -64,12 +89,13 @@ const PayPalButton = ({ amount }) => {
         document.head.removeChild(scriptElement);
       }
     };
-  }, [amount]);
+  }, [amount, email]);
 
   return <div ref={paypalRef}></div>;
 };
 
 export default PayPalButton;
+
 
 
 
