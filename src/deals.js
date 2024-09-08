@@ -194,8 +194,8 @@ const handleSubmit = async (event) => {
         className="PlaceholderImage"
         style={{
           alignSelf: "stretch",
-          height: "200px",
-          maxHeight: "300px",
+          height: "600px",
+          maxHeight: "900px",
           borderRadius: "8px",
           objectFit: "cover",
           width: "100%",
@@ -305,8 +305,8 @@ const handleSubmit = async (event) => {
         className="PlaceholderImage"
         style={{
           alignSelf: "stretch",
-          height: "200px",
-          maxHeight: "300px",
+          height: "600px",
+          maxHeight: "900px",
           borderRadius: "8px",
           objectFit: "contain",
           width: "100%",

@@ -47,13 +47,13 @@ const Terms = () => {
                 <p><b>How to Contact Us:</b> For any issues regarding damaged or defective items, please use the "Contact" form. We aim to respond to all inquiries within 48 hours.</p>
               </div>
 
-              {/* Stripe Payment Processing Section */}
+              {/* PayPal Payment Processing Section */}
               <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
                 <div id="stripepolicy" className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(40px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>
-                  Stripe Payment Processing
+                  PayPal Payment Processing
                 </div>
-                <p>Exotic Relief by Dr. Joi uses Stripe for payment processing. Stripe is a trusted and secure payment platform that handles all transactions on our website. By using our services, you agree to Stripe's payment processing terms and policies, which are available on their official website.</p>
-                <p>We prioritize your security and ensure that your payment information is protected by Stripe's industry-leading encryption and fraud prevention technologies. For more details about how Stripe handles your information, please refer to their <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
+                <p>Exotic Relief by Dr. Joi uses PayPal for payment processing. PayPal is a trusted and secure payment platform that handles all transactions on our website. By using our services, you agree to PayPal's payment processing terms and policies, which are available on their official website.</p>
+                <p>We prioritize your security and ensure that your payment information is protected by PayPal's industry-leading encryption and fraud prevention technologies. For more details about how PayPal handles your information, please refer to their <a href="https://www.paypal.com/us/legalhub/privacy-full" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
               </div>
 
               {/* Donation Policy Section */}

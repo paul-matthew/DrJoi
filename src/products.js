@@ -260,6 +260,9 @@ function constructModalBody() {
 
     case 2.5: // New case for displaying shipping costs and tax before payment
       subtotal = cartUtilities.getTotalPrice() / 100;
+      if (inputValues.region==='LA'){
+        taxRate=0.09; //NEEDS TO BE UPDATED WITH TAX TOOL
+      }
       taxAmount = Math.round(subtotal * taxRate * 100) / 100;
 
       // Check if subtotal is over $100 to apply free shipping
@@ -768,6 +771,16 @@ const DisplayProducts = (props) => {
                     `
                     )
                     .join("") ||
+                    product.options
+                    .find((option) => option.name === "Bottle color")
+                    ?.values.map(
+                      (color) => `
+                        <div class="color-option" 
+                             style="background-color: ${color.colors[0]};">
+                        </div>
+                      `
+                    )
+                    .join("") || 
                   ""
                 }
               </div>
@@ -894,7 +907,7 @@ const DisplayProducts = (props) => {
                               variant.is_enabled
                               ? `<option value="${size.id}">${size.title}</option>`
                               : "";
-                          }
+                            }
                         })
                         .map(
                           (size) => `
@@ -921,31 +934,43 @@ const DisplayProducts = (props) => {
                       `
                         )
                         .join("") ||
-                      product.options
-                        .find((option) => option.name === "Phone models")
-                        ?.values.filter((size) => {
-                          const variant = product.variants.find((variant) =>
-                            variant.options.includes(size.id)
-                          );
-                          return (
-                            variant &&
-                            variant.is_available &&
-                            variant.is_enabled
-                          );
-                        })
-                        .map(
-                          (size) => `
-                        <option value="${size.id}">${size.title}</option>
-                      `
+                        product.options
+                        .find((option) => option.name === "Quantity")
+                        ?.values.map(
+                          (quantity) => `
+                          <option value="${quantity.id}">${quantity.title}</option>
+                        `
                         )
-                        .join("")
+                        .join("") 
                     }            
                   </select>
                 </div>
-                <div>
-                  <label for="product-qty" style="margin-top: 10px; font-weight: bold; display: inline;">Quantity:</label>
-                  <input type="number" class="product-qty" name="quantity" min="1" max="50" value="1" style="display: inline; width: 40px;">
-                  </div>
+                ${
+                  product.options.find((option) => option.name === "Flavour" || option.name === "Flavor")
+                    ?.values.length > 0
+                    ? `
+                    <div class="flavour-options" style="margin-right: 20px;">
+                      <h6 style='font-weight:bold; display: inline;'>Flavors:</h6>
+                      <select class="flavour-dropdown">
+                        ${product.options
+                          .find((option) => option.name === "Flavour" || option.name === "Flavor")
+                          ?.values.map(
+                            (flavour) => `
+                            <option value="${flavour.id}">${flavour.title}</option>
+                          `
+                          )
+                          .join("")}
+                      </select>
+                    </div>
+                    `
+                    : ""
+                }
+                
+
+              </div>
+              <div style="margin-top:10px;margin-bottom:10px">
+                <label for="product-qty" style="margin-top: 10px; font-weight: bold; display: inline;">Quantity:</label>
+                <input type="number" class="product-qty" name="quantity" min="1" max="50" value="1" style="display: inline; width: 40px;">
               </div>
               <p style='font-weight:bold'>Price: 
                 <span style='font-weight:normal'>
@@ -1011,7 +1036,8 @@ const DisplayProducts = (props) => {
                     ?.values[colorIndex] ||
                   product.options.find(
                     (option) => option.name === "Seam Colors"
-                  )?.values[colorIndex];
+                  )?.values[colorIndex] ||
+                  product.options.find((option) => option.name === "Bottle color");
                 if (selectedColor) {
                   // Remove 'selected' class from all color options
                   colorOptions.forEach((option) => {
@@ -1023,6 +1049,29 @@ const DisplayProducts = (props) => {
                 }
               });
             });
+
+            const flavorOptions = productModal.querySelectorAll(".flavor-option");
+            flavorOptions.forEach((flavorOption, flavorIndex) => {
+              flavorOption.addEventListener("click", () => {
+                const selectedFlavor =
+                  product.options.find((option) => option.name === "Flavor" || option.name === "Flavour")
+                    ?.values[flavorIndex];
+
+                if (selectedFlavor) {
+                  // Remove 'selected' class from all flavor options
+                  flavorOptions.forEach((option) => {
+                    option.classList.remove("selected");
+                  });
+
+                  // Add 'selected' class to the clicked flavor option
+                  flavorOption.classList.add("selected");
+
+                  // Log or handle the selected flavor as needed
+                  console.log("Selected Flavor:", selectedFlavor);
+                }
+              });
+            });
+
 
             // JavaScript to handle size selection dropdown
             const sizeDropdown = productModal.querySelector(".size-dropdown");
@@ -1088,6 +1137,8 @@ const DisplayProducts = (props) => {
                 product.options.find((option) => option.name === "Color")
                   ?.values[selectedColorIndex] ||
                 product.options.find((option) => option.name === "Seam Colors")
+                  ?.values[selectedColorIndex] ||
+                product.options.find((option) => option.name === "Bottle color")
                   ?.values[selectedColorIndex];
               const selectedSizeId = sizeDropdown.value;
               const selectedQuantity = Quantity.value;
@@ -1110,7 +1161,7 @@ const DisplayProducts = (props) => {
                   (option) => option.type === "color"
                 );
                 const sizeOptionIndex = product.options.findIndex(
-                  (option) => option.type === "size"
+                  (option) => option.type === "size" 
                 );
                 const fabricOptionIndex = product.options.findIndex(
                   (option) =>
@@ -1119,7 +1170,6 @@ const DisplayProducts = (props) => {
                     option.type === "paper" ||
                     option.type === "surface"
                 );
-
                 const colorMatchIndex =
                   colorOptionIndex !== -1
                     ? variant.options[colorOptionIndex] === selectedColor?.id
@@ -1181,6 +1231,9 @@ const DisplayProducts = (props) => {
                   )?.values.length > 0 ||
                   product.options.find(
                     (option) => option.name === "Frame Color"
+                  )?.values.length > 0 ||
+                  product.options.find(
+                    (option) => option.name === "Bottle color"
                   )?.values.length > 0)
               ) {
                 // Show an error message to the user (you can customize this based on your UI)

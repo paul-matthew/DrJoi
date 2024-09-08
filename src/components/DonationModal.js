@@ -7,9 +7,12 @@ const DonationModal = ({ isOpen, onClose }) => {
   const [selectedAmount, setSelectedAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
   const [email, setEmail] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(false);
 
   const handleDonateClick = (method) => {
-    setPaymentMethod(method);
+    if (isEmailValid && selectedAmount) {
+      setPaymentMethod(method);
+    }
   };
 
   const handleOptionChange = (value) => {
@@ -19,8 +22,6 @@ const DonationModal = ({ isOpen, onClose }) => {
 
   const handleCustomAmountChange = (event) => {
     const value = event.target.value;
-    
-    // Regular expression to allow only numbers with up to two decimal places
     const moneyFormat = /^\d*\.?\d{0,2}$/;
   
     if (moneyFormat.test(value)) {
@@ -29,12 +30,19 @@ const DonationModal = ({ isOpen, onClose }) => {
     }
   };
 
+  const validateEmail = (email) => {
+    const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailFormat.test(email);
+  };
+
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    const value = event.target.value;
+    setEmail(value);
+    setIsEmailValid(validateEmail(value));
   };
 
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter' && !paymentMethod) {
+    if (event.key === 'Enter' && isEmailValid && selectedAmount) {
       handleDonateClick('paypal');
     }
   };
@@ -70,7 +78,7 @@ const DonationModal = ({ isOpen, onClose }) => {
         zIndex: 999,
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
         textAlign: 'center',
-        overflowY: 'auto', // Allow scrolling for overflow content
+        overflowY: 'auto',
       }}
     >
       <div
@@ -83,9 +91,9 @@ const DonationModal = ({ isOpen, onClose }) => {
           padding: '20px',
           margin: '100px auto',
           width: '80vw',
-          maxWidth: '600px', // Max width for the modal
+          maxWidth: '600px',
           height: '90vh',
-          maxHeight: '90vh', // Max height for the modal
+          maxHeight: '90vh',
           borderRadius: '10px',
           border: 'solid black',
           position: 'relative',
@@ -94,7 +102,7 @@ const DonationModal = ({ isOpen, onClose }) => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          overflowY: 'auto', // Enable scrolling within the modal
+          overflowY: 'auto',
         }}
       >
         <button
@@ -157,7 +165,7 @@ const DonationModal = ({ isOpen, onClose }) => {
             Other
           </button>
 
-          <div style={{ height: '60px', marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}> {/* Reserve space for the custom amount input */}
+          <div style={{ height: '60px', marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {selectedAmount === 'Other' && (
               <input
                 type="number"
@@ -207,13 +215,14 @@ const DonationModal = ({ isOpen, onClose }) => {
         ) : (
           <button
             onClick={() => handleDonateClick('paypal')}
+            disabled={!isEmailValid || !selectedAmount}
             style={{
               maxWidth: '200px',
               margin: '10px',
               padding: '10px',
               border: 'solid 1px black',
               fontSize: 'clamp(1rem, 2vw, 1.5rem)',
-              cursor: 'pointer',
+              cursor: !isEmailValid || !selectedAmount ? 'not-allowed' : 'pointer',
             }}
           >
             Enter
@@ -229,3 +238,5 @@ const DonationModal = ({ isOpen, onClose }) => {
 };
 
 export default DonationModal;
+
+
