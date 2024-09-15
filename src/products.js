@@ -1,7 +1,7 @@
 import "./style.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 // import { handleSubmit } from './components/CheckOutForm.js';
 
 import { cartUtilities } from "./utils/cart.js";
@@ -139,42 +139,42 @@ let totalPayment = 0;
 
   }
 
-//   async function calculateTax() {
-//     const fetchStripeTax = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-//         ? "http://localhost:5000/stripe/calculate-taxes"
-//         : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/calculate-taxes";
+  async function calculateTax() {
+    const fetchStripeTax = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000/stripe/calculate-taxes"
+        : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/calculate-taxes";
 
-//     try {
-//         const taxResponse = await fetch(fetchStripeTax, {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 region: inputValues.region,
-//                 city: inputValues.city,
-//                 country: inputValues.country,
-//                 zip: inputValues.zip,
-//                 address: inputValues.address,
-//             }),
-//         });
+    try {
+        const taxResponse = await fetch(fetchStripeTax, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                region: inputValues.region,
+                city: inputValues.city,
+                country: inputValues.country,
+                zip: inputValues.zip,
+                address: inputValues.address,
+            }),
+        });
 
-//         const taxData = await taxResponse.json();
-//         if (taxData.error) {
-//             throw new Error("Failed to fetch taxes: " + taxData.error);
-//         }
+        const taxData = await taxResponse.json();
+        if (taxData.error) {
+            throw new Error("Failed to fetch taxes: " + taxData.error);
+        }
 
-//         taxRate = (taxData.taxRate)/100 || 0; // Default to 0 if no rate found
-//         console.log("Client side tax rate:", taxRate);
+        taxRate = (taxData.taxRate)/100 || 0; // Default to 0 if no rate found
+        console.log("Client side tax rate:", taxRate);
 
-//         return taxRate;
+        return taxRate;
 
-//     } catch (error) {
-//         console.error("Error fetching tax rate:", error);
-//         alert("Error fetching tax rate. Please check the console for details.");
-//         return 0;
-//     }
-// }
+    } catch (error) {
+        console.error("Error fetching tax rate:", error);
+        alert("Error fetching tax rate. Please check the console for details.");
+        return 0;
+    }
+}
   
 function constructModalBody() {
   switch (currentStage) {
@@ -260,9 +260,6 @@ function constructModalBody() {
 
     case 2.5: // New case for displaying shipping costs and tax before payment
       subtotal = cartUtilities.getTotalPrice() / 100;
-      if (inputValues.region==='LA'){
-        taxRate=0.09; //NEEDS TO BE UPDATED WITH TAX TOOL
-      }
       taxAmount = Math.round(subtotal * taxRate * 100) / 100;
 
       // Check if subtotal is over $100 to apply free shipping
@@ -1420,7 +1417,7 @@ const DisplayProducts = (props) => {
       case "totalcost":
         saveInputValues();
         await calculateShippingCost();
-        // await calculateTax();
+        await calculateTax();
         break;
       case "proceedpayment":
         currentStage = 3;
@@ -1475,127 +1472,148 @@ const DisplayProducts = (props) => {
 
 
   
-  function initializePayPal() {
-    // Get the container for the PayPal button
-    const paypalContainer = document.getElementById("paypal-parent");
-
-    // Create a new div for the PayPal button
-    const paypalButtonContainer = document.createElement("div");
-    paypalButtonContainer.id = "paypal-button-container";
-
-    // Append the PayPal button container to the parent container
+  async function initializePayPal() {
     if (currentStage === 3) {
-        paypalContainer.appendChild(paypalButtonContainer);
-    }
+        const stripeContainer = document.getElementById("paypal-parent");
+        if (!stripeContainer) {
+            console.error("Element with ID 'paypal-parent' not found.");
+            return;
+        }
 
-    let fetchURLpayvalidate = "";
-    if (
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1"
-    ) {
-        fetchURLpayvalidate = "http://localhost:5000/paypal/validate";
-    } else {
-        fetchURLpayvalidate =
-            "https://drjoiserver-106ea7a60e39.herokuapp.com/paypal/validate";
-    }
+        // Create and append the payment form
+        const stripeFormContainer = document.createElement("form");
+        stripeFormContainer.id = "payment-form";
+        
+        const cardElementDiv = document.createElement("div");
+        cardElementDiv.id = "stripe-form-container";
+        stripeFormContainer.appendChild(cardElementDiv);
+        
+        const cardErrorsDiv = document.createElement("div");
+        cardErrorsDiv.id = "card-errors";
+        cardErrorsDiv.setAttribute("role", "alert");
+        stripeFormContainer.appendChild(cardErrorsDiv);
+        stripeContainer.appendChild(stripeFormContainer);
+        
+        // Create and append the Pay button
+        const payButton = document.createElement("button");
+        payButton.type = "submit";
+        payButton.className = "pay-button";
+        payButton.textContent = `Pay: $${totalPayment}`;
+        stripeContainer.appendChild(payButton);
 
-    // Initialize the PayPal SDK here
-    if (currentStage === 3) {
-        // eslint-disable-next-line no-undef
-        paypal.Buttons({
-            createOrder: function (_, actions) {
-                // Validate and sanitize input values before using them
-                saveInputValues();
-                console.log("Amount to be sent to PayPal:", totalPayment);
+        const fetchURLstripeCreatePaymentIntent = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? "http://localhost:5000/stripe/create-payment-intent"
+            : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
 
-                // Ensure breakdown values are numbers and formatted correctly
-                const formattedSubtotal = parseFloat(subtotal).toFixed(2);
-                const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
-                const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
-                const formattedDonationCost = parseFloat(inputValues.donation).toFixed(2);
+        const fetchURLstripeValidate = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? "http://localhost:5000/stripe/validate"
+            : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/validate";
 
+        const fetchStripeKey = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? "http://localhost:5000/stripe/publishable-key"
+            : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
 
-                return actions.order.create({
-                    purchase_units: [
-                        {
-                            amount: {
-                                value: totalPayment.toFixed(2),
-                                breakdown: {
-                                    item_total: {
-                                        currency_code: "USD",
-                                        value: formattedSubtotal
-                                    },
-                                    tax_total: {
-                                        currency_code: "USD",
-                                        value: formattedTaxAmount
-                                    },
-                                    shipping: {
-                                        currency_code: "USD",
-                                        value: formattedShippingCost
-                                    },
-                                    handling: {
-                                      currency_code: "USD",
-                                      value: formattedDonationCost
-                                  }
-                                }
-                            },
-                        },
-                    ],
-                    application_context: {
-                        shipping_preference: "NO_SHIPPING",
-                    },
-                }).catch(error => {
-                    console.error("Error creating PayPal order:", error);
-                    alert("Error creating PayPal order. Please check the console for details.");
-                });
-            },
-            onApprove: function (data, actions) {
-                return actions.order.capture().then(function (details) {
-                    console.log("Transaction details:", details);
+        try {
+            // Fetch the Stripe publishable key
+            const keyResponse = await fetch(fetchStripeKey);
+            const { publishableKey } = await keyResponse.json();
+            if (!publishableKey) {
+                throw new Error("Failed to retrieve Stripe publishable key");
+            }
 
-                    // Send payment details to the server for further validation
-                    fetch(fetchURLpayvalidate, {
+            // Initialize Stripe elements
+            const stripe = await loadStripe(publishableKey);
+            const elements = stripe.elements();
+            const cardElement = elements.create('card');
+            cardElement.mount('#stripe-form-container');
+
+            // Add event listener to the Pay button
+            payButton.addEventListener('click', async (event) => {
+                event.preventDefault();
+                if (!stripe || !elements) {
+                    console.error("Stripe or elements not loaded.");
+                    return;
+                }
+
+                try {
+                    // Calculate the tax amount based on the subtotal
+                    const formattedSubtotal = parseFloat(subtotal).toFixed(2);
+                    const taxAmount = (subtotal * taxRate).toFixed(2);
+                    const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
+                    const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
+                    const formattedDonationAmount = parseFloat(inputValues.donation) || 0;
+
+                    // Validate the payment details on the server
+                    const validationResponse = await fetch(fetchURLstripeValidate, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            order: data,
-                            paymentDetails: details,
-                            total: totalPayment,
-                            taxAmount: taxAmount,
-                            shippingCost: shippingCost              
+                            amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
+                            taxAmount: formattedTaxAmount,
+                            shippingCost: formattedShippingCost,
+                            donationAmount: formattedDonationAmount,
+                            subtotal: formattedSubtotal,
                         }),
-                    })
-                        .then((response) => response.json())
-                        .then((responseData) => {
-                            console.log("Response Data is:", responseData);
-                            if (responseData.success) {
-                                // If the server validates the payment, proceed with your logic
-                                submitOrder();
-                            } else {
-                                console.error(
-                                    "Error processing payment on the server:",
-                                    responseData.error
-                                );
-                                currentStage = 5;
-                                orderModal.innerHTML = constructModalBody();
+                    });
+                    
+                    const validationData = await validationResponse.json();
+                    if (!validationData.success) {
+                        throw new Error("Payment validation failed: " + (validationData.error || 'Unknown error'));
+                    }
 
-                                // Display an error message to the user
-                                alert("Error processing payment: " + responseData.error);
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("Error communicating with the server:", error);
-                            // Display an error message to the user
-                            alert("Error communicating with the server");
-                        });
-                }).catch(error => {
-                    console.error("Error capturing PayPal order:", error);
-                    alert("Error capturing PayPal order. Please check the console for details.");
-                });
-            },
-        }).render("#paypal-button-container");
+                    // Create a PaymentIntent on the server
+                    const paymentIntentResponse = await fetch(fetchURLstripeCreatePaymentIntent, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
+                            description: `Order total of $${totalPayment.toFixed(2)}`,
+                            metadata: {
+                                subtotal: formattedSubtotal,
+                                tax: formattedTaxAmount,
+                                shipping: formattedShippingCost,
+                                donation: inputValues.donation,
+                            },
+                        }),
+                    });
+
+                    const paymentIntentData = await paymentIntentResponse.json();
+                    if (!paymentIntentData.clientSecret) {
+                        throw new Error("Failed to get client secret from Stripe");
+                    }
+
+                    const clientSecret = paymentIntentData.clientSecret;
+
+                    // Handle the payment confirmation
+                    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+                        payment_method: {
+                            card: cardElement,
+                        },
+                    });
+
+                    console.log('Stripe PaymentIntent Response:', { paymentIntent, error });
+
+                    if (error) {
+                        console.error("Error confirming card payment:", error);
+                        alert("Error confirming card payment. Please check the console for details.");
+                    } else if (paymentIntent.status === 'succeeded') {
+                        submitOrder();
+                        console.log("Order submitted successfully");
+                        console.log("Payment succeeded:", paymentIntent);
+                    }
+                } catch (error) {
+                    console.error("Error during payment process:", error);
+                    alert("Error during payment process. Please check the console for details.");
+                }
+            });
+        } catch (error) {
+            console.error("Error during initialization process:", error);
+            alert("Error during initialization process. Please check the console for details.");
+        }
     }
 }
 

@@ -443,6 +443,8 @@ const shipping = [];
 app.post('/shipping-cost', async (req, res) => {
   const { address_to, line_items } = req.body;
 
+  console.log('Received shipping cost request:', { address_to, line_items });
+
   try {
     // Make a request to Printify's API to calculate shipping cost
     const shippingResponse = await fetch(`https://api.printify.com/v1/shops/${printifyShopID}/orders/shipping.json`, {
@@ -456,11 +458,15 @@ app.post('/shipping-cost', async (req, res) => {
 
     if (!shippingResponse.ok) {
       const errorData = await shippingResponse.json();
+      console.error('Failed to calculate shipping cost:', errorData);
       return res.status(500).json({ success: false, error: `Failed to calculate shipping cost: ${errorData.error}` });
     }
 
     const shippingData = await shippingResponse.json();
-    shipping.push(shippingData); // Store shipping data in the array
+    console.log('Shipping cost response from Printify:', shippingData);
+
+    // Store shipping data in the array (optional, if needed)
+    shipping.push(shippingData);
 
     res.status(200).json({ success: true, shippingCost: shippingData.standard });
   } catch (error) {
