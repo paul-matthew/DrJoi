@@ -259,57 +259,82 @@ function constructModalBody() {
     `;
 
     case 2.5: // New case for displaying shipping costs and tax before payment
-      subtotal = cartUtilities.getTotalPrice() / 100;
-      taxAmount = Math.round(subtotal * taxRate * 100) / 100;
-
-      // Check if subtotal is over $100 to apply free shipping
-      if (subtotal > 100 && inputValues.country==='US') {
-        shippingCost = 0;
-      }
-
-      console.log('updated shipping:',shippingCost);
-      const donationAmount = parseFloat(inputValues.donation); // Ensure donationAmount is a number
-      totalPayment = Math.round((subtotal + shippingCost + taxAmount + donationAmount) * 100) / 100;
-      
+    subtotal = cartUtilities.getTotalPrice() / 100;
+    taxAmount = Math.round(subtotal * taxRate * 100) / 100;
+  
+    // Check if subtotal is over $100 to apply free shipping (US only)
+    if (subtotal > 100 && inputValues.country === 'US') {
+      shippingCost = 0;
+    }
+  
+    // Check if shipping cost is NaN for Canada
+    if (inputValues.country === 'CA' && isNaN(shippingCost)) {
+      // Display an error message and prevent proceeding
       return `
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Order Summary<span style="font-size: 14px;">(USD)</span></h5>
+              <h5 class="modal-title">Shipping Error</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <!-- Display shipping costs, tax, and total before payment -->
-              <table style="border-collapse: collapse; width: 50%;">
-                <tr>
-                  <td style="border: none;">Subtotal:</td>
-                  <td style="border: none; text-align: left;">$${subtotal}</td>
-                </tr>
-                <tr>
-                  <td style="border: none;">Shipping:</td>
-                  <td style="border: none; text-align: left;">$${shippingCost}</td>
-                </tr>
-                <tr>
-                  <td style="border: none;">Tax (${(taxRate * 100).toFixed(2)}%):</td>
-                  <td style="border: none; text-align: left;">$${taxAmount}</td>
-                </tr>
-                <tr>
-                  <td style="border: none;">Donation:</td>
-                  <td style="border: none; text-align: left;">$${donationAmount}</td>
-                </tr>
-                <tr>
-                  <td style="border: none; font-weight: bold;">Total:</td>
-                  <td style="border: none; text-align: left; font-weight: bold;">$${totalPayment}</td>
-                </tr>
-              </table>
-              <p style="font-size: 14px; color: gray;margin-top:10px">Review your order details before proceeding to payment.</p>
-              <p style="font-size: 14px; color: gray;">Standard shipping within continental US is typically 3-7 business days.  Shipping within Canada can be up to 30 business days.</p>
+              <p>Unfortunately, some products in your cart are not available for shipping to Canada. Please remove these items or select a different shipping address.</p>
               <button id="backButton2" class="back-btn gen-btn mt-3">Back</button>
-              <button id="proceedpayment" class="proceed-btn gen-btn mt-3">Proceed to Payment</button>
             </div>
           </div>
         </div>
       `;
+    }
+  
+    console.log('updated shipping:', shippingCost);
+    const donationAmount = parseFloat(inputValues.donation); // Ensure donationAmount is a number
+    totalPayment = Math.round((subtotal + shippingCost + taxAmount + donationAmount) * 100) / 100;
+    
+    const taxRow = taxAmount > 0 ? `
+    <tr>
+      <td style="border: none;">Tax (${(taxRate * 100).toFixed(2)}%):</td>
+      <td style="border: none; text-align: left;">$${taxAmount}</td>
+    </tr>
+  ` : '';
+
+    return `
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Order Summary<span style="font-size: 14px;">(USD)</span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Display shipping costs, tax, and total before payment -->
+            <table style="border-collapse: collapse; width: 50%;">
+              <tr>
+                <td style="border: none;">Subtotal:</td>
+                <td style="border: none; text-align: left;">$${subtotal}</td>
+              </tr>
+              <tr>
+                <td style="border: none;">Shipping:</td>
+                <td style="border: none; text-align: left;">$${shippingCost}</td>
+              </tr>
+              ${taxRow}
+              <tr>
+                <td style="border: none;">Support Gift:</td>
+                <td style="border: none; text-align: left;">$${donationAmount}</td>
+              </tr>
+              <tr>
+                <td style="border: none; font-weight: bold;">Total:</td>
+                <td style="border: none; text-align: left; font-weight: bold;">$${totalPayment}</td>
+              </tr>
+            </table>
+            <p style="font-size: 14px; color: gray;margin-top:10px">Review your order details before proceeding to payment.</p>
+            <p style="font-size: 14px; color: gray;">Standard shipping within continental US is typically 3-7 business days. Shipping within Canada can be up to 30 business days.</p>
+            <p style="font-size: 14px; color: gray;">Sales tax is collected for orders shipped within the state of Louisiana. We do not currently collect sales tax for other states or countries.</p>
+            <button id="backButton2" class="back-btn gen-btn mt-3">Back</button>
+            <button id="proceedpayment" class="proceed-btn gen-btn mt-3">Proceed to Payment</button>
+          </div>
+        </div>
+      </div>
+    `;
+  
 
     case 3:
       return `
@@ -323,6 +348,10 @@ function constructModalBody() {
                 <!-- Payment options container -->
                 <div id="paypal-parent" class="checkout-form"></div>
                 <button id="backButton3" class="back-btn gen-btn mt-3">Back</button>
+                <a href="./terms" target="_blank">
+                  <img src="./stripe-logo.png" class='stripelogo'>
+                </a>
+
             </div>
           </div>
       </div>
