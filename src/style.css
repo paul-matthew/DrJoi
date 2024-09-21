@@ -14423,3 +14423,25 @@ text-align: center;
 .products-container{
   z-index:1;
 }
+
+#billing-firstname,#billing-lastname,#billing-country,#billing-region,#billing-city,#billing-address,#billing-address2,#billing-zip{
+  margin:2px;
+}
+
+#stripe-form-container{
+  margin-top:10px;
+}
+
+.card-options-img {
+  max-width: 100%;
+  max-height: 300px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#paypal-parent {
+  max-height: 400px; /* Adjust this height as needed */
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 20px; /* Optional: add padding for spacing */
+}
+

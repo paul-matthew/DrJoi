@@ -596,45 +596,45 @@ app.listen(PORT, () => {
 });
 
 // Function to validate payment details FOR STRIPE
-// function validatePaymentDetails(amount, taxAmount, shippingCost, donationAmount, subtotal) {
-//   const expectedAmount = Math.round(((subtotal*100 + taxAmount*100 + shippingCost*100 + donationAmount*100) * 100) / 100);
-//   const amountReceived = Math.round(amount); 
-//   const isValid = amountReceived === expectedAmount;
-
-//   if (isValid) {
-//     console.log('Server validation complete for payment amount.');
-//   } else {
-//     console.log('Server validation error with details:', {
-//       received: amountReceived,
-//       amount:amount,
-//       subtotal:subtotal*100,
-//       shippingCost:shippingCost*100,
-//       donationAmount:donationAmount,
-//       taxAmount:taxAmount*100,
-//       expected: expectedAmount,
-//     });
-//   }
-
-//   return isValid;
-// }
-
-// Function to validate payment details FOR PAYPAL
-function validatePaymentDetails(paymentDetails, total) {
-  const isValid =
-    paymentDetails &&
-    paymentDetails.status === 'COMPLETED' &&
-    paymentDetails.purchase_units &&
-    paymentDetails.purchase_units[0] &&
-    paymentDetails.purchase_units[0].amount &&
-    parseFloat(paymentDetails.purchase_units[0].amount.value) === parseFloat(total);
+function validatePaymentDetails(amount, taxAmount, shippingCost, donationAmount, subtotal) {
+  const expectedAmount = Math.round(((subtotal*100 + taxAmount*100 + shippingCost*100 + donationAmount*100) * 100) / 100);
+  const amountReceived = Math.round(amount); 
+  const isValid = amountReceived === expectedAmount;
 
   if (isValid) {
-    console.log('Server validation complete');
+    console.log('Server validation complete for payment amount.');
   } else {
-    console.log('Server validation error');
-    console.log('paymentDetails:', paymentDetails);
+    console.log('Server validation error with details:', {
+      received: amountReceived,
+      amount:amount,
+      subtotal:subtotal*100,
+      shippingCost:shippingCost*100,
+      donationAmount:donationAmount,
+      taxAmount:taxAmount*100,
+      expected: expectedAmount,
+    });
   }
 
   return isValid;
 }
+
+// Function to validate payment details FOR PAYPAL
+// function validatePaymentDetails(paymentDetails, total) {
+//   const isValid =
+//     paymentDetails &&
+//     paymentDetails.status === 'COMPLETED' &&
+//     paymentDetails.purchase_units &&
+//     paymentDetails.purchase_units[0] &&
+//     paymentDetails.purchase_units[0].amount &&
+//     parseFloat(paymentDetails.purchase_units[0].amount.value) === parseFloat(total);
+
+//   if (isValid) {
+//     console.log('Server validation complete');
+//   } else {
+//     console.log('Server validation error');
+//     console.log('paymentDetails:', paymentDetails);
+//   }
+
+//   return isValid;
+// }
 

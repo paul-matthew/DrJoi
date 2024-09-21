@@ -36,6 +36,16 @@ const inputValues = {
   address2: "",
   zip: "",
   donation:"",
+  billingAddress: {
+    firstName: "",
+    lastName: "",  
+    country: "",
+    region: "",
+    city: "",
+    address: "",
+    address2: "",
+    zip: "",
+  },
 };
 
 //SHOPPING CART-------------------------------------------------------------------------------
@@ -189,7 +199,7 @@ function constructModalBody() {
             </div>
             <div class="modal-body">
               <!-- Display order summary and total cost here -->
-              <p style="font-size: 14px; color: gray;margin-top:10px">Taxes and shipping will be added at checkout based on your shipping address.</p>
+              <!-- <p style="font-size: 14px; color: gray;margin-top:10px">Taxes and shipping will be added at checkout based on your shipping address.</p> -->
               <table style="border-collapse: collapse; width: 50%;">
               <tr>
                   <td style="border: none; font-weight: bold;">Subtotal:</td>
@@ -197,17 +207,17 @@ function constructModalBody() {
               </tr>
             </table>
             <p style="font-size: 14px; color: gray; margin-top: 10px;">
-              Consider making a <strong>Support Gift</strong> to Exotic Relief by Dr. Joi. Your contribution helps us continue our mission and make a difference.
+              Consider making a <strong>Support Gift</strong> to Exotic Relief by Dr. Joi.
             </p>
             <table style="border-collapse: collapse; width: 50%;">
             <tr>
-              <td style="border: none; font-weight: bold;">Support Gift:</td>
+              <td style="border: none; font-weight: bold;min-width:120px">Support Gift:</td>
               <td style="border: none; text-align: left;">
               <input type="number" id="donationInput" value="${(parseFloat(inputValues.donation) || 0).toFixed(2)}" step="1.00" min="0" style="width: 100px; text-align: right;">
               </td>
             </tr>
             </table>
-            <button id="OrderDetailsButton" class="proceed-btn gen-btn mt-3">Order Details</button>
+            <button id="OrderDetailsButton" class="proceed-btn gen-btn mt-3">Shipping Info</button>
           </div>
         </div>
       </div>
@@ -325,9 +335,9 @@ function constructModalBody() {
                 <td style="border: none; text-align: left; font-weight: bold;">$${totalPayment}</td>
               </tr>
             </table>
-            <p style="font-size: 14px; color: gray;margin-top:10px">Review your order details before proceeding to payment.</p>
-            <p style="font-size: 14px; color: gray;">Standard shipping within continental US is typically 3-7 business days. Shipping within Canada can be up to 30 business days.</p>
-            <p style="font-size: 14px; color: gray;">Sales tax is collected for orders shipped within the state of Louisiana. We do not currently collect sales tax for other states or countries.</p>
+            <p style="font-size: 8px; color: gray;margin-top:10px;margin-bottom:5px">Review your order details before proceeding to payment.</p>
+            <p style="font-size: 8px; color: gray;margin-bottom:5px">Standard shipping within continental US is typically 3-7 business days. Shipping within Canada can be up to 30 business days.</p>
+            <p style="font-size: 8px; color: gray">Sales tax is collected for orders shipped within the state of Louisiana. We do not currently collect sales tax for other states or countries.</p>
             <button id="backButton2" class="back-btn gen-btn mt-3">Back</button>
             <button id="proceedpayment" class="proceed-btn gen-btn mt-3">Proceed to Payment</button>
           </div>
@@ -351,7 +361,6 @@ function constructModalBody() {
                 <a href="./terms" target="_blank">
                   <img src="./stripe-logo.png" class='stripelogo'>
                 </a>
-
             </div>
           </div>
       </div>
@@ -1509,20 +1518,133 @@ const DisplayProducts = (props) => {
             return;
         }
 
+        function handleAddressMatchChange(event) {
+            if (event.target.checked) {
+                // Copy shipping address to billing address
+                inputValues.billingAddress = {
+                    firstName: inputValues.firstName,
+                    lastName: inputValues.lastName,
+                    country: inputValues.country,
+                    region: inputValues.region,
+                    city: inputValues.city,
+                    address: inputValues.address,
+                    address2: inputValues.address2,
+                    zip: inputValues.zip,
+                };
+                // Update billing address fields to match shipping address
+                billingFirstNameInput.value = inputValues.firstName;
+                billingLastNameInput.value = inputValues.lastName;
+                billingCountryInput.value = inputValues.country;
+                billingRegionInput.value = inputValues.region;
+                billingCityInput.value = inputValues.city;
+                billingAddressInput.value = inputValues.address;
+                billingAddress2Input.value = inputValues.address2;
+                billingZipInput.value = inputValues.zip;
+            } else {
+                // Clear billing address if checkbox is unchecked
+                inputValues.billingAddress = {
+                    firstName:'',
+                    lastName:'',
+                    country: "",
+                    region: "",
+                    city: "",
+                    address: "",
+                    address2: "",
+                    zip: "",
+                };
+                // Clear billing address fields
+                billingFirstNameInput.value = "";
+                billingLastNameInput.value = "";
+                billingCountryInput.value = "";
+                billingRegionInput.value = "";
+                billingCityInput.value = "";
+                billingAddressInput.value = "";
+                billingAddress2Input.value = "";
+                billingZipInput.value = "";
+            }
+        }
+
         // Create and append the payment form
         const stripeFormContainer = document.createElement("form");
         stripeFormContainer.id = "payment-form";
         
+        // Checkbox for matching addresses
+        const addressMatchCheckbox = document.createElement("input");
+        addressMatchCheckbox.type = "checkbox";
+        addressMatchCheckbox.id = "address-match";
+        addressMatchCheckbox.addEventListener('change', handleAddressMatchChange);
+        const addressMatchLabel = document.createElement("label");
+        addressMatchLabel.htmlFor = "address-match";
+        addressMatchLabel.textContent = "Billing info is the same as shipping";
+        stripeFormContainer.appendChild(addressMatchCheckbox);
+        stripeFormContainer.appendChild(addressMatchLabel);
+
+        // Add card options image
+        const cardOptionsImg = document.createElement("img");
+        cardOptionsImg.src = "./cards.png"; // Replace with the actual path to your image
+        cardOptionsImg.alt = "Credit Card Options";
+        cardOptionsImg.className = "card-options-img";
+        stripeFormContainer.appendChild(cardOptionsImg);
+
+        // Billing address fields
+        const billingFirstNameInput = document.createElement("input");
+        billingFirstNameInput.type = "text";
+        billingFirstNameInput.placeholder = "First name";
+        billingFirstNameInput.id = "billing-firstname";
+        stripeFormContainer.appendChild(billingFirstNameInput);
+
+        const billingLastNameInput = document.createElement("input");
+        billingLastNameInput.type = "text";
+        billingLastNameInput.placeholder = "Last name";
+        billingLastNameInput.id = "billing-firstname";
+        stripeFormContainer.appendChild(billingLastNameInput);
+
+        const billingCountryInput = document.createElement("input");
+        billingCountryInput.type = "text";
+        billingCountryInput.placeholder = "Country";
+        billingCountryInput.id = "billing-country";
+        stripeFormContainer.appendChild(billingCountryInput);
+
+        const billingRegionInput = document.createElement("input");
+        billingRegionInput.type = "text";
+        billingRegionInput.placeholder = "State/Province";
+        billingRegionInput.id = "billing-region";
+        stripeFormContainer.appendChild(billingRegionInput);
+
+        const billingCityInput = document.createElement("input");
+        billingCityInput.type = "text";
+        billingCityInput.placeholder = "City";
+        billingCityInput.id = "billing-city";
+        stripeFormContainer.appendChild(billingCityInput);
+
+        const billingAddressInput = document.createElement("input");
+        billingAddressInput.type = "text";
+        billingAddressInput.placeholder = "Address";
+        billingAddressInput.id = "billing-address";
+        stripeFormContainer.appendChild(billingAddressInput);
+
+        const billingAddress2Input = document.createElement("input");
+        billingAddress2Input.type = "text";
+        billingAddress2Input.placeholder = "Address Line 2";
+        billingAddress2Input.id = "billing-address2";
+        stripeFormContainer.appendChild(billingAddress2Input);
+
+        const billingZipInput = document.createElement("input");
+        billingZipInput.type = "text";
+        billingZipInput.placeholder = "ZIP/Postal Code";
+        billingZipInput.id = "billing-zip";
+        stripeFormContainer.appendChild(billingZipInput);
+
         const cardElementDiv = document.createElement("div");
         cardElementDiv.id = "stripe-form-container";
         stripeFormContainer.appendChild(cardElementDiv);
-        
+
         const cardErrorsDiv = document.createElement("div");
         cardErrorsDiv.id = "card-errors";
         cardErrorsDiv.setAttribute("role", "alert");
         stripeFormContainer.appendChild(cardErrorsDiv);
         stripeContainer.appendChild(stripeFormContainer);
-        
+
         // Create and append the Pay button
         const payButton = document.createElement("button");
         payButton.type = "submit";

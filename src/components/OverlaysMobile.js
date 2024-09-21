@@ -431,7 +431,7 @@ const OverlaysMobile = ({
             <img
               className="AboutMem2"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              src="./home2c-mob.png"
+              src="./home2d-mob.png"
               alt="Boardroom"
             />
           </div>
@@ -527,7 +527,7 @@ const OverlaysMobile = ({
             <img
               className="AboutMem2"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              src="./home3da-mob.png"
+              src="./≈.png"
               alt="Planning"
             />
           </div>
