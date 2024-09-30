@@ -710,7 +710,7 @@ const DisplayProducts = (props) => {
             productsContainer.appendChild(productCard);
 
           const newLabel = productCard.querySelector('.new-label');
-          if (newLabel && counter<18) {
+          if (newLabel && counter<25) {
             newLabel.style.position = 'absolute';
             newLabel.style.bottom = '50%';
             newLabel.style.left = '30px';

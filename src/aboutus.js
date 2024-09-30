@@ -336,20 +336,9 @@ function About() {
                                 wordWrap: "break-word",
                               }}
                             >
-                              With over a decade of experience as a mental
-                              health practitioner, I have honed my expertise in
-                              hospital, clinic, and home settings, catering to
-                              diverse populations and addressing a spectrum of
-                              mental health challenges. For a training Clinical
-                              Neuropsychopharmacologist, my role as a medical
-                              doctor encompasses the diagnosis and treatment of
-                              various psychiatric and neurological disorders
-                              using pharmacological interventions. Specializing
-                              and studying the brain and behavior, I also
-                              conduct research to investigate the efficacy and
-                              safety of medications for mental health
-                              conditions, in addition to better understanding
-                              the underlying neurobiology of these disorders.{" "}
+                              With over a decade of experience as a mental health practitioner, I have honed my expertise in hospital, clinic, and home settings, catering to diverse populations and addressing a spectrum of mental health challenges. 
+                              As a training Clinical Neuropsychopharmacologist, my focus is on the diagnosis and treatment of psychiatric and neurological disorders using pharmacological interventions. 
+                              Specializing in the study of brain and behavior, I also conduct research to evaluate the efficacy and safety of medications for mental health conditions, while striving to better understand the neurobiology underlying these disorders.{" "}
                             </div>
                           </div>
                         </div>
@@ -442,17 +431,10 @@ function About() {
                                 wordWrap: "break-word",
                               }}
                             >
-                              My educational journey reflects a commitment to a
-                              holistic approach to mental health care. Holding
-                              degrees in medicine, public health, and business,
-                              I possess a unique interdisciplinary perspective.
-                              My Master of Public Health coupled with coursework
-                              in clinical and community-based behavioral health
-                              research methods, equips me with the skills to
-                              address mental health issues comprehensively. I am
-                              currently pursuing a Psy.D. in Clinical Psychology
-                              with an emphasis in Neuroscience, as well as an
-                              M.S. in Clinical Psychopharmacology.
+                            My educational journey reflects an unwavering dedication to advancing mental health care through a multidisciplinary lens. 
+                            With a strong foundation in the medical sciences, having completed all premedical coursework and attending medical school, I developed an in-depth understanding of human biology and medicine. 
+                            However, my true passion for brain science and neuropsychology led me to pursue a more specialized focus. Building on my degrees in public health and business, and currently advancing my expertise in clinical neuropsychopharmacology, I possess a rare blend of scientific rigor, medical insight, and strategic acumen. 
+                            My Master of Public Health, combined with advanced training in clinical and community-based behavioral health research, empowers me to tackle complex mental health issues with a comprehensive, research-driven, and patient-centered approach.
                             </div>
                           </div>
                         </div>
