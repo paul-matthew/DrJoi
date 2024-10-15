@@ -763,62 +763,49 @@ const DisplayProducts = (props) => {
                 </div>
               </div>
               </div>
-              <div class="color-options">
-                <h6></h6>
+              <div class="color-options" style="display: flex; align-items: center;">
                 ${
-                  (
-                    product.options.find((option) => option.name === "Colors")
-                      ?.values || []
-                  )
-                    .filter((color) => {
-                      const variant = product.variants.find((variant) =>
-                        variant.options.includes(color.id)
-                      );
+                  // Check for available color options
+                  (function () {
+                    const colorsOption = product.options.find(option => option.name === "Colors")?.values || [];
+                    const frameColorOption = product.options.find(option => option.name === "Frame Color")?.values || [];
+                    const colorOption = product.options.find(option => option.name === "Color")?.values || [];
+                    const seamColorsOption = product.options.find(option => option.name === "Seam Colors")?.values || [];
+                    const bottleColorOption = product.options.find(option => option.name === "Bottle color")?.values || [];
+
+                    const allAvailableColors = [
+                      ...colorsOption,
+                      ...frameColorOption,
+                      ...colorOption,
+                      ...seamColorsOption,
+                      ...bottleColorOption
+                    ].filter(color => {
+                      const variant = product.variants.find(variant => variant.options.includes(color.id));
                       return variant && variant.is_enabled;
-                    })
-                    .map(
-                      (color) => `
-                    <div class="color-option" style="background-color: ${color.colors[0]};"></div>
-                    `
-                    )
-                    .join("") ||
-                  product.options
-                    .find((option) => option.name === "Frame Color")
-                    ?.values.map(
-                      (frameColor) => `
-                    <div class="color-option" style="background-color: ${frameColor.colors[0]};"></div>
-                    `
-                    )
-                    .join("") ||
-                  product.options
-                    .find((option) => option.name === "Color")
-                    ?.values.map(
-                      (color) => `
-                    <div class="color-option" style="background-color: ${color.colors[0]};"></div>
-                    `
-                    )
-                    .join("") ||
-                  product.options
-                    .find((option) => option.name === "Seam Colors")
-                    ?.values.map(
-                      (color) => `
-                    <div class="color-option" style="background-color: ${color.colors[0]};"></div>
-                    `
-                    )
-                    .join("") ||
-                    product.options
-                    .find((option) => option.name === "Bottle color")
-                    ?.values.map(
-                      (color) => `
-                        <div class="color-option" 
-                             style="background-color: ${color.colors[0]};">
+                    });
+
+                    // If there are available colors, render the title and options
+                    if (allAvailableColors.length > 0) {
+                      const defaultColor = allAvailableColors.length === 1 ? "selected" : "";
+
+                      return `
+                      <div style="display: flex; align-items: center; margin-top: 20px;">
+                        <h6 style='font-weight:bold; margin-right: 8px;'>Color selection:</h6>
+                        <div style="display: flex; align-items: center;margin-bottom:5px;">
+                          ${allAvailableColors.map(color => `
+                            <div class="color-option ${defaultColor}" style="background-color: ${color.colors[0]};"></div>
+                          `).join("")}
                         </div>
-                      `
-                    )
-                    .join("") || 
-                  ""
+                      </div>
+                    `;
+                    
+                    }
+                    // Return empty if no colors are available
+                    return "";
+                  })()
                 }
               </div>
+
               <div class="fabric-options" style="margin-right: 20px; ${
                 product.options.some(
                   (option) =>
@@ -920,10 +907,9 @@ const DisplayProducts = (props) => {
                 </select>
               </div>
 
-    
               <div class="size-and-quantity-options" style="display: flex; align-items: center;">
-                <div class="size-options" style="margin-right: 20px;">
-                  <h6 style='font-weight:bold; display: inline;'>Size Options:</h6>
+                <div class="size-options" style="margin-right: 20px;margin-top:10px">
+                  <h6 style='font-weight:bold; display: inline;'>Size selection:</h6>
                   <select class="size-dropdown">
                     ${
                       product.options
@@ -980,11 +966,14 @@ const DisplayProducts = (props) => {
                     }            
                   </select>
                 </div>
-                ${
+                
+
+              </div>
+                              ${
                   product.options.find((option) => option.name === "Flavour" || option.name === "Flavor")
                     ?.values.length > 0
                     ? `
-                    <div class="flavour-options" style="margin-right: 20px;">
+                    <div class="flavour-options" style="margin-right: 20px;margin-top:10px;">
                       <h6 style='font-weight:bold; display: inline;'>Flavors:</h6>
                       <select class="flavour-dropdown">
                         ${product.options
@@ -1000,9 +989,7 @@ const DisplayProducts = (props) => {
                     `
                     : ""
                 }
-                
 
-              </div>
               <div style="margin-top:10px;margin-bottom:10px">
                 <label for="product-qty" style="margin-top: 10px; font-weight: bold; display: inline;">Quantity:</label>
                 <input type="number" class="product-qty" name="quantity" min="1" max="50" value="1" style="display: inline; width: 40px;">
