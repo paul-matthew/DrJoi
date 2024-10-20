@@ -44,8 +44,12 @@
   font-weight: 600;
 }
 .price {
-  font-weight: 500;
+  font-weight: bold;
   line-height: 1em;
+}
+
+.price span {
+  font-weight: 500;
 }
 
 .remove {

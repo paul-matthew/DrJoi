@@ -30,18 +30,26 @@ export function CartItem({ id, qty, update, product }) {
   return (
     <div className={styles.container}>
       <div className={styles.img}>
-        <img loading="lazy" style={{minWidth:'190px'}} src={product.images[0].src} alt={product.title} />
+        <img
+          loading="lazy"
+          style={{ minWidth: '190px' }}
+          src={product.images[0].src}
+          alt={product.title}
+        />
+        <p style={{ fontSize: '0.5em', color: 'gray', marginTop: '5px',textAlign:'center' }}>
+          Selected color not displayed in this image.
+        </p>
       </div>
       <div className={styles.content}>
         <p className={styles.title}>{product.title}</p>
         <p className={styles.price}>
-          variant : <span>{currSkus.title}</span>
+          selection: <span>{currSkus.title}</span>
         </p>
         <p className={styles.price}>
-          price : <span>${currSkus.price / 100}</span>
+          price: <span>${currSkus.price / 100}</span>
         </p>
         <label className={styles.price}>
-          qty :
+          qty:
           <input
             type="number"
             min={1}
@@ -51,12 +59,13 @@ export function CartItem({ id, qty, update, product }) {
           />
         </label>
         <p className={styles.price}>
-          total : <span>${(currSkus.price * count) / 100}</span>
+          total: <span>${(currSkus.price * count) / 100}</span>
         </p>
         <button className={styles.remove} onClick={remove}>
           remove
         </button>
       </div>
     </div>
+
   );
 }

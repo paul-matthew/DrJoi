@@ -348,7 +348,7 @@ function About() {
                       className="Card Card1"
                       style={{
                         maxWidth: "100%",
-                        maxHeight:'900px',
+                        // maxHeight:'900px',
                         flex: "1 1 0",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -733,19 +733,23 @@ function About() {
                         marginBottom: "20px",
                       }}
                     >
-                    <video
+                    <iframe
+                      src="https://www.youtube.com/embed/UcvPJYPzN7g?si=w8cb8b-cPMqMi913"
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
                       className="PlaceholderVideo"
                       style={{
                         alignSelf: "stretch",
-                        height: 200,
+                        height: 400,
+                        width: "100%", // To match the 'stretch' property and make it responsive
                         borderRadius: 8,
-                        objectFit: "cover",
+                        objectFit: "cover", // Though this doesn't apply to iframes, it’s included to reflect the intent
                       }}
-                      controls
-                    >
-                      <source src="./videos/GoodMorning.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    />
+
                       <div
                         className="CardContent1"
                         style={{
@@ -824,6 +828,7 @@ function About() {
                     <div
                       className="Card"
                       style={{
+                        height:850,
                         maxWidth: "100%",
                         flex: "1 1 0",
                         background: "white",
@@ -836,19 +841,22 @@ function About() {
                         marginBottom: "20px",
                       }}
                     >
-                    <video
-                      className="PlaceholderVideo"
-                      style={{
-                        alignSelf: "stretch",
-                        height: 200,
-                        borderRadius: 8,
-                        objectFit: "cover",
-                      }}
-                      controls
-                    >
-                      <source src="./videos/GoodAfternoon.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                      <iframe
+                        src="https://www.youtube.com/embed/tEnK5cLU8Hs?si=xQrrP5pWTEry47mi"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        className="PlaceholderVideo"
+                        style={{
+                          alignSelf: "stretch",
+                          height: 400,
+                          width: "100%", // To ensure the iframe stretches to fit the container
+                          borderRadius: 8, // For rounded corners like your video
+                          objectFit: "cover", // Though this doesn't affect iframes, included for intent
+                        }}
+                      />
                       <div
                         className="CardContent1"
                         style={{
@@ -940,19 +948,22 @@ function About() {
                         marginBottom: "20px",
                       }}
                     >
-                    <video
+                    <iframe
+                      src="https://www.youtube.com/embed/re7XzJbH94U?si=0tHrA-v8zYmIgIxx"
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
                       className="PlaceholderVideo"
                       style={{
                         alignSelf: "stretch",
-                        height: 200,
-                        borderRadius: 8,
-                        objectFit: "cover",
+                        height: 400,
+                        width: "100%", // To ensure the iframe stretches to fit the container
+                        borderRadius: 8, // For rounded corners like your video
+                        objectFit: "cover", // Though this doesn't affect iframes, included for intent
                       }}
-                      controls
-                    >
-                      <source src="./videos/GoodNight.mp4" type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    />
                       <div
                         className="CardContent1"
                         style={{

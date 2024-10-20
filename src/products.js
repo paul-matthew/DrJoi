@@ -732,287 +732,279 @@ const DisplayProducts = (props) => {
             productModal.classList.add("portfolio-modal", "modal", "fade");
             productModal.id = `productitem${index + 1}`;
             productModal.innerHTML = `
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">${product.title}</h5>
-              <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px"><i class="fas ion-ios-cart"></i></button>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="product-images">
-                <div class="small-images">
-                  ${product.images
-                    .map(
-                      (image, i) => `
-                    <img src="${image.src}" class="small-img" alt="${product.title}" loading="lazy">
-                  `
-                    )
-                    .join("")}
-                </div>
-                <div class="main-container">
-                <div class="magnify" id="magnify-${index + 1}">
-                  <img src="${
-                    product.images[0].src
-                  }" class="img-fluid main-img" alt="${
-              product.title
-            }" loading="lazy" id="main-image-${index + 1}">
-                  <div class="magnify-glass" id="magnify-glass-${
-                    index + 1
-                  }"></div>
-                </div>
-              </div>
-              </div>
-              <div class="color-options" style="display: flex; align-items: center;">
-                ${
-                  // Check for available color options
-                  (function () {
-                    const colorsOption = product.options.find(option => option.name === "Colors")?.values || [];
-                    const frameColorOption = product.options.find(option => option.name === "Frame Color")?.values || [];
-                    const colorOption = product.options.find(option => option.name === "Color")?.values || [];
-                    const seamColorsOption = product.options.find(option => option.name === "Seam Colors")?.values || [];
-                    const bottleColorOption = product.options.find(option => option.name === "Bottle color")?.values || [];
-
-                    const allAvailableColors = [
-                      ...colorsOption,
-                      ...frameColorOption,
-                      ...colorOption,
-                      ...seamColorsOption,
-                      ...bottleColorOption
-                    ].filter(color => {
-                      const variant = product.variants.find(variant => variant.options.includes(color.id));
-                      return variant && variant.is_enabled;
-                    });
-
-                    // If there are available colors, render the title and options
-                    if (allAvailableColors.length > 0) {
-                      const defaultColor = allAvailableColors.length === 1 ? "selected" : "";
-
-                      return `
-                      <div style="display: flex; align-items: center; margin-top: 20px;">
-                        <h6 style='font-weight:bold; margin-right: 8px;'>Color selection:</h6>
-                        <div style="display: flex; align-items: center;margin-bottom:5px;">
-                          ${allAvailableColors.map(color => `
-                            <div class="color-option ${defaultColor}" style="background-color: ${color.colors[0]};"></div>
-                          `).join("")}
-                        </div>
-                      </div>
-                    `;
-                    
-                    }
-                    // Return empty if no colors are available
-                    return "";
-                  })()
-                }
-              </div>
-
-              <div class="fabric-options" style="margin-right: 20px; ${
-                product.options.some(
-                  (option) =>
-                    option.name === "Fabric weight" ||
-                    option.name === "Box type" ||
-                    option.name === "Paper finishes" ||
-                    option.name === "Finishes"
-                ) &&
-                (product.options.some(
-                  (option) =>
-                    option.name === "Fabric weight" && option.type === "weight"
-                ) ||
-                  product.options.some(
-                    (option) =>
-                      option.name === "Box type" && option.type === "finish"
-                  ) ||
-                  product.options.some(
-                    (option) =>
-                      option.name === "Paper finishes" &&
-                      option.type === "paper"
-                  ) ||
-                  product.options.some(
-                    (option) =>
-                      option.name === "Finishes" && option.type === "surface"
-                  ))
-                  ? ""
-                  : "display: none;"
-              }">
-                <h6 style='font-weight:bold; display: inline;'>${
-                  product.options.find(
-                    (option) =>
-                      option.name === "Fabric weight" ||
-                      option.name === "Box type" ||
-                      option.name === "Paper finishes" ||
-                      option.name === "Finishes"
-                  )?.name
-                }:</h6>
-                <select class="fabric-dropdown">
-                    ${(
-                      product.options.find(
-                        (option) =>
-                          option.name === "Fabric weight" &&
-                          option.type === "weight"
-                      )?.values ||
-                      product.options.find(
-                        (option) =>
-                          option.name === "Box type" && option.type === "finish"
-                      )?.values ||
-                      product.options.find(
-                        (option) =>
-                          option.name === "Paper finishes" &&
-                          option.type === "paper"
-                      )?.values ||
-                      product.options.find(
-                        (option) =>
-                          option.name === "Finishes" &&
-                          option.type === "surface"
-                      )?.values ||
-                      []
-                    )
-                      .filter((option) => {
-                        const variant = product.variants.find((variant) => {
-                          if (variant.options.includes(option.id)) {
-                            if (
-                              product.options.some(
-                                (opt) =>
-                                  opt.name === "Fabric weight" &&
-                                  opt.type === "weight"
-                              ) ||
-                              product.options.some(
-                                (opt) =>
-                                  opt.name === "Box type" &&
-                                  opt.type === "finish"
-                              ) ||
-                              product.options.some(
-                                (opt) =>
-                                  opt.name === "Paper finishes" &&
-                                  opt.type === "paper"
-                              ) ||
-                              product.options.some(
-                                (opt) =>
-                                  opt.name === "Finishes" &&
-                                  opt.type === "surface"
-                              )
-                            ) {
-                              return variant.is_available && variant.is_enabled;
-                            }
-                          }
-                          return false;
-                        });
-                        return variant;
-                      })
-                      .map(
-                        (option) => `
-                            <option value="${option.id}">${option.title}</option>
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">${product.title}</h5>
+                    <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px"><i class="fas ion-ios-cart"></i></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="product-images">
+                      <div class="small-images">
+                        ${product.images
+                          .map(
+                            (image, i) => `
+                          <img src="${image.src}" class="small-img" alt="${product.title}" loading="lazy">
                         `
-                      )
-                      .join("")}
-                </select>
-              </div>
-
-              <div class="size-and-quantity-options" style="display: flex; align-items: center;">
-                <div class="size-options" style="margin-right: 20px;margin-top:10px">
-                  <h6 style='font-weight:bold; display: inline;'>Size selection:</h6>
-                  <select class="size-dropdown">
-                    ${
-                      product.options
-                        .find((option) => option.name === "Sizes")
-                        ?.values.filter((size) => {
-                          const variant = product.variants.find((variant) =>
-                            variant.options.includes(size.id)
-                          );
-                          if (size.title.length < 4) {
-                            return variant && variant.is_available
-                              ? `<option value="${size.id}">${size.title} (Available)</option>`
-                              : "";
-                          } else {
-                            return variant &&
-                              variant.is_available &&
-                              variant.is_enabled
-                              ? `<option value="${size.id}">${size.title}</option>`
-                              : "";
-                            }
-                        })
-                        .map(
-                          (size) => `
-                        <option value="${size.id}">${size.title}</option>
-                      `
-                        )
-                        .join("") ||
-                      product.options
-                        .find((option) => option.name === "Size")
-                        ?.values.filter((size) => {
-                          const variant = product.variants.find((variant) =>
-                            variant.options.includes(size.id)
-                          );
-                          return (
-                            variant &&
-                            variant.is_available
-                            //REMOVED BELOW LINE TO MAKE WATER BOTTLE WORK
-                            // && variant.is_enabled
-                          );
-                        })
-                        .map(
-                          (size) => `
-                        <option value="${size.id}">${size.title}</option>
-                      `
-                        )
-                        .join("") ||
-                        product.options
-                        .find((option) => option.name === "Quantity")
-                        ?.values.map(
-                          (quantity) => `
-                          <option value="${quantity.id}">${quantity.title}</option>
-                        `
-                        )
-                        .join("") 
-                    }            
-                  </select>
-                </div>
-                
-
-              </div>
-                              ${
-                  product.options.find((option) => option.name === "Flavour" || option.name === "Flavor")
-                    ?.values.length > 0
-                    ? `
-                    <div class="flavour-options" style="margin-right: 20px;margin-top:10px;">
-                      <h6 style='font-weight:bold; display: inline;'>Flavors:</h6>
-                      <select class="flavour-dropdown">
-                        ${product.options
-                          .find((option) => option.name === "Flavour" || option.name === "Flavor")
-                          ?.values.map(
-                            (flavour) => `
-                            <option value="${flavour.id}">${flavour.title}</option>
-                          `
                           )
                           .join("")}
+                      </div>
+                      <div class="main-container">
+                      <div class="magnify" id="magnify-${index + 1}">
+                        <img src="${
+                          product.images[0].src
+                        }" class="img-fluid main-img" alt="${
+                    product.title
+                  }" loading="lazy" id="main-image-${index + 1}">
+                        <div class="magnify-glass" id="magnify-glass-${
+                          index + 1
+                        }"></div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="color-options" style="display: flex; align-items: center;">
+                      ${
+                        // Check for available color options
+                        (function () {
+                          const colorsOption = product.options.find(option => option.name === "Colors")?.values || [];
+                          const frameColorOption = product.options.find(option => option.name === "Frame Color")?.values || [];
+                          const colorOption = product.options.find(option => option.name === "Color")?.values || [];
+                          const seamColorsOption = product.options.find(option => option.name === "Seam Colors")?.values || [];
+                          const bottleColorOption = product.options.find(option => option.name === "Bottle color")?.values || [];
+
+                          const allAvailableColors = [
+                            ...colorsOption,
+                            ...frameColorOption,
+                            ...colorOption,
+                            ...seamColorsOption,
+                            ...bottleColorOption
+                          ].filter(color => {
+                            const variant = product.variants.find(variant => variant.options.includes(color.id));
+                            return variant && variant.is_enabled;
+                          });
+
+                          // If there are available colors, render the title and options
+                          if (allAvailableColors.length > 0) {
+                            const defaultColor = allAvailableColors.length === 1 ? "selected" : "";
+
+                            return `
+                            <div style="display: flex; align-items: center; margin-top: 20px;">
+                              <h6 style='font-weight:bold; margin-right: 8px;'>Color selection:</h6>
+                              <div style="display: flex; align-items: center;margin-bottom:5px;">
+                                ${allAvailableColors.map(color => `
+                                  <div class="color-option ${defaultColor}" style="background-color: ${color.colors[0]};"></div>
+                                `).join("")}
+                              </div>
+                            </div>
+                          `;
+                          
+                          }
+                          // Return empty if no colors are available
+                          return "";
+                        })()
+                      }
+                    </div>
+
+                    <div class="fabric-options" style="margin-right: 20px; ${
+                      product.options.some(
+                        (option) =>
+                          option.name === "Fabric weight" ||
+                          option.name === "Box type" ||
+                          option.name === "Paper finishes" ||
+                          option.name === "Finishes"
+                      ) &&
+                      (product.options.some(
+                        (option) =>
+                          option.name === "Fabric weight" && option.type === "weight"
+                      ) ||
+                        product.options.some(
+                          (option) =>
+                            option.name === "Box type" && option.type === "finish"
+                        ) ||
+                        product.options.some(
+                          (option) =>
+                            option.name === "Paper finishes" &&
+                            option.type === "paper"
+                        ) ||
+                        product.options.some(
+                          (option) =>
+                            option.name === "Finishes" && option.type === "surface"
+                        ))
+                        ? ""
+                        : "display: none;"
+                    }">
+                      <h6 style='font-weight:bold; display: inline;'>${
+                        product.options.find(
+                          (option) =>
+                            option.name === "Fabric weight" ||
+                            option.name === "Box type" ||
+                            option.name === "Paper finishes" ||
+                            option.name === "Finishes"
+                        )?.name
+                      }:</h6>
+                      <select class="fabric-dropdown">
+                          ${(
+                            product.options.find(
+                              (option) =>
+                                option.name === "Fabric weight" &&
+                                option.type === "weight"
+                            )?.values ||
+                            product.options.find(
+                              (option) =>
+                                option.name === "Box type" && option.type === "finish"
+                            )?.values ||
+                            product.options.find(
+                              (option) =>
+                                option.name === "Paper finishes" &&
+                                option.type === "paper"
+                            )?.values ||
+                            product.options.find(
+                              (option) =>
+                                option.name === "Finishes" &&
+                                option.type === "surface"
+                            )?.values ||
+                            []
+                          )
+                            .filter((option) => {
+                              const variant = product.variants.find((variant) => {
+                                if (variant.options.includes(option.id)) {
+                                  if (
+                                    product.options.some(
+                                      (opt) =>
+                                        opt.name === "Fabric weight" &&
+                                        opt.type === "weight"
+                                    ) ||
+                                    product.options.some(
+                                      (opt) =>
+                                        opt.name === "Box type" &&
+                                        opt.type === "finish"
+                                    ) ||
+                                    product.options.some(
+                                      (opt) =>
+                                        opt.name === "Paper finishes" &&
+                                        opt.type === "paper"
+                                    ) ||
+                                    product.options.some(
+                                      (opt) =>
+                                        opt.name === "Finishes" &&
+                                        opt.type === "surface"
+                                    )
+                                  ) {
+                                    return variant.is_available && variant.is_enabled;
+                                  }
+                                }
+                                return false;
+                              });
+                              return variant;
+                            })
+                            .map(
+                              (option) => `
+                                  <option value="${option.id}">${option.title}</option>
+                              `
+                            )
+                            .join("")}
                       </select>
                     </div>
-                    `
-                    : ""
-                }
 
-              <div style="margin-top:10px;margin-bottom:10px">
-                <label for="product-qty" style="margin-top: 10px; font-weight: bold; display: inline;">Quantity:</label>
-                <input type="number" class="product-qty" name="quantity" min="1" max="50" value="1" style="display: inline; width: 40px;">
+                    <div class="size-and-quantity-options" style="display: flex; align-items: center;">
+                      <div class="size-options" style="margin-right: 20px; margin-top: 10px;">
+                        <h6 style='font-weight:bold; display: inline;'>Size selection:</h6>
+                        <select class="size-dropdown">
+                          ${
+                            // Look for the "Sizes" option
+                            product.options
+                              .find((option) => option.name === "Sizes")
+                              ?.values
+                              .filter((size) => {
+                                // Check if there is an available and enabled variant for each size
+                                return product.variants.some((variant) =>
+                                  variant.options.includes(size.id) &&
+                                  variant.is_available &&  // Only include if the variant is available
+                                  variant.is_enabled        // Only include if the variant is enabled
+                                );
+                              })
+                              .map(
+                                (size) => `
+                                  <option value="${size.id}">${size.title}</option>
+                                `
+                              )
+                              .join("") ||
+                            // Fallback to the "Size" option if "Sizes" option is not found
+                            product.options
+                              .find((option) => option.name === "Size")
+                              ?.values
+                              .filter((size) => {
+                                // Check if there is an available and enabled variant for each size
+                                return product.variants.some((variant) =>
+                                  variant.options.includes(size.id) &&
+                                  variant.is_available &&  // Only include if the variant is available
+                                  variant.is_enabled        // Only include if the variant is enabled
+                                );
+                              })
+                              .map(
+                                (size) => `
+                                  <option value="${size.id}">${size.title}</option>
+                                `
+                              )
+                              .join("") ||
+                            // Handle Quantity options as a separate dropdown, if needed
+                            product.options
+                              .find((option) => option.name === "Quantity")
+                              ?.values.map(
+                                (quantity) => `
+                                  <option value="${quantity.id}">${quantity.title}</option>
+                                `
+                              )
+                              .join("") 
+                          }
+                        </select>
+                      </div>
+                    </div>
+                    ${
+                        product.options.find((option) => option.name === "Flavour" || option.name === "Flavor")
+                          ?.values.length > 0
+                          ? `
+                          <div class="flavour-options" style="margin-right: 20px;margin-top:10px;">
+                            <h6 style='font-weight:bold; display: inline;'>Flavors:</h6>
+                            <select class="flavour-dropdown">
+                              ${product.options
+                                .find((option) => option.name === "Flavour" || option.name === "Flavor")
+                                ?.values.map(
+                                  (flavour) => `
+                                  <option value="${flavour.id}">${flavour.title}</option>
+                                `
+                                )
+                                .join("")}
+                            </select>
+                          </div>
+                          `
+                          : ""
+                      }
+
+                    <div style="margin-top:10px;margin-bottom:10px">
+                      <label for="product-qty" style="margin-top: 10px; font-weight: bold; display: inline;">Quantity:</label>
+                      <input type="number" class="product-qty" name="quantity" min="1" max="50" value="1" style="display: inline; width: 40px;">
+                    </div>
+                    <p style='font-weight:bold'>Price: 
+                      <span style='font-weight:normal'>
+                        $${
+                          product.variants
+                            .filter((variant) => variant.is_enabled)
+                            .reduce(
+                              (maxPrice, variant) =>
+                                variant.price > maxPrice ? variant.price : maxPrice,
+                              0
+                            ) / 100
+                        }
+                      USD</span>
+                    </p>
+                    <button class="add-to-cart-btn" style='margin-right:10px'>Add to Cart</button>Items in Cart: <span class="item-count"></span>
+                    <p>${product.description}</p>
+                  </div>
+                </div>
               </div>
-              <p style='font-weight:bold'>Price: 
-                <span style='font-weight:normal'>
-                  $${
-                    product.variants
-                      .filter((variant) => variant.is_enabled)
-                      .reduce(
-                        (maxPrice, variant) =>
-                          variant.price > maxPrice ? variant.price : maxPrice,
-                        0
-                      ) / 100
-                  }
-                USD</span>
-              </p>
-              <button class="add-to-cart-btn" style='margin-right:10px'>Add to Cart</button>Items in Cart: <span class="item-count"></span>
-              <p>${product.description}</p>
-            </div>
-          </div>
-        </div>
-      `;
+            `;
 
             document.body.appendChild(productModal);
 
@@ -1495,7 +1487,7 @@ const DisplayProducts = (props) => {
     }
   });
 
-
+//STRIPE
   
   async function initializePayPal() {
     if (currentStage === 3) {
@@ -1755,7 +1747,152 @@ const DisplayProducts = (props) => {
     }
 }
 
+//PAYPAL
 
+// async function initializePayPal() {
+//   if (currentStage === 3) {
+//       const stripeContainer = document.getElementById("paypal-parent");
+//       if (!stripeContainer) {
+//           console.error("Element with ID 'paypal-parent' not found.");
+//           return;
+//       }
+
+//       // Create and append the payment form
+//       const stripeFormContainer = document.createElement("form");
+//       stripeFormContainer.id = "payment-form";
+      
+//       const cardElementDiv = document.createElement("div");
+//       cardElementDiv.id = "stripe-form-container";
+//       stripeFormContainer.appendChild(cardElementDiv);
+      
+//       const cardErrorsDiv = document.createElement("div");
+//       cardErrorsDiv.id = "card-errors";
+//       cardErrorsDiv.setAttribute("role", "alert");
+//       stripeFormContainer.appendChild(cardErrorsDiv);
+//       stripeContainer.appendChild(stripeFormContainer);
+      
+//       // Create and append the Pay button
+//       const payButton = document.createElement("button");
+//       payButton.type = "submit";
+//       payButton.className = "pay-button";
+//       payButton.textContent = `Pay: $${totalPayment}`;
+//       stripeContainer.appendChild(payButton);
+
+//       const fetchURLstripeCreatePaymentIntent = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+//           ? "http://localhost:5000/stripe/create-payment-intent"
+//           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
+
+//       const fetchURLstripeValidate = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+//           ? "http://localhost:5000/stripe/validate"
+//           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/validate";
+
+//       const fetchStripeKey = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+//           ? "http://localhost:5000/stripe/publishable-key"
+//           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
+
+//       try {
+//           // Fetch the Stripe publishable key
+//           const keyResponse = await fetch(fetchStripeKey);
+//           const { publishableKey } = await keyResponse.json();
+//           if (!publishableKey) {
+//               throw new Error("Failed to retrieve Stripe publishable key");
+//           }
+
+//           // Initialize Stripe elements
+//           const stripe = await loadStripe(publishableKey);
+//           const elements = stripe.elements();
+//           const cardElement = elements.create('card');
+//           cardElement.mount('#stripe-form-container');
+
+//           // Add event listener to the Pay button
+//           payButton.addEventListener('click', async (event) => {
+//               event.preventDefault();
+//               if (!stripe || !elements) {
+//                   console.error("Stripe or elements not loaded.");
+//                   return;
+//               }
+
+//               try {
+//                   // Calculate the tax amount based on the subtotal
+//                   const formattedSubtotal = parseFloat(subtotal).toFixed(2);
+//                   const taxAmount = (subtotal * taxRate).toFixed(2);
+//                   const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
+//                   const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
+//                   const formattedDonationAmount = parseFloat(inputValues.donation) || 0;
+
+//                   // Validate the payment details on the server
+//                   const validationResponse = await fetch(fetchURLstripeValidate, {
+//                       method: "POST",
+//                       headers: {
+//                           "Content-Type": "application/json",
+//                       },
+//                       body: JSON.stringify({
+//                           amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
+//                           taxAmount: formattedTaxAmount,
+//                           shippingCost: formattedShippingCost,
+//                           donationAmount: formattedDonationAmount,
+//                           subtotal: formattedSubtotal,
+//                       }),
+//                   });
+                  
+//                   const validationData = await validationResponse.json();
+//                   if (!validationData.success) {
+//                       throw new Error("Payment validation failed: " + (validationData.error || 'Unknown error'));
+//                   }
+
+//                   // Create a PaymentIntent on the server
+//                   const paymentIntentResponse = await fetch(fetchURLstripeCreatePaymentIntent, {
+//                       method: "POST",
+//                       headers: {
+//                           "Content-Type": "application/json",
+//                       },
+//                       body: JSON.stringify({
+//                           amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
+//                           description: `Order total of $${totalPayment.toFixed(2)}`,
+//                           metadata: {
+//                               subtotal: formattedSubtotal,
+//                               tax: formattedTaxAmount,
+//                               shipping: formattedShippingCost,
+//                               donation: inputValues.donation,
+//                           },
+//                       }),
+//                   });
+
+//                   const paymentIntentData = await paymentIntentResponse.json();
+//                   if (!paymentIntentData.clientSecret) {
+//                       throw new Error("Failed to get client secret from Stripe");
+//                   }
+
+//                   const clientSecret = paymentIntentData.clientSecret;
+
+//                   // Handle the payment confirmation
+//                   const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+//                       payment_method: {
+//                           card: cardElement,
+//                       },
+//                   });
+
+//                   console.log('Stripe PaymentIntent Response:', { paymentIntent, error });
+
+//                   if (error) {
+//                       console.error("Error confirming card payment:", error);
+//                       alert("Error confirming card payment. Please check the console for details.");
+//                   } else if (paymentIntent.status === 'succeeded') {
+//                       submitOrder();
+//                       console.log("Order submitted successfully");
+//                       console.log("Payment succeeded:", paymentIntent);
+//                   }
+//               } catch (error) {
+//                   console.error("Error during payment process:", error);
+//                   alert("Error during payment process. Please check the console for details.");
+//               }
+//           });
+//       } catch (error) {
+//           console.error("Error during initialization process:", error);
+//           alert("Error during initialization process. Please check the console for details.");
+//       }
+//   }
+// }
 
 
 

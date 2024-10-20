@@ -54,7 +54,7 @@ function AboutUsMobile() {
                         </div>
                         <FadeInSection>
                         <div className="Row" style={{ flexWrap: "wrap", justifyContent: "flex-start",marginBottom:'160px' }}>
-                            <div className="Card" style={{ minHeight:'650px',maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex',marginBottom:'20px' }}>
+                            <div className="Card Card1" style={{ minHeight:'650px',maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex',marginBottom:'20px' }}>
                                 <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./professional.jpg" alt='Placeholder' />
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -68,7 +68,7 @@ function AboutUsMobile() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="Card" style={{ minHeight:'550px',maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                            <div className="Card Card1" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                 <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./grad.jpg" alt='Placeholder' />
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -82,7 +82,7 @@ function AboutUsMobile() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="Card" style={{ minHeight:'550px',maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                            <div className="Card Card1" style={{ minHeight:'550px',maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                 <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./expertise.jpg" alt='Placeholder' />
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -105,7 +105,7 @@ function AboutUsMobile() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="Card" style={{ minHeight:'600px',axWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
+                            <div className="Card Card1" style={{ minHeight:'600px',axWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
                                 <img className="PlaceholderImage" style={{ alignSelf: 'stretch', height: 200, borderRadius: 8, objectFit: 'cover' }} src="./exp4.jpg" alt='Placeholder' />
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '220px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'70px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -131,10 +131,22 @@ function AboutUsMobile() {
                         <FadeInSection>
                         <div className="Row" style={{ flexWrap: "wrap", justifyContent: "flex-start",marginBottom:'160px' }}>
                             <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
-                            <video className="PlaceholderVideo"style={{alignSelf: "stretch",height: 200,borderRadius: 8,objectFit: "cover",}}controls>
-                                <source src="./videos/GoodMorning.mp4" type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>                                
+                                <iframe
+                                src="https://www.youtube.com/embed/UcvPJYPzN7g?si=w8cb8b-cPMqMi913"
+                                title="YouTube video player"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                allowFullScreen
+                                className="PlaceholderVideo"
+                                style={{
+                                    alignSelf: "stretch",
+                                    height: 300,
+                                    width: "100%", // Stretches the iframe to match container width, similar to alignSelf: "stretch"
+                                    borderRadius: 8, // Matches the rounded corners of the video
+                                    objectFit: "cover", // While this won't affect iframe, it aligns with the intent of covering content
+                                }}
+                                />
                             <div className="CardContent" style={{ alignSelf: 'stretch', height: '340px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
                                         <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
@@ -145,28 +157,52 @@ function AboutUsMobile() {
                                 </div>
                             </div>
                             <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
-                                <video className="PlaceholderVideo"style={{alignSelf: "stretch",height: 200,borderRadius: 8,objectFit: "cover",}}controls>
-                                    <source src="./videos/GoodAfternoon.mp4" type="video/mp4" />
-                                    Your browser does not support the video tag.
-                                </video>                                
+                                <iframe
+                                src="https://www.youtube.com/embed/tEnK5cLU8Hs?si=xQrrP5pWTEry47mi"
+                                title="YouTube video player"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                allowFullScreen
+                                className="PlaceholderVideo"
+                                style={{
+                                    alignSelf: "stretch",
+                                    height: 300,
+                                    width: "100%", // Stretches to match container width
+                                    borderRadius: 8, // Same rounded corners as your video
+                                    objectFit: "cover", // Though it doesn't affect iframe, it reflects the intended design
+                                }}
+                                />                      
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '340px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
                                         <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
-                                            <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(18px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Good Afternoon</div>
+                                            <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(18px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Good Afternoon Affirmation</div>
                                             <div  style={{ alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(14px, 3vw, 17px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word' }}>Amidst the hustle and bustle of the day, take a moment to center yourself and recharge with these uplifting affirmations. Whether you're facing challenges or embracing triumphs, these affirmations will fortify your spirit and fuel your perseverance. Remind yourself of your resilience, inner strength, and unwavering determination as you navigate through the afternoon. With each affirmation, reaffirm your ability to overcome obstacles and seize the day with unwavering resolve.</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="Card" style={{ maxWidth: "100%", flex: '1 1 0', background: 'white', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)', borderRadius: 8, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'inline-flex', marginBottom:'20px' }}>
-                                <video className="PlaceholderVideo"style={{alignSelf: "stretch",height: 200,borderRadius: 8,objectFit: "cover",}}controls>
-                                    <source src="./videos/GoodNight.mp4" type="video/mp4" />
-                                    Your browser does not support the video tag.
-                                </video>                                
+                                <iframe
+                                src="https://www.youtube.com/embed/re7XzJbH94U?si=0tHrA-v8zYmIgIxx"
+                                title="YouTube video player"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerPolicy="strict-origin-when-cross-origin"
+                                allowFullScreen
+                                className="PlaceholderVideo"
+                                style={{
+                                    alignSelf: "stretch",
+                                    height: 300,
+                                    width: "100%", // Ensures the iframe stretches across the container width
+                                    borderRadius: 8, // Matches the rounded corners of your video
+                                    objectFit: "cover", // Intent for responsive content fitting, though doesn't affect iframe directly
+                                }}
+                                />
                                 <div className="CardContent" style={{ alignSelf: 'stretch', height: '340px', padding: 32, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex',marginBottom:'50px' }}>
                                     <div className="Content" style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
                                         <div style={{ alignSelf: 'stretch', height: '30vh', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 10.67, display: 'flex' }}>
-                                            <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(18px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Good Night</div>
+                                            <div className="Project3" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(18px, 3vw, 30px)', fontFamily: 'Roboto', fontWeight: '700', wordWrap: 'break-word' }}>Good Night Affirmation</div>
                                             <div  style={{ alignSelf: 'stretch', color: '#1C1E53', fontSize: 'clamp(14px, 3vw, 17px)', fontFamily: 'Roboto', fontWeight: '400', wordWrap: 'break-word' }}>As the day draws to a close, grant yourself the gift of tranquility and serenity with these calming affirmations. Let go of the stresses and worries of the day as you prepare for a restful night's sleep. These affirmations will soothe your mind, ease tension from your body, and invite peace into your heart. Embrace gratitude for the day's blessings, release any lingering anxieties, and welcome a sense of calm into your soul. May these affirmations guide you into a peaceful night’s sleep, rejuvenating your spirit for the adventures that await in the morning light.</div>
                                         </div>
                                     </div>
