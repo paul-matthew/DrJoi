@@ -18,6 +18,7 @@ const printifyApiKey = process.env.PRINTIFY_API_KEY;
 const printifyShopID = process.env.PRINTIFY_SHOPID;
 const emailUser = process.env.EMAIL_USER;
 const emailPass = process.env.EMAIL_PASS;
+const emailBusiness = process.env.BUSINESS_EMAIL
 const stripe = Stripe(process.env.STRIPE_CLIENT_SECRET_SB); 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -528,7 +529,7 @@ app.post('/contact', (req, res) => {
 
   const mailOptions = {
     from: email,
-    to: 'DoctorJoi@exoticrelief.com', // Your email address
+    to: emailBusiness, // Your email address
     subject: `Contact Form Submission from ${name}`,
     text: message,
   };
@@ -588,6 +589,51 @@ app.post('/donation-email', (req, res) => {
     console.log('Email sent:', info.response);
     res.status(200).send('Email sent');
   });
+});
+
+// Deals submission endpoint
+app.post('/deals', async (req, res) => {
+  const { name, location, email, goal } = req.body;
+
+  // HTML table for the email content
+  const emailContent = `
+    <h2>New Travel Form Submission</h2>
+    <table border="1" cellspacing="0" cellpadding="10">
+      <tr>
+        <th>Name</th>
+        <td>${name}</td>
+      </tr>
+      <tr>
+        <th>Location</th>
+        <td>${location}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>${email}</td>
+      </tr>
+      <tr>
+        <th>Goal</th>
+        <td>${goal}</td>
+      </tr>
+    </table>
+  `;
+
+  // Mail options
+  const mailOptions = {
+    from: emailUser,
+    to: emailBusiness, // Replace with the desired recipient's email address
+    subject: 'Travel Form Submission',
+    html: emailContent,
+  };
+
+  // Send the email
+  try {
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'Form submitted and email sent successfully!' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'Failed to send email' });
+  }
 });
 
 // Start the server

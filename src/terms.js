@@ -19,12 +19,12 @@ const Terms = () => {
               {/* Terms of Use Section */}
               <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
                 <div id="termsofuse" className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(40px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>Terms of Use</div>
-                <p>Welcome to Exotic Relief by Dr. Joi. By accessing and using our website and services, you agree to comply with the following Terms of Use. These terms are designed to ensure a safe and enjoyable experience for all users.</p>
+                <p>Welcome to <strong>Exotic Relief by Dr. Joi</strong>. By accessing and using our website and services, you agree to comply with the following Terms of Use. These terms are designed to ensure a safe and enjoyable experience for all users.</p>
                 <p><b>Acceptance of Terms:</b> By accessing our site, you agree to be bound by these Terms of Use and any applicable laws and regulations. If you do not agree with any part of these terms, you are prohibited from using or accessing this site.</p>
                 <p><b>Modification of Terms:</b> Exotic Relief by Dr Joi reserves the right to modify these terms at any time. Your continued use of the site following any changes indicates your acceptance of the new terms.</p>
                 <p><b>Use of Site:</b> You agree to use our site only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else's use and enjoyment of the site. Prohibited behavior includes harassing or causing distress or inconvenience to any other user, transmitting obscene or offensive content, or disrupting the normal flow of dialogue within our site.</p>
                 <p><b>Intellectual Property:</b> All content on this site, including text, graphics, logos, icons, and images, is the property of Exotic Relief or its content suppliers and is protected by international copyright laws. You agree not to reproduce, duplicate, copy, sell, or resell any portion of the site without express written permission from Exotic Relief by Dr Joi.</p>
-                <p><b>Limitation of Liability:</b> Exotic Relief by Dr. Joi is not liable for any direct, indirect, incidental, or consequential damages arising from your use of the site. This includes but is not limited to damages for loss of profits, goodwill, use, data, or other intangible losses.</p>
+                <p><b>Limitation of Liability:</b> <strong>Exotic Relief by Dr. Joi </strong>is not liable for any direct, indirect, incidental, or consequential damages arising from your use of the site. This includes but is not limited to damages for loss of profits, goodwill, use, data, or other intangible losses.</p>
               </div>
               
               {/* Privacy Policy Section */}
@@ -48,10 +48,17 @@ const Terms = () => {
               </div>
 
               {/* PayPal Payment Processing Section */}
-              <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
+              {/* <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
                 <div id="paypalpolicy" className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(40px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>PayPal Payment Processing</div>
-                <p>Exotic Relief by Dr. Joi uses PayPal for payment processing. PayPal is a trusted and secure payment platform that handles all transactions on our website. By using our services, you agree to PayPal's payment processing terms and policies, which are available on their official website.</p>
+                <p><strong>Exotic Relief by Dr. Joi </strong>uses PayPal for payment processing. PayPal is a trusted and secure payment platform that handles all transactions on our website. By using our services, you agree to PayPal's payment processing terms and policies, which are available on their official website.</p>
                 <p>We prioritize your security and ensure that your payment information is protected by PayPal's industry-leading encryption and fraud prevention technologies. For more details about how PayPal handles your information, please refer to their <a href="https://www.paypal.com/us/legalhub/privacy-full" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
+              </div> */}
+
+              {/* STRIPE Payment Processing Section */}
+              <div className="Content" style={{ alignSelf: 'stretch', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 32, display: 'flex' }}>
+                <div id="paypalpolicy" className="MyExpertise" style={{ alignSelf: 'stretch', color: '#282938', fontSize: 'clamp(40px, 4vw, 61px)', fontFamily: 'PlayfairDisplay', fontWeight: '700', wordWrap: 'break-word' }}>Stripe Payment Processing</div>
+                <p><strong>Exotic Relief by Dr. Joi </strong>uses Stripe for payment processing. Stripe is a trusted and secure payment platform that handles all transactions on our website. By using our services, you agree to Stripe's payment processing terms and policies, which are available on their official website.</p>
+                <p>We prioritize your security and ensure that your payment information is protected by Stripe's industry-leading encryption and fraud prevention technologies. For more details about how Stripe handles your information, please refer to their <a href="https://stripe.com/en-ca/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
               </div>
 
               {/* Printify Terms Reference Section */}

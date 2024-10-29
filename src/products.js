@@ -780,12 +780,15 @@ const DisplayProducts = (props) => {
                             ...seamColorsOption,
                             ...bottleColorOption
                           ].filter(color => {
-                            const variant = product.variants.find(variant => variant.options.includes(color.id));
-                            return variant && variant.is_enabled;
-                          });
+                            // Check for any variant that matches the color's id and is enabled
+                            const variant = product.variants.find(variant => 
+                              variant.options.includes(color.id) && variant.is_enabled
+                            );
+                            return variant;  // Include only colors that have enabled variants
+                          }); //THIS FIXES THE LAPTOP PRODUCT COLORS ISSUE
 
                           // If there are available colors, render the title and options
-                          if (allAvailableColors.length > 0) {
+                          if (allAvailableColors.length >= 1) {
                             const defaultColor = allAvailableColors.length === 1 ? "selected" : "";
 
                             return `

@@ -427,7 +427,7 @@ function App() {
             alignItems: "center",
             display: "inline-flex",
           }}
-          onClick={() => handleBlogClick()}
+          onClick={() => handleLoveClick()}
         >
           <div
             className="Label"
@@ -442,7 +442,7 @@ function App() {
               wordWrap: "break-word",
             }}
           >
-            Deals
+            Coaching
           </div>
         </div>
         <div
@@ -460,7 +460,7 @@ function App() {
             alignItems: "center",
             display: "inline-flex",
           }}
-          onClick={() => handleLoveClick()}
+          onClick={() => handleBlogClick()}
         >
           <div
             className="Label"
@@ -475,7 +475,7 @@ function App() {
               wordWrap: "break-word",
             }}
           >
-            Coaching
+            Deals
           </div>
         </div>
         <div
