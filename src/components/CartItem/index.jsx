@@ -37,7 +37,7 @@ export function CartItem({ id, qty, update, product }) {
           alt={product.title}
         />
         <p style={{ fontSize: '0.5em', color: 'gray', marginTop: '5px',textAlign:'center' }}>
-          Selected color not displayed in this image.
+          Selected color may not be displayed in this image.
         </p>
       </div>
       <div className={styles.content}>
