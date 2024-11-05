@@ -34,6 +34,13 @@ paypal.configure({
 app.use(express.json());
 app.use(cors());
 
+app.use((req, res, next) => {
+  if (req.secure) {
+      return next(); // If already HTTPS, proceed to the next middleware/route
+  }
+  res.redirect(`https://${req.headers.host}${req.url}`); // Redirect to HTTPS
+});
+
 
 app.use('/.well-known', (req, res, next) => {
   if (req.url === '/apple-developer-merchantid-domain-association') {
@@ -55,11 +62,16 @@ app.get('/config', (req, res) => {
 
 // Configure nodemailer with your email provider's SMTP settings
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // Example: 'gmail'
+  host: 'smtp.gmail.com', // SMTP server for Gmail
+  port: 587, // TLS port
+  secure: false, // true for port 465, false for other ports
   auth: {
-    user: emailUser,
-    pass: emailPass,
+    user: emailUser, // Your Gmail address
+    pass: emailPass, // Your Gmail password or app password
   },
+  tls: {
+    rejectUnauthorized: true // Recommended to leave as true for secure connections
+  }
 });
 
 app.get('/stripe/publishable-key', (req, res) => {
@@ -112,7 +124,7 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), (req, res
   switch (event.type) {
     case 'payment_intent.succeeded':
       const paymentIntent = event.data.object;
-      console.log('PaymentIntent was successful:', paymentIntent);
+      console.log('PaymentIntent was successful:');
       break;
     case 'payment_intent.payment_failed':
       const paymentFailure = event.data.object;
@@ -250,7 +262,7 @@ app.post('/stripe/calculate-taxes', async (req, res) => {
     return res.status(400).json({ error: 'Invalid country, region, city, address, or zip' });
   }
 
-  console.log('Received request to fetch tax rate with country:', country, 'region:', region, 'city:', city, 'address:', address, 'zip:', zip);
+  console.log('Received request to fetch tax rate with country:');
 
   try {
     // Create a tax calculation with the specified tax code
@@ -343,7 +355,7 @@ app.post('/orders', async (req, res) => {
       };
       
       const shippingTime = getShippingTime(address_to.country);
-      console.log("Received line_items:", line_items);
+      console.log("Received line_items:");
       
       const lineItemsHtml = line_items.map(item => `
       <tr style='padding-top:20px'>
@@ -354,9 +366,9 @@ app.post('/orders', async (req, res) => {
     `).join('');
     
     const mailOptions = {
-      from: emailUser,
+      from: emailBusiness,
       to: address_to.email,
-      bcc: emailUser,
+      bcc: emailBusiness,
       subject: 'Order Placed, Thank You! Exotic Relief by Dr. Joi',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
@@ -410,7 +422,7 @@ app.post('/orders', async (req, res) => {
         if (error) {
           console.error('Error sending email:', error);
         } else {
-          console.log('Email sent:', info.response);
+          console.log('Email sent:');
         }
       });
 
@@ -444,7 +456,7 @@ const shipping = [];
 app.post('/shipping-cost', async (req, res) => {
   const { address_to, line_items } = req.body;
 
-  console.log('Received shipping cost request:', { address_to, line_items });
+  console.log('Received shipping cost request:');
 
   try {
     // Make a request to Printify's API to calculate shipping cost
@@ -464,7 +476,7 @@ app.post('/shipping-cost', async (req, res) => {
     }
 
     const shippingData = await shippingResponse.json();
-    console.log('Shipping cost response from Printify:', shippingData);
+    console.log('Shipping cost response from Printify:');
 
     // Store shipping data in the array (optional, if needed)
     shipping.push(shippingData);
@@ -531,7 +543,7 @@ app.post('/contact', (req, res) => {
     from: email,
     to: emailBusiness, // Your email address
     subject: `Contact Form Submission from ${name}`,
-    text: message,
+    text: `From: ${email}\n\nMessage:\n${message}`
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -539,7 +551,7 @@ app.post('/contact', (req, res) => {
       console.error('Error sending email:', error);
       res.status(500).send('Error sending email');
     } else {
-      console.log('Email sent:', info.response);
+      console.log('Email sent:');
       res.status(200).json({ message: 'Email sent' });    
     }
   });
@@ -549,8 +561,9 @@ app.post('/donation-email', (req, res) => {
   const { email, amount} = req.body;
 
   const mailOptions = {
-    from: 'Drjoi@exoticrelief.com',
+    from: emailBusiness,
     to: email,
+    bcc: emailBusiness,
     subject: 'Donation Receipt from Exotic Relief Research & Mental Health Institute',
     html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6;">
@@ -570,7 +583,7 @@ app.post('/donation-email', (req, res) => {
             <p><strong>Non-Profit Status:</strong> We are a tax-exempt entity under section 501(c)(3) of the Internal Revenue Code.</p>
             <p><strong>No Goods or Services Provided:</strong> No goods or services were provided in exchange for this donation.</p>
             
-            <p>If you have any questions or need further assistance, please feel free to contact us at <a href="mailto:Drjoi@exoticrelief.com">Drjoi@exoticrelief.com</a>.</p>
+            <p>If you have any questions or need further assistance, please feel free to contact us at <a href="mailto:${emailBusiness}}">${emailBusiness}</a>.</p>
             <p>Thank you once again for your support!</p>
             <p>Best regards,</p>
             <p>Dr. Joi</p>
@@ -586,7 +599,7 @@ app.post('/donation-email', (req, res) => {
       console.error('Error sending email:', error);
       return res.status(500).send('Error sending email');
     }
-    console.log('Email sent:', info.response);
+    console.log('Email sent:');
     res.status(200).send('Email sent');
   });
 });
