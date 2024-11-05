@@ -8,6 +8,7 @@ import nodemailer from 'nodemailer';
 import Stripe from 'stripe';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { body, validationResult } from 'express-validator';
 
 dotenv.config();
 
@@ -32,7 +33,15 @@ paypal.configure({
 });
 
 app.use(express.json());
-app.use(cors());
+const allowedOrigins = [
+  'https://localhost:3000',  // Local development
+  'https://exoticrelief.com',  // Production domain
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 
 app.use('/.well-known', (req, res, next) => {
@@ -211,17 +220,24 @@ app.post('/paypal/validate', async (req, res) => {
   }
 });
 
-app.post('/stripe/validate', async (req, res) => {
-  const {amount, taxAmount, shippingCost,donationAmount,subtotal } = req.body;
-
-  if (amount === undefined || taxAmount === undefined || shippingCost === undefined || donationAmount === undefined || subtotal === undefined) {
-    console.error("bossman",amount,taxAmount,shippingCost,donationAmount )
-    console.error('Invalid request data:', req.body);
-    return res.status(400).json({ error: 'Invalid request data' });
+app.post('/stripe/validate', [
+  body('amount').isNumeric().withMessage('Amount must be a number'),
+  body('taxAmount').isNumeric().withMessage('Tax amount must be a number'),
+  body('shippingCost').isNumeric().withMessage('Shipping cost must be a number'),
+  body('donationAmount').isNumeric().withMessage('Donation amount must be a number'),
+  body('subtotal').isNumeric().withMessage('Subtotal must be a number'),
+], async (req, res) => {
+  // Check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.error('Invalid request data:', errors.array());
+    return res.status(400).json({ errors: errors.array() });
   }
 
+  const { amount, taxAmount, shippingCost, donationAmount, subtotal } = req.body;
+
   try {
-    const isPaymentValid = validatePaymentDetails(amount, taxAmount, shippingCost,donationAmount, subtotal);
+    const isPaymentValid = validatePaymentDetails(amount, taxAmount, shippingCost, donationAmount, subtotal);
 
     if (isPaymentValid) {
       console.log('Payment validated successfully:', {
@@ -238,7 +254,7 @@ app.post('/stripe/validate', async (req, res) => {
         taxAmount,
         shippingCost,
         donationAmount,
-        subtotal
+        subtotal,
       });
       res.status(400).json({ success: false, error: 'Invalid payment' });
     }
@@ -248,12 +264,21 @@ app.post('/stripe/validate', async (req, res) => {
   }
 });
 
-app.post('/stripe/calculate-taxes', async (req, res) => {
-  const { country, region, city, address, zip } = req.body;
-
-  if (!country || !region || !city || !address || !zip) {
-    return res.status(400).json({ error: 'Invalid country, region, city, address, or zip' });
+app.post('/stripe/calculate-taxes', [
+  body('country').notEmpty().withMessage('Country is required'),
+  body('region').notEmpty().withMessage('Region is required'),
+  body('city').notEmpty().withMessage('City is required'),
+  body('address').notEmpty().withMessage('Address is required'),
+  body('zip').notEmpty().withMessage('Zip code is required'),
+], async (req, res) => {
+  // Check for validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.error('Invalid request data:', errors.array());
+    return res.status(400).json({ errors: errors.array() });
   }
+
+  const { country, region, city, address, zip } = req.body;
 
   console.log('Received request to fetch tax rate with country:');
 
@@ -281,8 +306,6 @@ app.post('/stripe/calculate-taxes', async (req, res) => {
       expand: ['line_items.data.tax_breakdown'],
     });
 
-    // console.log('Tax calculation result:', calculation);
-
     // Check tax breakdown
     const taxBreakdown = calculation.tax_breakdown || [];
     let taxRate = 0;
@@ -293,9 +316,11 @@ app.post('/stripe/calculate-taxes', async (req, res) => {
         console.log('Extracted tax rate:', taxRate);
       }
     });
-    if(!region==='LA'){
-      taxRate = 0; // Default to 0 if no rate found
-      console.log("Out of state taxrate", taxRate);
+
+    // Default to 0 if no rate found for non-Louisiana residents
+    if (region !== 'LA') {
+      taxRate = 0;
+      console.log("Out of state tax rate", taxRate);
     }
 
     // Return the tax rate to the client
