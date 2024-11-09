@@ -79,26 +79,7 @@ const Donations = () => {
           maxWidth: "800px",
         }}
       >
-        <button
-          className="donate-button"
-          onClick={() => setModalOpen(true)} 
-          style={{ 
-            position: "absolute", 
-            top: '12vh', 
-            zIndex:'1',
-            backgroundColor: 'red',
-            color: 'white',
-            padding: '10px 10px', 
-            // marginRight: '20px',
-            cursor: 'pointer',
-            border: 'solid 1px black',
-            borderRadius: '15px',
-          }}
-        >
-          Donations
-        </button>
-        <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />        
-
+        <DonationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
         <FadeInSection>
           <div
             className="DonationContent"
@@ -154,6 +135,24 @@ const Donations = () => {
                 “	The Exotic Relief Research & Mental Health Institute is dedicated to advancing the understanding and treatment of mental health conditions and addictions. 
                 All donations to the nonprofit organization are used to further innovative research, global exploration of natural health practices, and community outreach aimed at reducing stigma and support neurodiversity individuals.” - Dr. Joi
               </p>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button
+                  className="donate-button"
+                  onClick={() => setModalOpen(true)}
+                  style={{
+                    zIndex: '1',
+                    backgroundColor: 'red',
+                    color: 'white',
+                    padding: '10px 10px',
+                    cursor: 'pointer',
+                    border: 'solid 1px black',
+                    borderRadius: '15px',
+                    marginBottom:'10px',
+                  }}
+                >
+                  Make a Donation
+                </button>
+              </div>
               <p>
                 All donations made are tax-deductible, as they support our mission through our 501(c)(3) nonprofit organization.
               </p>

@@ -28,9 +28,9 @@ const __dirname = dirname(__filename);
 
 // Configure PayPal SDK
 paypal.configure({
-  mode: 'sandbox', // Change to 'live' for production
-  client_id: process.env.PAYPAL_CLIENT_ID_SB,
-  client_secret: process.env.PAYPAL_CLIENT_SECRET_SB,
+  mode: 'live', // Change to 'live' for production; sandbox for testing
+  client_id: process.env.PAYPAL_CLIENT_ID_DONATION,
+  client_secret: process.env.PAYPAL_CLIENT_SECRET_DONATION,
 });
 
 app.use(express.json());
@@ -55,7 +55,7 @@ app.use('/.well-known', express.static(join(__dirname, 'well-known')));
 
 // PayPal configuration endpoint
 app.get('/config', (req, res) => {
-  const paypalClientId = process.env.PAYPAL_CLIENT_ID_SB;
+  const paypalClientId = process.env.PAYPAL_CLIENT_ID_DONATION
   if (!paypalClientId) {
     console.error('PayPal client ID not found.');
     return res.status(500).json({ error: 'Internal Server Error' });
