@@ -177,7 +177,7 @@ function Contact() {
                 <button
                     className="subscribe-button"
                     style={{
-                        position: 'fixed',
+                        position: 'absolute',
                         // right: '50%',
                         top: '12vh',
                         zIndex: 1,
