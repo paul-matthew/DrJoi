@@ -1,7 +1,7 @@
 import "./style.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from "@stripe/stripe-js";
 // import { handleSubmit } from './components/CheckOutForm.js';
 
 import { cartUtilities } from "./utils/cart.js";
@@ -35,10 +35,10 @@ const inputValues = {
   address: "",
   address2: "",
   zip: "",
-  donation:"",
+  donation: "",
   billingAddress: {
     firstName: "",
-    lastName: "",  
+    lastName: "",
     country: "",
     region: "",
     city: "",
@@ -57,135 +57,136 @@ orderModal.classList.add("modal", "fade", "portfolio-modal");
 orderModal.id = "orderModal";
 let totalPayment = 0;
 
-  //Shipping - FUNCTION CURRENTLY NOT BEING USED
-  let shippingCost = 0;
-  let taxAmount = 0;
-  let taxRate = 0
-  
-  // let donationAmount = 0;
-  async function calculateShippingCost() {
+//Shipping - FUNCTION CURRENTLY NOT BEING USED
+let shippingCost = 0;
+let taxAmount = 0;
+let taxRate = 0;
 
-    const cartItems = cartUtilities.getCartItems();
+// let donationAmount = 0;
+async function calculateShippingCost() {
+  const cartItems = cartUtilities.getCartItems();
 
+  const {
+    firstName,
+    lastName,
+    email,
+    country,
+    region,
+    city,
+    address,
+    address2,
+    zip,
+  } = inputValues;
 
-    const {
-      firstName,
-      lastName,
-      email,
-      country,
-      region,
-      city,
-      address,
-      address2,
-      zip,
-    } = inputValues;
+  // Initialize an array to store all line items for the order
+  const lineItems = [];
 
-    // Initialize an array to store all line items for the order
-    const lineItems = [];
-
-    cartItems.forEach((item) => {
-      if (item.product_id && item.variant_id) {
-        // Ensure product_id and variant_id exist
-        lineItems.push({
-          product_id: item.product_id,
-          variant_id: item.variant_id,
-          quantity: item.qty,
-        });
-      } else {
-        console.error(`Missing product_id or variant_id for item:`, item);
-        // Handle missing IDs (e.g., show error message, skip item, etc.)
-      }
-    });
-
-    // Construct the order details
-    const ShippingCalc = {
-      line_items: lineItems,
-      address_to: {
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        country: country,
-        region: region,
-        address1: address,
-        address2: address2,
-        city: city,
-        zip: zip,
-      },
-    };
-    console.log("Shipping Details:", ShippingCalc);
-  
-    let fetchURL = '';
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      fetchURL = 'http://localhost:5000/shipping-cost';
-    } else {
-      fetchURL = 'https://drjoiserver-106ea7a60e39.herokuapp.com/shipping-cost';
-    }
-  
-    fetch(fetchURL, {
-      method: 'POST',
-      body: JSON.stringify(ShippingCalc),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          // Assuming shipping cost is returned with order data
-          shippingCost = Math.round((data.shippingCost / 100 * 1.10) * 100) / 100;// Update global shippingCost..adding 10% margin due to flucations in coversion rate
-
-          console.log('Shipping cost updated:', shippingCost);
-          currentStage = 2.5;
-          saveInputValues();
-          orderModal.innerHTML = constructModalBody();
-        } else {
-          console.error('Failed to fetch shipping cost:', data.error);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching shipping cost:', error);
+  cartItems.forEach((item) => {
+    if (item.product_id && item.variant_id) {
+      // Ensure product_id and variant_id exist
+      lineItems.push({
+        product_id: item.product_id,
+        variant_id: item.variant_id,
+        quantity: item.qty,
       });
-      console.log('DONE')
+    } else {
+      console.error(`Missing product_id or variant_id for item:`, item);
+      // Handle missing IDs (e.g., show error message, skip item, etc.)
+    }
+  });
 
+  // Construct the order details
+  const ShippingCalc = {
+    line_items: lineItems,
+    address_to: {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      country: country,
+      region: region,
+      address1: address,
+      address2: address2,
+      city: city,
+      zip: zip,
+    },
+  };
+  console.log("Shipping Details:", ShippingCalc);
+
+  let fetchURL = "";
+  if (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+  ) {
+    fetchURL = "http://localhost:5000/shipping-cost";
+  } else {
+    fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/shipping-cost";
   }
 
-  async function calculateTax() {
-    const fetchStripeTax = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-        ? "http://localhost:5000/stripe/calculate-taxes"
-        : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/calculate-taxes";
+  fetch(fetchURL, {
+    method: "POST",
+    body: JSON.stringify(ShippingCalc),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        // Assuming shipping cost is returned with order data
+        shippingCost = Math.round((data.shippingCost / 100) * 1.1 * 100) / 100; // Update global shippingCost..adding 10% margin due to flucations in coversion rate
 
-    try {
-        const taxResponse = await fetch(fetchStripeTax, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                region: inputValues.region,
-                city: inputValues.city,
-                country: inputValues.country,
-                zip: inputValues.zip,
-                address: inputValues.address,
-            }),
-        });
-
-        const taxData = await taxResponse.json();
-        if (taxData.error) {
-            throw new Error("Failed to fetch taxes: " + taxData.error);
-        }
-
-        taxRate = (taxData.taxRate)/100 || 0; // Default to 0 if no rate found
-        console.log("Client side tax rate:", taxRate);
-
-        return taxRate;
-
-    } catch (error) {
-        console.error("Error fetching tax rate:", error);
-        alert("Error fetching tax rate. Please check the console for details.");
-        return 0;
-    }
+        console.log("Shipping cost updated:", shippingCost);
+        currentStage = 2.5;
+        saveInputValues();
+        orderModal.innerHTML = constructModalBody();
+      } else {
+        console.error("Failed to fetch shipping cost:", data.error);
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching shipping cost:", error);
+    });
+  console.log("DONE");
 }
-  
+
+async function calculateTax() {
+  const fetchStripeTax =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+      ? "http://localhost:5000/stripe/calculate-taxes"
+      : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/calculate-taxes";
+
+  try {
+    const taxResponse = await fetch(fetchStripeTax, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        region: inputValues.region,
+        city: inputValues.city,
+        country: inputValues.country,
+        zip: inputValues.zip,
+        address: inputValues.address,
+      }),
+    });
+
+    const taxData = await taxResponse.json();
+    if (taxData.error) {
+      throw new Error("Failed to fetch taxes: " + taxData.error);
+    }
+
+    taxRate = taxData.taxRate / 100 || 0; // Default to 0 if no rate found
+    console.log("Client side tax rate:", taxRate);
+
+    return taxRate;
+  } catch (error) {
+    console.error("Error fetching tax rate:", error);
+    alert("Error fetching tax rate. Please check the console for details.");
+    return 0;
+  }
+}
+
 function constructModalBody() {
   switch (currentStage) {
     case 1:
@@ -203,7 +204,9 @@ function constructModalBody() {
               <table style="border-collapse: collapse; width: 50%;">
               <tr>
                   <td style="border: none; font-weight: bold;">Subtotal:</td>
-                  <td style="border: none; text-align: left; font-weight: bold;">$${Math.round((price) * 100) / 100}</td>
+                  <td style="border: none; text-align: left; font-weight: bold;">$${
+                    Math.round(price * 100) / 100
+                  }</td>
               </tr>
             </table>
             <p style="font-size: 14px; color: gray; margin-top: 10px;">
@@ -213,7 +216,11 @@ function constructModalBody() {
             <tr>
               <td style="border: none; font-weight: bold;min-width:120px">Support Gift:</td>
               <td style="border: none; text-align: left;">
-              <input type="number" id="donationInput" value="${(parseFloat(inputValues.donation) || 0).toFixed(2)}" step="1.00" min="0" style="width: 100px; text-align: right;">
+              <input type="number" id="donationInput" value="${(
+                parseFloat(inputValues.donation) || 0
+              ).toFixed(
+                2
+              )}" step="1.00" min="0" style="width: 100px; text-align: right;">
               </td>
             </tr>
             </table>
@@ -222,7 +229,7 @@ function constructModalBody() {
         </div>
       </div>
       `;
-    
+
     case 2:
       return `
       <div class="modal-dialog modal-dialog-centered" style="top:30px; ">
@@ -269,18 +276,18 @@ function constructModalBody() {
     `;
 
     case 2.5: // New case for displaying shipping costs and tax before payment
-    subtotal = cartUtilities.getTotalPrice() / 100;
-    taxAmount = Math.round(subtotal * taxRate * 100) / 100;
-  
-    // Check if subtotal is over $100 to apply free shipping (US only)
-    if (subtotal > 100 && inputValues.country === 'US') {
-      shippingCost = 0;
-    }
-  
-    // Check if shipping cost is NaN for Canada
-    if (inputValues.country === 'CA' && isNaN(shippingCost)) {
-      // Display an error message and prevent proceeding
-      return `
+      subtotal = cartUtilities.getTotalPrice() / 100;
+      taxAmount = Math.round(subtotal * taxRate * 100) / 100;
+
+      // Check if subtotal is over $100 to apply free shipping (US only)
+      if (subtotal > 100 && inputValues.country === "US") {
+        shippingCost = 0;
+      }
+
+      // Check if shipping cost is NaN for Canada
+      if (inputValues.country === "CA" && isNaN(shippingCost)) {
+        // Display an error message and prevent proceeding
+        return `
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
@@ -294,20 +301,26 @@ function constructModalBody() {
           </div>
         </div>
       `;
-    }
-  
-    console.log('updated shipping:', shippingCost);
-    const donationAmount = parseFloat(inputValues.donation); // Ensure donationAmount is a number
-    totalPayment = Math.round((subtotal + shippingCost + taxAmount + donationAmount) * 100) / 100;
-    
-    const taxRow = taxAmount > 0 ? `
+      }
+
+      console.log("updated shipping:", shippingCost);
+      const donationAmount = parseFloat(inputValues.donation); // Ensure donationAmount is a number
+      totalPayment =
+        Math.round(
+          (subtotal + shippingCost + taxAmount + donationAmount) * 100
+        ) / 100;
+
+      const taxRow =
+        taxAmount > 0
+          ? `
     <tr>
       <td style="border: none;">Tax (${(taxRate * 100).toFixed(2)}%):</td>
       <td style="border: none; text-align: left;">$${taxAmount}</td>
     </tr>
-  ` : '';
+  `
+          : "";
 
-    return `
+      return `
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -344,7 +357,6 @@ function constructModalBody() {
         </div>
       </div>
     `;
-  
 
     case 3:
       return `
@@ -411,7 +423,6 @@ const initializeSelectedSKUs = () => {
   selectedSKUs = storedSKUs ? JSON.parse(storedSKUs) : [];
 };
 
-
 var initialSetupDone = false;
 
 function saveInputValues() {
@@ -443,7 +454,10 @@ function saveInputValues() {
   if (addressInput) inputValues.address = addressInput.value;
   if (address2Input) inputValues.address2 = address2Input.value;
   if (zipInput) inputValues.zip = zipInput.value;
-  if (donationInput) {inputValues.donation = donationInput.value;console.log("Donation amount:",inputValues.donation)}
+  if (donationInput) {
+    inputValues.donation = donationInput.value;
+    console.log("Donation amount:", inputValues.donation);
+  }
 
   if (currentStage === 2) {
     var formControls = document.getElementsByClassName("form-control");
@@ -576,7 +590,7 @@ function handleOrderButtonClick() {
 
   // Show the modal
   orderModal.style.display = "block";
-  
+
   // Function to hide the modal
   function hideModal() {
     backdrop.remove();
@@ -665,21 +679,29 @@ const DisplayProducts = (props) => {
         const productsContainer = document.getElementById("products-container");
         if (data && data.data) {
           // const reversedProducts = data.data.reverse();
-          let counter=0;
+          let counter = 0;
           // reversedProducts.forEach((product, index) => {
-            data.data.forEach((product, index) => {
-            const isInStock = product.variants.some(variant => variant.is_available);
+          data.data.forEach((product, index) => {
+            const isInStock = product.variants.some(
+              (variant) => variant.is_available
+            );
             if (!isInStock) {
               return;
             }
-            const maxPrice=product.variants
+            const maxPrice = product.variants
               .filter((variant) => variant.is_enabled)
-              .reduce((maxPrice, variant) => (variant.price > maxPrice ? variant.price : maxPrice), 0);
-              
+              .reduce(
+                (maxPrice, variant) =>
+                  variant.price > maxPrice ? variant.price : maxPrice,
+                0
+              );
+
             const productCard = document.createElement("div");
             productCard.classList.add("card-container");
             productCard.innerHTML = `
-            <a data-bs-toggle="modal" href="#productitem${index + 1}" style="text-decoration: none;">
+            <a data-bs-toggle="modal" href="#productitem${
+              index + 1
+            }" style="text-decoration: none;">
               <div class="card">
                 <div class='productimage'>
                   ${
@@ -695,7 +717,9 @@ const DisplayProducts = (props) => {
                       <h5 class="card-title2">${product.title}</h5>
                     </div>
                     <div class='card-price' style='color: grey; font-size: 0.8em;'>
-                      <span style='text-decoration: line-through;'>$${(maxPrice / 75).toFixed(2)}</span> <!-- 75 is because it's 25% off! -->
+                      <span style='text-decoration: line-through;'>$${(
+                        maxPrice / 75
+                      ).toFixed(2)}</span> <!-- 75 is because it's 25% off! -->
                       <br>
                     </div>
                     <div class='card-price' style='color:red;font-weight:bold'>
@@ -709,24 +733,23 @@ const DisplayProducts = (props) => {
           `;
             productsContainer.appendChild(productCard);
 
-          const newLabel = productCard.querySelector('.new-label');
-          if (newLabel && counter<25) {
-            newLabel.style.position = 'absolute';
-            newLabel.style.bottom = '50%';
-            newLabel.style.left = '30px';
-            newLabel.style.backgroundColor = 'red';
-            newLabel.style.color = 'white';
-            newLabel.style.padding = '5px';
-            newLabel.style.fontWeight = 'bold';
-            newLabel.style.maxWidth='50px';
-            newLabel.style.zIndex = '1'; // Ensure it overlays the image
-            counter++;
-          }
-          else{
-            if (newLabel) {
-              newLabel.style.display = 'none';
-            }          
-          }
+            const newLabel = productCard.querySelector(".new-label");
+            if (newLabel && counter < 25) {
+              newLabel.style.position = "absolute";
+              newLabel.style.bottom = "50%";
+              newLabel.style.left = "30px";
+              newLabel.style.backgroundColor = "red";
+              newLabel.style.color = "white";
+              newLabel.style.padding = "5px";
+              newLabel.style.fontWeight = "bold";
+              newLabel.style.maxWidth = "50px";
+              newLabel.style.zIndex = "1"; // Ensure it overlays the image
+              counter++;
+            } else {
+              if (newLabel) {
+                newLabel.style.display = "none";
+              }
+            }
 
             const productModal = document.createElement("div");
             productModal.classList.add("portfolio-modal", "modal", "fade");
@@ -755,8 +778,8 @@ const DisplayProducts = (props) => {
                         <img src="${
                           product.images[0].src
                         }" class="img-fluid main-img" alt="${
-                    product.title
-                  }" loading="lazy" id="main-image-${index + 1}">
+              product.title
+            }" loading="lazy" id="main-image-${index + 1}">
                         <div class="magnify-glass" id="magnify-glass-${
                           index + 1
                         }"></div>
@@ -767,41 +790,62 @@ const DisplayProducts = (props) => {
                       ${
                         // Check for available color options
                         (function () {
-                          const colorsOption = product.options.find(option => option.name === "Colors")?.values || [];
-                          const frameColorOption = product.options.find(option => option.name === "Frame Color")?.values || [];
-                          const colorOption = product.options.find(option => option.name === "Color")?.values || [];
-                          const seamColorsOption = product.options.find(option => option.name === "Seam Colors")?.values || [];
-                          const bottleColorOption = product.options.find(option => option.name === "Bottle color")?.values || [];
+                          const colorsOption =
+                            product.options.find(
+                              (option) => option.name === "Colors"
+                            )?.values || [];
+                          const frameColorOption =
+                            product.options.find(
+                              (option) => option.name === "Frame Color"
+                            )?.values || [];
+                          const colorOption =
+                            product.options.find(
+                              (option) => option.name === "Color"
+                            )?.values || [];
+                          const seamColorsOption =
+                            product.options.find(
+                              (option) => option.name === "Seam Colors"
+                            )?.values || [];
+                          const bottleColorOption =
+                            product.options.find(
+                              (option) => option.name === "Bottle color"
+                            )?.values || [];
 
                           const allAvailableColors = [
                             ...colorsOption,
                             ...frameColorOption,
                             ...colorOption,
                             ...seamColorsOption,
-                            ...bottleColorOption
-                          ].filter(color => {
+                            ...bottleColorOption,
+                          ].filter((color) => {
                             // Check for any variant that matches the color's id and is enabled
-                            const variant = product.variants.find(variant => 
-                              variant.options.includes(color.id) && variant.is_enabled
+                            const variant = product.variants.find(
+                              (variant) =>
+                                variant.options.includes(color.id) &&
+                                variant.is_enabled
                             );
-                            return variant;  // Include only colors that have enabled variants
+                            return variant; // Include only colors that have enabled variants
                           }); //THIS FIXES THE LAPTOP PRODUCT COLORS ISSUE
 
                           // If there are available colors, render the title and options
                           if (allAvailableColors.length >= 1) {
-                            const defaultColor = allAvailableColors.length === 1 ? "selected" : "";
+                            const defaultColor =
+                              allAvailableColors.length === 1 ? "selected" : "";
 
                             return `
                             <div style="display: flex; align-items: center; margin-top: 20px;">
                               <h6 style='font-weight:bold; margin-right: 8px;'>Color selection:</h6>
                               <div style="display: flex; align-items: center;margin-bottom:5px;">
-                                ${allAvailableColors.map(color => `
+                                ${allAvailableColors
+                                  .map(
+                                    (color) => `
                                   <div class="color-option ${defaultColor}" style="background-color: ${color.colors[0]};"></div>
-                                `).join("")}
+                                `
+                                  )
+                                  .join("")}
                               </div>
                             </div>
                           `;
-                          
                           }
                           // Return empty if no colors are available
                           return "";
@@ -819,11 +863,13 @@ const DisplayProducts = (props) => {
                       ) &&
                       (product.options.some(
                         (option) =>
-                          option.name === "Fabric weight" && option.type === "weight"
+                          option.name === "Fabric weight" &&
+                          option.type === "weight"
                       ) ||
                         product.options.some(
                           (option) =>
-                            option.name === "Box type" && option.type === "finish"
+                            option.name === "Box type" &&
+                            option.type === "finish"
                         ) ||
                         product.options.some(
                           (option) =>
@@ -832,7 +878,8 @@ const DisplayProducts = (props) => {
                         ) ||
                         product.options.some(
                           (option) =>
-                            option.name === "Finishes" && option.type === "surface"
+                            option.name === "Finishes" &&
+                            option.type === "surface"
                         ))
                         ? ""
                         : "display: none;"
@@ -855,7 +902,8 @@ const DisplayProducts = (props) => {
                             )?.values ||
                             product.options.find(
                               (option) =>
-                                option.name === "Box type" && option.type === "finish"
+                                option.name === "Box type" &&
+                                option.type === "finish"
                             )?.values ||
                             product.options.find(
                               (option) =>
@@ -870,35 +918,40 @@ const DisplayProducts = (props) => {
                             []
                           )
                             .filter((option) => {
-                              const variant = product.variants.find((variant) => {
-                                if (variant.options.includes(option.id)) {
-                                  if (
-                                    product.options.some(
-                                      (opt) =>
-                                        opt.name === "Fabric weight" &&
-                                        opt.type === "weight"
-                                    ) ||
-                                    product.options.some(
-                                      (opt) =>
-                                        opt.name === "Box type" &&
-                                        opt.type === "finish"
-                                    ) ||
-                                    product.options.some(
-                                      (opt) =>
-                                        opt.name === "Paper finishes" &&
-                                        opt.type === "paper"
-                                    ) ||
-                                    product.options.some(
-                                      (opt) =>
-                                        opt.name === "Finishes" &&
-                                        opt.type === "surface"
-                                    )
-                                  ) {
-                                    return variant.is_available && variant.is_enabled;
+                              const variant = product.variants.find(
+                                (variant) => {
+                                  if (variant.options.includes(option.id)) {
+                                    if (
+                                      product.options.some(
+                                        (opt) =>
+                                          opt.name === "Fabric weight" &&
+                                          opt.type === "weight"
+                                      ) ||
+                                      product.options.some(
+                                        (opt) =>
+                                          opt.name === "Box type" &&
+                                          opt.type === "finish"
+                                      ) ||
+                                      product.options.some(
+                                        (opt) =>
+                                          opt.name === "Paper finishes" &&
+                                          opt.type === "paper"
+                                      ) ||
+                                      product.options.some(
+                                        (opt) =>
+                                          opt.name === "Finishes" &&
+                                          opt.type === "surface"
+                                      )
+                                    ) {
+                                      return (
+                                        variant.is_available &&
+                                        variant.is_enabled
+                                      );
+                                    }
                                   }
+                                  return false;
                                 }
-                                return false;
-                              });
+                              );
                               return variant;
                             })
                             .map(
@@ -918,13 +971,13 @@ const DisplayProducts = (props) => {
                             // Look for the "Sizes" option
                             product.options
                               .find((option) => option.name === "Sizes")
-                              ?.values
-                              .filter((size) => {
+                              ?.values.filter((size) => {
                                 // Check if there is an available and enabled variant for each size
-                                return product.variants.some((variant) =>
-                                  variant.options.includes(size.id) &&
-                                  variant.is_available &&  // Only include if the variant is available
-                                  variant.is_enabled        // Only include if the variant is enabled
+                                return product.variants.some(
+                                  (variant) =>
+                                    variant.options.includes(size.id) &&
+                                    variant.is_available && // Only include if the variant is available
+                                    variant.is_enabled // Only include if the variant is enabled
                                 );
                               })
                               .map(
@@ -936,13 +989,13 @@ const DisplayProducts = (props) => {
                             // Fallback to the "Size" option if "Sizes" option is not found
                             product.options
                               .find((option) => option.name === "Size")
-                              ?.values
-                              .filter((size) => {
+                              ?.values.filter((size) => {
                                 // Check if there is an available and enabled variant for each size
-                                return product.variants.some((variant) =>
-                                  variant.options.includes(size.id) &&
-                                  variant.is_available &&  // Only include if the variant is available
-                                  variant.is_enabled        // Only include if the variant is enabled
+                                return product.variants.some(
+                                  (variant) =>
+                                    variant.options.includes(size.id) &&
+                                    variant.is_available && // Only include if the variant is available
+                                    variant.is_enabled // Only include if the variant is enabled
                                 );
                               })
                               .map(
@@ -959,20 +1012,26 @@ const DisplayProducts = (props) => {
                                   <option value="${quantity.id}">${quantity.title}</option>
                                 `
                               )
-                              .join("") 
+                              .join("")
                           }
                         </select>
                       </div>
                     </div>
                     ${
-                        product.options.find((option) => option.name === "Flavour" || option.name === "Flavor")
-                          ?.values.length > 0
-                          ? `
+                      product.options.find(
+                        (option) =>
+                          option.name === "Flavour" || option.name === "Flavor"
+                      )?.values.length > 0
+                        ? `
                           <div class="flavour-options" style="margin-right: 20px;margin-top:10px;">
                             <h6 style='font-weight:bold; display: inline;'>Flavors:</h6>
                             <select class="flavour-dropdown">
                               ${product.options
-                                .find((option) => option.name === "Flavour" || option.name === "Flavor")
+                                .find(
+                                  (option) =>
+                                    option.name === "Flavour" ||
+                                    option.name === "Flavor"
+                                )
                                 ?.values.map(
                                   (flavour) => `
                                   <option value="${flavour.id}">${flavour.title}</option>
@@ -982,8 +1041,8 @@ const DisplayProducts = (props) => {
                             </select>
                           </div>
                           `
-                          : ""
-                      }
+                        : ""
+                    }
 
                     <div style="margin-top:10px;margin-bottom:10px">
                       <label for="product-qty" style="margin-top: 10px; font-weight: bold; display: inline;">Quantity:</label>
@@ -996,7 +1055,9 @@ const DisplayProducts = (props) => {
                             .filter((variant) => variant.is_enabled)
                             .reduce(
                               (maxPrice, variant) =>
-                                variant.price > maxPrice ? variant.price : maxPrice,
+                                variant.price > maxPrice
+                                  ? variant.price
+                                  : maxPrice,
                               0
                             ) / 100
                         }
@@ -1054,7 +1115,9 @@ const DisplayProducts = (props) => {
                   product.options.find(
                     (option) => option.name === "Seam Colors"
                   )?.values[colorIndex] ||
-                  product.options.find((option) => option.name === "Bottle color");
+                  product.options.find(
+                    (option) => option.name === "Bottle color"
+                  );
                 if (selectedColor) {
                   // Remove 'selected' class from all color options
                   colorOptions.forEach((option) => {
@@ -1067,12 +1130,14 @@ const DisplayProducts = (props) => {
               });
             });
 
-            const flavorOptions = productModal.querySelectorAll(".flavor-option");
+            const flavorOptions =
+              productModal.querySelectorAll(".flavor-option");
             flavorOptions.forEach((flavorOption, flavorIndex) => {
               flavorOption.addEventListener("click", () => {
-                const selectedFlavor =
-                  product.options.find((option) => option.name === "Flavor" || option.name === "Flavour")
-                    ?.values[flavorIndex];
+                const selectedFlavor = product.options.find(
+                  (option) =>
+                    option.name === "Flavor" || option.name === "Flavour"
+                )?.values[flavorIndex];
 
                 if (selectedFlavor) {
                   // Remove 'selected' class from all flavor options
@@ -1088,7 +1153,6 @@ const DisplayProducts = (props) => {
                 }
               });
             });
-
 
             // JavaScript to handle size selection dropdown
             const sizeDropdown = productModal.querySelector(".size-dropdown");
@@ -1178,7 +1242,7 @@ const DisplayProducts = (props) => {
                   (option) => option.type === "color"
                 );
                 const sizeOptionIndex = product.options.findIndex(
-                  (option) => option.type === "size" 
+                  (option) => option.type === "size"
                 );
                 const fabricOptionIndex = product.options.findIndex(
                   (option) =>
@@ -1314,7 +1378,6 @@ const DisplayProducts = (props) => {
       .catch((error) => console.error(error));
   }
 
-
   const random = generateRandom6DigitNumber();
   const randomlabel = generateRandom6DigitNumber();
 
@@ -1380,10 +1443,10 @@ const DisplayProducts = (props) => {
         zip: zip,
         // Include other user input in address_to
       },
-      subtotal: subtotal,         
-      shippingCost: shippingCost, 
+      subtotal: subtotal,
+      shippingCost: shippingCost,
       totalPayment: totalPayment,
-      taxAmount:taxAmount, 
+      taxAmount: taxAmount,
     };
     console.log("Order Details:", orderDetails);
 
@@ -1433,6 +1496,8 @@ const DisplayProducts = (props) => {
         saveInputValues();
         currentStage = 2;
         orderModal.innerHTML = constructModalBody();
+        await region();
+        await fetchCities();
         break;
       case "totalcost":
         saveInputValues();
@@ -1454,6 +1519,8 @@ const DisplayProducts = (props) => {
         currentStage = 2;
         orderModal.innerHTML = constructModalBody();
         saveInputValues();
+        await region();
+        await fetchCities();
         break;
       case "backButton3":
         currentStage = 2.5;
@@ -1463,443 +1530,464 @@ const DisplayProducts = (props) => {
       default:
         break;
     }
-  
+
     // Add event listeners for country and region select inputs
     if (currentStage === 2) {
       const countryInput = document.getElementById("countryInput");
       const regionInput = document.getElementById("regionInput");
       // const cityInput = document.getElementById('cityInput');
-  
+
       // Function to populate country options when input gains focus
       countryInput.addEventListener("focus", async () => {
         await populateCountryOptions();
       });
-  
+
       // Function to update regions based on selected country
       countryInput.addEventListener("change", async () => {
         await region(); // Update regions
       });
-  
+
       // Function to update cities based on selected region
       regionInput.addEventListener("change", async () => {
         await fetchCities(); // Update cities
       });
-  
+
       // Optionally, you can populate country options initially
       populateCountryOptions(); // Assuming this function exists
     }
   });
 
-//STRIPE
-  
+  //STRIPE
+
   async function initializePayPal() {
     if (currentStage === 3) {
-        const stripeContainer = document.getElementById("paypal-parent");
-        if (!stripeContainer) {
-            console.error("Element with ID 'paypal-parent' not found.");
+      const stripeContainer = document.getElementById("paypal-parent");
+      if (!stripeContainer) {
+        console.error("Element with ID 'paypal-parent' not found.");
+        return;
+      }
+
+      function handleAddressMatchChange(event) {
+        if (event.target.checked) {
+          // Copy shipping address to billing address
+          inputValues.billingAddress = {
+            firstName: inputValues.firstName,
+            lastName: inputValues.lastName,
+            country: inputValues.country,
+            region: inputValues.region,
+            city: inputValues.city,
+            address: inputValues.address,
+            address2: inputValues.address2,
+            zip: inputValues.zip,
+          };
+          // Update billing address fields to match shipping address
+          billingFirstNameInput.value = inputValues.firstName;
+          billingLastNameInput.value = inputValues.lastName;
+          billingCountryInput.value = inputValues.country;
+          billingRegionInput.value = inputValues.region;
+          billingCityInput.value = inputValues.city;
+          billingAddressInput.value = inputValues.address;
+          billingAddress2Input.value = inputValues.address2;
+          billingZipInput.value = inputValues.zip;
+        } else {
+          // Clear billing address if checkbox is unchecked
+          inputValues.billingAddress = {
+            firstName: "",
+            lastName: "",
+            country: "",
+            region: "",
+            city: "",
+            address: "",
+            address2: "",
+            zip: "",
+          };
+          // Clear billing address fields
+          billingFirstNameInput.value = "";
+          billingLastNameInput.value = "";
+          billingCountryInput.value = "";
+          billingRegionInput.value = "";
+          billingCityInput.value = "";
+          billingAddressInput.value = "";
+          billingAddress2Input.value = "";
+          billingZipInput.value = "";
+        }
+      }
+
+      // Create and append the payment form
+      const stripeFormContainer = document.createElement("form");
+      stripeFormContainer.id = "payment-form";
+
+      // Checkbox for matching addresses
+      const addressMatchCheckbox = document.createElement("input");
+      addressMatchCheckbox.type = "checkbox";
+      addressMatchCheckbox.id = "address-match";
+      addressMatchCheckbox.addEventListener("change", handleAddressMatchChange);
+      const addressMatchLabel = document.createElement("label");
+      addressMatchLabel.htmlFor = "address-match";
+      addressMatchLabel.textContent = "Billing info is the same as shipping";
+      stripeFormContainer.appendChild(addressMatchCheckbox);
+      stripeFormContainer.appendChild(addressMatchLabel);
+
+      // Add card options image
+      const cardOptionsImg = document.createElement("img");
+      cardOptionsImg.src = "./cards.png"; // Replace with the actual path to your image
+      cardOptionsImg.alt = "Credit Card Options";
+      cardOptionsImg.className = "card-options-img";
+      stripeFormContainer.appendChild(cardOptionsImg);
+
+      // Billing address fields
+      const billingFirstNameInput = document.createElement("input");
+      billingFirstNameInput.type = "text";
+      billingFirstNameInput.placeholder = "First name";
+      billingFirstNameInput.id = "billing-firstname";
+      stripeFormContainer.appendChild(billingFirstNameInput);
+
+      const billingLastNameInput = document.createElement("input");
+      billingLastNameInput.type = "text";
+      billingLastNameInput.placeholder = "Last name";
+      billingLastNameInput.id = "billing-firstname";
+      stripeFormContainer.appendChild(billingLastNameInput);
+
+      const billingCountryInput = document.createElement("input");
+      billingCountryInput.type = "text";
+      billingCountryInput.placeholder = "Country";
+      billingCountryInput.id = "billing-country";
+      stripeFormContainer.appendChild(billingCountryInput);
+
+      const billingRegionInput = document.createElement("input");
+      billingRegionInput.type = "text";
+      billingRegionInput.placeholder = "State/Province";
+      billingRegionInput.id = "billing-region";
+      stripeFormContainer.appendChild(billingRegionInput);
+
+      const billingCityInput = document.createElement("input");
+      billingCityInput.type = "text";
+      billingCityInput.placeholder = "City";
+      billingCityInput.id = "billing-city";
+      stripeFormContainer.appendChild(billingCityInput);
+
+      const billingAddressInput = document.createElement("input");
+      billingAddressInput.type = "text";
+      billingAddressInput.placeholder = "Address";
+      billingAddressInput.id = "billing-address";
+      stripeFormContainer.appendChild(billingAddressInput);
+
+      const billingAddress2Input = document.createElement("input");
+      billingAddress2Input.type = "text";
+      billingAddress2Input.placeholder = "Address Line 2";
+      billingAddress2Input.id = "billing-address2";
+      stripeFormContainer.appendChild(billingAddress2Input);
+
+      const billingZipInput = document.createElement("input");
+      billingZipInput.type = "text";
+      billingZipInput.placeholder = "ZIP/Postal Code";
+      billingZipInput.id = "billing-zip";
+      stripeFormContainer.appendChild(billingZipInput);
+
+      const cardElementDiv = document.createElement("div");
+      cardElementDiv.id = "stripe-form-container";
+      stripeFormContainer.appendChild(cardElementDiv);
+
+      const cardErrorsDiv = document.createElement("div");
+      cardErrorsDiv.id = "card-errors";
+      cardErrorsDiv.setAttribute("role", "alert");
+      stripeFormContainer.appendChild(cardErrorsDiv);
+      stripeContainer.appendChild(stripeFormContainer);
+
+      // Create and append the Pay button
+      const payButton = document.createElement("button");
+      payButton.type = "submit";
+      payButton.className = "pay-button";
+      payButton.textContent = `Pay: $${totalPayment}`;
+      stripeContainer.appendChild(payButton);
+
+      const fetchURLstripeCreatePaymentIntent =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+          ? "http://localhost:5000/stripe/create-payment-intent"
+          : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
+
+      const fetchURLstripeValidate =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+          ? "http://localhost:5000/stripe/validate"
+          : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/validate";
+
+      const fetchStripeKey =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+          ? "http://localhost:5000/stripe/publishable-key"
+          : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
+
+      try {
+        // Fetch the Stripe publishable key
+        const keyResponse = await fetch(fetchStripeKey);
+        const { publishableKey } = await keyResponse.json();
+        if (!publishableKey) {
+          throw new Error("Failed to retrieve Stripe publishable key");
+        }
+
+        // Initialize Stripe elements
+        const stripe = await loadStripe(publishableKey);
+        const elements = stripe.elements();
+        const cardElement = elements.create("card");
+        cardElement.mount("#stripe-form-container");
+
+        // Add event listener to the Pay button
+        payButton.addEventListener("click", async (event) => {
+          event.preventDefault();
+          if (!stripe || !elements) {
+            console.error("Stripe or elements not loaded.");
             return;
-        }
+          }
 
-        function handleAddressMatchChange(event) {
-            if (event.target.checked) {
-                // Copy shipping address to billing address
-                inputValues.billingAddress = {
-                    firstName: inputValues.firstName,
-                    lastName: inputValues.lastName,
-                    country: inputValues.country,
-                    region: inputValues.region,
-                    city: inputValues.city,
-                    address: inputValues.address,
-                    address2: inputValues.address2,
-                    zip: inputValues.zip,
-                };
-                // Update billing address fields to match shipping address
-                billingFirstNameInput.value = inputValues.firstName;
-                billingLastNameInput.value = inputValues.lastName;
-                billingCountryInput.value = inputValues.country;
-                billingRegionInput.value = inputValues.region;
-                billingCityInput.value = inputValues.city;
-                billingAddressInput.value = inputValues.address;
-                billingAddress2Input.value = inputValues.address2;
-                billingZipInput.value = inputValues.zip;
-            } else {
-                // Clear billing address if checkbox is unchecked
-                inputValues.billingAddress = {
-                    firstName:'',
-                    lastName:'',
-                    country: "",
-                    region: "",
-                    city: "",
-                    address: "",
-                    address2: "",
-                    zip: "",
-                };
-                // Clear billing address fields
-                billingFirstNameInput.value = "";
-                billingLastNameInput.value = "";
-                billingCountryInput.value = "";
-                billingRegionInput.value = "";
-                billingCityInput.value = "";
-                billingAddressInput.value = "";
-                billingAddress2Input.value = "";
-                billingZipInput.value = "";
-            }
-        }
+          try {
+            // Calculate the tax amount based on the subtotal
+            const formattedSubtotal = parseFloat(subtotal).toFixed(2);
+            const taxAmount = (subtotal * taxRate).toFixed(2);
+            const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
+            const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
+            const formattedDonationAmount =
+              parseFloat(inputValues.donation) || 0;
 
-        // Create and append the payment form
-        const stripeFormContainer = document.createElement("form");
-        stripeFormContainer.id = "payment-form";
-        
-        // Checkbox for matching addresses
-        const addressMatchCheckbox = document.createElement("input");
-        addressMatchCheckbox.type = "checkbox";
-        addressMatchCheckbox.id = "address-match";
-        addressMatchCheckbox.addEventListener('change', handleAddressMatchChange);
-        const addressMatchLabel = document.createElement("label");
-        addressMatchLabel.htmlFor = "address-match";
-        addressMatchLabel.textContent = "Billing info is the same as shipping";
-        stripeFormContainer.appendChild(addressMatchCheckbox);
-        stripeFormContainer.appendChild(addressMatchLabel);
-
-        // Add card options image
-        const cardOptionsImg = document.createElement("img");
-        cardOptionsImg.src = "./cards.png"; // Replace with the actual path to your image
-        cardOptionsImg.alt = "Credit Card Options";
-        cardOptionsImg.className = "card-options-img";
-        stripeFormContainer.appendChild(cardOptionsImg);
-
-        // Billing address fields
-        const billingFirstNameInput = document.createElement("input");
-        billingFirstNameInput.type = "text";
-        billingFirstNameInput.placeholder = "First name";
-        billingFirstNameInput.id = "billing-firstname";
-        stripeFormContainer.appendChild(billingFirstNameInput);
-
-        const billingLastNameInput = document.createElement("input");
-        billingLastNameInput.type = "text";
-        billingLastNameInput.placeholder = "Last name";
-        billingLastNameInput.id = "billing-firstname";
-        stripeFormContainer.appendChild(billingLastNameInput);
-
-        const billingCountryInput = document.createElement("input");
-        billingCountryInput.type = "text";
-        billingCountryInput.placeholder = "Country";
-        billingCountryInput.id = "billing-country";
-        stripeFormContainer.appendChild(billingCountryInput);
-
-        const billingRegionInput = document.createElement("input");
-        billingRegionInput.type = "text";
-        billingRegionInput.placeholder = "State/Province";
-        billingRegionInput.id = "billing-region";
-        stripeFormContainer.appendChild(billingRegionInput);
-
-        const billingCityInput = document.createElement("input");
-        billingCityInput.type = "text";
-        billingCityInput.placeholder = "City";
-        billingCityInput.id = "billing-city";
-        stripeFormContainer.appendChild(billingCityInput);
-
-        const billingAddressInput = document.createElement("input");
-        billingAddressInput.type = "text";
-        billingAddressInput.placeholder = "Address";
-        billingAddressInput.id = "billing-address";
-        stripeFormContainer.appendChild(billingAddressInput);
-
-        const billingAddress2Input = document.createElement("input");
-        billingAddress2Input.type = "text";
-        billingAddress2Input.placeholder = "Address Line 2";
-        billingAddress2Input.id = "billing-address2";
-        stripeFormContainer.appendChild(billingAddress2Input);
-
-        const billingZipInput = document.createElement("input");
-        billingZipInput.type = "text";
-        billingZipInput.placeholder = "ZIP/Postal Code";
-        billingZipInput.id = "billing-zip";
-        stripeFormContainer.appendChild(billingZipInput);
-
-        const cardElementDiv = document.createElement("div");
-        cardElementDiv.id = "stripe-form-container";
-        stripeFormContainer.appendChild(cardElementDiv);
-
-        const cardErrorsDiv = document.createElement("div");
-        cardErrorsDiv.id = "card-errors";
-        cardErrorsDiv.setAttribute("role", "alert");
-        stripeFormContainer.appendChild(cardErrorsDiv);
-        stripeContainer.appendChild(stripeFormContainer);
-
-        // Create and append the Pay button
-        const payButton = document.createElement("button");
-        payButton.type = "submit";
-        payButton.className = "pay-button";
-        payButton.textContent = `Pay: $${totalPayment}`;
-        stripeContainer.appendChild(payButton);
-
-        const fetchURLstripeCreatePaymentIntent = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-            ? "http://localhost:5000/stripe/create-payment-intent"
-            : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
-
-        const fetchURLstripeValidate = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-            ? "http://localhost:5000/stripe/validate"
-            : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/validate";
-
-        const fetchStripeKey = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-            ? "http://localhost:5000/stripe/publishable-key"
-            : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
-
-        try {
-            // Fetch the Stripe publishable key
-            const keyResponse = await fetch(fetchStripeKey);
-            const { publishableKey } = await keyResponse.json();
-            if (!publishableKey) {
-                throw new Error("Failed to retrieve Stripe publishable key");
-            }
-
-            // Initialize Stripe elements
-            const stripe = await loadStripe(publishableKey);
-            const elements = stripe.elements();
-            const cardElement = elements.create('card');
-            cardElement.mount('#stripe-form-container');
-
-            // Add event listener to the Pay button
-            payButton.addEventListener('click', async (event) => {
-                event.preventDefault();
-                if (!stripe || !elements) {
-                    console.error("Stripe or elements not loaded.");
-                    return;
-                }
-
-                try {
-                    // Calculate the tax amount based on the subtotal
-                    const formattedSubtotal = parseFloat(subtotal).toFixed(2);
-                    const taxAmount = (subtotal * taxRate).toFixed(2);
-                    const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
-                    const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
-                    const formattedDonationAmount = parseFloat(inputValues.donation) || 0;
-
-                    // Validate the payment details on the server
-                    const validationResponse = await fetch(fetchURLstripeValidate, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
-                            taxAmount: formattedTaxAmount,
-                            shippingCost: formattedShippingCost,
-                            donationAmount: formattedDonationAmount,
-                            subtotal: formattedSubtotal,
-                        }),
-                    });
-                    
-                    const validationData = await validationResponse.json();
-                    if (!validationData.success) {
-                        throw new Error("Payment validation failed: " + (validationData.error || 'Unknown error'));
-                    }
-
-                    // Create a PaymentIntent on the server
-                    const paymentIntentResponse = await fetch(fetchURLstripeCreatePaymentIntent, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
-                            description: `Order total of $${totalPayment.toFixed(2)}`,
-                            metadata: {
-                                subtotal: formattedSubtotal,
-                                tax: formattedTaxAmount,
-                                shipping: formattedShippingCost,
-                                donation: inputValues.donation,
-                            },
-                        }),
-                    });
-
-                    const paymentIntentData = await paymentIntentResponse.json();
-                    if (!paymentIntentData.clientSecret) {
-                        throw new Error("Failed to get client secret from Stripe");
-                    }
-
-                    const clientSecret = paymentIntentData.clientSecret;
-
-                    // Handle the payment confirmation
-                    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-                        payment_method: {
-                            card: cardElement,
-                        },
-                    });
-
-                    console.log('Stripe PaymentIntent Response:', { paymentIntent, error });
-
-                    if (error) {
-                        console.error("Error confirming card payment:", error);
-                        alert("Error confirming card payment. Please check the console for details.");
-                    } else if (paymentIntent.status === 'succeeded') {
-                        submitOrder();
-                        console.log("Order submitted successfully");
-                        console.log("Payment succeeded:", paymentIntent);
-                    }
-                } catch (error) {
-                    console.error("Error during payment process:", error);
-                    alert("Error during payment process. Please check the console for details.");
-                }
+            // Validate the payment details on the server
+            const validationResponse = await fetch(fetchURLstripeValidate, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
+                taxAmount: formattedTaxAmount,
+                shippingCost: formattedShippingCost,
+                donationAmount: formattedDonationAmount,
+                subtotal: formattedSubtotal,
+              }),
             });
-        } catch (error) {
-            console.error("Error during initialization process:", error);
-            alert("Error during initialization process. Please check the console for details.");
-        }
+
+            const validationData = await validationResponse.json();
+            if (!validationData.success) {
+              throw new Error(
+                "Payment validation failed: " +
+                  (validationData.error || "Unknown error")
+              );
+            }
+
+            // Create a PaymentIntent on the server
+            const paymentIntentResponse = await fetch(
+              fetchURLstripeCreatePaymentIntent,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
+                  description: `Order total of $${totalPayment.toFixed(2)}`,
+                  metadata: {
+                    subtotal: formattedSubtotal,
+                    tax: formattedTaxAmount,
+                    shipping: formattedShippingCost,
+                    donation: inputValues.donation,
+                  },
+                }),
+              }
+            );
+
+            const paymentIntentData = await paymentIntentResponse.json();
+            if (!paymentIntentData.clientSecret) {
+              throw new Error("Failed to get client secret from Stripe");
+            }
+
+            const clientSecret = paymentIntentData.clientSecret;
+
+            // Handle the payment confirmation
+            const { paymentIntent, error } = await stripe.confirmCardPayment(
+              clientSecret,
+              {
+                payment_method: {
+                  card: cardElement,
+                },
+              }
+            );
+
+            console.log("Stripe PaymentIntent Response:", {
+              paymentIntent,
+              error,
+            });
+
+            if (error) {
+              console.error("Error confirming card payment:", error);
+              alert(
+                "Error confirming card payment. Please check the console for details."
+              );
+            } else if (paymentIntent.status === "succeeded") {
+              submitOrder();
+              console.log("Order submitted successfully");
+              console.log("Payment succeeded:", paymentIntent);
+            }
+          } catch (error) {
+            console.error("Error during payment process:", error);
+            alert(
+              "Error during payment process. Please check the console for details."
+            );
+          }
+        });
+      } catch (error) {
+        console.error("Error during initialization process:", error);
+        alert(
+          "Error during initialization process. Please check the console for details."
+        );
+      }
     }
-}
+  }
 
-//PAYPAL
+  //PAYPAL
 
-// async function initializePayPal() {
-//   if (currentStage === 3) {
-//       const stripeContainer = document.getElementById("paypal-parent");
-//       if (!stripeContainer) {
-//           console.error("Element with ID 'paypal-parent' not found.");
-//           return;
-//       }
+  // async function initializePayPal() {
+  //   if (currentStage === 3) {
+  //       const stripeContainer = document.getElementById("paypal-parent");
+  //       if (!stripeContainer) {
+  //           console.error("Element with ID 'paypal-parent' not found.");
+  //           return;
+  //       }
 
-//       // Create and append the payment form
-//       const stripeFormContainer = document.createElement("form");
-//       stripeFormContainer.id = "payment-form";
-      
-//       const cardElementDiv = document.createElement("div");
-//       cardElementDiv.id = "stripe-form-container";
-//       stripeFormContainer.appendChild(cardElementDiv);
-      
-//       const cardErrorsDiv = document.createElement("div");
-//       cardErrorsDiv.id = "card-errors";
-//       cardErrorsDiv.setAttribute("role", "alert");
-//       stripeFormContainer.appendChild(cardErrorsDiv);
-//       stripeContainer.appendChild(stripeFormContainer);
-      
-//       // Create and append the Pay button
-//       const payButton = document.createElement("button");
-//       payButton.type = "submit";
-//       payButton.className = "pay-button";
-//       payButton.textContent = `Pay: $${totalPayment}`;
-//       stripeContainer.appendChild(payButton);
+  //       // Create and append the payment form
+  //       const stripeFormContainer = document.createElement("form");
+  //       stripeFormContainer.id = "payment-form";
 
-//       const fetchURLstripeCreatePaymentIntent = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-//           ? "http://localhost:5000/stripe/create-payment-intent"
-//           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
+  //       const cardElementDiv = document.createElement("div");
+  //       cardElementDiv.id = "stripe-form-container";
+  //       stripeFormContainer.appendChild(cardElementDiv);
 
-//       const fetchURLstripeValidate = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-//           ? "http://localhost:5000/stripe/validate"
-//           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/validate";
+  //       const cardErrorsDiv = document.createElement("div");
+  //       cardErrorsDiv.id = "card-errors";
+  //       cardErrorsDiv.setAttribute("role", "alert");
+  //       stripeFormContainer.appendChild(cardErrorsDiv);
+  //       stripeContainer.appendChild(stripeFormContainer);
 
-//       const fetchStripeKey = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-//           ? "http://localhost:5000/stripe/publishable-key"
-//           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
+  //       // Create and append the Pay button
+  //       const payButton = document.createElement("button");
+  //       payButton.type = "submit";
+  //       payButton.className = "pay-button";
+  //       payButton.textContent = `Pay: $${totalPayment}`;
+  //       stripeContainer.appendChild(payButton);
 
-//       try {
-//           // Fetch the Stripe publishable key
-//           const keyResponse = await fetch(fetchStripeKey);
-//           const { publishableKey } = await keyResponse.json();
-//           if (!publishableKey) {
-//               throw new Error("Failed to retrieve Stripe publishable key");
-//           }
+  //       const fetchURLstripeCreatePaymentIntent = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  //           ? "http://localhost:5000/stripe/create-payment-intent"
+  //           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
 
-//           // Initialize Stripe elements
-//           const stripe = await loadStripe(publishableKey);
-//           const elements = stripe.elements();
-//           const cardElement = elements.create('card');
-//           cardElement.mount('#stripe-form-container');
+  //       const fetchURLstripeValidate = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  //           ? "http://localhost:5000/stripe/validate"
+  //           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/validate";
 
-//           // Add event listener to the Pay button
-//           payButton.addEventListener('click', async (event) => {
-//               event.preventDefault();
-//               if (!stripe || !elements) {
-//                   console.error("Stripe or elements not loaded.");
-//                   return;
-//               }
+  //       const fetchStripeKey = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  //           ? "http://localhost:5000/stripe/publishable-key"
+  //           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
 
-//               try {
-//                   // Calculate the tax amount based on the subtotal
-//                   const formattedSubtotal = parseFloat(subtotal).toFixed(2);
-//                   const taxAmount = (subtotal * taxRate).toFixed(2);
-//                   const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
-//                   const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
-//                   const formattedDonationAmount = parseFloat(inputValues.donation) || 0;
+  //       try {
+  //           // Fetch the Stripe publishable key
+  //           const keyResponse = await fetch(fetchStripeKey);
+  //           const { publishableKey } = await keyResponse.json();
+  //           if (!publishableKey) {
+  //               throw new Error("Failed to retrieve Stripe publishable key");
+  //           }
 
-//                   // Validate the payment details on the server
-//                   const validationResponse = await fetch(fetchURLstripeValidate, {
-//                       method: "POST",
-//                       headers: {
-//                           "Content-Type": "application/json",
-//                       },
-//                       body: JSON.stringify({
-//                           amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
-//                           taxAmount: formattedTaxAmount,
-//                           shippingCost: formattedShippingCost,
-//                           donationAmount: formattedDonationAmount,
-//                           subtotal: formattedSubtotal,
-//                       }),
-//                   });
-                  
-//                   const validationData = await validationResponse.json();
-//                   if (!validationData.success) {
-//                       throw new Error("Payment validation failed: " + (validationData.error || 'Unknown error'));
-//                   }
+  //           // Initialize Stripe elements
+  //           const stripe = await loadStripe(publishableKey);
+  //           const elements = stripe.elements();
+  //           const cardElement = elements.create('card');
+  //           cardElement.mount('#stripe-form-container');
 
-//                   // Create a PaymentIntent on the server
-//                   const paymentIntentResponse = await fetch(fetchURLstripeCreatePaymentIntent, {
-//                       method: "POST",
-//                       headers: {
-//                           "Content-Type": "application/json",
-//                       },
-//                       body: JSON.stringify({
-//                           amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
-//                           description: `Order total of $${totalPayment.toFixed(2)}`,
-//                           metadata: {
-//                               subtotal: formattedSubtotal,
-//                               tax: formattedTaxAmount,
-//                               shipping: formattedShippingCost,
-//                               donation: inputValues.donation,
-//                           },
-//                       }),
-//                   });
+  //           // Add event listener to the Pay button
+  //           payButton.addEventListener('click', async (event) => {
+  //               event.preventDefault();
+  //               if (!stripe || !elements) {
+  //                   console.error("Stripe or elements not loaded.");
+  //                   return;
+  //               }
 
-//                   const paymentIntentData = await paymentIntentResponse.json();
-//                   if (!paymentIntentData.clientSecret) {
-//                       throw new Error("Failed to get client secret from Stripe");
-//                   }
+  //               try {
+  //                   // Calculate the tax amount based on the subtotal
+  //                   const formattedSubtotal = parseFloat(subtotal).toFixed(2);
+  //                   const taxAmount = (subtotal * taxRate).toFixed(2);
+  //                   const formattedTaxAmount = parseFloat(taxAmount).toFixed(2);
+  //                   const formattedShippingCost = parseFloat(shippingCost).toFixed(2);
+  //                   const formattedDonationAmount = parseFloat(inputValues.donation) || 0;
 
-//                   const clientSecret = paymentIntentData.clientSecret;
+  //                   // Validate the payment details on the server
+  //                   const validationResponse = await fetch(fetchURLstripeValidate, {
+  //                       method: "POST",
+  //                       headers: {
+  //                           "Content-Type": "application/json",
+  //                       },
+  //                       body: JSON.stringify({
+  //                           amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
+  //                           taxAmount: formattedTaxAmount,
+  //                           shippingCost: formattedShippingCost,
+  //                           donationAmount: formattedDonationAmount,
+  //                           subtotal: formattedSubtotal,
+  //                       }),
+  //                   });
 
-//                   // Handle the payment confirmation
-//                   const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-//                       payment_method: {
-//                           card: cardElement,
-//                       },
-//                   });
+  //                   const validationData = await validationResponse.json();
+  //                   if (!validationData.success) {
+  //                       throw new Error("Payment validation failed: " + (validationData.error || 'Unknown error'));
+  //                   }
 
-//                   console.log('Stripe PaymentIntent Response:', { paymentIntent, error });
+  //                   // Create a PaymentIntent on the server
+  //                   const paymentIntentResponse = await fetch(fetchURLstripeCreatePaymentIntent, {
+  //                       method: "POST",
+  //                       headers: {
+  //                           "Content-Type": "application/json",
+  //                       },
+  //                       body: JSON.stringify({
+  //                           amount: Math.round(totalPayment * 100), // Stripe expects the amount in cents
+  //                           description: `Order total of $${totalPayment.toFixed(2)}`,
+  //                           metadata: {
+  //                               subtotal: formattedSubtotal,
+  //                               tax: formattedTaxAmount,
+  //                               shipping: formattedShippingCost,
+  //                               donation: inputValues.donation,
+  //                           },
+  //                       }),
+  //                   });
 
-//                   if (error) {
-//                       console.error("Error confirming card payment:", error);
-//                       alert("Error confirming card payment. Please check the console for details.");
-//                   } else if (paymentIntent.status === 'succeeded') {
-//                       submitOrder();
-//                       console.log("Order submitted successfully");
-//                       console.log("Payment succeeded:", paymentIntent);
-//                   }
-//               } catch (error) {
-//                   console.error("Error during payment process:", error);
-//                   alert("Error during payment process. Please check the console for details.");
-//               }
-//           });
-//       } catch (error) {
-//           console.error("Error during initialization process:", error);
-//           alert("Error during initialization process. Please check the console for details.");
-//       }
-//   }
-// }
+  //                   const paymentIntentData = await paymentIntentResponse.json();
+  //                   if (!paymentIntentData.clientSecret) {
+  //                       throw new Error("Failed to get client secret from Stripe");
+  //                   }
 
+  //                   const clientSecret = paymentIntentData.clientSecret;
 
+  //                   // Handle the payment confirmation
+  //                   const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+  //                       payment_method: {
+  //                           card: cardElement,
+  //                       },
+  //                   });
 
+  //                   console.log('Stripe PaymentIntent Response:', { paymentIntent, error });
 
+  //                   if (error) {
+  //                       console.error("Error confirming card payment:", error);
+  //                       alert("Error confirming card payment. Please check the console for details.");
+  //                   } else if (paymentIntent.status === 'succeeded') {
+  //                       submitOrder();
+  //                       console.log("Order submitted successfully");
+  //                       console.log("Payment succeeded:", paymentIntent);
+  //                   }
+  //               } catch (error) {
+  //                   console.error("Error during payment process:", error);
+  //                   alert("Error during payment process. Please check the console for details.");
+  //               }
+  //           });
+  //       } catch (error) {
+  //           console.error("Error during initialization process:", error);
+  //           alert("Error during initialization process. Please check the console for details.");
+  //       }
+  //   }
+  // }
 
   // PAYPAL CONNECTION ----------------
   const headers = new Headers();
