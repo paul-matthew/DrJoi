@@ -81,35 +81,24 @@ app.get('/stripe/publishable-key', (req, res) => {
   res.json({ publishableKey: process.env.STRIPE_CLIENT_ID_SB });
 });
 
-const paymentIntentsStore = {};
-
 app.post('/stripe/create-payment-intent', async (req, res) => {
-    const { amount, description, metadata, donationId } = req.body;
+  const { amount, description, metadata } = req.body;
 
-    try {
-        let paymentIntent = paymentIntentsStore[donationId];
+  try {
+      // Create a new Payment Intent each time
+      const paymentIntent = await stripe.paymentIntents.create({
+          amount: Math.round(amount),
+          currency: 'usd',
+          description: description,
+          metadata: metadata,
+      });
 
-        if (paymentIntent && paymentIntent.status === 'requires_payment_method') {
-            return res.json({ clientSecret: paymentIntent.client_secret });
-        }
-
-        paymentIntent = await stripe.paymentIntents.create({
-            amount: Math.round(amount),
-            currency: 'usd',
-            description: description,
-            metadata: metadata,
-        });
-
-        paymentIntentsStore[donationId] = paymentIntent;
-
-        res.json({ clientSecret: paymentIntent.client_secret });
-    } catch (error) {
-        console.error('Error creating payment intent:', error);
-        res.status(500).json({ error: 'Failed to create payment intent' });
-    }
+      res.json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+      console.error('Error creating payment intent:', error);
+      res.status(500).json({ error: 'Failed to create payment intent' });
+  }
 });
-
-
 
 // Stripe webhook endpoint
 app.post('/stripe/webhook', express.raw({ type: 'application/json' }), (req, res) => {
