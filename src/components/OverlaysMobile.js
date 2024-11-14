@@ -9,9 +9,9 @@ const OverlaysMobile = ({
   handleServicesClick,
   handleAboutClick,
 }) => {
-  const [Overlay1, set1stOverlay] = useState("75vw");
+  const [Overlay1, set1stOverlay] = useState("68vw");
   const [MainOverlay, setPrimeOverlay] = useState("10vw");
-  const [Overlay2, set2ndOverlay] = useState("85vw");
+  const [Overlay2, set2ndOverlay] = useState("78vw");
   const [Button1, set1stButton] = useState("Shop");
   const [Button2, set2ndButton] = useState("Deals");
 
@@ -28,22 +28,22 @@ const OverlaysMobile = ({
     }, transitionDuration);
 
     // Set the overlay states based on the current state
-    if (Overlay1 === "75vw" && Overlay2 === "85vw") {
+    if (Overlay1 === "68vw" && Overlay2 === "78vw") {
       set1stOverlay("10vw");
       setPrimeOverlay("20vw");
       setTimeout(() => {
         set1stButton("About");
       }, transitionDuration / 2); // Wait for half of the transition duration
-    } else if (Overlay1 === "10vw" && Overlay2 === "85vw") {
-      set1stOverlay("75vw");
+    } else if (Overlay1 === "10vw" && Overlay2 === "78vw") {
+      set1stOverlay("68vw");
       setPrimeOverlay("10vw");
       setTimeout(() => {
         set1stButton("Shop");
       }, transitionDuration / 2); // Wait for half of the transition duration
     } else {
       // Set overlay states for other cases
-      set1stOverlay("75vw");
-      set2ndOverlay("85vw");
+      set1stOverlay("68vw");//75
+      set2ndOverlay("78vw");//85
       setPrimeOverlay("10vw");
       setTimeout(() => {
         set1stButton("Shop");
@@ -76,7 +76,7 @@ const OverlaysMobile = ({
     }, transitionDuration);
 
     // Set the overlay states based on the current overlay positions
-    if (Overlay2 === "85vw" && Overlay1 === "75vw") {
+    if (Overlay2 === "78vw" && Overlay1 === "68vw") {
       set1stOverlay("10vw");
       setPrimeOverlay("30vw");
       set2ndOverlay("20vw");
@@ -84,7 +84,7 @@ const OverlaysMobile = ({
         set1stButton("About");
         set2ndButton("Shop");
       }, transitionDuration / 2); // Wait for half of the transition duration
-    } else if (Overlay2 === "85vw" && Overlay1 === "10vw") {
+    } else if (Overlay2 === "78vw" && Overlay1 === "10vw") {
       setPrimeOverlay("30vw");
       set2ndOverlay("20vw");
       setTimeout(() => {
@@ -93,14 +93,14 @@ const OverlaysMobile = ({
     } else if (Overlay2 === "20vw" && Overlay1 === "10vw") {
       setPrimeOverlay("20vw");
       set1stOverlay("10vw");
-      set2ndOverlay("85vw");
+      set2ndOverlay("78vw");
       setTimeout(() => {
         set1stButton("About");
         set2ndButton("Deals");
       }, transitionDuration / 2); // Wait for half of the transition duration
     } else {
       // Set overlay states for other cases
-      set1stOverlay("75vw");
+      set1stOverlay("68vw");
       setPrimeOverlay("10vw");
       set2ndOverlay("85vw");
       setTimeout(() => {
@@ -118,7 +118,7 @@ const OverlaysMobile = ({
         // setDisplayState('block');
         // setDisplayState2('1');
         setDesktopState("Homedesktop1");
-        set1stOverlay("75vw");
+        set1stOverlay("68vw");
         set2ndOverlay("85vw");
         setPrimeOverlay("10vw");
       }, 0);
@@ -152,6 +152,7 @@ const OverlaysMobile = ({
           position: "absolute",
           background: "rgba(217, 217, 217, 0.0)",
           transition: "top 0.5s ease-in-out",
+          
         }}
       />
       <div
@@ -160,7 +161,7 @@ const OverlaysMobile = ({
           display: displayState,
           zIndex: displayState2,
           width: "100vw",
-          height: "15vh",
+          height: "10vh",
           top: `${Overlay2.replace("vw", "")}%`,
           left: 0,
           position: "absolute",
@@ -175,12 +176,13 @@ const OverlaysMobile = ({
           display: displayState,
           zIndex: displayState2,
           width: "100vw",
-          height: "65vh",
+          height: "68vh",
           top: `${MainOverlay.replace("vw", "")}%`,
           left: 0,
           position: "absolute",
           background: "rgba(0, 0, 0, 0.10)",
           transition: "top 0.5s ease-in-out",
+          
         }}
       ></div>
 
@@ -197,6 +199,7 @@ const OverlaysMobile = ({
           position: "absolute",
           backgroundColor: "rgba(33, 74, 109, 0.4)",
           transition: "top 0.5s ease-in-out",
+
         }}
       />
       <div
@@ -225,7 +228,7 @@ const OverlaysMobile = ({
             height: "25vh",
             textAlign: "center",
             color: "white",
-            fontSize: "clamp(34px, 3vw, 30px)",
+            fontSize: "clamp(25px, 3vw, 30px)",
             fontFamily: "PlayfairDisplay",
             fontWeight: "700",
             letterSpacing: 3,
@@ -234,7 +237,6 @@ const OverlaysMobile = ({
             justifyContent: "center",
             alignItems: "center",
             textShadow: "4px 4px 4px rgba(0, 0, 0, 0.5)",
-            paddingBottom: "10px",
           }}
           onClick={() => handleButtonClick(desktopState)}
         >
@@ -283,9 +285,9 @@ const OverlaysMobile = ({
           style={{
             zIndex: 2,
             color: "white",
-            height: "25vh",
+            height: "10vh",
             textAlign: "center",
-            fontSize: "clamp(34px, 3vw, 30px)",
+            fontSize: "clamp(25px, 3vw, 30px)",
             fontFamily: "PlayfairDisplay",
             fontWeight: "700",
             letterSpacing: 3,
@@ -294,7 +296,6 @@ const OverlaysMobile = ({
             justifyContent: "center",
             alignItems: "center",
             textShadow: "4px 4px 4px rgba(0, 0, 0, 0.5)",
-            paddingBottom: "10px",
           }}
           onClick={() => handleButton2Click(desktopState)}
         >
