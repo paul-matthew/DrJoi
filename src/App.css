@@ -387,8 +387,7 @@
     max-width: "25vw" !important;
   }
   .Card1 {
-    height:fit-content !important;
-   
+    height: fit-content !important;
   }
 }
 
@@ -415,8 +414,8 @@
   }
   .Card1 {
     /* height: fit-content !important; */
-    min-height: 600px !important; 
-    max-height:660px !important;
+    min-height: 730px !important;
+    max-height:740px !important;
   }
 }
 
@@ -428,7 +427,8 @@
     max-width: "25vw" !important;
   }
   .Card1 {
-    height: fit-content !important;
+    min-height: 720px !important;
+    max-height: 800px !important;
   }
 }
 
@@ -441,8 +441,8 @@
     min-width:'40%' !important;
   }
   .Card1 {
-    min-height: 500px !important; 
-    max-height:560px !important;
+    min-height: 660px !important; 
+    max-height:680px !important;
   }
 }
 
@@ -455,6 +455,8 @@
     min-width:'40%' !important;
   }
   .Card1 {
+    max-width: 45vw !important;
+    min-width: 44vw !important;
     min-height: 400px !important;
     /* 800 */
     max-height:660px !important;
