@@ -203,6 +203,7 @@ function About() {
                   gap: 56.67,
                   display: "inline-flex",
                   padding: "0px 3vw",
+
                 }}
               >
                 <div
@@ -425,16 +426,18 @@ function About() {
                               style={{
                                 alignSelf: "stretch",
                                 color: "#1C1E53",
+                                
                                 fontSize: "clamp(10px, 3vw, 17px)",
                                 fontFamily: "Roboto",
                                 fontWeight: "400",
                                 wordWrap: "break-word",
                               }}
                             >
-                            My educational journey reflects an unwavering dedication to advancing mental health care through a multidisciplinary lens. 
+                            {/* My educational journey reflects an unwavering dedication to advancing mental health care through a multidisciplinary lens. 
                             With a strong foundation in the medical sciences, having completed all premedical coursework and attending medical school, I developed an in-depth understanding of human biology and medicine. 
                             However, my true passion for brain science and neuropsychology led me to pursue a more specialized focus. Building on my degrees in public health and business, and currently advancing my expertise in clinical neuropsychopharmacology, I possess a rare blend of scientific rigor, medical insight, and strategic acumen. 
-                            My Master of Public Health, combined with advanced training in clinical and community-based behavioral health research, empowers me to tackle complex mental health issues with a comprehensive, research-driven, and patient-centered approach.
+                            My Master of Public Health, combined with advanced training in clinical and community-based behavioral health research, empowers me to tackle complex mental health issues with a comprehensive, research-driven, and patient-centered approach. */}
+                            My educational journey reflects a strong commitment to enhancing mental health care through a multidisciplinary lens. Starting with medical sciences and medical school, I gained a deep understanding of human biology. Driven by a passion for neuropsychology, I specialized further, earning degrees in public health and business and pursuing advanced studies in neuropsychopharmacology. This unique blend of medical, scientific, and strategic expertise enables me to address complex mental health challenges with a comprehensive, research-based, and patient-centered approach.
                             </div>
                           </div>
                         </div>
