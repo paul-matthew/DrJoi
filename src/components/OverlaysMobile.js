@@ -547,7 +547,7 @@ const OverlaysMobile = ({
               alignItems: "center",
               gap: 24,
               display: "inline-flex",
-              top: "25vh",
+              top: "28vh",
             }}
           >
             <div
