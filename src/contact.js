@@ -159,15 +159,19 @@ function Contact() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              position:"relative"
             }}
           >
             <form
               className="ContactForm"
               style={{
-                width: "70%",
+                width: "90%",
                 minHeight: "30vh",
-                border: "solid gray",
+                border: "1px solid gray",
                 boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
+                maxWidth:700,
+                marginBottom:50,
+                
               }}
               onSubmit={handleSubmit}
             >
@@ -189,6 +193,9 @@ function Contact() {
                   type="text"
                   id="name"
                   name="name"
+                  style={{
+                    backgroundColor:"whitesmoke"
+                  }}
                   placeholder={smallScreen ? "Name" : "Enter your name"}
                   required
                 />
@@ -198,6 +205,9 @@ function Contact() {
                   type="email"
                   id="email"
                   name="email"
+                  style={{
+                    backgroundColor:"whitesmoke"
+                  }}
                   placeholder={smallScreen ? "Email" : "Enter your email"}
                   required
                 />
@@ -207,9 +217,10 @@ function Contact() {
                   id="message"
                   name="message"
                   rows="4"
+                  
                   placeholder={smallScreen ? "Message" : "Enter your message"}
                   required
-                  style={{ minHeight: "10vh" }}
+                  style={{  backgroundColor:"whitesmoke" }}
                 ></textarea>
               </div>
               <div
@@ -279,7 +290,7 @@ function Contact() {
           style={{
             position: "absolute",
             // right: '50%',
-            top: "25vh",
+            top: "22.5%",
             zIndex: 1,
             backgroundColor: "red",
             color: "white",
