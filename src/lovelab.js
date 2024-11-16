@@ -4,7 +4,7 @@ import "./App.css";
 
 const LoveLab = () => {
   return (
-    <div className="BlogContainer" style={{overflowY:'hidden'}}>
+    <div className="BlogContainer" style={{ overflowY: "hidden" }}>
       <div id="NavlogoMobile">
         <img
           src="./logo-green4.png"
@@ -33,135 +33,154 @@ const LoveLab = () => {
               </div>
             </div>
           </div>
-          <div className='coach-container'>
-          <FadeInSection>
-            <div className="section">
-              <img
-                src="./coach1.jpg"
-                alt="Personal Guidance"
-                className="sectionImage"
-              />
-              <div className="sectionText">
-                <h2>Personal Coaching</h2>
-                <p>
-                  Offering one-on-one coaching sessions to provide you with
-                  personalized guidance and support in your journey. Book
-                  an appointment today to start making positive changes.
-                </p>
+          <div className="coach-container">
+            <FadeInSection>
+              <div className="section" style={{ backgroundColor: "#fff7e5" }}>
+                <img
+                  src="./coach1.jpg"
+                  alt="Personal Guidance"
+                  className="sectionImage"
+                />
+                <div className="sectionText">
+                  <h2>Personal Coaching</h2>
+                  <p>
+                    Offering one-on-one coaching sessions to provide you with
+                    personalized guidance and support in your journey. Book an
+                    appointment today to start making positive changes.
+                  </p>
+                </div>
               </div>
-            </div>
-          </FadeInSection>
+            </FadeInSection>
 
-          <div className="section" style={{ margin: "20px",justifyContent:'center' }}>
-          <div className="sectionText caption-mobile"style={{maxWidth:'300px',visibility:'visible'}}>
-              <h2>Discover My Coaching Services</h2>
-            </div>
-
-            <div className="buttonsContainer">
-              <button
-                className="infoButton"
-                onClick={() =>
-                  window.open(
-                    "https://exoticrelief.setmore.com/beta/services/cf66b8eb-db57-4cde-900e-16c2ea7a34c9?source=easyshare",
-                    "_blank"
-                  )
-                }
+            <div
+              className="section"
+              style={{ margin: "20px", justifyContent: "center",backgroundColor : "#fff7e5" }}
+            >
+              <div
+                className="sectionText caption-mobile"
+                style={{
+                  maxWidth: "300px",
+                  visibility: "visible",
+                }}
               >
-                Finding Love
-              </button>
-              <button
-                className="infoButton"
-                onClick={() =>
-                  window.open(
-                    "https://exoticrelief.setmore.com/beta/services/76ed5a2c-d73d-4a10-8136-8abd0872a954?source=easyshare",
-                    "_blank"
-                  )
-                }
-              >
-                Fixing Love
-              </button>
-              <button
-                className="infoButton"
-                onClick={() =>
-                  window.open(
-                    "https://exoticrelief.setmore.com/beta/services/1a59a8a9-5fe2-4dde-bfc0-794533574481?source=easyshare",
-                    "_blank"
-                  )
-                }
-              >
-                Self-Esteem
-              </button>
-              <button
-                className="infoButton"
-                onClick={() =>
-                  window.open(
-                    "https://exoticrelief.setmore.com/beta/services/b068a1db-14a1-45b8-8731-8a04d48019bf?source=easyshare",
-                    "_blank"
-                  )
-                }
-              >
-                Personal
-              </button>
-              <button
-                className="infoButton"
-                onClick={() =>
-                  window.open(
-                    "https://exoticrelief.setmore.com/beta/services/3d7a7aef-57fe-4e2a-9299-e6f2301e6700?source=easyshare",
-                    "_blank"
-                  )
-                }
-              >
-                Image Consulting
-              </button>
-              <button
-                className="infoButton"
-                onClick={() =>
-                  window.open(
-                    "https://exoticrelief.setmore.com/beta/services/35062118-735a-47a5-98fc-905ffc11e2fa?source=easyshare",
-                    "_blank"
-                  )
-                }
-              >
-                Self-Improvement
-              </button>
-              <button
-                className="infoButton"
-                onClick={() =>
-                  window.open(
-                    "https://exoticrelief.setmore.com/beta/services/bde59724-c761-457e-9a9f-bedc1563b0d4?source=easyshare",
-                    "_blank"
-                  )
-                }
-              >
-                General
-              </button>
-            </div>
-            <div className="sectionText caption-desktop"style={{maxWidth:'300px',visibility:"hidden"}}>
-              <h2>Discover My Coaching Services</h2>
-            </div>
-          </div>
-
-          <FadeInSection>
-            <div className="section" style={{justifyContent:'flex-start'}}>
-            <img
-                src="./guidance.jpg"
-                alt="Personalized Coaching"
-                className="sectionImage"
-              />
-              <div className="sectionText">
-                <h2>Personalized Guidance</h2>
-                <p>
-                Life can be incredibly tough, and sometimes it feels like no one truly understands the struggles you’re facing. 
-                Whether you're battling mental health challenges, feeling lost or lonely, navigating the unique experiences of being neurodivergent, or need help with a situation, I’m here to support you. 
-                My coaching isn’t just about giving advice; it’s about walking with you through your journey, offering compassionate guidance, and helping you find your way to a place of peace and strength. 
-                I’m here for anyone who needs a listening ear and a caring heart. Let’s work together to rediscover the hope and purpose that sometimes gets buried in life’s challenges.
-                </p>
+                <h2>Discover My Coaching Services</h2>
               </div>
 
+              <div className="buttonsContainer">
+                <button
+                  className="infoButton"
+                  onClick={() =>
+                    window.open(
+                      "https://exoticrelief.setmore.com/beta/services/cf66b8eb-db57-4cde-900e-16c2ea7a34c9?source=easyshare",
+                      "_blank"
+                    )
+                  }
+                >
+                  Finding Love
+                </button>
+                <button
+                  className="infoButton"
+                  onClick={() =>
+                    window.open(
+                      "https://exoticrelief.setmore.com/beta/services/76ed5a2c-d73d-4a10-8136-8abd0872a954?source=easyshare",
+                      "_blank"
+                    )
+                  }
+                >
+                  Fixing Love
+                </button>
+                <button
+                  className="infoButton"
+                  onClick={() =>
+                    window.open(
+                      "https://exoticrelief.setmore.com/beta/services/1a59a8a9-5fe2-4dde-bfc0-794533574481?source=easyshare",
+                      "_blank"
+                    )
+                  }
+                >
+                  Self-Esteem
+                </button>
+                <button
+                  className="infoButton"
+                  onClick={() =>
+                    window.open(
+                      "https://exoticrelief.setmore.com/beta/services/b068a1db-14a1-45b8-8731-8a04d48019bf?source=easyshare",
+                      "_blank"
+                    )
+                  }
+                >
+                  Personal
+                </button>
+                <button
+                  className="infoButton"
+                  onClick={() =>
+                    window.open(
+                      "https://exoticrelief.setmore.com/beta/services/3d7a7aef-57fe-4e2a-9299-e6f2301e6700?source=easyshare",
+                      "_blank"
+                    )
+                  }
+                >
+                  Image Consulting
+                </button>
+                <button
+                  className="infoButton"
+                  onClick={() =>
+                    window.open(
+                      "https://exoticrelief.setmore.com/beta/services/35062118-735a-47a5-98fc-905ffc11e2fa?source=easyshare",
+                      "_blank"
+                    )
+                  }
+                >
+                  Self-Improvement
+                </button>
+                <button
+                  className="infoButton"
+                  onClick={() =>
+                    window.open(
+                      "https://exoticrelief.setmore.com/beta/services/bde59724-c761-457e-9a9f-bedc1563b0d4?source=easyshare",
+                      "_blank"
+                    )
+                  }
+                >
+                  General
+                </button>
+              </div>
+              <div
+                className="sectionText caption-desktop"
+                style={{ maxWidth: "300px", visibility: "hidden" }}
+              >
+                <h2>Discover My Coaching Services</h2>
+              </div>
             </div>
-          </FadeInSection>
 
-          {/* <FadeInSection>
+            <FadeInSection>
+              <div className="section" style={{ justifyContent: "flex-start", backgroundColor:"#fff7e5" }}>
+                <img
+                  src="./guidance.jpg"
+                  alt="Personalized Coaching"
+                  className="sectionImage"
+                />
+                <div className="sectionText">
+                  <h2>Personalized Guidance</h2>
+                  <p>
+                    Life can be incredibly tough, and sometimes it feels like no
+                    one truly understands the struggles you’re facing. Whether
+                    you're battling mental health challenges, feeling lost or
+                    lonely, navigating the unique experiences of being
+                    neurodivergent, or need help with a situation, I’m here to
+                    support you. My coaching isn’t just about giving advice;
+                    it’s about walking with you through your journey, offering
+                    compassionate guidance, and helping you find your way to a
+                    place of peace and strength. I’m here for anyone who needs a
+                    listening ear and a caring heart. Let’s work together to
+                    rediscover the hope and purpose that sometimes gets buried
+                    in life’s challenges.
+                  </p>
+                </div>
+              </div>
+            </FadeInSection>
+
+            {/* <FadeInSection>
             <div className="section">
               <img
                 src="./home2.png"
@@ -211,6 +230,5 @@ const LoveLab = () => {
     </div>
   );
 };
-
 
 export default LoveLab;
