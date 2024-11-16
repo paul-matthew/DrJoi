@@ -4793,6 +4793,7 @@ fieldset:disabled .btn {
 @media(min-width:767px){
   .productimage{
     min-height:300px;
+    overflow: hidden;
   }
   }
 
