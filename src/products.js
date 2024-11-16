@@ -512,8 +512,8 @@ function saveInputValues() {
 
     if (
       !initialSetupDone ||
-      Array.from(formControls).some(
-        (input) => input.value.trim() === "" && input !== address2Input
+      Object.keys(inputValues).some(
+        (input) => input?.trim() === "" && input !== address2Input
       ) ||
       !validateEmailFormat(emailInput.value.trim()) ||
       !validateZipCodeFormat(zipInput.value.trim()) ||
@@ -534,12 +534,12 @@ function saveInputValues() {
     // Loop through each element with the 'form-control' class
     Array.from(formControls).forEach(function (formControl) {
       formControl.addEventListener("input", function () {
-        var inputsToCheck = Array.from(formControls).filter(function (input) {
+        var inputsToCheck = Object.keys(inputValues).filter(function (input) {
           return input !== address2Input;
         });
 
         var allFieldsFilled = inputsToCheck.every(function (input) {
-          return input.value.trim() !== "";
+          return input?.trim() !== "";
         });
 
         var emailIsValid = validateEmailFormat(emailInput.value.trim());
