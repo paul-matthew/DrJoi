@@ -111,7 +111,7 @@
 .about-us {
   color: white;
   font-size: 16px;
-  font-family: "Roboto";
+  font-family: "roboto";
   font-weight: 700;
   line-height: 24px;
   letter-spacing: 1.6px;
@@ -317,7 +317,7 @@
 .Row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center !important; 
   align-items: center; /*added  changed*/
   gap: 20px; /* Adjust the gap as needed */
   width: 90vw;
@@ -1603,7 +1603,7 @@ button:hover {
 @media (min-width: 810px) and (max-width: 1238px) {
   .CardContent {
     height: 300px !important;
-    /* min-width: 50vh !important; */
+    /* min-height: 50vh !important; */
     width: 100% !important;
   }
 }
