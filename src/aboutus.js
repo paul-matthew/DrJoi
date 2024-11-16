@@ -12,7 +12,7 @@ import greenhori5Image from "./greenhori5.jpeg";
 function About() {
   const [desktopState] = useState("About1");
   const scrollToMySkills = () => {
-    window.location.href = '#my-skills'; 
+    window.location.href = "#my-skills";
   };
 
   // const handleAboutClick = () => {
@@ -46,12 +46,11 @@ function About() {
             style={{
               width: "100%",
               height: "100%",
-              top: "10vh",
-              position: "absolute",
+
               backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 1)), url(${greenhori5Image})`,
             }}
           >
-            <div
+            {/* <div
               className="Image"
               style={{
                 width: "100%",
@@ -60,138 +59,162 @@ function About() {
                 bottom: 0,
                 position: "absolute",
               }}
-            ><FadeInSection>
-              <img
-                className="aboutmepic"
-                style={{
-                  width: "auto",
-                  maxWidth: "65vw",
-                  maxHeight: "80vh",
-                  height: "auto",
-                  right: 0,
-                  top: "5vh",
-                  position: "absolute",
-                }}
-                src="./aboutme2c-icon3-new.png"
-                alt="Placeholder"
-              />
-            </FadeInSection>
-
-            </div>
+            >
+      
+            </div> */}
             <div
-              className="Intro"
               style={{
-                width: "100%",
-                height: "100%",
-                top: 24,
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                gap: 12,
-                display: "inline-flex",
-                padding: "0px 3vw",
-                marginTop: "60px",
+                display: "flex",
               }}
             >
-              <div
-                className="Content"
-                style={{
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  alignItems: "flex-start",
-                  gap: 12,
-                  display: "flex",
-                }}
-              >
+
                 <div
-                  className=""
+                  className="Intro"
                   style={{
-                    width: "50vw",
-                    color: "#25282B",
-                    fontSize: "clamp(16px, 4vw, 4vw)",
-                    fontFamily: "Playfair Display",
-                    fontWeight: "700",
-                    wordWrap: "break-word",
-                  }}
-                >
-                  Hello, my name is Dr. Joi
-                </div>
-                <div
-                  className="Subheadline"
-                  style={{
+                    width: "100%",
+                    height: "100vh",
+                    top: 24,
                     flexDirection: "column",
-                    justifyContent: "flex-start",
+                    justifyContent: "center",
                     alignItems: "flex-start",
                     gap: 12,
-                    display: "flex",
-                    marginTop: "0px",
+                    display: "inline-flex",
+                    padding: "0px 3vw",
+                    flex:1
                   }}
                 >
                   <div
-                    className="Text biointro"
+                    className="Content"
                     style={{
-                      textShadow: "2px 2px 4px rgba(255, 255, 255, 0.5)",
-                      color: "black",
-                      fontSize: "clamp(13px, 2vw, 1.5vw)",
-                      fontFamily: "Roboto",
-                      fontWeight: "400",
-                      wordWrap: "break-word",
-                      lineHeight: "1.5",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                      gap: 12,
+                      display: "flex",
                     }}
                   >
-                    I am passionate about empowering individuals to prioritize
-                    their mental health and well-being. As a mental health
-                    advocate, I believe in fostering a supportive and inclusive
-                    environment where everyone feels heard and valued. Through
-                    my journey and experiences, I am committed to breaking
-                    stigmas surrounding mental health and promoting self-care
-                    practices for a happier and healthier life.
+                    <div
+                      className=""
+                      style={{
+                        width: "50vw",
+                        color: "#25282B",
+                        fontSize: "clamp(16px, 4vw, 4vw)",
+                        fontFamily: "Playfair Display",
+                        fontWeight: "700",
+                        wordWrap: "break-word",
+                      }}
+                    >
+                      Hello, I&apos;m Dr. Joi.
+                    </div>
+                    <div
+                      className="Subheadline"
+                      style={{
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                        alignItems: "flex-start",
+                        gap: 12,
+                        display: "flex",
+                        marginTop: "0px",
+                      }}
+                    >
+                      <div
+                        className="Text biointro"
+                        style={{
+                          textShadow: "2px 2px 4px rgba(255, 255, 255, 0.5)",
+                          color: "black",
+                          fontSize: "clamp(13px, 2vw, 1.5vw)",
+                          fontFamily: "Roboto",
+                          fontWeight: "400",
+                          wordWrap: "break-word",
+                          lineHeight: "1.5",
+                        }}
+                      >
+                        I am passionate about empowering individuals to
+                        prioritize their mental health and well-being. As a
+                        mental health advocate, I believe in fostering a
+                        supportive and inclusive environment where everyone
+                        feels heard and valued. Through my journey and
+                        experiences, I am committed to breaking stigmas
+                        surrounding mental health and promoting self-care
+                        practices for a happier and healthier life.
+                      </div>
+                    </div>
+                    <div
+                      className="Button"
+                      style={{ marginTop: "20px", zIndex: 1 }}
+                    >
+                      <div
+                        className="Label"
+                        onClick={scrollToMySkills}
+                        style={{
+                          color: "white",
+                          fontFamily: "PlayfairDisplay",
+                        }}
+                      >
+                        Read More
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: "10px",
+                        marginLeft: "10px",
+                        zIndex: 1,
+                      }}
+                    >
+                      <a
+                        href="https://www.instagram.com/theebonijoi/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <i
+                          className="fab fa-instagram"
+                          style={{
+                            fontSize: "20px",
+                            color: "black",
+                            marginRight: "10px",
+                          }}
+                        ></i>
+                      </a>
+                      <a
+                        href="https://www.tiktok.com/@TheEboniJoi"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <i
+                          className="fab fa-tiktok"
+                          style={{ fontSize: "20px", color: "black" }}
+                        ></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
-                <div
-                  className="Button"
-                  style={{ marginTop: "20px", zIndex: 1 }}
-                >
-                  <div className="Label" onClick={scrollToMySkills} style={{ color: "white", fontFamily: "PlayfairDisplay" }}>
-                    Read More
-                  </div>
-                </div>
-                <div
+              
+           
+              <div
                   style={{
+                    width: "100%",
                     display: "flex",
                     justifyContent: "center",
-                    marginTop: "10px",
-                    marginLeft: "10px",
-                    zIndex:1,
+                    alignItems: "center",
+                    flex:1
                   }}
                 >
-                  <a
-                    href="https://www.instagram.com/theebonijoi/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i
-                      className="fab fa-instagram"
-                      style={{
-                        fontSize: "20px",
-                        color: "black",
-                        marginRight: "10px",
-                      }}
-                    ></i>
-                  </a>
-                  <a
-                    href="https://www.tiktok.com/@TheEboniJoi"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i
-                      className="fab fa-tiktok"
-                      style={{ fontSize: "20px", color: "black" }}
-                    ></i>
-                  </a>
+                  <img
+                    className="aboutmepic"
+                    style={{
+                      width: "80%",
+
+                      boxShadow: "0px 4px 10px rgba(0, 128, 0, 0.6)",
+                      borderRadius: "50%",
+                    }}
+                    src="./aboutme2c-icon3-new.png"
+                    alt="Placeholder"
+                  />
                 </div>
-              </div>
             </div>
+
             <div id="my-skills" style={{ backgroundColor: "white" }}>
               <div
                 className="MySkill"
@@ -203,7 +226,6 @@ function About() {
                   gap: 56.67,
                   display: "inline-flex",
                   padding: "0px 3vw",
-
                 }}
               >
                 <div
@@ -244,19 +266,24 @@ function About() {
                 </div>
                 <FadeInSection>
                   <div
-                    className="Row"
+                    // className="Row"
                     style={{
-                      flexWrap: "wrap",
-                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: "15px",
                       marginBottom: "160px",
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(auto-fit, minmax(400px, 1fr))",
                     }}
                   >
+                    {/* card1 */}
                     <div
-                      className="Card Card1"
+                      // className="Card Card1"
                       style={{
-                        maxWidth: "100%",
-                        maxHeight:'900px',
-                        flex: "1 1 0",
+                        // maxWidth: "100%",
+                        // maxHeight: "900px",
+                        // flex: "1 1 0",
+                        height: "100%",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                         flexDirection: "column",
@@ -264,6 +291,10 @@ function About() {
                         alignItems: "flex-start",
                         display: "inline-flex",
                         marginBottom: "20px",
+                        borderRadius: 8,
+                        // added
+                        // height: window.innerWidth>1290?"600px":"660px",
+                        // width:window.innerWidth>1290?"480px":"430px"
                       }}
                     >
                       <img
@@ -278,10 +309,10 @@ function About() {
                         alt="Placeholder"
                       />
                       <div
-                        className="CardContent"
+                        // className="CardContent"
                         style={{
                           alignSelf: "stretch",
-                          height: "500px",
+                          // height: "500px",
                           padding: 32,
                           flexDirection: "column",
                           justifyContent: "flex-start",
@@ -295,7 +326,6 @@ function About() {
                           className="Content"
                           style={{
                             alignSelf: "stretch",
-                            height: "30vh",
                             flexDirection: "column",
                             justifyContent: "flex-start",
                             alignItems: "flex-start",
@@ -306,7 +336,6 @@ function About() {
                           <div
                             style={{
                               alignSelf: "stretch",
-                              height: "30vh",
                               flexDirection: "column",
                               justifyContent: "flex-start",
                               alignItems: "flex-start",
@@ -337,20 +366,33 @@ function About() {
                                 wordWrap: "break-word",
                               }}
                             >
-                              With over a decade of experience as a mental health practitioner, I have honed my expertise in hospital, clinic, and home settings, catering to diverse populations and addressing a spectrum of mental health challenges. 
-                              As a training Clinical Neuropsychopharmacologist, my focus is on the diagnosis and treatment of psychiatric and neurological disorders using pharmacological interventions. 
-                              Specializing in the study of brain and behavior, I also conduct research to evaluate the efficacy and safety of medications for mental health conditions, while striving to better understand the neurobiology underlying these disorders.{" "}
+                              With over a decade of experience as a mental
+                              health practitioner, I have honed my expertise in
+                              hospital, clinic, and home settings, catering to
+                              diverse populations and addressing a spectrum of
+                              mental health challenges. As a training Clinical
+                              Neuropsychopharmacologist, my focus is on the
+                              diagnosis and treatment of psychiatric and
+                              neurological disorders using pharmacological
+                              interventions. Specializing in the study of brain
+                              and behavior, I also conduct research to evaluate
+                              the efficacy and safety of medications for mental
+                              health conditions, while striving to better
+                              understand the neurobiology underlying these
+                              disorders.{" "}
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                    {/* card2 */}
                     <div
-                      className="Card Card1"
+                      // className="Card Card1"
                       style={{
-                        maxWidth: "100%",
+                        // maxWidth: "100%",
                         // maxHeight:'900px',
-                        flex: "1 1 0",
+                        // flex: "1 1 0",
+                        height: "100%",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                         borderRadius: 8,
@@ -359,6 +401,9 @@ function About() {
                         alignItems: "flex-start",
                         display: "inline-flex",
                         marginBottom: "20px",
+                        // added
+                        //  height: window.innerWidth>1290?"600px":"670px",
+                        // width:window.innerWidth>1290?"480px":"430px"
                       }}
                     >
                       <img
@@ -373,10 +418,10 @@ function About() {
                         alt="Placeholder"
                       />
                       <div
-                        className="CardContent"
+                        // className="CardContent"
                         style={{
                           alignSelf: "stretch",
-                          height: "500px",
+                          // height: "500px",
                           padding: 32,
                           flexDirection: "column",
                           justifyContent: "flex-start",
@@ -390,7 +435,6 @@ function About() {
                           className="Content"
                           style={{
                             alignSelf: "stretch",
-                            height: "30vh",
                             flexDirection: "column",
                             justifyContent: "flex-start",
                             alignItems: "flex-start",
@@ -401,7 +445,6 @@ function About() {
                           <div
                             style={{
                               alignSelf: "stretch",
-                              height: "30vh",
                               flexDirection: "column",
                               justifyContent: "flex-start",
                               alignItems: "flex-start",
@@ -426,29 +469,43 @@ function About() {
                               style={{
                                 alignSelf: "stretch",
                                 color: "#1C1E53",
-                                
+
                                 fontSize: "clamp(10px, 3vw, 17px)",
                                 fontFamily: "Roboto",
                                 fontWeight: "400",
                                 wordWrap: "break-word",
                               }}
                             >
-                            {/* My educational journey reflects an unwavering dedication to advancing mental health care through a multidisciplinary lens. 
+                              {/* My educational journey reflects an unwavering dedication to advancing mental health care through a multidisciplinary lens. 
                             With a strong foundation in the medical sciences, having completed all premedical coursework and attending medical school, I developed an in-depth understanding of human biology and medicine. 
                             However, my true passion for brain science and neuropsychology led me to pursue a more specialized focus. Building on my degrees in public health and business, and currently advancing my expertise in clinical neuropsychopharmacology, I possess a rare blend of scientific rigor, medical insight, and strategic acumen. 
                             My Master of Public Health, combined with advanced training in clinical and community-based behavioral health research, empowers me to tackle complex mental health issues with a comprehensive, research-driven, and patient-centered approach. */}
-                            My educational journey reflects a strong commitment to enhancing mental health care through a multidisciplinary lens. Starting with medical sciences and medical school, I gained a deep understanding of human biology. Driven by a passion for neuropsychology, I specialized further, earning degrees in public health and business and pursuing advanced studies in neuropsychopharmacology. This unique blend of medical, scientific, and strategic expertise enables me to address complex mental health challenges with a comprehensive, research-based, and patient-centered approach.
+                              My educational journey reflects a strong
+                              commitment to enhancing mental health care through
+                              a multidisciplinary lens. Starting with medical
+                              sciences and medical school, I gained a deep
+                              understanding of human biology. Driven by a
+                              passion for neuropsychology, I specialized
+                              further, earning degrees in public health and
+                              business and pursuing advanced studies in
+                              neuropsychopharmacology. This unique blend of
+                              medical, scientific, and strategic expertise
+                              enables me to address complex mental health
+                              challenges with a comprehensive, research-based,
+                              and patient-centered approach.
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                    {/* card3 */}
                     <div
-                      className="Card Card1"
+                      // className="Card Card1"
                       style={{
-                        maxWidth: "100%",
-                        maxHeight:'900px',
-                        flex: "1 1 0",
+                        // maxWidth: "100%",
+                        // maxHeight: "900px",
+                        // flex: "1 1 0",
+                        height: "100%",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                         borderRadius: 8,
@@ -457,6 +514,9 @@ function About() {
                         alignItems: "flex-start",
                         display: "inline-flex",
                         marginBottom: "20px",
+                        // added
+                        //  height: window.innerWidth>1290?"600px":"670px",
+                        // width:window.innerWidth>1290?"480px":"430px"
                       }}
                     >
                       <img
@@ -471,10 +531,10 @@ function About() {
                         alt="Placeholder"
                       />
                       <div
-                        className="CardContent"
+                        // className="CardContent"
                         style={{
                           alignSelf: "stretch",
-                          height: "500px",
+                          // height: "500px",
                           padding: 32,
                           flexDirection: "column",
                           justifyContent: "flex-start",
@@ -488,7 +548,6 @@ function About() {
                           className="Content"
                           style={{
                             alignSelf: "stretch",
-                            height: "30vh",
                             flexDirection: "column",
                             justifyContent: "flex-start",
                             alignItems: "flex-start",
@@ -499,7 +558,6 @@ function About() {
                           <div
                             style={{
                               alignSelf: "stretch",
-                              height: "30vh",
                               flexDirection: "column",
                               justifyContent: "flex-start",
                               alignItems: "flex-start",
@@ -548,12 +606,13 @@ function About() {
                         </div>
                       </div>
                     </div>
+                    {/* card4 */}
                     <div
-                      className="Card Card1"
+                      // className="Card Card1"
                       style={{
-                        maxWidth: "100%",
-                        maxHeight:'900px',
-                        flex: "1 1 0",
+                        // maxWidth: "100%",
+                        // maxHeight: "900px",
+                        // flex: "1 1 0",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                         borderRadius: 8,
@@ -562,6 +621,10 @@ function About() {
                         alignItems: "flex-start",
                         display: "inline-flex",
                         marginBottom: "20px",
+                        height: "100%",
+                        // added
+                        // height: window.innerWidth>1290?"600px":"670px",
+                        // width:window.innerWidth>1290?"480px":"430px"
                       }}
                     >
                       <img
@@ -576,10 +639,10 @@ function About() {
                         alt="Placeholder"
                       />
                       <div
-                        className="CardContent"
+                        // className="CardContent"
                         style={{
                           alignSelf: "stretch",
-                          height: "450px",
+                          // height: "450px",
                           padding: 32,
                           flexDirection: "column",
                           justifyContent: "flex-start",
@@ -593,7 +656,6 @@ function About() {
                           className="Content"
                           style={{
                             alignSelf: "stretch",
-                            height: "30vh",
                             flexDirection: "column",
                             justifyContent: "flex-start",
                             alignItems: "flex-start",
@@ -604,7 +666,6 @@ function About() {
                           <div
                             style={{
                               alignSelf: "stretch",
-                              height: "30vh",
                               flexDirection: "column",
                               justifyContent: "flex-start",
                               alignItems: "flex-start",
@@ -714,19 +775,22 @@ function About() {
                 </div>
                 <FadeInSection>
                   <div
-                    className="Row"
+                    // className="Row"
                     style={{
-                      flexWrap: "wrap",
-                      justifyContent: "flex-start",
-                      marginBottom: "100px",
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(auto-fit, minmax(400px, 1fr))",
+                      alignItems: "center",
+                      gap: "15px",
                     }}
                   >
+                    {/* card1 */}
                     <div
-                      className="Card"
+                      className=""
                       style={{
-                        maxWidth: "100%",
-                        flex: "1 1 0",
-                        background: "white",
+                        // flex: "1 1 0",
+
+                        // background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                         borderRadius: 8,
                         flexDirection: "column",
@@ -734,30 +798,31 @@ function About() {
                         alignItems: "flex-start",
                         display: "inline-flex",
                         marginBottom: "20px",
+                        height: "100%",
                       }}
                     >
-                    <iframe
-                      src="https://www.youtube.com/embed/UcvPJYPzN7g?si=w8cb8b-cPMqMi913"
-                      title="YouTube video player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                      className="PlaceholderVideo"
-                      style={{
-                        alignSelf: "stretch",
-                        height: 400,
-                        width: "100%", // To match the 'stretch' property and make it responsive
-                        borderRadius: 8,
-                        objectFit: "cover", // Though this doesn't apply to iframes, it’s included to reflect the intent
-                      }}
-                    />
-
-                      <div
-                        className="CardContent1"
+                      <iframe
+                        src="https://www.youtube.com/embed/UcvPJYPzN7g?si=w8cb8b-cPMqMi913"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        className="PlaceholderVideo"
                         style={{
                           alignSelf: "stretch",
-                          height: "450px",
+                          height: 400,
+                          width: "100%", // To match the 'stretch' property and make it responsive
+                          borderRadius: 8,
+                          objectFit: "cover", // Though this doesn't apply to iframes, it’s included to reflect the intent
+                        }}
+                      />
+
+                      <div
+                        className=""
+                        style={{
+                          alignSelf: "stretch",
+                          width: "auto",
                           padding: 32,
                           flexDirection: "column",
                           justifyContent: "flex-start",
@@ -771,7 +836,6 @@ function About() {
                           className="Content"
                           style={{
                             alignSelf: "stretch",
-                            height: "30vh",
                             flexDirection: "column",
                             justifyContent: "flex-start",
                             alignItems: "flex-start",
@@ -782,7 +846,6 @@ function About() {
                           <div
                             style={{
                               alignSelf: "stretch",
-                              height: "30vh",
                               flexDirection: "column",
                               justifyContent: "flex-start",
                               alignItems: "flex-start",
@@ -828,12 +891,11 @@ function About() {
                         </div>
                       </div>
                     </div>
+                    {/* card2 */}
                     <div
-                      className="Card"
+                      className=""
                       style={{
-                        height:850,
-                        maxWidth: "100%",
-                        flex: "1 1 0",
+                        // flex: "1 1 0",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                         borderRadius: 8,
@@ -842,6 +904,7 @@ function About() {
                         alignItems: "flex-start",
                         display: "inline-flex",
                         marginBottom: "20px",
+                        height: "100%",
                       }}
                     >
                       <iframe
@@ -861,10 +924,10 @@ function About() {
                         }}
                       />
                       <div
-                        className="CardContent1"
+                        // className="CardContent1"
                         style={{
                           alignSelf: "stretch",
-                          height: "450px",
+                          width: "auto",
                           padding: 32,
                           flexDirection: "column",
                           justifyContent: "flex-start",
@@ -878,7 +941,6 @@ function About() {
                           className="Content"
                           style={{
                             alignSelf: "stretch",
-                            height: "30vh",
                             flexDirection: "column",
                             justifyContent: "flex-start",
                             alignItems: "flex-start",
@@ -889,7 +951,6 @@ function About() {
                           <div
                             style={{
                               alignSelf: "stretch",
-                              height: "30vh",
                               flexDirection: "column",
                               justifyContent: "flex-start",
                               alignItems: "flex-start",
@@ -936,11 +997,10 @@ function About() {
                         </div>
                       </div>
                     </div>
+                    {/* card3 */}
                     <div
-                      className="Card"
+                      className=""
                       style={{
-                        maxWidth: "100%",
-                        flex: "1 1 0",
                         background: "white",
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                         borderRadius: 8,
@@ -949,29 +1009,30 @@ function About() {
                         alignItems: "flex-start",
                         display: "inline-flex",
                         marginBottom: "20px",
+                        height: "100%",
                       }}
                     >
-                    <iframe
-                      src="https://www.youtube.com/embed/re7XzJbH94U?si=0tHrA-v8zYmIgIxx"
-                      title="YouTube video player"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                      className="PlaceholderVideo"
-                      style={{
-                        alignSelf: "stretch",
-                        height: 400,
-                        width: "100%", // To ensure the iframe stretches to fit the container
-                        borderRadius: 8, // For rounded corners like your video
-                        objectFit: "cover", // Though this doesn't affect iframes, included for intent
-                      }}
-                    />
-                      <div
-                        className="CardContent1"
+                      <iframe
+                        src="https://www.youtube.com/embed/re7XzJbH94U?si=0tHrA-v8zYmIgIxx"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        className="PlaceholderVideo"
                         style={{
                           alignSelf: "stretch",
-                          height: "450px",
+                          height: 400,
+                          width: "100%", // To ensure the iframe stretches to fit the container
+                          borderRadius: 8, // For rounded corners like your video
+                          objectFit: "cover", // Though this doesn't affect iframes, included for intent
+                        }}
+                      />
+                      <div
+                        // className="CardContent1"
+                        style={{
+                          alignSelf: "stretch",
+                          width: "auto",
                           padding: 32,
                           flexDirection: "column",
                           justifyContent: "flex-start",
@@ -985,7 +1046,6 @@ function About() {
                           className="Content"
                           style={{
                             alignSelf: "stretch",
-                            height: "30vh",
                             flexDirection: "column",
                             justifyContent: "flex-start",
                             alignItems: "flex-start",
@@ -996,7 +1056,6 @@ function About() {
                           <div
                             style={{
                               alignSelf: "stretch",
-                              height: "30vh",
                               flexDirection: "column",
                               justifyContent: "flex-start",
                               alignItems: "flex-start",
@@ -1027,7 +1086,7 @@ function About() {
                                 wordWrap: "break-word",
                               }}
                             >
-                              As the day draws to a close, grant yourself the
+                              {/* As the day draws to a close, grant yourself the
                               gift of tranquility and serenity with these
                               calming affirmations. Let go of the stresses and
                               worries of the day as you prepare for a restful
@@ -1038,7 +1097,17 @@ function About() {
                               and welcome a sense of calm into your soul. May
                               these affirmations guide you into a peaceful
                               night’s sleep, rejuvenating your spirit for the
-                              adventures that await in the morning light.
+                              adventures that await in the morning light. */}
+                              As the day winds down, give yourself the gift of
+                              peace and calm through these soothing
+                              affirmations. Let go of the day&apos;s stress,
+                              release lingering worries, and invite serenity
+                              into your mind and heart. Reflect on the blessings
+                              of the day with gratitude, ease tension in your
+                              body, and welcome a deep sense of relaxation.
+                              These affirmations are here to guide you into a
+                              restful night&apos;s sleep, rejuvenating your
+                              spirit for the promise of a new day.
                             </div>
                           </div>
                         </div>
