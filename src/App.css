@@ -2080,3 +2080,6 @@ button:hover {
   opacity: 1;
 }
 
+.view-cart-btn i {
+  font-size: 14px; /* Adjust the size as needed */
+}
