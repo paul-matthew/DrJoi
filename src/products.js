@@ -110,7 +110,7 @@ async function calculateShippingCost() {
       zip: zip,
     },
   };
-  console.log("Shipping Details:", ShippingCalc);
+  // console.log("Shipping Details:", ShippingCalc);
 
   let fetchURL = "";
   if (
@@ -146,7 +146,6 @@ async function calculateShippingCost() {
     .catch((error) => {
       console.error("Error fetching shipping cost:", error);
     });
-  console.log("DONE");
 }
 
 async function calculateTax() {
@@ -447,7 +446,7 @@ function saveInputValues() {
   // if (phoneInput) inputValues.phone = phoneInput.value;
   if (countryInput) {
     inputValues.country = countryInput.value;
-    console.log("Saved Country:", inputValues.country);
+    // console.log("Saved Country:", inputValues.country);
   }
   if (regionInput) inputValues.region = regionInput.value;
   if (cityInput) inputValues.city = cityInput.value;
@@ -759,7 +758,9 @@ const DisplayProducts = (props) => {
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">${product.title}</h5>
-                    <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px"><i class="fas ion-ios-cart"></i></button>
+                    <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px">
+                      <i class="fas fa-shopping-cart"></i>
+                    </button>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -1645,7 +1646,7 @@ const DisplayProducts = (props) => {
       const billingLastNameInput = document.createElement("input");
       billingLastNameInput.type = "text";
       billingLastNameInput.placeholder = "Last name";
-      billingLastNameInput.id = "billing-firstname";
+      billingLastNameInput.id = "billing-lastname";
       stripeFormContainer.appendChild(billingLastNameInput);
 
       const billingCountryInput = document.createElement("input");
@@ -2060,7 +2061,7 @@ const DisplayProducts = (props) => {
     // Get the selected country
     const selectedCountry = document.getElementById("countryInput").value;
     saveInputValues();
-    console.log("Country saved:", selectedCountry);
+    // console.log("Country saved:", selectedCountry);
 
     // Get the region select element
     const regionSelect = document.getElementById("regionInput");
@@ -2147,41 +2148,38 @@ const DisplayProducts = (props) => {
     const selectedCountry = document.getElementById("countryInput").value;
     const selectedRegion = document.getElementById("regionInput").value;
     saveInputValues();
-    console.log("Region saved:", selectedRegion);
-
+  
+    // Avoid fetching cities if country or region is not selected
+    if (!selectedCountry || !selectedRegion) {
+      console.log("Country or region is not selected yet. Skipping fetch request.");
+      return;
+    }
+  
     // Set up headers for the API request
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
-
-    let fetchURLmap = "";
-    if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
-    ) {
-      fetchURLmap = "http://localhost:5000/maps/cities";
-    } else {
-      fetchURLmap =
-        "https://drjoiserver-106ea7a60e39.herokuapp.com/maps/cities";
-    }
-
-    const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(
-      selectedRegion
-    )}`;
-
+  
+    // Determine the fetch URL based on environment
+    const fetchURLmap =
+      window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000/maps/cities"
+        : "https://drjoiserver-106ea7a60e39.herokuapp.com/maps/cities";
+  
+    // Construct the API URL with query parameters
+    const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
+  
     try {
       // Fetch cities data from the server
-      const response = await fetch(apiUrl);
+      const response = await fetch(apiUrl, { headers });
       const result = await response.json();
-
-      // Log the result to the console (you can modify this part as needed)
-      // console.log(result);
-
+  
       // Update city dropdown options
       updateCityDropdown(result);
     } catch (error) {
-      console.log("Error fetching cities:", error);
+      console.error("Error fetching cities:", error);
     }
   }
+  
 
   function updateCityDropdown(cityData) {
     const citySelect = document.getElementById("cityInput");
@@ -2197,7 +2195,7 @@ const DisplayProducts = (props) => {
       citySelect.appendChild(option);
     });
     saveInputValues();
-    console.log("City saved:", citySelect.value);
+    // console.log("City saved:", citySelect.value);
   }
 
   function addOptions(regionSelect, optionsArray, selectedValue) {
