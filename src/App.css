@@ -902,7 +902,7 @@ button:hover {
 }
 
 .modal-dialog-scrollable {
-  height: calc(100% - 1rem);
+  height: calc(100% - 2rem);
 }
 .modal-dialog-scrollable .modal-content {
   max-height: 100%;
@@ -944,9 +944,15 @@ button:hover {
   pointer-events: auto;
   background-color: #fff;
   background-clip: padding-box;
-  /* border: 1px solid rgba(0, 0, 0, 0.2); */
   border-radius: 0.3rem;
   outline: 0;
+}
+
+@media (max-height:800px) {
+  .modal-content {
+    max-height: 80vh;
+  }
+  
 }
 
 .modal-backdrop {
@@ -1092,7 +1098,7 @@ button:hover {
   border-radius: 0;
 }
 
-@media (max-width: 795px) {
+@media (max-width: 994px) {
   .overlays-container-mobile {
     display: block !important;
   }
@@ -1343,7 +1349,7 @@ button:hover {
   }
 }
 
-@media only screen and (max-width: 795px) {
+@media only screen and (max-width: 996px) {
   /*FIX ISSUE OF IPAD RESPONSIVENESS*/
   #Navmenudesktop {
     display: none !important;
@@ -2080,6 +2086,3 @@ button:hover {
   opacity: 1;
 }
 
-.view-cart-btn i {
-  font-size: 14px; /* Adjust the size as needed */
-}
