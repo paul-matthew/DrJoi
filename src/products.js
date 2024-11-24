@@ -232,7 +232,7 @@ function constructModalBody() {
     case 2:
       return `
       <div class="modal-dialog modal-dialog-centered" style="top:30px; ">
-        <div class="modal-content">
+        <div class="modal-content" id="shipping-content">
           <div class="modal-header">
             <h5 class="modal-title">Shipping Information</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -539,8 +539,8 @@ const OverlaysMobile = ({
               width: "60vw",
               paddingLeft: "0vw",
               left: isStateServices ? "1000vw" : "20vw",
-              transition: "all 1s ease !important",
-              transitionDelay: "1s",
+              // transition: "all 1s ease !important",
+              // transitionDelay: "1s",
               position: "absolute",
               flexDirection: "column",
               justifyContent: "end",
@@ -556,8 +556,9 @@ const OverlaysMobile = ({
                 width: "100%",
                 height: 28,
                 flexDirection: "column",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
+                justifyContent: "cener",
+                transition:'',
+                alignItems: "center",
                 display: "flex",
               }}
             >

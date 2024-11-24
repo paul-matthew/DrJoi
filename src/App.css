@@ -950,7 +950,10 @@ button:hover {
 
 @media (max-height:800px) {
   .modal-content {
-    max-height: 80vh;
+    max-height: 100%;
+  }
+  #shipping-content {
+    max-height: 80vh !important;
   }
   
 }
