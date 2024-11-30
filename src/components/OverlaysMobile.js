@@ -560,6 +560,8 @@ const OverlaysMobile = ({
                 transition:'',
                 alignItems: "center",
                 display: "flex",
+                marginBottom:"30px",
+
               }}
             >
               <div

@@ -56,7 +56,7 @@ function MobileMenu({ handleAboutClick, handleServicesClick, handleBlogClick, ha
     <div
       id="mobile-menu"
       style={{
-        zIndex: 2,
+        zIndex: 5,
         position: "fixed",
         right: 0,
         top: 0,
