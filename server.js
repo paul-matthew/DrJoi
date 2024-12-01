@@ -367,12 +367,15 @@ app.post('/orders', async (req, res) => {
       console.log("Received line_items:");
       
       const lineItemsHtml = line_items.map(item => `
-      <tr style='padding-top:20px'>
-        <td style="padding: 5px; border-bottom: 1px solid #ddd;"><b>Product ID</b>:${item.product_id}</td>
-        <td style="padding: 5px; text-align: right; border-bottom: 1px solid #ddd;">$${item.price/100} ea</td>
-        <td style="padding: 5px; text-align: right; border-bottom: 1px solid #ddd;">x${item.quantity}</td>
-      </tr>
-    `).join('');
+        <tr style='padding-top:20px'>
+          <td style="padding: 5px; border-bottom: 1px solid #ddd;">
+            <b>Product ID</b>: ${item.variant_id}
+          </td>
+          <td style="padding: 5px; text-align: right; border-bottom: 1px solid #ddd;">$${item.price / 100} ea</td>
+          <td style="padding: 5px; text-align: right; border-bottom: 1px solid #ddd;">x${item.quantity}</td>
+        </tr>
+      `).join('');
+      
     
     const mailOptions = {
       from: emailBusiness,
