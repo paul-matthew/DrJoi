@@ -178,9 +178,10 @@ const Deals = () => {
                 >
                 {/* contact card */}
                   <div
-                    className="Card"
+                    // className="Card"
                     style={{
                       width: window.innerWidth < 768 ? "100%" : "48%",
+                      minHeight:"900px !important",
                       height: "1050px", 
                       background: "white",
                       boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
@@ -190,7 +191,6 @@ const Deals = () => {
                       display: "flex",
                       marginBottom: "20px",
                       padding: "16px",
-                      minHeight: "100%",
                       boxSizing: "border-box",
                     }}
                   >
@@ -198,8 +198,8 @@ const Deals = () => {
                       className="PlaceholderImage"
                       style={{
                         alignSelf: "stretch",
-                        height: "600px",
-                        maxHeight: "900px",
+                        minHeight: "150px",
+                        maxHeight: "600px",
                         borderRadius: "8px",
                         objectFit: "cover",
                         width: "100%",
@@ -364,10 +364,12 @@ const Deals = () => {
                   </div>
 {/* amazon card */}
                   <div
-                    className="Card"
+                    // className="Card"
                     style={{
                       width: window.innerWidth < 768 ? "100%" : "48%",
-                      height: "1050px", 
+                      minHeight:"900px !important",
+                      maxHeight: "1050px", 
+                      height: "1050px",
                       background: "white",
                       boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.5)",
                       flexDirection: "column",
@@ -376,7 +378,6 @@ const Deals = () => {
                       display: "flex",
                       marginBottom: "20px",
                       padding: "16px",
-                       minHeight: "100%", // Ensure card takes full height
                       boxSizing: "border-box",
                     }}
                   >
