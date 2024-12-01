@@ -21,7 +21,7 @@ const printifyShopID = process.env.PRINTIFY_SHOPID;
 const emailUser = process.env.EMAIL_USER;
 const emailPass = process.env.EMAIL_PASS;
 const emailBusiness = process.env.BUSINESS_EMAIL
-const stripe = Stripe(process.env.STRIPE_CLIENT_SECRET_SB); 
+const stripe = Stripe(process.env.STRIPE_CLIENT_SECRET); 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -78,7 +78,7 @@ const transporter = nodemailer.createTransport({
 });
 
 app.get('/stripe/publishable-key', (req, res) => {
-  res.json({ publishableKey: process.env.STRIPE_CLIENT_ID_SB });
+  res.json({ publishableKey: process.env.STRIPE_CLIENT_ID });
 });
 
 app.post('/stripe/create-payment-intent', async (req, res) => {
