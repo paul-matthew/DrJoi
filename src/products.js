@@ -1791,6 +1791,7 @@ const DisplayProducts = (props) => {
                     shipping: formattedShippingCost,
                     donation: inputValues.donation,
                   },
+                  email:inputValues.email,
                 }),
               }
             );

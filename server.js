@@ -82,7 +82,7 @@ app.get('/stripe/publishable-key', (req, res) => {
 });
 
 app.post('/stripe/create-payment-intent', async (req, res) => {
-  const { amount, description, metadata } = req.body;
+  const { amount, description, metadata,email } = req.body;
 
   try {
       // Create a new Payment Intent each time
@@ -91,6 +91,7 @@ app.post('/stripe/create-payment-intent', async (req, res) => {
           currency: 'usd',
           description: description,
           metadata: metadata,
+          receipt_email: email,
       });
 
       res.json({ clientSecret: paymentIntent.client_secret });
