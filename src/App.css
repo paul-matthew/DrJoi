@@ -758,6 +758,12 @@ button:hover {
   }
 }
 
+@media (max-height: 400px) {
+  .ContactX {
+    height: 130vh !important;
+  }
+}
+
 @media (max-width: 453px) {
   .contact-footer {
     display: none !important;
