@@ -5,7 +5,7 @@ import { loadStripe } from "@stripe/stripe-js";
 // import { handleSubmit } from './components/CheckOutForm.js';
 
 import { cartUtilities } from "./utils/cart.js";
-
+let hasFetchedCities = false;
 let fetchURL = "https://drjoiserver-106ea7a60e39.herokuapp.com/products";
 if (
   window.location.hostname === "localhost" ||
@@ -110,7 +110,7 @@ async function calculateShippingCost() {
       zip: zip,
     },
   };
-  console.log("Shipping Details:", ShippingCalc);
+  // console.log("Shipping Details:", ShippingCalc);
 
   let fetchURL = "";
   if (
@@ -146,13 +146,12 @@ async function calculateShippingCost() {
     .catch((error) => {
       console.error("Error fetching shipping cost:", error);
     });
-  console.log("DONE");
 }
 
 async function calculateTax() {
   const fetchStripeTax =
     window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1"
+      window.location.hostname === "127.0.0.1"
       ? "http://localhost:5000/stripe/calculate-taxes"
       : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/calculate-taxes";
 
@@ -204,9 +203,8 @@ function constructModalBody() {
               <table style="border-collapse: collapse; width: 50%;">
               <tr>
                   <td style="border: none; font-weight: bold;">Subtotal:</td>
-                  <td style="border: none; text-align: left; font-weight: bold;">$${
-                    Math.round(price * 100) / 100
-                  }</td>
+                  <td style="border: none; text-align: left; font-weight: bold;">$${Math.round(price * 100) / 100
+        }</td>
               </tr>
             </table>
             <p style="font-size: 14px; color: gray; margin-top: 10px;">
@@ -217,10 +215,10 @@ function constructModalBody() {
               <td style="border: none; font-weight: bold;min-width:120px">Support Gift:</td>
               <td style="border: none; text-align: left;">
               <input type="number" id="donationInput" value="${(
-                parseFloat(inputValues.donation) || 0
-              ).toFixed(
-                2
-              )}" step="1.00" min="0" style="width: 100px; text-align: right;">
+          parseFloat(inputValues.donation) || 0
+        ).toFixed(
+          2
+        )}" step="1.00" min="0" style="width: 100px; text-align: right;">
               </td>
             </tr>
             </table>
@@ -233,7 +231,7 @@ function constructModalBody() {
     case 2:
       return `
       <div class="modal-dialog modal-dialog-centered" style="top:30px; ">
-        <div class="modal-content">
+        <div class="modal-content shipping-content">
           <div class="modal-header">
             <h5 class="modal-title">Shipping Information</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -253,11 +251,11 @@ function constructModalBody() {
             </select>                       
             <label for="regionInput">State/Province/Region<span style='color:red'>*</span>:</label>
             <select id="regionInput" class="form-control" required>
-              <option>${inputValues.region}</option>
+              <option></option>
             </select>
             <label for="cityinput">City<span style='color:red'>*</span>:</label>
             <select id="cityInput" class="form-control" required>
-              <option>${inputValues.city}</option>
+              <option></option>
             </select>              
             <label for="addressinput">Address Line 1<span style='color:red'>*</span>:</label>
             <input type="address" id="addressInput" class="form-control" required value="${inputValues.address}">
@@ -426,6 +424,7 @@ const initializeSelectedSKUs = () => {
 var initialSetupDone = false;
 
 function saveInputValues() {
+  console.log("lul maru me")
   // console.log('this is the', currentStage)
   const firstNameInput = document.getElementById("firstNameInput");
   const lastNameInput = document.getElementById("lastNameInput");
@@ -447,7 +446,7 @@ function saveInputValues() {
   // if (phoneInput) inputValues.phone = phoneInput.value;
   if (countryInput) {
     inputValues.country = countryInput.value;
-    console.log("Saved Country:", inputValues.country);
+    // console.log("Saved Country:", inputValues.country);
   }
   if (regionInput) inputValues.region = regionInput.value;
   if (cityInput) inputValues.city = cityInput.value;
@@ -512,8 +511,8 @@ function saveInputValues() {
 
     if (
       !initialSetupDone ||
-      Array.from(formControls).some(
-        (input) => input.value.trim() === "" && input !== address2Input
+      Object.keys(inputValues).some(
+        (input) => input?.trim() === "" && input !== address2Input
       ) ||
       !validateEmailFormat(emailInput.value.trim()) ||
       !validateZipCodeFormat(zipInput.value.trim()) ||
@@ -534,12 +533,12 @@ function saveInputValues() {
     // Loop through each element with the 'form-control' class
     Array.from(formControls).forEach(function (formControl) {
       formControl.addEventListener("input", function () {
-        var inputsToCheck = Array.from(formControls).filter(function (input) {
+        var inputsToCheck = Object.keys(inputValues).filter(function (input) {
           return input !== address2Input;
         });
 
         var allFieldsFilled = inputsToCheck.every(function (input) {
-          return input.value.trim() !== "";
+          return input?.trim() !== "";
         });
 
         var emailIsValid = validateEmailFormat(emailInput.value.trim());
@@ -611,6 +610,7 @@ function handleOrderButtonClick() {
       saveInputValues();
       hideModal();
       currentStage = 1;
+      hasFetchedCities = false
     }
   });
 
@@ -699,16 +699,14 @@ const DisplayProducts = (props) => {
             const productCard = document.createElement("div");
             productCard.classList.add("card-container");
             productCard.innerHTML = `
-            <a data-bs-toggle="modal" href="#productitem${
-              index + 1
-            }" style="text-decoration: none;">
+            <a data-bs-toggle="modal" href="#productitem${index + 1
+              }" style="text-decoration: none;">
               <div class="card">
                 <div class='productimage'>
-                  ${
-                    product.images && product.images.length > 0
-                      ? `<img src="${product.images[0].src}" class="card-img-top" alt="${product.title}" loading="lazy">`
-                      : '<div class="no-image">No image available</div>'
-                  }
+                  ${product.images && product.images.length > 0
+                ? `<img src="${product.images[0].src}" class="card-img-top" alt="${product.title}" loading="lazy">`
+                : '<div class="no-image">No image available</div>'
+              }
                   <div class="new-label">NEW</div>
                 </div>
                 <div class="card-body">
@@ -718,8 +716,8 @@ const DisplayProducts = (props) => {
                     </div>
                     <div class='card-price' style='color: grey; font-size: 0.8em;'>
                       <span style='text-decoration: line-through;'>$${(
-                        maxPrice / 75
-                      ).toFixed(2)}</span> <!-- 75 is because it's 25% off! -->
+                maxPrice / 75
+              ).toFixed(2)}</span> <!-- 75 is because it's 25% off! -->
                       <br>
                     </div>
                     <div class='card-price' style='color:red;font-weight:bold'>
@@ -759,207 +757,204 @@ const DisplayProducts = (props) => {
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">${product.title}</h5>
-                    <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px"><i class="fas ion-ios-cart"></i></button>
+                    <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px">
+                      <i class="fas fa-shopping-cart"></i>
+                    </button>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                     <div class="product-images">
                       <div class="small-images">
                         ${product.images
-                          .map(
-                            (image, i) => `
+                .map(
+                  (image, i) => `
                           <img src="${image.src}" class="small-img" alt="${product.title}" loading="lazy">
                         `
-                          )
-                          .join("")}
+                )
+                .join("")}
                       </div>
                       <div class="main-container">
                       <div class="magnify" id="magnify-${index + 1}">
-                        <img src="${
-                          product.images[0].src
-                        }" class="img-fluid main-img" alt="${
-              product.title
-            }" loading="lazy" id="main-image-${index + 1}">
-                        <div class="magnify-glass" id="magnify-glass-${
-                          index + 1
-                        }"></div>
+                        <img src="${product.images[0].src
+              }" class="img-fluid main-img" alt="${product.title
+              }" loading="lazy" id="main-image-${index + 1}">
+                        <div class="magnify-glass" id="magnify-glass-${index + 1
+              }"></div>
                       </div>
                     </div>
                     </div>
                     <div class="color-options" style="display: flex; align-items: center;">
                       ${
-                        // Check for available color options
-                        (function () {
-                          const colorsOption =
-                            product.options.find(
-                              (option) => option.name === "Colors"
-                            )?.values || [];
-                          const frameColorOption =
-                            product.options.find(
-                              (option) => option.name === "Frame Color"
-                            )?.values || [];
-                          const colorOption =
-                            product.options.find(
-                              (option) => option.name === "Color"
-                            )?.values || [];
-                          const seamColorsOption =
-                            product.options.find(
-                              (option) => option.name === "Seam Colors"
-                            )?.values || [];
-                          const bottleColorOption =
-                            product.options.find(
-                              (option) => option.name === "Bottle color"
-                            )?.values || [];
+              // Check for available color options
+              (function () {
+                const colorsOption =
+                  product.options.find(
+                    (option) => option.name === "Colors"
+                  )?.values || [];
+                const frameColorOption =
+                  product.options.find(
+                    (option) => option.name === "Frame Color"
+                  )?.values || [];
+                const colorOption =
+                  product.options.find(
+                    (option) => option.name === "Color"
+                  )?.values || [];
+                const seamColorsOption =
+                  product.options.find(
+                    (option) => option.name === "Seam Colors"
+                  )?.values || [];
+                const bottleColorOption =
+                  product.options.find(
+                    (option) => option.name === "Bottle color"
+                  )?.values || [];
 
-                          const allAvailableColors = [
-                            ...colorsOption,
-                            ...frameColorOption,
-                            ...colorOption,
-                            ...seamColorsOption,
-                            ...bottleColorOption,
-                          ].filter((color) => {
-                            // Check for any variant that matches the color's id and is enabled
-                            const variant = product.variants.find(
-                              (variant) =>
-                                variant.options.includes(color.id) &&
-                                variant.is_enabled
-                            );
-                            return variant; // Include only colors that have enabled variants
-                          }); //THIS FIXES THE LAPTOP PRODUCT COLORS ISSUE
+                const allAvailableColors = [
+                  ...colorsOption,
+                  ...frameColorOption,
+                  ...colorOption,
+                  ...seamColorsOption,
+                  ...bottleColorOption,
+                ].filter((color) => {
+                  // Check for any variant that matches the color's id and is enabled
+                  const variant = product.variants.find(
+                    (variant) =>
+                      variant.options.includes(color.id) &&
+                      variant.is_enabled
+                  );
+                  return variant; // Include only colors that have enabled variants
+                }); //THIS FIXES THE LAPTOP PRODUCT COLORS ISSUE
 
-                          // If there are available colors, render the title and options
-                          if (allAvailableColors.length >= 1) {
-                            const defaultColor =
-                              allAvailableColors.length === 1 ? "selected" : "";
+                // If there are available colors, render the title and options
+                if (allAvailableColors.length >= 1) {
+                  const defaultColor =
+                    allAvailableColors.length === 1 ? "selected" : "";
 
-                            return `
+                  return `
                             <div style="display: flex; align-items: center; margin-top: 20px;">
                               <h6 style='font-weight:bold; margin-right: 8px;'>Color selection:</h6>
                               <div style="display: flex; align-items: center;margin-bottom:5px;">
                                 ${allAvailableColors
-                                  .map(
-                                    (color) => `
+                      .map(
+                        (color) => `
                                   <div class="color-option ${defaultColor}" style="background-color: ${color.colors[0]};"></div>
                                 `
-                                  )
-                                  .join("")}
+                      )
+                      .join("")}
                               </div>
                             </div>
                           `;
-                          }
-                          // Return empty if no colors are available
-                          return "";
-                        })()
-                      }
+                }
+                // Return empty if no colors are available
+                return "";
+              })()
+              }
                     </div>
 
-                    <div class="fabric-options" style="margin-right: 20px; ${
-                      product.options.some(
-                        (option) =>
-                          option.name === "Fabric weight" ||
-                          option.name === "Box type" ||
-                          option.name === "Paper finishes" ||
-                          option.name === "Finishes"
-                      ) &&
-                      (product.options.some(
-                        (option) =>
-                          option.name === "Fabric weight" &&
-                          option.type === "weight"
-                      ) ||
-                        product.options.some(
-                          (option) =>
-                            option.name === "Box type" &&
-                            option.type === "finish"
-                        ) ||
-                        product.options.some(
-                          (option) =>
-                            option.name === "Paper finishes" &&
-                            option.type === "paper"
-                        ) ||
-                        product.options.some(
-                          (option) =>
-                            option.name === "Finishes" &&
-                            option.type === "surface"
-                        ))
-                        ? ""
-                        : "display: none;"
-                    }">
-                      <h6 style='font-weight:bold; display: inline;'>${
-                        product.options.find(
-                          (option) =>
-                            option.name === "Fabric weight" ||
-                            option.name === "Box type" ||
-                            option.name === "Paper finishes" ||
-                            option.name === "Finishes"
-                        )?.name
-                      }:</h6>
+                    <div class="fabric-options" style="margin-right: 20px; ${product.options.some(
+                (option) =>
+                  option.name === "Fabric weight" ||
+                  option.name === "Box type" ||
+                  option.name === "Paper finishes" ||
+                  option.name === "Finishes"
+              ) &&
+                (product.options.some(
+                  (option) =>
+                    option.name === "Fabric weight" &&
+                    option.type === "weight"
+                ) ||
+                  product.options.some(
+                    (option) =>
+                      option.name === "Box type" &&
+                      option.type === "finish"
+                  ) ||
+                  product.options.some(
+                    (option) =>
+                      option.name === "Paper finishes" &&
+                      option.type === "paper"
+                  ) ||
+                  product.options.some(
+                    (option) =>
+                      option.name === "Finishes" &&
+                      option.type === "surface"
+                  ))
+                ? ""
+                : "display: none;"
+              }">
+                      <h6 style='font-weight:bold; display: inline;'>${product.options.find(
+                (option) =>
+                  option.name === "Fabric weight" ||
+                  option.name === "Box type" ||
+                  option.name === "Paper finishes" ||
+                  option.name === "Finishes"
+              )?.name
+              }:</h6>
                       <select class="fabric-dropdown">
                           ${(
-                            product.options.find(
-                              (option) =>
-                                option.name === "Fabric weight" &&
-                                option.type === "weight"
-                            )?.values ||
-                            product.options.find(
-                              (option) =>
-                                option.name === "Box type" &&
-                                option.type === "finish"
-                            )?.values ||
-                            product.options.find(
-                              (option) =>
-                                option.name === "Paper finishes" &&
-                                option.type === "paper"
-                            )?.values ||
-                            product.options.find(
-                              (option) =>
-                                option.name === "Finishes" &&
-                                option.type === "surface"
-                            )?.values ||
-                            []
+                product.options.find(
+                  (option) =>
+                    option.name === "Fabric weight" &&
+                    option.type === "weight"
+                )?.values ||
+                product.options.find(
+                  (option) =>
+                    option.name === "Box type" &&
+                    option.type === "finish"
+                )?.values ||
+                product.options.find(
+                  (option) =>
+                    option.name === "Paper finishes" &&
+                    option.type === "paper"
+                )?.values ||
+                product.options.find(
+                  (option) =>
+                    option.name === "Finishes" &&
+                    option.type === "surface"
+                )?.values ||
+                []
+              )
+                .filter((option) => {
+                  const variant = product.variants.find(
+                    (variant) => {
+                      if (variant.options.includes(option.id)) {
+                        if (
+                          product.options.some(
+                            (opt) =>
+                              opt.name === "Fabric weight" &&
+                              opt.type === "weight"
+                          ) ||
+                          product.options.some(
+                            (opt) =>
+                              opt.name === "Box type" &&
+                              opt.type === "finish"
+                          ) ||
+                          product.options.some(
+                            (opt) =>
+                              opt.name === "Paper finishes" &&
+                              opt.type === "paper"
+                          ) ||
+                          product.options.some(
+                            (opt) =>
+                              opt.name === "Finishes" &&
+                              opt.type === "surface"
                           )
-                            .filter((option) => {
-                              const variant = product.variants.find(
-                                (variant) => {
-                                  if (variant.options.includes(option.id)) {
-                                    if (
-                                      product.options.some(
-                                        (opt) =>
-                                          opt.name === "Fabric weight" &&
-                                          opt.type === "weight"
-                                      ) ||
-                                      product.options.some(
-                                        (opt) =>
-                                          opt.name === "Box type" &&
-                                          opt.type === "finish"
-                                      ) ||
-                                      product.options.some(
-                                        (opt) =>
-                                          opt.name === "Paper finishes" &&
-                                          opt.type === "paper"
-                                      ) ||
-                                      product.options.some(
-                                        (opt) =>
-                                          opt.name === "Finishes" &&
-                                          opt.type === "surface"
-                                      )
-                                    ) {
-                                      return (
-                                        variant.is_available &&
-                                        variant.is_enabled
-                                      );
-                                    }
-                                  }
-                                  return false;
-                                }
-                              );
-                              return variant;
-                            })
-                            .map(
-                              (option) => `
+                        ) {
+                          return (
+                            variant.is_available &&
+                            variant.is_enabled
+                          );
+                        }
+                      }
+                      return false;
+                    }
+                  );
+                  return variant;
+                })
+                .map(
+                  (option) => `
                                   <option value="${option.id}">${option.title}</option>
                               `
-                            )
-                            .join("")}
+                )
+                .join("")}
                       </select>
                     </div>
 
@@ -968,81 +963,80 @@ const DisplayProducts = (props) => {
                         <h6 style='font-weight:bold; display: inline;'>Size selection:</h6>
                         <select class="size-dropdown">
                           ${
-                            // Look for the "Sizes" option
-                            product.options
-                              .find((option) => option.name === "Sizes")
-                              ?.values.filter((size) => {
-                                // Check if there is an available and enabled variant for each size
-                                return product.variants.some(
-                                  (variant) =>
-                                    variant.options.includes(size.id) &&
-                                    variant.is_available && // Only include if the variant is available
-                                    variant.is_enabled // Only include if the variant is enabled
-                                );
-                              })
-                              .map(
-                                (size) => `
+              // Look for the "Sizes" option
+              product.options
+                .find((option) => option.name === "Sizes")
+                ?.values.filter((size) => {
+                  // Check if there is an available and enabled variant for each size
+                  return product.variants.some(
+                    (variant) =>
+                      variant.options.includes(size.id) &&
+                      variant.is_available && // Only include if the variant is available
+                      variant.is_enabled // Only include if the variant is enabled
+                  );
+                })
+                .map(
+                  (size) => `
                                   <option value="${size.id}">${size.title}</option>
                                 `
-                              )
-                              .join("") ||
-                            // Fallback to the "Size" option if "Sizes" option is not found
-                            product.options
-                              .find((option) => option.name === "Size")
-                              ?.values.filter((size) => {
-                                // Check if there is an available and enabled variant for each size
-                                return product.variants.some(
-                                  (variant) =>
-                                    variant.options.includes(size.id) &&
-                                    variant.is_available && // Only include if the variant is available
-                                    variant.is_enabled // Only include if the variant is enabled
-                                );
-                              })
-                              .map(
-                                (size) => `
+                )
+                .join("") ||
+              // Fallback to the "Size" option if "Sizes" option is not found
+              product.options
+                .find((option) => option.name === "Size")
+                ?.values.filter((size) => {
+                  // Check if there is an available and enabled variant for each size
+                  return product.variants.some(
+                    (variant) =>
+                      variant.options.includes(size.id) &&
+                      variant.is_available && // Only include if the variant is available
+                      variant.is_enabled // Only include if the variant is enabled
+                  );
+                })
+                .map(
+                  (size) => `
                                   <option value="${size.id}">${size.title}</option>
                                 `
-                              )
-                              .join("") ||
-                            // Handle Quantity options as a separate dropdown, if needed
-                            product.options
-                              .find((option) => option.name === "Quantity")
-                              ?.values.map(
-                                (quantity) => `
+                )
+                .join("") ||
+              // Handle Quantity options as a separate dropdown, if needed
+              product.options
+                .find((option) => option.name === "Quantity")
+                ?.values.map(
+                  (quantity) => `
                                   <option value="${quantity.id}">${quantity.title}</option>
                                 `
-                              )
-                              .join("")
-                          }
+                )
+                .join("")
+              }
                         </select>
                       </div>
                     </div>
-                    ${
-                      product.options.find(
-                        (option) =>
-                          option.name === "Flavour" || option.name === "Flavor"
-                      )?.values.length > 0
-                        ? `
+                    ${product.options.find(
+                (option) =>
+                  option.name === "Flavour" || option.name === "Flavor"
+              )?.values.length > 0
+                ? `
                           <div class="flavour-options" style="margin-right: 20px;margin-top:10px;">
                             <h6 style='font-weight:bold; display: inline;'>Flavors:</h6>
                             <select class="flavour-dropdown">
                               ${product.options
-                                .find(
-                                  (option) =>
-                                    option.name === "Flavour" ||
-                                    option.name === "Flavor"
-                                )
-                                ?.values.map(
-                                  (flavour) => `
+                  .find(
+                    (option) =>
+                      option.name === "Flavour" ||
+                      option.name === "Flavor"
+                  )
+                  ?.values.map(
+                    (flavour) => `
                                   <option value="${flavour.id}">${flavour.title}</option>
                                 `
-                                )
-                                .join("")}
+                  )
+                  .join("")}
                             </select>
                           </div>
                           `
-                        : ""
-                    }
+                : ""
+              }
 
                     <div style="margin-top:10px;margin-bottom:10px">
                       <label for="product-qty" style="margin-top: 10px; font-weight: bold; display: inline;">Quantity:</label>
@@ -1050,17 +1044,16 @@ const DisplayProducts = (props) => {
                     </div>
                     <p style='font-weight:bold'>Price: 
                       <span style='font-weight:normal'>
-                        $${
-                          product.variants
-                            .filter((variant) => variant.is_enabled)
-                            .reduce(
-                              (maxPrice, variant) =>
-                                variant.price > maxPrice
-                                  ? variant.price
-                                  : maxPrice,
-                              0
-                            ) / 100
-                        }
+                        $${product.variants
+                .filter((variant) => variant.is_enabled)
+                .reduce(
+                  (maxPrice, variant) =>
+                    variant.price > maxPrice
+                      ? variant.price
+                      : maxPrice,
+                  0
+                ) / 100
+              }
                       USD</span>
                     </p>
                     <button class="add-to-cart-btn" style='margin-right:10px'>Add to Cart</button>Items in Cart: <span class="item-count"></span>
@@ -1258,12 +1251,12 @@ const DisplayProducts = (props) => {
                 const sizeMatchIndex =
                   sizeOptionIndex !== -1
                     ? variant.options[sizeOptionIndex]?.toString() ===
-                      selectedSizeId.toString()
+                    selectedSizeId.toString()
                     : true;
                 const fabricMatchIndex =
                   fabricOptionIndex !== -1
                     ? variant.options[fabricOptionIndex]?.toString() ===
-                      selectedFabricId.toString()
+                    selectedFabricId.toString()
                     : true;
 
                 return colorMatchIndex && sizeMatchIndex && fabricMatchIndex;
@@ -1490,14 +1483,27 @@ const DisplayProducts = (props) => {
   }
 
   orderModal.addEventListener("click", async function (event) {
+
     const targetId = event.target.id;
     switch (targetId) {
       case "OrderDetailsButton":
-        saveInputValues();
+
         currentStage = 2;
         orderModal.innerHTML = constructModalBody();
         await region();
-        await fetchCities();
+        // await fetchCities();
+        // if (countryInput?.options[inputValues.country]) {
+        //   countryInput.value = inputValues.country;
+        // }
+        // if (regionInput?.options[inputValues.region]) {
+        //   regionInput.value = inputValues.region;
+        // }
+        // if (cityInput?.options[inputValues.city]) {
+        //   cityInput.value = inputValues.city;
+        // }
+        // saveInputValues();
+
+
         break;
       case "totalcost":
         saveInputValues();
@@ -1518,9 +1524,20 @@ const DisplayProducts = (props) => {
       case "backButton2":
         currentStage = 2;
         orderModal.innerHTML = constructModalBody();
-        saveInputValues();
+
         await region();
         await fetchCities();
+
+
+        // if (countryInput?.options[inputValues.country]) {
+        //   countryInput.value = inputValues.country;
+        // }
+
+        // if (cityInput?.options[inputValues.city]) {
+        //   cityInput.value = inputValues.city;
+        // }
+
+        // saveInputValues();
         break;
       case "backButton3":
         currentStage = 2.5;
@@ -1536,7 +1553,7 @@ const DisplayProducts = (props) => {
       const countryInput = document.getElementById("countryInput");
       const regionInput = document.getElementById("regionInput");
       // const cityInput = document.getElementById('cityInput');
-
+      const cityInput = document.getElementById("cityInput");
       // Function to populate country options when input gains focus
       countryInput.addEventListener("focus", async () => {
         await populateCountryOptions();
@@ -1545,13 +1562,20 @@ const DisplayProducts = (props) => {
       // Function to update regions based on selected country
       countryInput.addEventListener("change", async () => {
         await region(); // Update regions
+
       });
 
       // Function to update cities based on selected region
       regionInput.addEventListener("change", async () => {
         await fetchCities(); // Update cities
+        // inputValues.region = document.getElementById("regionInput")?.value;
+        console.log(inputValues.region)
       });
+      cityInput.addEventListener("change", () => {
 
+        inputValues.city = cityInput.value;
+        console.log(cityInput.value)
+      })
       // Optionally, you can populate country options initially
       populateCountryOptions(); // Assuming this function exists
     }
@@ -1645,7 +1669,7 @@ const DisplayProducts = (props) => {
       const billingLastNameInput = document.createElement("input");
       billingLastNameInput.type = "text";
       billingLastNameInput.placeholder = "Last name";
-      billingLastNameInput.id = "billing-firstname";
+      billingLastNameInput.id = "billing-lastname";
       stripeFormContainer.appendChild(billingLastNameInput);
 
       const billingCountryInput = document.createElement("input");
@@ -1703,19 +1727,19 @@ const DisplayProducts = (props) => {
 
       const fetchURLstripeCreatePaymentIntent =
         window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1"
+          window.location.hostname === "127.0.0.1"
           ? "http://localhost:5000/stripe/create-payment-intent"
           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
 
       const fetchURLstripeValidate =
         window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1"
+          window.location.hostname === "127.0.0.1"
           ? "http://localhost:5000/stripe/validate"
           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/validate";
 
       const fetchStripeKey =
         window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1"
+          window.location.hostname === "127.0.0.1"
           ? "http://localhost:5000/stripe/publishable-key"
           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
 
@@ -1769,7 +1793,7 @@ const DisplayProducts = (props) => {
             if (!validationData.success) {
               throw new Error(
                 "Payment validation failed: " +
-                  (validationData.error || "Unknown error")
+                (validationData.error || "Unknown error")
               );
             }
 
@@ -1790,6 +1814,7 @@ const DisplayProducts = (props) => {
                     shipping: formattedShippingCost,
                     donation: inputValues.donation,
                   },
+                  email: inputValues.email,
                 }),
               }
             );
@@ -2043,7 +2068,8 @@ const DisplayProducts = (props) => {
 
       countrySelect.appendChild(option);
     });
-    saveInputValues();
+
+    // saveInputValues();
   }
 
   function filterUSRegions(regions) {
@@ -2059,8 +2085,9 @@ const DisplayProducts = (props) => {
   async function region() {
     // Get the selected country
     const selectedCountry = document.getElementById("countryInput").value;
-    saveInputValues();
-    console.log("Country saved:", selectedCountry);
+    inputValues.country = selectedCountry
+    // saveInputValues();
+    // console.log("Country saved:", selectedCountry);
 
     // Get the region select element
     const regionSelect = document.getElementById("regionInput");
@@ -2146,76 +2173,106 @@ const DisplayProducts = (props) => {
     // Get the selected country and region
     const selectedCountry = document.getElementById("countryInput").value;
     const selectedRegion = document.getElementById("regionInput").value;
-    saveInputValues();
-    console.log("Region saved:", selectedRegion);
+    const citySelect = document.getElementById("cityInput");
+    // Only update inputValues.region after the first execution
+    if (hasFetchedCities) {
+      inputValues.region = selectedRegion;
+    }
+
+    // Avoid fetching cities if country or region is not selected
+    if (!selectedCountry || !selectedRegion) {
+      console.log("Country or region is not selected yet. Skipping fetch request.");
+      return;
+    }
 
     // Set up headers for the API request
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    let fetchURLmap = "";
-    if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
-    ) {
-      fetchURLmap = "http://localhost:5000/maps/cities";
-    } else {
-      fetchURLmap =
-        "https://drjoiserver-106ea7a60e39.herokuapp.com/maps/cities";
-    }
+    // Determine the fetch URL based on environment
+    const fetchURLmap =
+      window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000/maps/cities"
+        : "https://drjoiserver-106ea7a60e39.herokuapp.com/maps/cities";
 
-    const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(
-      selectedRegion
-    )}`;
+    // Construct the API URL with query parameters
+    const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
 
     try {
       // Fetch cities data from the server
-      const response = await fetch(apiUrl);
+      const response = await fetch(apiUrl, { headers });
       const result = await response.json();
-
-      // Log the result to the console (you can modify this part as needed)
-      // console.log(result);
 
       // Update city dropdown options
       updateCityDropdown(result);
     } catch (error) {
-      console.log("Error fetching cities:", error);
+      console.error("Error fetching cities:", error);
+    } finally {
+      // if (selectedRegion) {
+      //   document.getElementById("regionInput").value = inputValues.region;
+      // }
+      // if (citySelect.options.length > 1) {
+      //   citySelect.value = inputValues.city;
+      //   console.log("lul", inputValues.city);
+      // }
     }
+
+    // Set the flag to true after the first execution
+    hasFetchedCities = true;
   }
+
 
   function updateCityDropdown(cityData) {
     const citySelect = document.getElementById("cityInput");
-
+  
     // Clear existing options
     citySelect.innerHTML = "";
-
+  
     // Add new options based on the fetched city data
     cityData.forEach((city) => {
       const option = document.createElement("option");
       option.value = city.name; // Use the 'name' property for the value
       option.text = city.name; // Display the 'name' property in the dropdown
       citySelect.appendChild(option);
+  
+      // Select the option if it matches inputValues.city
+      if (inputValues.city === city.name) {
+        option.selected = true;
+      }
     });
-    saveInputValues();
-    console.log("City saved:", citySelect.value);
+  
+    // Optionally, handle cases where inputValues.city does not match any city
+    if (!citySelect.value && cityData.length > 0) {
+      // Default to the first city if inputValues.city is invalid or empty
+      citySelect.value = cityData[0].name;
+    }
   }
 
-  function addOptions(regionSelect, optionsArray, selectedValue) {
+  function addOptions(regionSelect, optionsArray) {
+    // Clear existing options
+    regionSelect.innerHTML = "";
+  
     // Add options to the select element
     optionsArray.forEach((optionText) => {
       const option = document.createElement("option");
-      option.value = optionText.value;
-      option.text = optionText.text;
-
+      option.value = optionText.value; // Use value property for the option value
+      option.text = optionText.text; // Use text property for the option display
+  
       // Add a data attribute to store the classification
       option.setAttribute("data-classification", "region");
-
-      if (selectedValue === optionText) {
+  
+      // Preselect the option if it matches inputValues.region
+      if (inputValues.region === optionText.value) {
         option.selected = true;
       }
+  
       regionSelect.add(option);
     });
+  
+    // Fallback to inputValues.region or default to the first option
+    if (!regionSelect.value && optionsArray.length > 0) {
+      regionSelect.value = inputValues.region || optionsArray[0].value;
+    }
   }
 };
-
 export default DisplayProducts;
