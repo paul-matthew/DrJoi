@@ -110,7 +110,7 @@ async function calculateShippingCost() {
       zip: zip,
     },
   };
-  // console.log("Shipping Details:", ShippingCalc);
+  console.log("Shipping Details:", ShippingCalc);
 
   let fetchURL = "";
   if (
@@ -146,6 +146,7 @@ async function calculateShippingCost() {
     .catch((error) => {
       console.error("Error fetching shipping cost:", error);
     });
+  console.log("DONE");
 }
 
 async function calculateTax() {
@@ -232,7 +233,7 @@ function constructModalBody() {
     case 2:
       return `
       <div class="modal-dialog modal-dialog-centered" style="top:30px; ">
-        <div class="modal-content" id="shipping-content">
+        <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Shipping Information</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -446,7 +447,7 @@ function saveInputValues() {
   // if (phoneInput) inputValues.phone = phoneInput.value;
   if (countryInput) {
     inputValues.country = countryInput.value;
-    // console.log("Saved Country:", inputValues.country);
+    console.log("Saved Country:", inputValues.country);
   }
   if (regionInput) inputValues.region = regionInput.value;
   if (cityInput) inputValues.city = cityInput.value;
@@ -511,8 +512,8 @@ function saveInputValues() {
 
     if (
       !initialSetupDone ||
-      Object.keys(inputValues).some(
-        (input) => input?.trim() === "" && input !== address2Input
+      Array.from(formControls).some(
+        (input) => input.value.trim() === "" && input !== address2Input
       ) ||
       !validateEmailFormat(emailInput.value.trim()) ||
       !validateZipCodeFormat(zipInput.value.trim()) ||
@@ -533,12 +534,12 @@ function saveInputValues() {
     // Loop through each element with the 'form-control' class
     Array.from(formControls).forEach(function (formControl) {
       formControl.addEventListener("input", function () {
-        var inputsToCheck = Object.keys(inputValues).filter(function (input) {
+        var inputsToCheck = Array.from(formControls).filter(function (input) {
           return input !== address2Input;
         });
 
         var allFieldsFilled = inputsToCheck.every(function (input) {
-          return input?.trim() !== "";
+          return input.value.trim() !== "";
         });
 
         var emailIsValid = validateEmailFormat(emailInput.value.trim());
@@ -758,9 +759,7 @@ const DisplayProducts = (props) => {
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">${product.title}</h5>
-                    <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px">
-                      <i class="fas fa-shopping-cart"></i>
-                    </button>
+                    <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px"><i class="fas ion-ios-cart"></i></button>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
@@ -1646,7 +1645,7 @@ const DisplayProducts = (props) => {
       const billingLastNameInput = document.createElement("input");
       billingLastNameInput.type = "text";
       billingLastNameInput.placeholder = "Last name";
-      billingLastNameInput.id = "billing-lastname";
+      billingLastNameInput.id = "billing-firstname";
       stripeFormContainer.appendChild(billingLastNameInput);
 
       const billingCountryInput = document.createElement("input");
@@ -1791,7 +1790,6 @@ const DisplayProducts = (props) => {
                     shipping: formattedShippingCost,
                     donation: inputValues.donation,
                   },
-                  email:inputValues.email,
                 }),
               }
             );
@@ -2062,7 +2060,7 @@ const DisplayProducts = (props) => {
     // Get the selected country
     const selectedCountry = document.getElementById("countryInput").value;
     saveInputValues();
-    // console.log("Country saved:", selectedCountry);
+    console.log("Country saved:", selectedCountry);
 
     // Get the region select element
     const regionSelect = document.getElementById("regionInput");
@@ -2149,38 +2147,41 @@ const DisplayProducts = (props) => {
     const selectedCountry = document.getElementById("countryInput").value;
     const selectedRegion = document.getElementById("regionInput").value;
     saveInputValues();
-  
-    // Avoid fetching cities if country or region is not selected
-    if (!selectedCountry || !selectedRegion) {
-      console.log("Country or region is not selected yet. Skipping fetch request.");
-      return;
-    }
-  
+    console.log("Region saved:", selectedRegion);
+
     // Set up headers for the API request
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
-  
-    // Determine the fetch URL based on environment
-    const fetchURLmap =
-      window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-        ? "http://localhost:5000/maps/cities"
-        : "https://drjoiserver-106ea7a60e39.herokuapp.com/maps/cities";
-  
-    // Construct the API URL with query parameters
-    const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
-  
+
+    let fetchURLmap = "";
+    if (
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
+    ) {
+      fetchURLmap = "http://localhost:5000/maps/cities";
+    } else {
+      fetchURLmap =
+        "https://drjoiserver-106ea7a60e39.herokuapp.com/maps/cities";
+    }
+
+    const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(
+      selectedRegion
+    )}`;
+
     try {
       // Fetch cities data from the server
-      const response = await fetch(apiUrl, { headers });
+      const response = await fetch(apiUrl);
       const result = await response.json();
-  
+
+      // Log the result to the console (you can modify this part as needed)
+      // console.log(result);
+
       // Update city dropdown options
       updateCityDropdown(result);
     } catch (error) {
-      console.error("Error fetching cities:", error);
+      console.log("Error fetching cities:", error);
     }
   }
-  
 
   function updateCityDropdown(cityData) {
     const citySelect = document.getElementById("cityInput");
@@ -2196,7 +2197,7 @@ const DisplayProducts = (props) => {
       citySelect.appendChild(option);
     });
     saveInputValues();
-    // console.log("City saved:", citySelect.value);
+    console.log("City saved:", citySelect.value);
   }
 
   function addOptions(regionSelect, optionsArray, selectedValue) {
@@ -2216,4 +2217,5 @@ const DisplayProducts = (props) => {
     });
   }
 };
+
 export default DisplayProducts;
