@@ -35,7 +35,7 @@ const inputValues = {
   address: "",
   address2: "",
   zip: "",
-  donation: "",
+  donation: 0,
   billingAddress: {
     firstName: "",
     lastName: "",
@@ -302,7 +302,7 @@ function constructModalBody() {
       }
 
       console.log("updated shipping:", shippingCost);
-      const donationAmount = parseFloat(inputValues.donation); // Ensure donationAmount is a number
+      const donationAmount = parseFloat(inputValues.donation) || 0; // Ensure donationAmount is a number
       totalPayment =
         Math.round(
           (subtotal + shippingCost + taxAmount + donationAmount) * 100
@@ -414,6 +414,14 @@ function constructModalBody() {
       break;
   }
 }
+
+// Attach the donation input event listener
+document.addEventListener("input", (event) => {
+  if (event.target.id === "donationInput") {
+    inputValues.donation = parseFloat(event.target.value) || 0;
+    console.log("Donation amount updated:", inputValues.donation);
+  }
+});
 
 // To RETRIEVE and log the stored SKUs locally
 const initializeSelectedSKUs = () => {
@@ -2173,7 +2181,7 @@ const DisplayProducts = (props) => {
     // Get the selected country and region
     const selectedCountry = document.getElementById("countryInput").value;
     const selectedRegion = document.getElementById("regionInput").value;
-    const citySelect = document.getElementById("cityInput");
+    // const citySelect = document.getElementById("cityInput"); //commented out if no longer being used.
     // Only update inputValues.region after the first execution
     if (hasFetchedCities) {
       inputValues.region = selectedRegion;
