@@ -35,14 +35,26 @@ paypal.configure({
 
 app.use(express.json());
 const allowedOrigins = [
-  'https://localhost:3000',  // Local development
+  'http://localhost:3000',  // Local development
   'https://exoticrelief.com',  // Production domain
 ];
 
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
+// app.use(cors({
+//   origin: allowedOrigins,
+//   credentials: true
+// }));
+
+app.use(cors());
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-with, Content-Type, Accept"
+  );
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  next();
+});
 
 
 app.use('/.well-known', (req, res, next) => {
