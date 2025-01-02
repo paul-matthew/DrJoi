@@ -201,7 +201,7 @@ const Deals = () => {
                         minHeight: "150px",
                         maxHeight: "600px",
                         borderRadius: "8px",
-                        objectFit: "cover",
+                        objectFit: "contain",
                         width: "100%",
                       }}
                       src="./DrJoiLondon.jpg"
