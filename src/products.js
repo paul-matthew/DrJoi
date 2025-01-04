@@ -151,7 +151,7 @@ async function calculateShippingCost() {
 async function calculateTax() {
   const fetchStripeTax =
     window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
+    window.location.hostname === "127.0.0.1"
       ? "http://localhost:5000/stripe/calculate-taxes"
       : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/calculate-taxes";
 
@@ -203,8 +203,9 @@ function constructModalBody() {
               <table style="border-collapse: collapse; width: 50%;">
               <tr>
                   <td style="border: none; font-weight: bold;">Subtotal:</td>
-                  <td style="border: none; text-align: left; font-weight: bold;">$${Math.round(price * 100) / 100
-        }</td>
+                  <td style="border: none; text-align: left; font-weight: bold;">$${
+                    Math.round(price * 100) / 100
+                  }</td>
               </tr>
             </table>
             <p style="font-size: 14px; color: gray; margin-top: 10px;">
@@ -215,10 +216,10 @@ function constructModalBody() {
               <td style="border: none; font-weight: bold;min-width:120px">Support Gift:</td>
               <td style="border: none; text-align: left;">
               <input type="number" id="donationInput" value="${(
-          parseFloat(inputValues.donation) || 0
-        ).toFixed(
-          2
-        )}" step="1.00" min="0" style="width: 100px; text-align: right;">
+                parseFloat(inputValues.donation) || 0
+              ).toFixed(
+                2
+              )}" step="1.00" min="0" style="width: 100px; text-align: right;">
               </td>
             </tr>
             </table>
@@ -432,7 +433,7 @@ const initializeSelectedSKUs = () => {
 var initialSetupDone = false;
 
 function saveInputValues() {
-  console.log("lul maru me")
+  console.log("lul maru me");
   // console.log('this is the', currentStage)
   const firstNameInput = document.getElementById("firstNameInput");
   const lastNameInput = document.getElementById("lastNameInput");
@@ -618,7 +619,7 @@ function handleOrderButtonClick() {
       saveInputValues();
       hideModal();
       currentStage = 1;
-      hasFetchedCities = false
+      hasFetchedCities = false;
     }
   });
 
@@ -718,14 +719,16 @@ const DisplayProducts = (props) => {
             const productCard = document.createElement("div");
             productCard.classList.add("card-container");
             productCard.innerHTML = `
-            <a data-bs-toggle="modal" href="#productitem${index + 1
-              }" style="text-decoration: none;">
+            <a data-bs-toggle="modal" href="#productitem${
+              index + 1
+            }" style="text-decoration: none;">
               <div class="card">
                 <div class='productimage'>
-                  ${product.images && product.images.length > 0
-                ? `<img src="${product.images[0].src}" class="card-img-top" alt="${product.title}" loading="lazy">`
-                : '<div class="no-image">No image available</div>'
-              }
+                  ${
+                    product.images && product.images.length > 0
+                      ? `<img src="${product.images[0].src}" class="card-img-top" alt="${product.title}" loading="lazy">`
+                      : '<div class="no-image">No image available</div>'
+                  }
                   <div class="new-label">NEW</div>
                 </div>
                 <div class="card-body">
@@ -735,8 +738,8 @@ const DisplayProducts = (props) => {
                     </div>
                     <div class='card-price' style='color: grey; font-size: 0.8em;'>
                       <span style='text-decoration: line-through;'>$${(
-                maxPrice / 75
-              ).toFixed(2)}</span> <!-- 75 is because it's 25% off! -->
+                        maxPrice / 75
+                      ).toFixed(2)}</span> <!-- 75 is because it's 25% off! -->
                       <br>
                     </div>
                     <div class='card-price' style='color:red;font-weight:bold'>
@@ -771,280 +774,358 @@ const DisplayProducts = (props) => {
             const productModal = document.createElement("div");
             productModal.classList.add("portfolio-modal", "modal", "fade");
             productModal.id = `productitem${index + 1}`;
+
+            // === MAIN HTML ===
             productModal.innerHTML = `
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">${product.title}</h5>
-                  <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px">
-                    <i class="fas fa-shopping-cart"></i>
-                  </button>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="product-images">
-                    <div class="small-images">
-                      ${product.images
-                        .map(
-                          (image, i) => `
-                        <img src="${image.src}" class="small-img" alt="${product.title}" loading="lazy">
-                      `
-                        )
-                        .join("")}
-                    </div>
-                    <div class="main-container">
-                      <div class="magnify" id="magnify-${index + 1}">
-                        <img src="${
-                          product.images[0].src
-                        }" class="img-fluid main-img" alt="${
-            product.title
-          }" loading="lazy" id="main-image-${index + 1}">
-                        <div class="magnify-glass" id="magnify-glass-${
-                          index + 1
-                        }"></div>
-                      </div>
-                    </div>
-                  </div>
-                  ${
-                    // Check for available color options and produce divs with data-color-id
-                    (function () {
-                      const colorsOption =
-                        product.options.find(
-                          (option) => option.name === "Colors"
-                        )?.values || [];
-                      const frameColorOption =
-                        product.options.find(
-                          (option) => option.name === "Frame Color"
-                        )?.values || [];
-                      const colorOption =
-                        product.options.find(
-                          (option) => option.name === "Color"
-                        )?.values || [];
-                      const seamColorsOption =
-                        product.options.find(
-                          (option) => option.name === "Seam Colors"
-                        )?.values || [];
-                      const bottleColorOption =
-                        product.options.find(
-                          (option) => option.name === "Bottle color"
-                        )?.values || [];
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">${product.title}</h5>
+        <button type="button" class="view-cart-btn" style="font-family:inherit;margin:10px">
+          <i class="fas fa-shopping-cart"></i>
+        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="product-images">
+          <div class="small-images">
+            ${product.images
+              .map(
+                (image, i) => `
+                  <img src="${image.src}" class="small-img" alt="${product.title}" loading="lazy">
+                `
+              )
+              .join("")}
+          </div>
+          <div class="main-container">
+            <div class="magnify" id="magnify-${index + 1}">
+              <img 
+                src="${product.images[0].src}" 
+                class="img-fluid main-img" 
+                alt="${product.title}" 
+                loading="lazy" 
+                id="main-image-${index + 1}"
+              >
+              <div class="magnify-glass" id="magnify-glass-${index + 1}"></div>
+            </div>
+          </div>
+        </div>
+        ${
+          // Check for available color options and produce divs with data-color-id
+          (function () {
+            const colorsOption =
+              product.options.find((option) => option.name === "Colors")
+                ?.values || [];
+            const frameColorOption =
+              product.options.find((option) => option.name === "Frame Color")
+                ?.values || [];
+            const colorOption =
+              product.options.find((option) => option.name === "Color")
+                ?.values || [];
+            const seamColorsOption =
+              product.options.find((option) => option.name === "Seam Colors")
+                ?.values || [];
+            const bottleColorOption =
+              product.options.find((option) => option.name === "Bottle color")
+                ?.values || [];
 
-                      const allAvailableColors = [
-                        ...colorsOption,
-                        ...frameColorOption,
-                        ...colorOption,
-                        ...seamColorsOption,
-                        ...bottleColorOption,
-                      ].filter((colorVal) => {
-                        // check if there's a variant that includes colorVal.id and is enabled
-                        const variant = product.variants.find(
-                          (v) =>
-                            v.options.includes(colorVal.id) && v.is_enabled
-                        );
-                        return variant;
-                      });
+            const allAvailableColors = [
+              ...colorsOption,
+              ...frameColorOption,
+              ...colorOption,
+              ...seamColorsOption,
+              ...bottleColorOption,
+            ].filter((colorVal) => {
+              // check if there's a variant that includes colorVal.id and is enabled
+              const variant = product.variants.find(
+                (v) => v.options.includes(colorVal.id) && v.is_enabled
+              );
+              return variant;
+            });
 
-                      if (allAvailableColors.length) {
-                        return `
-                        <div class="color-options" style="display: flex; flex-wrap: wrap; align-items: center; margin-top: 20px;">
-                          <h6 style='font-weight:bold; margin-right: 8px;'>Color selection:</h6>
-                          <div style="display: flex; flex-wrap: wrap; align-items: center; gap:6px;">
-                            ${allAvailableColors
-                              .map(
-                                (c) => `
-                                <div 
-                                  class="color-option"
-                                  data-color-id="${c.id}"
-                                  style="background-color: ${c.colors[0]}; width:20px; height:20px; cursor:pointer; border:1px solid #ccc;"
-                                ></div>
-                              `
-                              )
-                              .join("")}
-                          </div>
-                        </div>
-                        `;
-                      }
-                      return "";
-                    })()
-                  }
-                  <div class="fabric-options" style="margin-right: 20px; ${
-                    product.options.some(
-                      (option) =>
-                        option.name === "Fabric weight" ||
-                        option.name === "Box type" ||
-                        option.name === "Paper finishes" ||
-                        option.name === "Finishes"
-                    ) &&
-                    (product.options.some(
-                      (option) =>
-                        option.name === "Fabric weight" &&
-                        option.type === "weight"
-                    ) ||
-                      product.options.some(
-                        (option) =>
-                          option.name === "Box type" && option.type === "finish"
-                      ) ||
-                      product.options.some(
-                        (option) =>
-                          option.name === "Paper finishes" &&
-                          option.type === "paper"
-                      ) ||
-                      product.options.some(
-                        (option) =>
-                          option.name === "Finishes" && option.type === "surface"
-                      ))
-                      ? ""
-                      : "display: none;"
-                  }">
-                    <h6 style='font-weight:bold; display: inline;'>${
-                      product.options.find(
-                        (option) =>
-                          option.name === "Fabric weight" ||
-                          option.name === "Box type" ||
-                          option.name === "Paper finishes" ||
-                          option.name === "Finishes"
-                      )?.name
-                    }:</h6>
-                    <select class="fabric-dropdown">
-                        ${
-                          (
-                            product.options.find(
-                              (option) =>
-                                option.name === "Fabric weight" &&
-                                option.type === "weight"
-                            )?.values ||
-                            product.options.find(
-                              (option) =>
-                                option.name === "Box type" &&
-                                option.type === "finish"
-                            )?.values ||
-                            product.options.find(
-                              (option) =>
-                                option.name === "Paper finishes" &&
-                                option.type === "paper"
-                            )?.values ||
-                            product.options.find(
-                              (option) =>
-                                option.name === "Finishes" &&
-                                option.type === "surface"
-                            )?.values ||
-                            []
-                          )
-                            .filter((val) => {
-                              const variant = product.variants.find(
-                                (variant) =>
-                                  variant.options.includes(val.id) &&
-                                  variant.is_available &&
-                                  variant.is_enabled
-                              );
-                              return variant;
-                            })
-                            .map(
-                              (val) => `
-                                <option value="${val.id}">${val.title}</option>
-                            `
-                            )
-                            .join("")
-                        }
-                    </select>
-                  </div>
-                  <div class="size-and-quantity-options" style="display: flex; align-items: center;">
-                    <div class="size-options" style="margin-right: 20px; margin-top: 10px;">
-                      <h6 style='font-weight:bold; display: inline;'>Size selection:</h6>
-                      <select class="size-dropdown">
-                        ${
-                          product.options
-                            .find((option) => option.name === "Sizes")
-                            ?.values.filter((size) =>
-                              product.variants.some(
-                                (variant) =>
-                                  variant.options.includes(size.id) &&
-                                  variant.is_available &&
-                                  variant.is_enabled
-                              )
-                            )
-                            .map(
-                              (size) => `
-                                <option value="${size.id}">${size.title}</option>
-                              `
-                            )
-                            .join("") ||
-                          product.options
-                            .find((option) => option.name === "Size")
-                            ?.values.filter((size) =>
-                              product.variants.some(
-                                (variant) =>
-                                  variant.options.includes(size.id) &&
-                                  variant.is_available &&
-                                  variant.is_enabled
-                              )
-                            )
-                            .map(
-                              (size) => `
-                                <option value="${size.id}">${size.title}</option>
-                              `
-                            )
-                            .join("") ||
-                          product.options
-                            .find((option) => option.name === "Quantity")
-                            ?.values.map(
-                              (quantity) => `
-                                <option value="${quantity.id}">${quantity.title}</option>
-                              `
-                            )
-                            .join("")
-                        }
-                      </select>
-                    </div>
-                  </div>
-                  ${
-                    product.options.find(
-                      (option) =>
-                        option.name === "Flavour" || option.name === "Flavor"
-                    )?.values.length > 0
-                      ? `
-                        <div class="flavour-options" style="margin-right: 20px;margin-top:10px;">
-                          <h6 style='font-weight:bold; display: inline;'>Flavors:</h6>
-                          <select class="flavour-dropdown">
-                            ${product.options
-                              .find(
-                                (option) =>
-                                  option.name === "Flavour" ||
-                                  option.name === "Flavor"
-                              )
-                              ?.values.map(
-                                (flavour) => `
-                                <option value="${flavour.id}">${flavour.title}</option>
-                              `
-                              )
-                              .join("")}
-                          </select>
-                        </div>
-                        `
-                      : ""
-                  }
-                  <div style="margin-top:10px;margin-bottom:10px">
-                    <label for="product-qty" style="margin-top: 10px; font-weight: bold; display: inline;">Quantity:</label>
-                    <input type="number" class="product-qty" name="quantity" min="1" max="50" value="1" style="display: inline; width: 40px;">
-                  </div>
-                  <p style='font-weight:bold'>Price: 
-                    <span style='font-weight:normal'>
-                      $${product.variants
-                        .filter((variant) => variant.is_enabled)
-                        .reduce(
-                          (maxP, variant) =>
-                            variant.price > maxP ? variant.price : maxP,
-                          0
-                        ) / 100
-                      }
-                    USD</span>
-                  </p>
-                  <button class="add-to-cart-btn" style='margin-right:10px'>Add to Cart</button>Items in Cart: <span class="item-count"></span>
-                  <p>${product.description}</p>
+            if (allAvailableColors.length) {
+              return `
+              <div class="color-options" style="display: flex; flex-wrap: wrap; align-items: center; margin-top: 20px;">
+                <h6 style='font-weight:bold; margin-right: 8px;'>Color selection:</h6>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap:6px;">
+                  ${allAvailableColors
+                    .map(
+                      (c) => `
+                      <div 
+                        class="color-option"
+                        data-color-id="${c.id}"
+                        style="background-color: ${c.colors[0]}; width:20px; height:20px; cursor:pointer; border:1px solid #ccc;"
+                      ></div>
+                    `
+                    )
+                    .join("")}
                 </div>
               </div>
-            </div>
-          `;
+              `;
+            }
+            return "";
+          })()
+        }
+        <div class="fabric-options" style="margin-right: 20px; ${
+          product.options.some(
+            (option) =>
+              option.name === "Fabric weight" ||
+              option.name === "Box type" ||
+              option.name === "Paper finishes" ||
+              option.name === "Finishes"
+          ) &&
+          (product.options.some(
+            (option) =>
+              option.name === "Fabric weight" && option.type === "weight"
+          ) ||
+            product.options.some(
+              (option) => option.name === "Box type" && option.type === "finish"
+            ) ||
+            product.options.some(
+              (option) =>
+                option.name === "Paper finishes" && option.type === "paper"
+            ) ||
+            product.options.some(
+              (option) =>
+                option.name === "Finishes" && option.type === "surface"
+            ))
+            ? ""
+            : "display: none;"
+        }">
+          <h6 style='font-weight:bold; display: inline;'>${
+            product.options.find(
+              (option) =>
+                option.name === "Fabric weight" ||
+                option.name === "Box type" ||
+                option.name === "Paper finishes" ||
+                option.name === "Finishes"
+            )?.name
+          }:</h6>
+          <select class="fabric-dropdown">
+              ${(
+                product.options.find(
+                  (option) =>
+                    option.name === "Fabric weight" && option.type === "weight"
+                )?.values ||
+                product.options.find(
+                  (option) =>
+                    option.name === "Box type" && option.type === "finish"
+                )?.values ||
+                product.options.find(
+                  (option) =>
+                    option.name === "Paper finishes" && option.type === "paper"
+                )?.values ||
+                product.options.find(
+                  (option) =>
+                    option.name === "Finishes" && option.type === "surface"
+                )?.values ||
+                []
+              )
+                .filter((val) => {
+                  const variant = product.variants.find(
+                    (variant) =>
+                      variant.options.includes(val.id) &&
+                      variant.is_available &&
+                      variant.is_enabled
+                  );
+                  return variant;
+                })
+                .map(
+                  (val) => `
+                      <option value="${val.id}">${val.title}</option>
+                  `
+                )
+                .join("")}
+          </select>
+        </div>
+        <div class="size-and-quantity-options" style="display: flex; align-items: center;">
+          <div class="size-options" style="margin-right: 20px; margin-top: 10px;">
+            <h6 style='font-weight:bold; display: inline;'>Size selection:</h6>
+            <select class="size-dropdown">
+              ${
+                product.options
+                  .find((option) => option.name === "Sizes")
+                  ?.values.filter((size) =>
+                    product.variants.some(
+                      (variant) =>
+                        variant.options.includes(size.id) &&
+                        variant.is_available &&
+                        variant.is_enabled
+                    )
+                  )
+                  .map(
+                    (size) => `
+                      <option value="${size.id}">${size.title}</option>
+                    `
+                  )
+                  .join("") ||
+                product.options
+                  .find((option) => option.name === "Size")
+                  ?.values.filter((size) =>
+                    product.variants.some(
+                      (variant) =>
+                        variant.options.includes(size.id) &&
+                        variant.is_available &&
+                        variant.is_enabled
+                    )
+                  )
+                  .map(
+                    (size) => `
+                      <option value="${size.id}">${size.title}</option>
+                    `
+                  )
+                  .join("") ||
+                product.options
+                  .find((option) => option.name === "Quantity")
+                  ?.values.map(
+                    (quantity) => `
+                      <option value="${quantity.id}">${quantity.title}</option>
+                    `
+                  )
+                  .join("")
+              }
+            </select>
+          </div>
+        </div>
+        ${
+          product.options.find(
+            (option) => option.name === "Flavour" || option.name === "Flavor"
+          )?.values.length > 0
+            ? `
+              <div class="flavour-options" style="margin-right: 20px;margin-top:10px;">
+                <h6 style='font-weight:bold; display: inline;'>Flavors:</h6>
+                <select class="flavour-dropdown">
+                  ${product.options
+                    .find(
+                      (option) =>
+                        option.name === "Flavour" || option.name === "Flavor"
+                    )
+                    ?.values.map(
+                      (flavour) => `
+                      <option value="${flavour.id}">${flavour.title}</option>
+                    `
+                    )
+                    .join("")}
+                </select>
+              </div>
+              `
+            : ""
+        }
+        <div style="margin-top:10px;margin-bottom:10px">
+          <label for="product-qty" style="margin-top: 10px; font-weight: bold; display: inline;">Quantity:</label>
+          <input 
+            type="number" 
+            class="product-qty" 
+            name="quantity" 
+            min="1" 
+            max="50" 
+            value="1" 
+            style="display: inline; width: 40px;"
+          >
+        </div>
+
+        <!-- CHANGED: Introduce a dedicated span for the live-updating price -->
+        <p style='font-weight:bold'>
+          Price: <span class="selected-price" style='font-weight:normal'>$0.00 USD</span>
+        </p>
+        <button class="add-to-cart-btn" style='margin-right:10px'>Add to Cart</button>Items in Cart: <span class="item-count"></span>
+        <p>${product.description}</p>
+      </div>
+    </div>
+  </div>
+`;
+
+            // === AFTER the HTML is in place, attach event listeners to update price dynamically ===
+
+            /**
+             * Grab references to the newly rendered elements for dynamic updating
+             */
+            const colorOptionDivs =
+              productModal.querySelectorAll(".color-option");
+            const sizeDropdown = productModal.querySelector(".size-dropdown");
+            const fabricDropdown =
+              productModal.querySelector(".fabric-dropdown");
+            const priceDisplay = productModal.querySelector(".selected-price");
+
+            // 1. "findMatchingVariant" checks the current selected color/size/fabric
+            function findMatchingVariant() {
+              // Find the selected color ID if color div is selected
+              const selectedColorDiv = productModal.querySelector(
+                ".color-option.selected"
+              );
+              let selectedColorId = null;
+              if (selectedColorDiv) {
+                selectedColorId = parseInt(
+                  selectedColorDiv.getAttribute("data-color-id")
+                );
+              }
+
+              // Get the selected size ID
+              const selectedSizeId = sizeDropdown
+                ? parseInt(sizeDropdown.value)
+                : null;
+
+              // Get the selected fabric ID
+              const selectedFabricId = fabricDropdown
+                ? parseInt(fabricDropdown.value)
+                : null;
+
+              // Now search for a variant that matches these chosen IDs
+              const matchingVariant = product.variants.find((variant) => {
+                const colorMatch = selectedColorId
+                  ? variant.options.includes(selectedColorId)
+                  : true;
+                const sizeMatch = selectedSizeId
+                  ? variant.options.includes(selectedSizeId)
+                  : true;
+                const fabricMatch = selectedFabricId
+                  ? variant.options.includes(selectedFabricId)
+                  : true;
+
+                // Must be enabled and match all chosen IDs
+                return (
+                  variant.is_enabled && colorMatch && sizeMatch && fabricMatch
+                );
+              });
+
+              return matchingVariant || null;
+            }
+
+            // 2. "updateDisplayedPrice" will set .selected-price to the found variant price
+            function updateDisplayedPrice() {
+              const variant = findMatchingVariant();
+              if (!variant) {
+                // If there's no matching variant, you can show N/A
+                priceDisplay.textContent = "N/A USD";
+              } else {
+                const priceInDollars = (variant.price / 100).toFixed(2);
+                priceDisplay.textContent = `$${priceInDollars} USD`;
+              }
+            }
+
+            // 3. Attach listeners to color, size, and fabric so the price updates when changed
+            colorOptionDivs.forEach((colorDiv) => {
+              colorDiv.addEventListener("click", () => {
+                // Unselect all, select the clicked one
+                colorOptionDivs.forEach((cd) =>
+                  cd.classList.remove("selected")
+                );
+                colorDiv.classList.add("selected");
+                // Then update price
+                updateDisplayedPrice();
+              });
+            });
+
+            if (sizeDropdown) {
+              sizeDropdown.addEventListener("change", updateDisplayedPrice);
+            }
+
+            if (fabricDropdown) {
+              fabricDropdown.addEventListener("change", updateDisplayedPrice);
+            }
+
+            // 4. Optionally, call updateDisplayedPrice once to show the default selection price
+            updateDisplayedPrice();
 
             document.body.appendChild(productModal);
 
@@ -1136,45 +1217,45 @@ const DisplayProducts = (props) => {
             // const fabricDropdown =
             //   productModal.querySelector(".fabric-dropdown");
 
-              productCard.addEventListener("click", () => {
-                // Switch main image on click of small images
-                const smallImages = document.querySelectorAll(
-                  `#productitem${index + 1} .small-images .small-img`
-                );
-                const mainImage = document.querySelector(
-                  `#productitem${index + 1} .main-img`
-                );
-  
-                smallImages.forEach((img, idx) => {
-                  img.addEventListener("click", () => {
-                    smallImages.forEach((img) => {
-                      img.classList.remove("selected");
-                    });
-                    img.classList.add("selected");
-  
-                    mainImage.style.opacity = "0";
-                    mainImage.onload = function () {
-                      mainImage.style.opacity = "1";
-                    };
-                    mainImage.src = product.images[idx].src;
+            productCard.addEventListener("click", () => {
+              // Switch main image on click of small images
+              const smallImages = document.querySelectorAll(
+                `#productitem${index + 1} .small-images .small-img`
+              );
+              const mainImage = document.querySelector(
+                `#productitem${index + 1} .main-img`
+              );
+
+              smallImages.forEach((img, idx) => {
+                img.addEventListener("click", () => {
+                  smallImages.forEach((img) => {
+                    img.classList.remove("selected");
                   });
-                });
-  
-                // Make each color option clickable
-                const colorOptionDivs = document.querySelectorAll(
-                  `#productitem${index + 1} .color-option`
-                );
-                colorOptionDivs.forEach((colorDiv) => {
-                  colorDiv.addEventListener("click", () => {
-                    // remove "selected" from all colorOptionDivs
-                    colorOptionDivs.forEach((cDiv) =>
-                      cDiv.classList.remove("selected")
-                    );
-                    // add "selected" to the clicked one
-                    colorDiv.classList.add("selected");
-                  });
+                  img.classList.add("selected");
+
+                  mainImage.style.opacity = "0";
+                  mainImage.onload = function () {
+                    mainImage.style.opacity = "1";
+                  };
+                  mainImage.src = product.images[idx].src;
                 });
               });
+
+              // Make each color option clickable
+              const colorOptionDivs = document.querySelectorAll(
+                `#productitem${index + 1} .color-option`
+              );
+              colorOptionDivs.forEach((colorDiv) => {
+                colorDiv.addEventListener("click", () => {
+                  // remove "selected" from all colorOptionDivs
+                  colorOptionDivs.forEach((cDiv) =>
+                    cDiv.classList.remove("selected")
+                  );
+                  // add "selected" to the clicked one
+                  colorDiv.classList.add("selected");
+                });
+              });
+            });
 
             const addToCartButton = productModal.querySelector(
               `#productitem${index + 1} .add-to-cart-btn`
@@ -1412,11 +1493,9 @@ const DisplayProducts = (props) => {
   }
 
   orderModal.addEventListener("click", async function (event) {
-
     const targetId = event.target.id;
     switch (targetId) {
       case "OrderDetailsButton":
-
         currentStage = 2;
         orderModal.innerHTML = constructModalBody();
         await region();
@@ -1431,7 +1510,6 @@ const DisplayProducts = (props) => {
         //   cityInput.value = inputValues.city;
         // }
         // saveInputValues();
-
 
         break;
       case "totalcost":
@@ -1456,7 +1534,6 @@ const DisplayProducts = (props) => {
 
         await region();
         await fetchCities();
-
 
         // if (countryInput?.options[inputValues.country]) {
         //   countryInput.value = inputValues.country;
@@ -1491,20 +1568,18 @@ const DisplayProducts = (props) => {
       // Function to update regions based on selected country
       countryInput.addEventListener("change", async () => {
         await region(); // Update regions
-
       });
 
       // Function to update cities based on selected region
       regionInput.addEventListener("change", async () => {
         await fetchCities(); // Update cities
         // inputValues.region = document.getElementById("regionInput")?.value;
-        console.log(inputValues.region)
+        console.log(inputValues.region);
       });
       cityInput.addEventListener("change", () => {
-
         inputValues.city = cityInput.value;
-        console.log(cityInput.value)
-      })
+        console.log(cityInput.value);
+      });
       // Optionally, you can populate country options initially
       populateCountryOptions(); // Assuming this function exists
     }
@@ -1656,19 +1731,19 @@ const DisplayProducts = (props) => {
 
       const fetchURLstripeCreatePaymentIntent =
         window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1"
+        window.location.hostname === "127.0.0.1"
           ? "http://localhost:5000/stripe/create-payment-intent"
           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/create-payment-intent";
 
       const fetchURLstripeValidate =
         window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1"
+        window.location.hostname === "127.0.0.1"
           ? "http://localhost:5000/stripe/validate"
           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/validate";
 
       const fetchStripeKey =
         window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1"
+        window.location.hostname === "127.0.0.1"
           ? "http://localhost:5000/stripe/publishable-key"
           : "https://drjoiserver-106ea7a60e39.herokuapp.com/stripe/publishable-key";
 
@@ -1722,7 +1797,7 @@ const DisplayProducts = (props) => {
             if (!validationData.success) {
               throw new Error(
                 "Payment validation failed: " +
-                (validationData.error || "Unknown error")
+                  (validationData.error || "Unknown error")
               );
             }
 
@@ -2014,7 +2089,7 @@ const DisplayProducts = (props) => {
   async function region() {
     // Get the selected country
     const selectedCountry = document.getElementById("countryInput").value;
-    inputValues.country = selectedCountry
+    inputValues.country = selectedCountry;
     // saveInputValues();
     // console.log("Country saved:", selectedCountry);
 
@@ -2110,7 +2185,9 @@ const DisplayProducts = (props) => {
 
     // Avoid fetching cities if country or region is not selected
     if (!selectedCountry || !selectedRegion) {
-      console.log("Country or region is not selected yet. Skipping fetch request.");
+      console.log(
+        "Country or region is not selected yet. Skipping fetch request."
+      );
       return;
     }
 
@@ -2120,12 +2197,15 @@ const DisplayProducts = (props) => {
 
     // Determine the fetch URL based on environment
     const fetchURLmap =
-      window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1"
         ? "http://localhost:5000/maps/cities"
         : "https://drjoiserver-106ea7a60e39.herokuapp.com/maps/cities";
 
     // Construct the API URL with query parameters
-    const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(selectedRegion)}`;
+    const apiUrl = `${fetchURLmap}?country=${selectedCountry}&region=${encodeURIComponent(
+      selectedRegion
+    )}`;
 
     try {
       // Fetch cities data from the server
@@ -2150,26 +2230,25 @@ const DisplayProducts = (props) => {
     hasFetchedCities = true;
   }
 
-
   function updateCityDropdown(cityData) {
     const citySelect = document.getElementById("cityInput");
-  
+
     // Clear existing options
     citySelect.innerHTML = "";
-  
+
     // Add new options based on the fetched city data
     cityData.forEach((city) => {
       const option = document.createElement("option");
       option.value = city.name; // Use the 'name' property for the value
       option.text = city.name; // Display the 'name' property in the dropdown
       citySelect.appendChild(option);
-  
+
       // Select the option if it matches inputValues.city
       if (inputValues.city === city.name) {
         option.selected = true;
       }
     });
-  
+
     // Optionally, handle cases where inputValues.city does not match any city
     if (!citySelect.value && cityData.length > 0) {
       // Default to the first city if inputValues.city is invalid or empty
@@ -2180,24 +2259,24 @@ const DisplayProducts = (props) => {
   function addOptions(regionSelect, optionsArray) {
     // Clear existing options
     regionSelect.innerHTML = "";
-  
+
     // Add options to the select element
     optionsArray.forEach((optionText) => {
       const option = document.createElement("option");
       option.value = optionText.value; // Use value property for the option value
       option.text = optionText.text; // Use text property for the option display
-  
+
       // Add a data attribute to store the classification
       option.setAttribute("data-classification", "region");
-  
+
       // Preselect the option if it matches inputValues.region
       if (inputValues.region === optionText.value) {
         option.selected = true;
       }
-  
+
       regionSelect.add(option);
     });
-  
+
     // Fallback to inputValues.region or default to the first option
     if (!regionSelect.value && optionsArray.length > 0) {
       regionSelect.value = inputValues.region || optionsArray[0].value;
