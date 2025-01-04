@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "start-react": "HTTPS=true SSL_CRT_FILE=./localhost.pem SSL_KEY_FILE=./localhost-key.pem react-scripts start --port 3000",
+    "start-react": "react-scripts start --port 3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
