@@ -25,14 +25,14 @@ const LoadingScreen = ({ hidden }) => {
     <div className={`loading-screen ${hidden ? 'hidden' : ''}`}>
       {showHeart && <div className="pulsing-heart"></div>}
       <div>
-        <video autoPlay muted loop className="heart-video portrait">
-          <source src="../videos/intro-mobile.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <video autoPlay muted loop className="heart-video landscape">
-          <source src="../videos/intro.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+      <video autoPlay muted loop playsInline className="heart-video portrait">
+        <source src="/videos/intro-mobile.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <video autoPlay muted loop playsInline className="heart-video landscape">
+        <source src="/videos/intro.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
       </div>
     </div>
   );
