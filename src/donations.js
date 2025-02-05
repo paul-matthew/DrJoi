@@ -133,7 +133,11 @@ const Donations = () => {
                 }}
               >
                 “	The Exotic Relief Research & Mental Health Institute is dedicated to advancing the understanding and treatment of mental health conditions and addictions. 
+<<<<<<< Updated upstream
                 All donations to the nonprofit organization are used to further innovative research, global exploration of natural health practices, and community outreach aimed at reducing stigma and support neurodiversity.” - Dr. Joi
+=======
+                All donations to the nonprofit organization are used to further innovative research, global exploration of natural health practices, and community outreach aimed at reducing stigma and supporting neurodiversity individuals.” - Dr. Joi
+>>>>>>> Stashed changes
               </p>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <button

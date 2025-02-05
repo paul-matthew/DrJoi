@@ -21,6 +21,7 @@ const printifyShopID = process.env.PRINTIFY_SHOPID;
 const emailUser = process.env.EMAIL_USER;
 const emailPass = process.env.EMAIL_PASS;
 const emailBusiness = process.env.BUSINESS_EMAIL
+const emailDev = process.env.DEV_EMAIL
 const stripe = Stripe(process.env.STRIPE_CLIENT_SECRET); 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -380,7 +381,7 @@ app.post('/orders', async (req, res) => {
     const mailOptions = {
       from: emailBusiness,
       to: address_to.email,
-      bcc: emailBusiness,
+      bcc: emailBusiness,emailDev,
       subject: 'Order Placed, Thank You! Exotic Relief by Dr. Joi',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
