@@ -554,7 +554,7 @@ app.post('/contact', (req, res) => {
 
   const mailOptions = {
     from: email,
-    to: emailBusiness, // Your email address
+    to: emailDev, // Your email address
     subject: `Contact Form Submission from ${name}`,
     text: `From: ${email}\n\nMessage:\n${message}`
   };
