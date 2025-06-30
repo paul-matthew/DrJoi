@@ -1,6 +1,6 @@
 {
-  "short_name": "E3 Strategic Solutions",
-  "name": "E3 Strategic Solutions",
+  "short_name": "Exotic Relief by Dr Joi",
+  "name": "Exotic Relief by Dr Joi",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,7 +8,7 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo1.png",
+      "src": "logo-green4.png",
       "type": "image/png",
       "sizes": "192x192"
     },

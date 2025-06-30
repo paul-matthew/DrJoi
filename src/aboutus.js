@@ -104,7 +104,7 @@ function About() {
                         wordWrap: "break-word",
                       }}
                     >
-                      Hello, I&apos;m Dr. Joi.
+                      Hello, I&apos;m Dr. Joi
                     </div>
                     <div
                       className="Subheadline"
@@ -587,6 +587,7 @@ function About() {
                                 <li>Alzheimer’s</li>
                                 <li>Dementia</li>
                                 <li>Substance Abuse</li>
+                                <li>Stroke</li>
                               </ol>
                             </div>
                           </div>
@@ -851,7 +852,7 @@ function About() {
                                 wordWrap: "break-word",
                               }}
                             >
-                              Good Morning Affirmation
+                              Good Morning
                             </div>
                             <div
                               style={{

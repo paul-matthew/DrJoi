@@ -127,7 +127,7 @@ function AboutUsMobile() {
                         wordWrap: "break-word",
                       }}
                     >
-                      Hello, my name is Dr. Joi
+                      Hello, I'm Dr. Joi
                     </div>
                     <div
                       className="Experience"
@@ -547,6 +547,7 @@ function AboutUsMobile() {
                                 <li>Alzheimer’s</li>
                                 <li>Dementia</li>
                                 <li>Substance Abuse</li>
+                                <li>Stroke</li>
                               </ol>
                             </div>
                           </div>
@@ -800,7 +801,7 @@ function AboutUsMobile() {
                                 wordWrap: "break-word",
                               }}
                             >
-                              Good Morning Affirmation
+                              Good Morning
                             </div>
                             <div
                               style={{
