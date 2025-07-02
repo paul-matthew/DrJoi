@@ -908,7 +908,7 @@ function AboutUsMobile() {
                                 wordWrap: "break-word",
                               }}
                             >
-                              Good Afternoon Affirmation
+                              Good Afternoon
                             </div>
                             <div
                               style={{
@@ -1017,7 +1017,7 @@ function AboutUsMobile() {
                                 wordWrap: "break-word",
                               }}
                             >
-                              Good Night Affirmation
+                              Good Night
                             </div>
                             <div
                               style={{
@@ -1041,8 +1041,16 @@ function AboutUsMobile() {
                               these affirmations guide you into a peaceful
                               night’s sleep, rejuvenating your spirit for the
                               adventures that await in the morning light. */}
-                              As the day winds down, give yourself the gift of peace and calm through these soothing affirmations. Let go of the day&apos;s stress, release lingering worries, and invite serenity into your mind and heart. Reflect on the blessings of the day with gratitude, ease tension in your body, and welcome a deep sense of relaxation. These affirmations are here to guide you into a restful night&apos;s sleep, rejuvenating your spirit for the promise of a new day.
-
+                              As the day winds down, give yourself the gift of
+                              peace and calm through these soothing
+                              affirmations. Let go of the day&apos;s stress,
+                              release lingering worries, and invite serenity
+                              into your mind and heart. Reflect on the blessings
+                              of the day with gratitude, ease tension in your
+                              body, and welcome a deep sense of relaxation.
+                              These affirmations are here to guide you into a
+                              restful night&apos;s sleep, rejuvenating your
+                              spirit for the promise of a new day.
                             </div>
                           </div>
                         </div>
