@@ -131,6 +131,21 @@ app.post('/stripe/webhook', express.raw({ type: 'application/json' }), (req, res
   res.status(200).json({ received: true });
 });
 
+const hiddenProductIds = [
+  "667772eb498da9f3cb0e2398",
+  "66777a99d2089126090d729b",
+  "66778e16dabf3efa7808930e",
+  "66cbd383691947123b00006e",
+  "66778c23b3f9c927d90bac85",
+  "66f9ed9f81d3e81f28061eff",
+  "670dbc16338e4bbbd20912cf",
+  "670dbcfdac878da0da0570bf",
+  "66f9fe5181d3e81f28062818",
+  "66ab1d48216f15ff9c09f978",
+  '66f9ecc6dd969d5af3041d86'
+];
+
+
 // Endpoint to fetch products from Printify
 app.get('/products', async (req, res) => {
   try {
@@ -140,17 +155,26 @@ app.get('/products', async (req, res) => {
       }
     });
 
-    if (printifyResponse.ok) {
-      const products = await printifyResponse.json();
-      res.status(200).json(products);
-    } else {
-      res.status(500).json({ error: 'Failed to fetch products from Printify' });
+    if (!printifyResponse.ok) {
+      return res.status(500).json({ error: 'Failed to fetch products from Printify' });
     }
+
+    const products = await printifyResponse.json();
+
+    // Filter OUT the hidden IDs
+    const filtered = {
+      ...products,
+      data: products.data.filter(product => !hiddenProductIds.includes(product.id))
+    };
+
+    res.status(200).json(filtered);
+
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 // Endpoint to fetch regions
 app.get('/maps/regions', async (req, res) => {
